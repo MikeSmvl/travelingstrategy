@@ -1,7 +1,7 @@
 # Traveling Strategy
 https://www.travelingstrategy.com
 
-Capstone repository
+**Capstone repository**
 
 Team members: Charles Chan 27841523 (lead)
 
