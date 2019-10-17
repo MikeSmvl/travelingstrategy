@@ -1,4 +1,4 @@
-# travelingstrategy
+# Traveling Strategy
 https://www.travelingstrategy.com
 
 Capstone repository
