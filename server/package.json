@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "0.0.1",
+  "description": "Apollo, GraphQL & SQLite server",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "nodemon src/index.js",
+    "start:ci": "node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikeSmvl/travelingstrategy.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MikeSmvl/travelingstrategy/issues"
+  },
+  "homepage": "https://github.com/MikeSmvl/travelingstrategy#readme",
+  "dependencies": {
+    "apollo": "^2.20.0",
+    "apollo-server": "^2.9.6",
+    "dotenv": "^8.2.0",
+    "graphql": "^14.5.8",
+    "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "jest": "^24.9.0",
+    "nodemon": "^1.19.4"
+  }
+}
