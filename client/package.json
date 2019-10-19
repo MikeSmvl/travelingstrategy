@@ -1,0 +1,53 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "description": "React Frontend",
+  "private": true,
+  "dependencies": {
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-scripts": "3.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "contributors": [
+    "Arminé Iradian <armirad@yahoo.ca>",
+    "Charles Chan <chanc09@gmail.com>",
+    "Hassan Karimian <karimian.hassan@gmail.com>",
+    "Line Ghanem <ghanemline@gmail.com>",
+    "Mikael Samvelian <mikael.samvelian@gmail.com>",
+    "Oumar Ba <oumarba221296@hotmail.fr>",
+    "Steffan Venacious <steffan_v@hotmail.com>",
+    "Tyler Delaportas <tdelaportas@hotmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MikeSmvl/travelingstrategy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MikeSmvl/travelingstrategy/issues"
+  },
+  "homepage": "https://github.com/MikeSmvl/travelingstrategy#readme",
+  "license": "MIT"
+}
