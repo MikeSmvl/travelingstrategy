@@ -1,0 +1,16 @@
+version: 2
+
+jobs:
+  Client:
+    docker:
+      - image: circleci/node:10.16.0
+
+    steps:
+      - checkout
+      - run: cd client && npm ci
+      - run: cd client && npm test
+workflows:
+  version: 2
+  Build and Test:
+    jobs:
+      - Client
