@@ -31,7 +31,7 @@ module.exports = {
     },
     output: {
       path: path.resolve(__dirname),
-      filename: './dist/bundle.js'
+      filename: './public/bundle.js'
     },
     devServer: {
       contentBase: './public',
