@@ -1,13 +1,19 @@
-const { ApolloServer } = require('apollo-server');
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
+const express = require('express');
 
-// Set up Apollo Server
-const server = new ApolloServer({ typeDefs, resolvers });
+const ExpressGraphQL = require("express-graphql");
+const graphql = require("graphql");
 
-// Start our server if we're not in a test env.
-// if we're in a test env, we'll manually start it in a test
-if (process.env.NODE_ENV !== 'test')
-  server
-    .listen({ port: 4000 })
-    .then(({ url }) => console.log(`🚀 app running at ${url}`));
+const app = express();
+
+const queries = require('./resolvers/queries')
+
+const schema = new graphql.GraphQLSchema({
+    query: queries
+    // mutation: mutations
+});
+
+app.use("/", ExpressGraphQL({ schema: schema, graphiql: true}));
+
+app.listen(4000, () => {
+    console.log("🚀 GraphQL server running at http://localhost:4000.");
+});
