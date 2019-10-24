@@ -1,17 +1,18 @@
 var path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/App.js',
+    entry: './src/index.js',
     module: {
       rules: [
         {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
-          use: ['babel-loader', "eslint-loader"]
+          use: ['babel-loader']
         },
         {
             test: /\.(le|c)ss$/,
-            use: ['style-loader', 'css-loader', 'less-loader']
+            use: ['style-loader', 'css-loader']
         },
         {
           test: /\.(png|jpg|gif|svg)$/i,
@@ -30,11 +31,15 @@ module.exports = {
       extensions: ['*', '.js', '.jsx']
     },
     output: {
-      path: path.resolve(__dirname),
-      filename: './public/bundle.js'
+      filename: 'bundle.js',
+        path: path.resolve(__dirname, 'public/')
     },
-    devServer: {
-      contentBase: './public',
+    plugins: [
+      new webpack.HotModuleReplacementPlugin()
+    ],
+    devServer:{
+      contentBase: 'public',
+      hot: true,
       port: 3000
     }
   };

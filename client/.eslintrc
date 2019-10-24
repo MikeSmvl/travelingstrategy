@@ -4,5 +4,10 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/jsx-one-expression-per-line": "off",
+        "no-tabs": "off",
+        "react/jsx-indent": "off",
+        "indent": ["error", "tab"],
+        "react/jsx-indent-props": [2, "tab"],
+        "comma-dangle": ["error", "never"]
     }
 }
