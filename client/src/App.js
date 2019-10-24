@@ -5,7 +5,7 @@ import logo from './logo.png';
 
 function App() {
 	return (
-		<body>
+		<div>
 			<div className="App">
 				<div className="App-header" style={{ height: '420px' }}>
 					<Navbar variant="dark" style={{ backgroundColor: 'transparent' }}>
@@ -60,7 +60,7 @@ function App() {
 					<Card.Body>This is some text within a card body.</Card.Body>
 				</Card>
 			</div>
-		</body>
+		</div>
 	);
 }
 
