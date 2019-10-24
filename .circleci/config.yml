@@ -7,7 +7,7 @@ jobs:
 
     steps:
       - checkout
-      - run: cd client && yarn ci
+      - run: cd client && yarn
       - run: cd client && yarn test
 workflows:
   version: 2
