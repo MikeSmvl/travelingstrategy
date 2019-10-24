@@ -7,8 +7,8 @@ jobs:
 
     steps:
       - checkout
-      - run: cd client && npm ci
-      - run: cd client && npm test
+      - run: cd client && yarn ci
+      - run: cd client && yarn test
 workflows:
   version: 2
   Build and Test:
