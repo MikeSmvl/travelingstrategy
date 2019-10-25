@@ -1,0 +1,21 @@
+# base image
+FROM node:10.16.0-alpine
+
+# set working directory
+WORKDIR /app/client
+
+# add `/app/client/node_modules/.bin` to $PATH
+ENV PATH /app/client/node_modules/.bin:$PATH
+
+# install and cache app dependencies
+COPY package.json /app/client/package.json
+RUN apk add --no-cache --virtual .gyp \
+        python \
+        make \
+        g++ \
+    && npm install \
+    && npm install react-scripts@3.0.1 -g --silent \
+    && apk del .gyp
+
+# start app
+CMD ["npm", "start"]
