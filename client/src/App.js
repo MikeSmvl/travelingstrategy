@@ -1,48 +1,33 @@
 import * as React from 'react';
-import './App.css';
-import Navbar from './components/Navbar/Navbar'
-import { Card } from 'react-bootstrap/';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Country from './pages/Country';
+import Home from './pages/Home';
 
 function App() {
 	return (
-		<div>
-			<div className="App">
-				<div className="App-header" style={{ height: '420px' }}>
-					<Navbar />
-					<div
-						style={{
-							textAlign: 'center',
-							paddingTop: '110px'
-						}}
-					>
-						<span
-							style={{
-								color: 'white',
-								fontSize: '33px',
-								fontWeight: '750'
-							}}
-						>
-							Paris
-						</span>
-						<span
-							style={{
-								color: 'white',
-								fontSize: '23px',
-								fontWeight: '600',
-								display: 'block'
-							}}
-						>
-							France
-						</span>
-					</div>
-				</div>
-			</div>
-			<div style={{ padding: '20px' }}>
-				<Card style={{ color: 'grey' }}>
-					<Card.Body>This is some text within a card body.</Card.Body>
-				</Card>
-			</div>
-		</div>
+    <Router>
+      <div>
+        {/*
+          A <Switch> looks through all its children <Route>
+          elements and renders the first one whose path
+          matches the current URL. Use a <Switch> any time
+          you have multiple routes, but you want only one
+          of them to render at a time
+        */}
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/country">
+            <Country />
+          </Route>
+        </Switch>
+      </div>
+    </Router>
 	);
 }
 
