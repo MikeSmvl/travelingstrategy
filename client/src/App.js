@@ -1,32 +1,14 @@
 import * as React from 'react';
 import './App.css';
-import { Card, Navbar } from 'react-bootstrap/';
-import logo from './logo.png';
+import Navbar from './components/Navbar/Navbar'
+import { Card } from 'react-bootstrap/';
 
 function App() {
 	return (
 		<div>
 			<div className="App">
 				<div className="App-header" style={{ height: '420px' }}>
-					<Navbar variant="dark" style={{ backgroundColor: 'transparent' }}>
-						<Navbar.Brand href="#home">
-							<img
-								alt=""
-								src={logo}
-								width="45"
-								height="45"
-								className="d-inline-block align-top"
-							/>
-							<Navbar.Text style={{ color: 'white' }}>
-								Traveling Strategy
-							</Navbar.Text>
-						</Navbar.Brand>
-						<Navbar.Collapse className="justify-content-end">
-							<Navbar.Text>
-								<a href="#login">Login</a>
-							</Navbar.Text>
-						</Navbar.Collapse>
-					</Navbar>
+					<Navbar />
 					<div
 						style={{
 							textAlign: 'center',
