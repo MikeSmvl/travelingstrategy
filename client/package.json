@@ -1,26 +1,46 @@
 {
   "name": "client",
-  "version": "0.0.1",
-  "description": "React Frontend",
+  "version": "0.0.2",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/components/**/*.js",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
   "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.16",
+    "@storybook/addon-a11y": "^5.2.5",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-backgrounds": "^5.2.5",
+    "@storybook/addon-info": "^5.2.5",
+    "@storybook/addon-knobs": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addon-storyshots": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
+    "@storybook/theming": "^5.2.5",
+    "bootstrap": "^4.3.1",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "less": "^3.10.3",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
-    "bootstrap": "^4.3.1"
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0"
   },
-  "scripts": {
-    "start": "webpack-dev-server --open --mode development",
-    "build": "webpack --mode=production",
-    "dev-server": "webpack-dev-server",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src/App.js",
-    "storybook": "start-storybook -p 6006"
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -54,33 +74,5 @@
   "bugs": {
     "url": "https://github.com/MikeSmvl/travelingstrategy/issues"
   },
-  "homepage": "https://github.com/MikeSmvl/travelingstrategy#readme",
-  "license": "MIT",
-  "devDependencies": {
-    "@babel/core": "^7.6.4",
-    "@babel/preset-env": "^7.6.3",
-    "@babel/preset-react": "^7.6.3",
-    "@storybook/addon-a11y": "^5.2.5",
-    "@storybook/addon-actions": "^5.2.5",
-    "@storybook/addon-backgrounds": "^5.2.5",
-    "@storybook/addon-info": "^5.2.5",
-    "@storybook/addon-knobs": "^5.2.5",
-    "@storybook/addon-links": "^5.2.5",
-    "@storybook/addon-storyshots": "^5.2.5",
-    "@storybook/react": "^5.2.5",
-    "babel-eslint": "^10.0.3",
-    "babel-loader": "^8.0.6",
-    "css-loader": "^3.2.0",
-    "eslint": "^6.1.0",
-    "eslint-config-airbnb": "^18.0.1",
-    "eslint-loader": "^3.0.2",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^1.7.0",
-    "less-loader": "^5.0.0",
-    "react-hot-loader": "^4.12.15",
-    "style-loader": "^1.0.0",
-    "webpack-cli": "^3.3.9"
-  }
+  "license": "MIT"
 }
