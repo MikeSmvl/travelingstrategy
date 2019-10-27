@@ -1,11 +1,12 @@
 import React from 'react';
 import { Navbar as RBNavbar } from 'react-bootstrap/';
-import logo from '../../logo.png';
+import logo from './logo.png';
+import './Navbar.css'
 
 function Navbar() {
   return (
     <div>
-      <RBNavbar variant="dark" style={{ backgroundColor: 'transparent' }}>
+      <RBNavbar fixed="top" variant="dark" style={{ backgroundColor: 'transparent' }}>
       <RBNavbar.Brand href="#home">
         <img
           alt=""
