@@ -1,3 +1,9 @@
-.navbar {
-  z-index:9;
+.Navbar {
+  background-color: transparent;
+}
+.Navbar .title {
+    color: white !important;
+  }
+a {
+  text-decoration: none !important;
 }
