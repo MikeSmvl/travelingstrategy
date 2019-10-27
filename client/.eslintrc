@@ -6,7 +6,7 @@
         "react/jsx-one-expression-per-line": "off",
         "no-tabs": "off",
         "react/jsx-indent": "off",
-        "indent": ["error", "tab"],
+        "indent": "off",
         "react/jsx-indent-props": [2, "tab"],
         "comma-dangle": ["error", "never"]
     }
