@@ -7,12 +7,13 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src/App.js",
+    "lint": "eslint src/components/",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.16",
+    "@storybook/theming": "^5.2.5",
     "bootstrap": "^4.3.1",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
