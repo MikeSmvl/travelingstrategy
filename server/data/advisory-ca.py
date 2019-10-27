@@ -1,4 +1,4 @@
-import urllib.request, jso
+import urllib.request, json
 import contextlib
 from html.parser import HTMLParser
 
@@ -62,10 +62,9 @@ def advisory_canada(all_countries):
 
 all_countries = get_all_countries()
 countries_data = advisory_canada(all_countries)
-print(countries_data)
 
-# with open('advisory-ca.json', 'w') as fp:
-#     json.dump(countries_data, fp)
+with open('advisory-ca.json', 'w') as fp:
+    json.dump(countries_data, fp)
 
 # with open('advisory-ca.json') as fp:
 #     d  = json.loads(fp.read())
