@@ -1,8 +1,6 @@
 const Book = require('../classes/book')
 const graphql = require('graphql');
-const sqlite3 = require('sqlite3').verbose();
 const database = require("../database/database");
-// const database = new sqlite3.Database("./store.sqlite");
 var db = new database().db;
 
 var books = {
