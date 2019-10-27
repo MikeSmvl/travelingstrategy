@@ -1,6 +1,7 @@
 import urllib.request, json
 import contextlib
 from html.parser import HTMLParser
+import sqlite3
 
 #Html parser
 class MyHTMLParser(HTMLParser): #Initializing lists
@@ -60,12 +61,29 @@ def advisory_canada(all_countries):
             countries_data[name]=info
     return countries_data
 
+con  = sqlite3.connect('../../canada.sqlite')
+cur = con.cursor()
+#should not create the table every time
+#change in the future
+cur.execute('DROP TABLE IF EXISTS canada')
+con.commit()
+cur.execute('CREATE TABLE canada (country_iso VARCHAR, name VARCHAR, advisory_text VARCHAR, visa_info VARCHAR)')
+con.commit()
+
 all_countries = get_all_countries()
 countries_data = advisory_canada(all_countries)
 
-with open('advisory-ca.json', 'w') as fp:
-    json.dump(countries_data, fp)
+for country in countries_data:
+    iso = countries_data[country].get('country-iso')
+    n = countries_data[country].get('name')
+    text = countries_data[country].get('advisory-text')
+    info = countries_data[country].get('visa-info')
+    cur.execute('INSERT INTO canada (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
+con.commit()
+# with open('advisory-ca.json', 'w') as fp:
+#     json.dump(countries_data, fp)
 
+con.close()
 # with open('advisory-ca.json') as fp:
 #     d  = json.loads(fp.read())
 # print(d['Zimbabwe'].get('visa-info'))
