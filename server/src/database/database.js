@@ -1,14 +1,25 @@
+const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
+const path = require("path");
+const databasePath = "./store.sqlite";
+
 
 class database {
   constructor() {
-    this.db = new sqlite3.Database("./store.sqlite", (err) => {
-      if (err) {
-        console.log('Could not connect to database', err)
-      } else {
-        console.log('Connected to database')
+    try {
+        if (fs.existsSync(databasePath)) {
+            this.db = new sqlite3.Database(databasePath, (err) => {
+                if (err) {
+                console.log('Could not connect to database', err)
+                } else {
+                console.log('Connected to database')
+                }
+            })
+        }
+      } catch(err) {
+            console.log("Database not found")
+            this.db = {};
       }
-    })
   }
 }
 

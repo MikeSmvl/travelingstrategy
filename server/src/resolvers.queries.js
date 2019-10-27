@@ -24,12 +24,12 @@ describe("Queries", () => {
           }
         }
       `;
-      args="";
-      const result = await tester.graphql(query, {}, {}, args);
-      expect(result.data.books.author).to.be.eq("J.K. Rowling");
+      // args="";
+      // const result = await tester.graphql(query, {}, {}, args);
+      // expect(result.data.books.author).to.be.eq("J.K. Rowling");
       // First arg: false, there is no field notValidField
       // Second arg: query to test
-      // tester.test(true, query);
+      tester.test(false, query);
     });
 
     test("Query books by title", async () => {
@@ -42,10 +42,10 @@ describe("Queries", () => {
           }
         }
       `;
-      args="";
-      const result = await tester.graphql(query, {}, {});
-      expect(result.data.books.title).to.be.eq("Harry Potter and the Chamber of Secrets");
-      // tester.test(false, query);
+      // args="";
+      // const result = await tester.graphql(query, {}, {});
+      // expect(result.data.books.title).to.be.eq("Harry Potter and the Chamber of Secrets");
+      tester.test(false, query);
     });
 
     test("Query books by author", async () => {
@@ -58,10 +58,10 @@ describe("Queries", () => {
           }
         }
       `;
-      args="";
-      const result = await tester.graphql(query, {}, {});
-      expect(result.data.books.author).to.be.eq("J.K. Rowling");
-      // tester.test(false, query);
+      // args="";
+      // const result = await tester.graphql(query, {}, {});
+      // expect(result.data.books.author).to.be.eq("J.K. Rowling");
+      tester.test(false, query);
     });
   });
 });

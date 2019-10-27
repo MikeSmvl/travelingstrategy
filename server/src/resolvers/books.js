@@ -1,7 +1,7 @@
 const Book = require('../classes/book')
 const graphql = require('graphql');
 const database = require("../database/database");
-var db = new database().db;
+const db = new database().db;
 
 var books = {
     type: graphql.GraphQLList(Book),

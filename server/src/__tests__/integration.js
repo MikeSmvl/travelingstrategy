@@ -1,2 +1,8 @@
-const database = new sqlite3.Database("./store.sqlite");
+const database = require("../database/database");
+const db = new database();
+
+test("Test db connection", () =>{
+    console.log = jest.fn();
+    expect(db).not.toEqual({});
+});
 
