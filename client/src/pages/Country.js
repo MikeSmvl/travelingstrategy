@@ -12,7 +12,7 @@ function Country() {
         //fullpage options
         licenseKey = {'CF1896AE-3B194629-99B627C1-841383E5'}
         scrollingSpeed = {1000} /* Options here */
-        sectionsColor={["#00b7ff", "#00fff0"]}
+        sectionsColor={["#e8e9f1", "#00fff0"]}
         navigation
         navigationPosition = {'left'}
         navigationTooltips = {['Basics', 'Health & Safety', 'Money']}
@@ -23,7 +23,7 @@ function Country() {
             <ReactFullpage.Wrapper>
               <div className="section">
                 <div className="App">
-                  <div className="App-header" style={{ height: '50vh' }}>
+                  <div className="App-header" style={{ height: '40vh' }}>
                     <div
                       style={{
                         textAlign: 'center',

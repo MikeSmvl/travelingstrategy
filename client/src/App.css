@@ -20,3 +20,7 @@
 .section {
   text-align: center;
 }
+
+.fp-tableCell {
+  vertical-align: top;
+}
