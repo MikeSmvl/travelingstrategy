@@ -1,9 +1,9 @@
 import React from 'react';
-import {storiesOf} from '@storybook/react';
-import {action} from '@storybook/addon-actions';
-import {withKnobs, text, select, boolean} from '@storybook/addon-knobs';
-import {withInfo} from '@storybook/addon-info';
-import {withA11y} from '@storybook/addon-a11y';
+import { storiesOf } from '@storybook/react';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, text, select, boolean } from '@storybook/addon-knobs';
+import { withInfo } from '@storybook/addon-info';
+import { withA11y } from '@storybook/addon-a11y';
 
 import Navbar from './Navbar';
 
@@ -15,7 +15,7 @@ stories.addDecorator(withA11y);
 
 stories
 	.add('Base usage', () => (
-		<Navbar title='Traveling Strategy' textRight='Login' />
+		<Navbar title="Traveling Strategy" textRight="Login" />
 	))
 	.add('Set props', () => {
 		const title = text('Title Text') || 'Traveling Strategy';

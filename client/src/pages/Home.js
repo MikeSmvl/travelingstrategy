@@ -5,10 +5,10 @@ function Home() {
 	return (
 		<div>
 			<Navbar
-				title='Traveling Strategy'
-				textRight='Login'
-				hrefBrand='#home'
-				hrefRight='#login'
+				title="Traveling Strategy"
+				textRight="Login"
+				hrefBrand="#home"
+				hrefRight="#login"
 			/>
 		</div>
 	);
