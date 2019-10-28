@@ -1,0 +1,21 @@
+.App-header {
+  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3) ), url('paris.gif') no-repeat;
+  background-size: cover;
+  width: 100%;
+  background-position: center center;
+  height: 420px;
+}
+.App-header .title {
+  text-align: center;
+  padding-top: 182px;
+  color: white;
+	font-size: 33px;
+	font-weight: 750;
+}
+.App-header .subtitle {
+  text-align: center;
+  color: white;
+	font-size: 23px;
+	font-weight: 600;
+  display: block;
+}
