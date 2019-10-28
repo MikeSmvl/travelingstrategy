@@ -1,20 +1,46 @@
 {
   "name": "client",
-  "version": "0.0.1",
-  "description": "React Frontend",
+  "version": "0.0.2",
   "private": true,
-  "dependencies": {
-    "graphql": "^14.5.8",
-    "graphql-tag": "^2.10.1",
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
-  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint src/**/*.js src/components/**/*.js",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public"
+  },
+  "dependencies": {
+    "@fullpage/react-fullpage": "^0.1.16",
+    "@storybook/addon-a11y": "^5.2.5",
+    "@storybook/addon-actions": "^5.2.5",
+    "@storybook/addon-backgrounds": "^5.2.5",
+    "@storybook/addon-info": "^5.2.5",
+    "@storybook/addon-knobs": "^5.2.5",
+    "@storybook/addon-links": "^5.2.5",
+    "@storybook/addon-storyshots": "^5.2.5",
+    "@storybook/addons": "^5.2.5",
+    "@storybook/react": "^5.2.5",
+    "@storybook/theming": "^5.2.5",
+    "bootstrap": "^4.3.1",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1",
+    "less": "^3.10.3",
+    "prop-types": "^15.7.2",
+    "react": "^16.11.0",
+    "react-bootstrap": "^1.0.0-beta.14",
+    "react-dom": "^16.11.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -48,6 +74,5 @@
   "bugs": {
     "url": "https://github.com/MikeSmvl/travelingstrategy/issues"
   },
-  "homepage": "https://github.com/MikeSmvl/travelingstrategy#readme",
   "license": "MIT"
 }
