@@ -67,24 +67,18 @@ A list of related resources that we find helpful are listed in the acknowledgeme
 
 ### Infrastructure
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+* [Node.js](https://nodejs.org/en)
 * [React](https://getbootstrap.com)
 * [Apollo](https://jquery.com)
 * [GraphQL](https://laravel.com)
 * [SQLite](https://laravel.com)
-* Storybook
-* Node package manager (npm)
-* yarn
-* .CircleCi
-* Eslint
-* Service Worker
-* Bootstrap
-* graphQL
-* Webpack
-* Babel
-* SQLite3
-* Nodemon
-* jest
-
+* [Storybook](https://storybook.js.org)
+* [Babel](https://babeljs.io)
+* [SQLite3](https://www.sqlite.org/index.html)
+* [CircleCi](https://circleci.com)
+* [jest](https://jestjs.io)
+* [Eslint](https://eslint.org)
+* [Nodemon](https://www.npmjs.com/package/nodemon)
 
 <!-- RISKS -->
 ## Risks
@@ -100,8 +94,29 @@ Accuracy of data
 
 <!-- VELOCITY -->
 ## Velocity and iterations
-Iteration 3
-Iteration 4
+### [Iteration 3](https://github.com/MikeSmvl/travelingstrategy/milestone/1) (4 stories, 19 points)
+We have moved away from the Arthur.ai project and will be moving forward with Traveling Strategy from this sprint onward. The rest of the sprint was spent setting up the project (dependencies, CI, DB) and implementing a basic UI. The sprint was rounded out by parsing data to and from a json file. 
+
+### Iteration 3 (X stories, X points)
+
+### Release 1 Total: X stories, X points over X weeks
+Release 1 aka Iteration 4, (X stories, X points)
+Max four sentence paragraph describing main achievements.
+
+
+### Iteration 5 (X stories, X points)
+
+### Iteration 6 (X stories, X points)
+
+### Iteration 7 (X stories, X points)
+
+### Iteration 8 (X stories, X points)
+
+### Iteration 9 (X stories, X points)
+
+### Iteration 10 (X stories, X points)
+
+### Iteration 11 (X stories, X points)
 
 <!-- DIAGRAM -->
 ### Overall Arch and Class diagram
