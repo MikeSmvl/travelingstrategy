@@ -6,10 +6,11 @@ const graphql = require("graphql");
 const app = express();
 
 const queries = require('./resolvers/queries')
+const mutations = require('./resolvers/mutations')
 
 const schema = new graphql.GraphQLSchema({
-    query: queries
-    // mutation: mutations
+    query: queries,
+    mutation:mutations
 });
 
 app.use("/", ExpressGraphQL({ schema: schema, graphiql: true}));
