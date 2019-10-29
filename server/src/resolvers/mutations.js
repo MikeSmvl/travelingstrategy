@@ -1,10 +1,11 @@
 const { GraphQLObjectType} = require('graphql');
-const addBooks = require('./addBooks')
+const {addBooks,deleteBooks} = require('./bookMutations')
 
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        addBooks
+        addBooks,
+        deleteBooks
     }
 });
 
