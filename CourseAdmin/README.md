@@ -26,7 +26,7 @@
   * [Infrastructure](#infrastructure)
 * [Risks](#risks)
 * [Ethical issues](#ethical-issues)
-* [Velocity and Iterations](#velocity)
+* [Velocity and Iterations](#velocity-and-iterations)
 * [Overall Arch and Class diagram](#overall-arch-and-class-diagram)
 * [Code](#code)
 * [Testing and CI](#testing-and-ci)
@@ -98,22 +98,22 @@ Accuracy of data
 ### [Iteration 3](https://github.com/MikeSmvl/travelingstrategy/milestone/1) (4 stories, 19 points)
 We have moved away from the Arthur.ai project and will be moving forward with Traveling Strategy from this sprint onward. The rest of the sprint was spent setting up the project (dependencies, CI, DB) and implementing a basic UI. The sprint was rounded out by parsing data to and from a json file. 
 
-### Iteration 4 (X stories, X points)
+### [Iteration 4](https://github.com/MikeSmvl/travelingstrategy/milestone/2) (X stories, X points)
 
 ### Release 1 Total: X stories, X points over X weeks
 Release 1 aka Iteration 4, (X stories, X points)
 Max four sentence paragraph describing main achievements.
 
 
-### Iteration 5 (X stories, X points)
+### [Iteration 5](https://github.com/MikeSmvl/travelingstrategy/milestone/3) (X stories, X points)
 
-### Iteration 6 (X stories, X points)
+### [Iteration 6](https://github.com/MikeSmvl/travelingstrategy/milestone/4) (X stories, X points)
 
-### Iteration 7 (X stories, X points)
+### [Iteration 7](https://github.com/MikeSmvl/travelingstrategy/milestone/5) (X stories, X points)
 
-### Iteration 8 (X stories, X points)
+### [Iteration 8]](https://github.com/MikeSmvl/travelingstrategy/milestone/6) (X stories, X points)
 
-### Iteration 9 (X stories, X points)
+### [Iteration 9](https://github.com/MikeSmvl/travelingstrategy/milestone/7) (X stories, X points)
 
 ### Iteration 10 (X stories, X points)
 
