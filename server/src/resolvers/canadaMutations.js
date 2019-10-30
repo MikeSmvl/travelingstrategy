@@ -1,5 +1,5 @@
-const Canada = require('../classes/book')
-const inputCanada = require('../classes/inputBook')
+const Canada = require('../classes/canada')
+const inputCanada = require('../classes/inputCanada')
 const database = require("../database/database");
 const db = new database().db;
 

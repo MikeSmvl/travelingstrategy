@@ -1,5 +1,5 @@
 const { GraphQLObjectType} = require('graphql');
-const {addCanadaToCountry,deleteCanadaToCountry} = require('./bookMutations')
+const {addCanadaToCountry,deleteCanadaToCountry} = require('./canadaMutations')
 
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',

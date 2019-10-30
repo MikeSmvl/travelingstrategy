@@ -1,4 +1,4 @@
-const Canada = require('../classes/book')
+const Canada = require('../classes/canada')
 const graphql = require('graphql');
 const database = require("../database/database");
 const db = new database().db;
