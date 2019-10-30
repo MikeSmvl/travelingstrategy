@@ -4,6 +4,7 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
+import DropdownExampleSearchSelection from './components/CountrySelector/CountrySelector';
 import Country from './pages/Country';
 import Home from './pages/Home';
 
@@ -13,7 +14,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path="/">
-            <Home />
+          <DropdownExampleSearchSelection />
           </Route>
           <Route path="/country">
             <Country />
