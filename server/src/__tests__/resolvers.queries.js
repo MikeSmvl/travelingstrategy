@@ -1,16 +1,22 @@
 const fs = require("fs");
 const path = require("path");
 const EasyGraphQLTester = require("easygraphql-tester");
-const { expect } = require("chai");
 const graphql = require("graphql");
 const schemaCode = fs.readFileSync(path.join(__dirname, "../graphql/", "schema.graphql"), "utf8");
-const books = require("../resolvers/books");
+const books = require("../resolvers/allBooks");
+const Book = require('../classes/book')
+
+const schema = new graphql.GraphQLSchema({
+  Book
+});
 
 
 describe("Test schema", () => {
   let tester;
+  console.log(schema);
+  console.log(books);
   beforeAll(() => {
-    tester = new EasyGraphQLTester(schemaCode,books);
+    tester = new EasyGraphQLTester(schema,books);
   });
 describe("Queries", () => {
     test("Query books by title and author", async () => {
