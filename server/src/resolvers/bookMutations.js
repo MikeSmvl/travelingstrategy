@@ -1,19 +1,18 @@
-const book = require('../classes/book')
-const inputBookType = require('../classes/inputBook')
-const graphql = require('graphql');
+const Canada = require('../classes/book')
+const inputCanada = require('../classes/inputBook')
 const database = require("../database/database");
 const db = new database().db;
 
-var addBooks = {
-    type: book,
+var addCanadaToCountry = {
+    type: Canada,
     args: {
         input: { 
-            type: inputBookType 
+            type: inputCanada 
         }
     },
     resolve: function (source, args) {
         return new Promise((resolve, reject) => {
-            db.run("INSERT INTO books(author, title) VALUES(?,?);",[args.input.author, args.input.title], function(err, rows) {
+            db.run("INSERT INTO canada(country_iso,name,advisory_text, visa_info) VALUES(?,?,?,?);",[args.input.country_iso, args.input.name, args.input.advisory_text, args.input.visa_info ], function(err, rows) {
                 if(err){
                     reject(err);
                 }
@@ -23,16 +22,16 @@ var addBooks = {
     }
 }
 
-var deleteBooks = {
-    type: book,
+var deleteCanadaToCountry = {
+    type: Canada,
     args: {
         input: { 
-            type: inputBookType 
+            type: inputCanada 
         }
     },
     resolve: function (source, args) {
         return new Promise((resolve, reject) => {
-            db.run("DELETE FROM books where author=(?) and title=(?)",[args.input.author, args.input.title], function(err, rows) {
+            db.run("DELETE FROM canada where country_iso=(?) and name=(?) and advisory_text=(?) and visa_info=(?) ",[args.input.country_iso, args.input.name, args.input.advisory_text, args.input.visa_info ], function(err, rows) {
                 if(err){
                     reject(err);
                 }
@@ -42,4 +41,4 @@ var deleteBooks = {
     }
 }
 
-module.exports = {addBooks, deleteBooks}
+module.exports = {addCanadaToCountry, deleteCanadaToCountry}
