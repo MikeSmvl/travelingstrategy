@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const books = require('./books')
+const books = require('./allBooks')
 
 var queryType = new graphql.GraphQLObjectType({
     name: 'Query',
