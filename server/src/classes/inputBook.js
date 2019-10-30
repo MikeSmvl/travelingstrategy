@@ -1,11 +1,13 @@
 const graphql = require("graphql");
 
-inputBook = new graphql.GraphQLInputObjectType({
-    name: 'BookInput',
+inputCanada = new graphql.GraphQLInputObjectType({
+    name: 'CanadaInput',
     fields: {
-        author: { type: graphql.GraphQLString },
-        title: { type: graphql.GraphQLString },
+        country_iso: { type: graphql.GraphQLString },
+        name: { type: graphql.GraphQLString },
+        advisory_text: { type: graphql.GraphQLString },
+        visa_info: { type: graphql.GraphQLString }
     }
 });
 
-module.exports = inputBook;
+module.exports = inputCanada;

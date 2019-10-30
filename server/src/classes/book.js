@@ -1,11 +1,13 @@
 const graphql = require("graphql");
 
-const Book = new graphql.GraphQLObjectType({
-  name: "Book",
+const Canada = new graphql.GraphQLObjectType({
+  name: "Canada",
   fields: {
-      author: { type: graphql.GraphQLString },
-      title: { type: graphql.GraphQLString },
-  }
+      country_iso: { type: graphql.GraphQLString },
+      name: { type: graphql.GraphQLString },
+      advisory_text: { type: graphql.GraphQLString },
+      visa_info: { type: graphql.GraphQLString }
+    }
 });
 
-module.exports = Book
+module.exports = Canada
