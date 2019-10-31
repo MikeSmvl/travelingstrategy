@@ -54,10 +54,10 @@ A list of related resources that we find helpful are listed in the acknowledgeme
 
 ### Built With
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [React](https://getbootstrap.com)
-* [Apollo](https://jquery.com)
-* [GraphQL](https://laravel.com)
-* [SQLite](https://laravel.com)
+* [React](https://reactjs.org)
+* [Apollo](https://www.apollographql.com)
+* [GraphQL](https://graphql.org)
+* [SQLite](https://www.sqlite.org)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -96,6 +96,54 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://github.com/MikeSmvl/travelingstrategy/wiki)_
 
+### GraphQL
+This section shows how to use graphql queries and mutations. We will use the table canada as an example.
+
+To **query** all the data from the table
+```
+query{
+  canadaAll{
+        country_iso,
+        name,
+        advisory_text,
+        visa_info
+      }
+}
+```
+To **add** a row to the table
+```
+mutation{
+  addCanadaToCountry(
+    input:{
+      country_iso:"country_iso",
+      name:"name",
+      advisory_text:"advisory_text",
+      visa_info:"visa_info"
+    }){
+        country_iso,
+        name,
+        advisory_text,
+        visa_info
+      }
+}
+```
+To **delete** a row from the table
+```
+mutation{
+  deleteCanadaToCountry(
+    input:{
+      country_iso:"country_iso",
+      name:"name",
+      advisory_text:"advisory_text",
+      visa_info:"visa_info"
+    }){
+        country_iso,
+        name,
+        advisory_text,
+        visa_info
+      }
+}
+```
 
 <!-- ROADMAP -->
 ## Roadmap
