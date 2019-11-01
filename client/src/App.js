@@ -4,10 +4,9 @@ import {
   Switch,
   Route
 } from 'react-router-dom';
-import DropdownExampleSearchSelection from './components/CountrySelector/CountrySelector';
+import Home from './pages/Home';
 import Country from './pages/Country';
-//import Home from './pages/Home';
-import Home from'./components/Home/Home';
+import SearchBar from './components/CountrySelector/SearchBar';
 
 function App() {
 	return (

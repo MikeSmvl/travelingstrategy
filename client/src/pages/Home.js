@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Navbar from '../components/Navbar/Navbar';
+import SearchBar from '../components/CountrySelector/SearchBar';
 
 function Home() {
 	return (
@@ -8,8 +9,10 @@ function Home() {
 				title="Traveling Strategy"
 				textRight="Login"
 				hrefBrand="#home"
-				hrefRight="#login"
-			/>
+				hrefRight="#login"/>
+		</div>
+		<div>
+		<SearchBar></SearchBar>
 		</div>
 	);
 }

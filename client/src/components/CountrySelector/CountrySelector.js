@@ -1,5 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
+import './CountrySelector.css';
 
 const countryOptions = [
   { key: 'af', value: 'af', flag: 'af', text: 'Afghanistan' },
@@ -27,7 +28,9 @@ const countryOptions = [
   { key: 'bj', value: 'bj', flag: 'bj', text: 'Benin' }
 ];
 
-const DropdownExampleSearchSelection = () => (
+const DropdownExampleSearchSelection = () => {
+  return(
+  <div  className="orderform">
   <Dropdown
 	placeholder="Select Country"
 	fluid
@@ -35,6 +38,7 @@ const DropdownExampleSearchSelection = () => (
 	selection
 	options={countryOptions}
   />
-);
+  </div>)
+};
 
 export default DropdownExampleSearchSelection;
