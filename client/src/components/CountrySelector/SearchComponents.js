@@ -12,19 +12,17 @@ return(
     onPlaceSelected={(place) => {
       console.log(place);
     }}
-    types={[]}
-    componentRestrictions={[]}/>
+    types={[]}/>
 
     <br></br>
     <br></br>
-  
+
   <Autocomplete
     style={{width: '90%'}}
     onPlaceSelected={(place) => {
       console.log(place);
     }}
-    types={[]}
-    componentRestrictions={[]}/>
+    types={[]}/>
     <br></br>
     <br></br>
   <SButton variant="outline-primary">Search</SButton>

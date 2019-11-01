@@ -10,18 +10,16 @@ import Country from './pages/Country';
 function App() {
 	return (
     <Router>
-      <body>
+      <div>
         <Switch>
           <Route exact path="/">
-          <div>
 						<Route exact path="/" component={Home} />
-					</div>
           </Route>
           <Route path="/country">
             <Country />
           </Route>
         </Switch>
-      </body>
+        </div>
     </Router>
 	);
 }
