@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import Search from './Search';
+import CountrySearch from './Search';
 
 class Home extends Component {
 
 	render() {
 		return(
 			<div style={{ margin: '100px' }}>
-				<SearchBar/>
+				<CountrySearch/>
 			</div>
 		);
 	}

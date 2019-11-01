@@ -7,7 +7,7 @@ import Script from 'react-load-script';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-class Search extends Component {
+class CountrySearch extends Component {
 
   constructor(props) {
     super(props);
@@ -40,6 +40,7 @@ class Search extends Component {
   }
 
   handlePlaces = () => {
+
 
     const addressObject = this.autocomplete.getPlace();
     const address = addressObject.address_components;
@@ -76,4 +77,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default CountrySearch;
