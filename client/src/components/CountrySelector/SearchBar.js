@@ -9,8 +9,8 @@ return(
     onPlaceSelected={(place) => {
       console.log(place);
     }}
-    types={['(regions)']}
-    componentRestrictions={{country: "ru"}}/>
+    types={[]}
+    componentRestrictions={[]}/>
 )
 };
 

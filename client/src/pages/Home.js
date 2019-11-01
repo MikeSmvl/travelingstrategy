@@ -10,10 +10,16 @@ function Home() {
 				textRight="Login"
 				hrefBrand="#home"
 				hrefRight="#login"/>
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+				<br></br>
+				<SearchBar></SearchBar>
 		</div>
-		<div>
-		<SearchBar></SearchBar>
-		</div>
+		
+		
+		
 	);
 }
 
