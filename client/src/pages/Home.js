@@ -16,12 +16,8 @@ function Home() {
 				<br></br>
 				<br></br>
 				<br></br>
-				<SearchComponents></SearchComponents>
-				
+				<SearchComponents></SearchComponents>	
 		</div>
-		
-		
-		
 	);
 }
 
