@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import SearchBar from '../components/CountrySelector/SearchBar';
+import SearchComponents from '../components/CountrySelector/SearchComponents';
+
 
 function Home() {
 	return (
@@ -15,7 +16,8 @@ function Home() {
 				<br></br>
 				<br></br>
 				<br></br>
-				<SearchBar></SearchBar>
+				<SearchComponents></SearchComponents>
+				
 		</div>
 		
 		
