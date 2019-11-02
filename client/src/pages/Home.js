@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Navbar from '../components/Navbar/Navbar';
-import SearchComponents from '../components/CountrySelector/SearchComponents';
+import SearchComponents from '../components/CountrySelector/CountrySelector';
 
 
 function Home() {
@@ -16,7 +16,7 @@ function Home() {
 				<br></br>
 				<br></br>
 				<br></br>
-				<SearchComponents></SearchComponents>	
+				<SearchComponents></SearchComponents>
 		</div>
 	);
 }
