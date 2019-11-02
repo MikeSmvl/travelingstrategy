@@ -5,6 +5,7 @@
   width: 1000px;
   height: 250px;
   margin: 0 auto;
+  background: white;
 }
 
 .country-selector-title {
@@ -15,6 +16,10 @@
 .country-selector-form Label{
 font-size: large;
 font-weight: bold;
+}
+.country-selector-form .form-control{
+
+  border: 2px solid #007bff93;
 }
 
 .country-selector-form  Button{
