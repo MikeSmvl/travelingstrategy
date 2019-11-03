@@ -2,8 +2,9 @@ import { configure, addParameters } from '@storybook/react';
 import { themes } from '@storybook/theming';
 import './story.styles.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import requireContext from 'require-context.macro';
 
-const req = require.context('../src', true, /\.stories\.js$/);
+const req = requireContext('../src', true, /\.stories\.js$/);
 
 addParameters({
   options: {
