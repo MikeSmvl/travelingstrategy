@@ -1,6 +1,6 @@
 import sqlite3
 
-con  = sqlite3.connect('../../australia.sqlite')
+con  = sqlite3.connect('../../countries.sqlite')
 cur = con.cursor()
 # should not create the table every time
 # change in the future
