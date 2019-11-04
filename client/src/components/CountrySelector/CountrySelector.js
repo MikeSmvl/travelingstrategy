@@ -9,7 +9,7 @@ return(
   <div className="country-selector-form">
     <Form>
       <Row className="justify-content-center">
-        <Col xs="12" sm="3" lg="4">
+        <Col className="originInput" xs="12" sm="3">
           <Form.Label>From</Form.Label>
           <Autocomplete className="form-control"
           placeholder="Origin"
@@ -18,7 +18,7 @@ return(
           console.log(place);}}
           />
         </Col>
-        <Col xs="12" sm="3" lg="4">
+        <Col className="destinationInput" xs="12" sm="3">
           <Form.Label>To</Form.Label>
           <Autocomplete className="form-control"
           placeholder="Destination"
@@ -28,7 +28,9 @@ return(
           />
         </Col>
         <Col xs="auto" sm="auto" style={{display: "flex", "alignItems": "flex-end"}}>
-          <Link to="/country"><Button className="TSButton" variant="outline-primary">Compare</Button></Link>
+          <Link to="/country">
+            <Button variant="outline-primary">Compare</Button>
+          </Link>
         </Col>
       </Row>
     </Form>

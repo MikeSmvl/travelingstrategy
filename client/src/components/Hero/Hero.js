@@ -5,7 +5,7 @@ import Typed from 'react-typed';
 
 const Hero = (props) => {
 return(
-  <div>
+  <div className="homeHero">
     <header>
       <video playsInline autoPlay loop muted className="wrapper__video">
         <source src={video} />
