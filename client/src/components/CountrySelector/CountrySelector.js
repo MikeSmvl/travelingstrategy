@@ -4,10 +4,9 @@ import { Button, Form, Row, Col } from 'react-bootstrap/';
 import { Link} from 'react-router-dom';
 import './CountrySelector.css';
 
-const SearchComponents = (props) => {
+const CountrySelector = (props) => {
 return(
   <div className="country-selector-form">
-    <h1 className="country-selector-title">Strategy Planner</h1>
     <Form>
       <Row className="justify-content-center">
         <Col xs="12" sm="3" lg="4">
@@ -29,7 +28,7 @@ return(
           />
         </Col>
         <Col xs="auto" sm="auto" style={{display: "flex", "alignItems": "flex-end"}}>
-        <Link to="/country"><Button variant="outline-primary">Compare</Button></Link>
+          <Link to="/country"><Button className="TSButton" variant="outline-primary">Compare</Button></Link>
         </Col>
       </Row>
     </Form>
@@ -37,4 +36,4 @@ return(
 )
 };
 
-export default SearchComponents;
+export default CountrySelector;

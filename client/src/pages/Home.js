@@ -1,22 +1,17 @@
 import * as React from 'react';
-import Navbar from '../components/Navbar/Navbar';
-import SearchComponents from '../components/CountrySelector/CountrySelector';
-
+import CountrySelector from '../components/CountrySelector/CountrySelector';
+import Hero from '../components/Hero/Hero'
 
 function Home() {
 	return (
 		<div>
-			<Navbar
-				title="Traveling Strategy"
-				textRight="Login"
-				hrefBrand="#home"
-				hrefRight="#login"/>
 				<br></br>
 				<br></br>
 				<br></br>
 				<br></br>
 				<br></br>
-				<SearchComponents></SearchComponents>
+				<Hero></Hero>
+				<CountrySelector></CountrySelector>
 		</div>
 	);
 }
