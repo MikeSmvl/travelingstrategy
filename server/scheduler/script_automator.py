@@ -1,13 +1,15 @@
+import sys
 import sqlite3
 import schedule
 import time
-from server import data
+sys.path.append('../data')
+from advisory_ca import save_to_canada
+from advisory_aus import save_to_australia
+from advisory_nz import save_to_newZealand
 
-
-# schedule to run the scripts in the data folder everyday
-schedule.every().day.do(data.advisory_ca)
-schedule.every().day.do(data.advisory_aus)
-schedule.every().day.do(data.advisory_nz)
+schedule.every().day.do(save_to_canada)
+schedule.every().day.do(save_to_australia)
+schedule.every().day.do(save_to_newZealand)
 
 while True:
     schedule.run_pending()
