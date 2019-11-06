@@ -1,12 +1,12 @@
 import * as React from 'react';
 import CountrySelector from '../components/CountrySelector/CountrySelector';
-import Hero from '../components/Hero/Hero'
+import Hero from '../components/Hero/Hero';
 
 function Home() {
 	return (
 		<div>
-				<Hero></Hero>
-				<CountrySelector></CountrySelector>
+			<Hero />
+			<CountrySelector origin="Origin" destination="Destination" />
 		</div>
 	);
 }

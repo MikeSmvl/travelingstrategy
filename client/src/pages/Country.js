@@ -19,7 +19,7 @@ function Country() {
 					return (
 						<ReactFullpage.Wrapper>
 							<div className="section App">
-                <Header title="Paris" subtitle="France" />
+								<Header title="Paris" subtitle="France" />
 								<div style={{ padding: '20px' }}>
 									<Card style={{ color: 'grey' }}>
 										<Card.Body>This is some text within a card body.</Card.Body>
