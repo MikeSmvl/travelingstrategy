@@ -20,3 +20,4 @@ contents = [
     "Automation has stopped working " + date_of_failure 
 ]
 yag.send(recipients, 'subject', contents)
+
