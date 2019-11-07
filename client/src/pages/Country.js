@@ -1,19 +1,12 @@
 import * as React from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Card } from 'react-bootstrap/';
-import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
 import '../App.css';
 
 function Country() {
 	return (
 		<div>
-			<Navbar
-				title="Traveling Strategy"
-				textRight="Login"
-				hrefBrand="#home"
-				hrefRight="#login"
-			/>
 			<ReactFullpage
 				licenseKey="CF1896AE-3B194629-99B627C1-841383E5"
 				scrollingSpeed={1000} /* Options here */
@@ -26,7 +19,7 @@ function Country() {
 					return (
 						<ReactFullpage.Wrapper>
 							<div className="section App">
-                <Header title="Paris" subtitle="France" />
+								<Header title="Paris" subtitle="France" />
 								<div style={{ padding: '20px' }}>
 									<Card style={{ color: 'grey' }}>
 										<Card.Body>This is some text within a card body.</Card.Body>
