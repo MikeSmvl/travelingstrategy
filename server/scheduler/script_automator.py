@@ -2,23 +2,24 @@ import sys
 import sqlite3
 import schedule
 import time
-
+from schedule_error_handling import SafeScheduler
 
 sys.path.append('../data')
 from advisory_ca import save_to_canada
 from advisory_aus import save_to_australia
 from advisory_nz import save_to_newZealand
 
-
 try:
-    schedule.every().day.do(save_to_canada)
-    schedule.every().day.do(save_to_australia)
-    schedule.every().day.do(save_to_newZealand)
+    scheduler = SafeScheduler()
+    scheduler.every().day.do(save_to_canada)
+    scheduler.every().day.do(save_to_australia)
+    scheduler.every().day.do(save_to_newZealand)
 
     while True:
-        schedule.run_pending()
+        scheduler.run_pending()
         time.sleep(1)
 
-except:
+except :
     import error_email
+
         
