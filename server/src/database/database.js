@@ -1,6 +1,6 @@
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
-const databasePath = "./canada.sqlite";
+const databasePath = "./countries.sqlite";
 
 class database {
   constructor() {
