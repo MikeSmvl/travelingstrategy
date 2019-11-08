@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Card } from 'react-bootstrap/';
+import {Card, CardBody} from '../components/Card/Card';
 import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
 import '../App.css';
@@ -28,9 +28,7 @@ function Country() {
 							<div className="section App">
                 <Header title="Paris" subtitle="France" />
 								<div style={{ padding: '20px' }}>
-									<Card style={{ color: 'grey' }}>
-										<Card.Body>This is some text within a card body.</Card.Body>
-									</Card>
+									<Card><CardBody>hoi</CardBody></Card>
 								</div>
 								<p>Basics</p>
 							</div>
