@@ -1,10 +1,24 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Card } from 'react-bootstrap/';
 import Header from '../components/Header/Header';
 import '../App.css';
 
 function Country() {
+  const [books, setBooks] = useState({});
+
+	useEffect(() => {
+		async function fetchData() {
+			const res = await fetch('http://localhost:4000/', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ query: '{ books { author title } }' }),
+			})
+				.then(res => res.json())
+				.then(res => setBooks(res.data))
+		}
+		fetchData();
+  });
 	return (
 		<div>
 			<ReactFullpage
@@ -26,6 +40,7 @@ function Country() {
 									</Card>
 								</div>
 								<p>Basics</p>
+								<p>{JSON.stringify(books)}</p>
 							</div>
 							<div className="section">
 								<p>Health & Safety</p>
