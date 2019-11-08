@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Navbar as RBNavbar, Nav } from 'react-bootstrap/';
+import { Navbar as RBNavbar } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
 

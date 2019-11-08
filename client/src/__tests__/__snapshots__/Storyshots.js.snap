@@ -1,0 +1,247 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Storyshots Header Base usage 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      className="App-header"
+    >
+      <div
+        className="title"
+      >
+        Paris
+      </div>
+      <div
+        className="subtitle"
+      >
+        France
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Header Set props 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      className="App-header"
+    >
+      <div
+        className="title"
+      >
+        Paris
+      </div>
+      <div
+        className="subtitle"
+      >
+        France
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Navbar Base usage 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <nav
+      className="Navbar navbar navbar-expand navbar-dark fixed-top"
+    >
+      <span
+        className="navbar-brand"
+        href=""
+      >
+        <img
+          alt=""
+          className="d-inline-block align-top"
+          height="45"
+          src="logo.png"
+          width="45"
+        />
+        <span
+          className="title navbar-text"
+        >
+          Traveling Strategy
+        </span>
+      </span>
+      <div
+        aria-expanded={null}
+        className="justify-content-end navbar-collapse collapse"
+      >
+        <span
+          className="navbar-text"
+        >
+          <a
+            href=""
+          >
+            Login
+          </a>
+        </span>
+      </div>
+    </nav>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Navbar Set props 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <nav
+      className="Navbar navbar navbar-expand navbar-dark fixed-top"
+    >
+      <span
+        className="navbar-brand"
+        href=""
+      >
+        <img
+          alt=""
+          className="d-inline-block align-top"
+          height="45"
+          src="logo.png"
+          width="45"
+        />
+        <span
+          className="title navbar-text"
+        >
+          Traveling Strategy
+        </span>
+      </span>
+      <div
+        aria-expanded={null}
+        className="justify-content-end navbar-collapse collapse"
+      >
+        <span
+          className="navbar-text"
+        >
+          <a
+            href=""
+          >
+            Login
+          </a>
+        </span>
+      </div>
+    </nav>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;

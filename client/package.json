@@ -22,7 +22,8 @@
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "require-context.macro": "^1.2.2"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^5.2.5",
@@ -41,8 +42,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^1.7.0",
-    "react-test-renderer": "^16.11.0",
-    "require-context.macro": "^1.2.2"
+    "react-test-renderer": "^16.11.0"
   },
   "eslintConfig": {
     "extends": "react-app"
