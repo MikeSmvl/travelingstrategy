@@ -5,13 +5,13 @@ import logo from './logo.png';
 import './Navbar.css';
 
 const Navbar = (props) => {
-  const {
-    hrefBrand = '',
-    title = '',
-    hrefRight = '',
-    textRight = '',
-    ...rest
-  } = props;
+	const {
+		hrefBrand = '',
+		title = '',
+		hrefRight = '',
+		textRight = '',
+		...rest
+	} = props;
 	return (
 		<>
 			<RBNavbar

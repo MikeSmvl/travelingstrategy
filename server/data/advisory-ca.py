@@ -61,7 +61,7 @@ def advisory_canada(all_countries):
             countries_data[name]=info
     return countries_data
 
-con  = sqlite3.connect('../../canada.sqlite')
+con  = sqlite3.connect('../../countries.sqlite')
 cur = con.cursor()
 #should not create the table every time
 #change in the future
