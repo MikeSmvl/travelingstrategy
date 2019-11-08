@@ -1,8 +1,6 @@
 const fs = require('fs');
 const sqlite3 = require('sqlite3').verbose();
-const path = require("path");
-const databasePath = "./store.sqlite";
-
+const databasePath = "./countries.sqlite";
 
 class database {
   constructor() {
@@ -15,6 +13,9 @@ class database {
                 console.log('Connected to database')
                 }
             })
+        }
+        else{
+          throw err;
         }
       } catch(err) {
             console.log("Database not found")

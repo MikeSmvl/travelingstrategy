@@ -3,6 +3,6 @@ const db = new database();
 
 test("Test db connection", () =>{
     console.log = jest.fn();
-    expect(db).not.toEqual({});
+    expect(db.db).not.toEqual({});
 });
 
