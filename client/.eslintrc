@@ -4,9 +4,10 @@
     "rules": {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
         "react/jsx-one-expression-per-line": "off",
-        "no-tabs": "off",
-        "react/jsx-indent": "off",
-        "indent": "off",
+        "indent": [2, "tab", { "SwitchCase": 1, "VariableDeclarator": 1 }],
+        "no-tabs": 0,
+        "react/prop-types": 0,
+        "react/jsx-indent": [2, "tab"],
         "react/jsx-indent-props": [2, "tab"],
         "comma-dangle": ["error", "never"],
         "arrow-body-style": "off",
@@ -14,6 +15,7 @@
         "no-unused-vars": "off",
         "react/require-default-props": "off",
         "import/no-unresolved": "off",
-        "object-curly-newline": "off"
+        "object-curly-newline": "off",
+        "no-undef": "off"
     }
 }

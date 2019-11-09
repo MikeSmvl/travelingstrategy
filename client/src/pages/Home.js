@@ -1,15 +1,12 @@
 import * as React from 'react';
-import Navbar from '../components/Navbar/Navbar';
+import CountrySelector from '../components/CountrySelector/CountrySelector';
+import Hero from '../components/Hero/Hero';
 
 function Home() {
 	return (
 		<div>
-			<Navbar
-				title="Traveling Strategy"
-				textRight="Login"
-				hrefBrand="#home"
-				hrefRight="#login"
-			/>
+			<Hero />
+			<CountrySelector origin="Origin" destination="Destination" />
 		</div>
 	);
 }

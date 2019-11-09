@@ -1,17 +1,17 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Navbar as RBNavbar, Nav } from 'react-bootstrap/';
+import { Navbar as RBNavbar } from 'react-bootstrap/';
 import logo from './logo.png';
 import './Navbar.css';
 
 const Navbar = (props) => {
-  const {
-    hrefBrand = '',
-    title = '',
-    hrefRight = '',
-    textRight = '',
-    ...rest
-  } = props;
+	const {
+		hrefBrand = '',
+		title = '',
+		hrefRight = '',
+		textRight = '',
+		...rest
+	} = props;
 	return (
 		<>
 			<RBNavbar
