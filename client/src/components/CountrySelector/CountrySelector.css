@@ -56,3 +56,8 @@ Form {
     padding-top: 20px;
   }
 }
+
+.validate {
+  color:#dc3545;
+  font-weight: 600;
+}

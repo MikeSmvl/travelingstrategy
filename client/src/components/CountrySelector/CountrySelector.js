@@ -6,13 +6,17 @@ import './CountrySelector.css';
 
 const CountrySelector = props => {
   const [origin, setOrigin] = useState('');
-  const [destination, setDestination] = useState('');
+	const [destination, setDestination] = useState('');
+	const [validOrig, setValidOrig] = useState(true);
+	const [validDest, setValidDest] = useState(true);
 
   const handleSubmit = event => {
     if (!origin || !destination) {
       event.preventDefault();
-      event.stopPropagation();
-    }
+			event.stopPropagation();
+			if (!origin) setValidOrig(false);
+			if (!destination) setValidDest(false);
+		}
   };
 
   const { originLabel = '', destinationLabel = '' } = props;
@@ -20,9 +24,9 @@ const CountrySelector = props => {
   return (
     <div className="country-selector-form">
       <Form onSubmit={handleSubmit}>
-        <Row className="justify-content-center">
+        <Row className="justify-content-center" style={{height: '100px'}}>
           <Col className="originInput" xs="12" sm="3">
-            <Form.Label>From</Form.Label>
+            <Form.Label style={{marginBottom: '4px'}}>From</Form.Label>
             <Autocomplete
               className="form-control"
               type="text"
@@ -33,9 +37,11 @@ const CountrySelector = props => {
                 setOrigin(place.formatted_address);
               }}
             />
+						{!validOrig &&
+						<span className="validate">Please select an origin from the dropdown.</span>}
           </Col>
           <Col className="destinationInput" xs="12" sm="3">
-            <Form.Label>To</Form.Label>
+            <Form.Label style={{marginBottom: '4px'}}>To</Form.Label>
             <Autocomplete
               className="form-control"
               type="text"
@@ -46,11 +52,13 @@ const CountrySelector = props => {
                 setDestination(place.formatted_address);
               }}
             />
+						{!validDest &&
+						<span className="validate">Please select a destination from the dropdown.</span>}
           </Col>
           <Col
             xs="auto"
             sm="auto"
-            style={{ display: 'flex', alignItems: 'flex-end' }}
+            style={{ display: 'flex', alignItems: 'center' }}
           >
             {origin && destination ? (
               <Link
