@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './CountrySelector.css';
 
 const CountrySelector = (props) => {
-  const {
+	const {
 		origin = '',
 		destination = ''
 	} = props;

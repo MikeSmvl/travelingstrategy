@@ -31,6 +31,13 @@ Array [
         >
           Subtitle
         </div>
+        <hr
+          style={
+            Object {
+              "color": "grey",
+            }
+          }
+        />
         <p
           className="card-text"
         >

@@ -1,25 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import ReactFullpage from '@fullpage/react-fullpage';
-import {Card, CardBody} from '../components/Card/Card';
+import { Card, CardBody, Divider } from '../components/Card/Card';
 import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
+import { Menu, MenuItem } from '../components/Menu/Menu';
 import '../App.css';
 
 function Country() {
-  const [books, setBooks] = useState({});
+	const [books, setBooks] = useState({});
 
 	useEffect(() => {
 		async function fetchData() {
 			const res = await fetch('http://localhost:4000/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ query: '{ books { author title } }' }),
+				body: JSON.stringify({ query: '{ books { author title } }' })
 			})
-				.then(res => res.json())
-				.then(res => setBooks(res.data))
+				.then((res) => res.json())
+				.then((res) => setBooks(res.data));
 		}
 		fetchData();
-  });
+	});
 	return (
 		<div>
 			<ReactFullpage
@@ -35,11 +36,10 @@ function Country() {
 						<ReactFullpage.Wrapper>
 							<div className="section App">
 								<Header title="Paris" subtitle="France" />
-								<div style={{ padding: '20px' }}>
-									<Card><CardBody>hoi</CardBody></Card>
-								</div>
 								<p>Basics</p>
-								<p>{JSON.stringify(books)}</p>
+								<div style={{ padding: '20px' }}>
+									<Card><CardBody>{JSON.stringify(books)}</CardBody><Divider /></Card>
+								</div>
 							</div>
 							<div className="section">
 								<p>Health & Safety</p>

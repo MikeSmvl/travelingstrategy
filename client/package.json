@@ -27,9 +27,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-typed": "^1.2.0",
-    "require-context.macro": "^1.2.2"
-  },
-  "devDependencies": {
+    "require-context.macro": "^1.2.2",
     "@storybook/addon-a11y": "^5.2.5",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-backgrounds": "^5.2.5",
@@ -39,7 +37,9 @@
     "@storybook/addon-storyshots": "^5.2.5",
     "@storybook/addons": "^5.2.5",
     "@storybook/react": "^5.2.5",
-    "@storybook/theming": "^5.2.5",
+    "@storybook/theming": "^5.2.5"
+  },
+  "devDependencies": {
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
