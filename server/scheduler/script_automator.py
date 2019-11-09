@@ -9,7 +9,11 @@ from advisory_ca import save_to_canada
 from advisory_aus import save_to_australia
 from advisory_nz import save_to_newZealand
 
-try:
+def bad_task_1():
+    print("bad task")
+    print(1/0)
+
+def main():
     scheduler = SafeScheduler()
     scheduler.every().day.do(save_to_canada)
     scheduler.every().day.do(save_to_australia)
@@ -18,8 +22,6 @@ try:
     while True:
         scheduler.run_pending()
         time.sleep(1)
-
-except :
-    import error_email
-
         
+if __name__ == "__main__":
+    main()

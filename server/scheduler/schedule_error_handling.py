@@ -2,7 +2,6 @@ import logging
 from traceback import format_exc
 import traceback
 import datetime
-import error_email
 import yagmail
 from schedule import Scheduler
 
@@ -12,14 +11,14 @@ logger = logging.getLogger('schedule')
 yag = yagmail.SMTP('travelingstrategy@gmail.com')
 
 recipients = {
-  'chanc09@gmail.com': 'charles',
-  'svenacious@gmail.com': 'steffan',
-  'oumarba221296@hotmail.fr': 'oumar',
-  'mikael.samvelian@gmail.com': 'mikael',
-  'karimian.hassan@gmail.com': 'hassan',
-  'tdelaportas@hotmail.com': 'tyler',
-  'ghanemline@gmail.com': 'line',
-  'armine.iradian@gmail.com': 'armine'
+    'chanc09@gmail.com': 'charles',
+    'svenacious@gmail.com': 'steffan',
+    'oumarba221296@hotmail.fr': 'oumar',
+    'mikael.samvelian@gmail.com': 'mikael',
+    'karimian.hassan@gmail.com': 'hassan',
+    'tdelaportas@hotmail.com': 'tyler',
+    'ghanemline@gmail.com': 'line',
+    'armine.iradian@gmail.com': 'armine'
 }
 
 date_of_failure = str(datetime.datetime.now())
