@@ -20,7 +20,10 @@ describe('Header component', () => {
 		  subtitle: "Paris"
 		}
 		const wrapper = shallow(<Header {...props} />)
-		expect(toJson(wrapper)).toMatchSnapshot()
+		const title = wrapper.find('.title').text();
+		const subtitle = wrapper.find('.subtitle').text();
+		expect(title).toEqual("France");
+		expect(subtitle).toEqual("Paris");
 	  })
 });
 
