@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import {Card, CardBody} from '../components/Card/Card';
-import Navbar from '../components/Navbar/Navbar';
 import Header from '../components/Header/Header';
 import '../App.css';
 
-function Country() {
-  const [books, setBooks] = useState({});
+function Country({origin, destination}) {
+	const [books, setBooks] = useState({});
 
 	useEffect(() => {
 		async function fetchData() {
-			const res = await fetch('http://localhost:4000/', {
+			await fetch('http://localhost:4000/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({ query: '{ books { author title } }' }),
@@ -19,7 +19,12 @@ function Country() {
 				.then(res => setBooks(res.data))
 		}
 		fetchData();
-  });
+	});
+
+	if (!origin || !destination) {
+		return <Redirect to="/" />
+	}
+
 	return (
 		<div>
 			<ReactFullpage
@@ -40,6 +45,8 @@ function Country() {
 								</div>
 								<p>Basics</p>
 								<p>{JSON.stringify(books)}</p>
+								<p>Origin is {origin}</p>
+								<p>Destination is {destination}</p>
 							</div>
 							<div className="section">
 								<p>Health & Safety</p>
