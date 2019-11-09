@@ -11,9 +11,9 @@ from advisory_nz import save_to_newZealand
 
 def main():
     scheduler = SafeScheduler()
-    scheduler.every().seconds.do(save_to_canada)
-    scheduler.every().seconds.do(save_to_australia)
-    scheduler.every().seconds.do(save_to_newZealand)
+    scheduler.every().day.do(save_to_canada)
+    scheduler.every().day.do(save_to_australia)
+    scheduler.every().day.do(save_to_newZealand)
 
     while True:
         scheduler.run_pending()

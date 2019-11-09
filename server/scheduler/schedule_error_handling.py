@@ -12,7 +12,7 @@ yag = yagmail.SMTP('travelingstrategy@gmail.com')
 
 recipients = {
     'chanc09@gmail.com': 'charles',
-    'svenacious@gmail.com': 'steffan'
+    'svenacious@gmail.com': 'steffan',
     'oumarba221296@hotmail.fr': 'oumar',
     'mikael.samvelian@gmail.com': 'mikael',
     'karimian.hassan@gmail.com': 'hassan',
