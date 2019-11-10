@@ -32,6 +32,7 @@ const CountrySelector = (props) => {
 							type="text"
 							required
 							placeholder={originLabel}
+							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
 								setOrigin(place.formatted_address);
@@ -47,6 +48,7 @@ const CountrySelector = (props) => {
 							type="text"
 							required
 							placeholder={destinationLabel}
+							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
 								setDestination(place.formatted_address);
