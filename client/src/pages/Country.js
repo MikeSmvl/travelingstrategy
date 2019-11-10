@@ -7,6 +7,7 @@ import {CountryCard, CountryBody} from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import {Row, Col} from 'react-bootstrap/';
 import getCountryCode from '../utils/countryToISO';
+import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import '../App.css';
 
 function Country({origin, destination}) {
@@ -70,7 +71,7 @@ function Country({origin, destination}) {
 									</Col>
 									<Col xs='10' sm='4'>
 									<Card header='Advisory'>
-											<CardBody>{(JSON.stringify(advisoryInfo)).replace (/(^")|("$)/g, '')}</CardBody>
+											<CardBody><ErrorOutlineOutlinedIcon style={{color: '#dc3545'}} />{(JSON.stringify(advisoryInfo)).replace (/(^")|("$)/g, '')}</CardBody>
 										</Card>
 									</Col>
 								</Row>

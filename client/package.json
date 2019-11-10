@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.16",
+    "@material-ui/icons": "^4.5.1",
     "@storybook/addon-a11y": "^5.2.5",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-backgrounds": "^5.2.5",
