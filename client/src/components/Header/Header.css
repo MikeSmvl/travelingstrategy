@@ -5,11 +5,11 @@
   background-size: cover;
   width: 100%;
   background-position: center center;
-  height: 420px;
+  height: 45%;
 }
 .App-header .title {
   text-align: center;
-  padding-top: 182px;
+  padding-top: 10%;
   color: white;
 	font-size: 40px;
   font-weight: 750;

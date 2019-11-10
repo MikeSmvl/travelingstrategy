@@ -11,6 +11,8 @@ import '../App.css';
 
 function Country({origin, destination}) {
 	const [data, setData] = useState({});
+	const [advisoryInfo, setAdvisory] = useState({});
+	const [visaInfo, setVisa] = useState({});
 
 	useEffect(() => {
 		async function fetchData() {
@@ -22,10 +24,14 @@ function Country({origin, destination}) {
 				})
 			})
 				.then(res => res.json())
-				.then(res => setData(res.data));
+				.then(res => {
+					setData(res.data);
+					setAdvisory(res.data.canadaAll[0].advisory_text);
+					setVisa(res.data.canadaAll[0].visa_info);
+				});
 		}
 		fetchData();
-	});
+	}, []);
 
 	if (!origin || !destination) {
 		return <Redirect to='/' />;
@@ -58,13 +64,13 @@ function Country({origin, destination}) {
 											title="Country Flag"></CountryCard>
 									</Col>
 									<Col xs='10' sm='4'>
-										<Card header='Visa Info'>
-											<CardBody>{JSON.stringify(data)}</CardBody>
+										<Card header='Visa Info' style={{textAlign: 'left'}}>
+											<CardBody>{(JSON.stringify(visaInfo)).replace (/(^")|("$)/g, '')}</CardBody>
 										</Card>
 									</Col>
 									<Col xs='10' sm='4'>
 									<Card header='Advisory'>
-											<CardBody></CardBody>
+											<CardBody>{(JSON.stringify(advisoryInfo)).replace (/(^")|("$)/g, '')}</CardBody>
 										</Card>
 									</Col>
 								</Row>
