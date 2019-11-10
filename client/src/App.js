@@ -12,37 +12,37 @@ import Navbar from './components/Navbar/Navbar';
 // A custom hook that builds on useLocation to parse
 // the query string for you.
 function useQuery() {
-  return new URLSearchParams(useLocation().search);
+	return new URLSearchParams(useLocation().search);
 }
 
 function Application() {
-	let query = useQuery();
-	console.log(query)
+	const query = useQuery();
+	console.log(query);
 
 	return (
-			<div>
-				<Navbar
-					title="Traveling Strategy"
-					textRight="Login"
-					hrefBrand="/"
-					hrefRight="#login"
-				/>
-				<Switch>
-					<Route exact path="/">
-						<Route exact path="/" component={Home} />
-					</Route>
-					<Route path="/country">
-						<Country origin={query.get("origin")} destination={query.get("destination")} />
-					</Route>
-				</Switch>
-			</div>
+		<div>
+			<Navbar
+				title="Traveling Strategy"
+				textRight="Login"
+				hrefBrand="/"
+				hrefRight="#login"
+			/>
+			<Switch>
+				<Route exact path="/">
+					<Route exact path="/" component={Home} />
+				</Route>
+				<Route path="/country">
+					<Country origin={query.get('origin')} destination={query.get('destination')} />
+				</Route>
+			</Switch>
+		</div>
 	);
 }
 
 export default function App() {
-  return (
-    <Router>
-      <Application />
-    </Router>
-  );
+	return (
+		<Router>
+			<Application />
+		</Router>
+	);
 }
