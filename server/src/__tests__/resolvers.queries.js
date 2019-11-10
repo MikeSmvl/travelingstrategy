@@ -12,10 +12,10 @@ const schemaCode = new graphql.GraphQLSchema({
 
 const tester = new EasyGraphQLTester(schemaCode)
 
-test("Test Query", () =>{
+test("Querying Canada to France", () =>{
   const query = `
   {
-    canadaAll{
+    canadaAll(name: "France"){
       country_iso,
       name,
       advisory_text,
