@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 import sqlite3
 
 #Html parser
-class MyHTMLParser(HTMLParser): #Initializing lists
+class (HTMLParser): #Initializing lists
     headers = {}
     headerName = ''
     inHeader = False
@@ -18,7 +18,7 @@ class MyHTMLParser(HTMLParser): #Initializing lists
         if(endTag == 'h3') | (endTag == 'h4'):
             self.inHeader = False
 
-    def handle_data(self,data):
+    def handle_data(self, data):
         if (self.inHeader == True):
             self.headerName = data
             self.headers[data]=''
