@@ -1,12 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
 
-.TSCard {
+.subtitle {
   font-family: 'Open Sans', sans-serif;
-}
-
-.cardHeader {
-  background-color: white;
+  font-size: 15px;
+  padding-top: 13px;
+  padding-bottom: 2px;
   color: rgb(134, 134, 146);
-  font-size: large;
-  align-items: center;
+  font-weight: 600;
 }

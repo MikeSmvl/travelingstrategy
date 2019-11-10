@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
 .App-header {
   background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3) ), url('paris.gif') no-repeat;
   background-size: cover;
@@ -9,8 +11,9 @@
   text-align: center;
   padding-top: 182px;
   color: white;
-	font-size: 33px;
-	font-weight: 750;
+	font-size: 40px;
+  font-weight: 750;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 .App-header .subtitle {
   text-align: center;

@@ -11,10 +11,10 @@ Array [
     }
   >
     <div
-      className="card"
+      className="TSCard card"
     >
       <div
-        className="card-header"
+        className="cardHeader card-header"
       >
         Header
       </div>
@@ -34,7 +34,7 @@ Array [
         <hr
           style={
             Object {
-              "color": "grey",
+              "color": "rgb(134, 134, 146)",
             }
           }
         />
@@ -88,7 +88,7 @@ Array [
     }
   >
     <div
-      className="card"
+      className="TSCard card"
     >
       
       <div

@@ -6,8 +6,8 @@ import './Card.css';
 const Card = (props) => {
 	const { header = '', footer = '', title = '', subtitle = '', children, ...rest } = props;
 	return (
-		<RBCard {...rest}>
-			{header && <RBCard.Header>{header}</RBCard.Header>}
+		<RBCard {...rest} className="TSCard">
+			{header && <RBCard.Header className="cardHeader">{header}</RBCard.Header>}
 			<RBCard.Body>
 				{title && <RBCard.Title>{title}</RBCard.Title>}
 				{subtitle && (
@@ -28,7 +28,7 @@ const CardBody = (props) => {
 };
 
 const Divider = () => {
-	return <hr style={{ color: 'grey' }} />;
+	return <hr style={{ color: 'rgb(134, 134, 146)' }} />;
 };
 
 Card.propTypes = {
