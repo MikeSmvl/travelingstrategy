@@ -5,8 +5,16 @@ import datetime
 import yagmail
 from schedule import Scheduler
 
+logger =  logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 
-logger = logging.getLogger('schedule')
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
+
+file_handler = logging.FileHandler('scheduler.log')
+file_handler.setFormatter(formatter)
+
+logger.addHandler(file_handler)
+
 
 yag = yagmail.SMTP('travelingstrategy@gmail.com')
 
@@ -27,12 +35,14 @@ class SafeScheduler(Scheduler):
 
     # To catch jobs that might or might not crash. This will skip the bads job 
     # and execute the subsequent jobs. 
+    
+    keep_running = True
 
     def __init__(self, reschedule_on_failure=True):
 
         # If reschedule_on_failure is True, jobs will be rescheduled for their
         # next run 
-
+        logger.info("Process is running smoothly...")
         self.reschedule_on_failure = reschedule_on_failure
         super().__init__()
 
@@ -47,3 +57,4 @@ class SafeScheduler(Scheduler):
             ]
             job.last_run = datetime.datetime.now()
             yag.send(recipients, 'subject', contents)
+            logger.error("Automation has skipped a job for the following reason: \n %s", error_message)
