@@ -1,4 +1,0 @@
-type Book {
-    author: String,
-    title: String,
-}

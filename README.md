@@ -54,10 +54,10 @@ A list of related resources that we find helpful are listed in the acknowledgeme
 
 ### Built With
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-* [React](https://getbootstrap.com)
-* [Apollo](https://jquery.com)
-* [GraphQL](https://laravel.com)
-* [SQLite](https://laravel.com)
+* [React](https://reactjs.org)
+* [Apollo](https://www.apollographql.com)
+* [GraphQL](https://graphql.org)
+* [SQLite](https://www.sqlite.org)
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -95,7 +95,6 @@ docker-compose up
 Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
 
 _For more examples, please refer to the [Documentation](https://github.com/MikeSmvl/travelingstrategy/wiki)_
-
 
 <!-- ROADMAP -->
 ## Roadmap

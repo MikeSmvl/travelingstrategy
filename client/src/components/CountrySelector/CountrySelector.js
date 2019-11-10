@@ -38,7 +38,7 @@ const CountrySelector = props => {
               }}
             />
 						{!validOrig &&
-						<span className="validate">Please select an origin from the dropdown.</span>}
+						<span className="validate">Please select a location from the dropdown.</span>}
           </Col>
           <Col className="destinationInput" xs="12" sm="3">
             <Form.Label style={{marginBottom: '4px'}}>To</Form.Label>
@@ -53,7 +53,7 @@ const CountrySelector = props => {
               }}
             />
 						{!validDest &&
-						<span className="validate">Please select a destination from the dropdown.</span>}
+						<span className="validate">Please select a location from the dropdown.</span>}
           </Col>
           <Col
             xs="auto"
