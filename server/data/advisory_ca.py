@@ -4,7 +4,7 @@ from html.parser import HTMLParser
 import sqlite3
 
 #Html parser
-class (HTMLParser): #Initializing lists
+class MyHTMLParser (HTMLParser): #Initializing lists
     headers = {}
     headerName = ''
     inHeader = False
