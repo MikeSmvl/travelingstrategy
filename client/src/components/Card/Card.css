@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.TSCard {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.cardHeader {
+	background-color: white;
+	color: rgb(134, 134, 146);
+	font-size: large;
+	align-items: center;
+}
+
+.cardDivider {
+	color: rgb(134, 134, 146);
+}

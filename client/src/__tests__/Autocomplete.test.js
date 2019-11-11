@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CountrySelector from '.././components/CountrySelector/CountrySelector.js'
 import { BrowserRouter as Router } from 'react-router-dom';
-import '.././stubs/google';
+import CountrySelector from '../components/CountrySelector/CountrySelector';
+import '../stubs/google';
 
 
 it('renders without crashing', () => {
@@ -10,5 +10,3 @@ it('renders without crashing', () => {
 	ReactDOM.render(<Router><CountrySelector /></Router>, div);
 	ReactDOM.unmountComponentAtNode(div);
 });
-
-

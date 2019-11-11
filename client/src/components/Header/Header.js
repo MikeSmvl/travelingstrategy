@@ -9,7 +9,7 @@ const Header = (props) => {
 		...rest
 	} = props;
 	return (
-		<div className="App-header" {...rest}>
+		<div className="AppHeader" {...rest}>
 			<div className="title">
 				{title}
 			</div>

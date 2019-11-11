@@ -7,8 +7,8 @@ const db = new database().db;
 var addCanadaToCountry = {
     type: Canada,
     args: {
-        input: { 
-            type: inputCanada 
+        input: {
+            type: inputCanada
         }
     },
     resolve: function (source, args) {
@@ -29,8 +29,8 @@ var addCanadaToCountry = {
 var deleteCanadaToCountry = {
     type: Canada,
     args: {
-        input: { 
-            type: inputCanada 
+        input: {
+            type: inputCanada
         }
     },
     resolve: function (source, args) {

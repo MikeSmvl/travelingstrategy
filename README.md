@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/MikeSmvl/travelingstrategy">
-    <img src="https://i.imgur.com/6Dght1x.png" alt="Logo" width="60" height="80">
+    <img src="https://i.imgur.com/Z5A90af.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">TravelingStrategy</h3>
@@ -41,8 +41,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-  <img style="margin-left: auto;margin-right: auto;display: block;" src="https://raw.githubusercontent.com/othneildrew/Best-README-Template/master/images/screenshot.png" alt="Logo">
-
+  <img style="margin-left: auto;margin-right: auto;display: block;" src="https://i.imgur.com/SAW6bpF.png" alt="Logo">
+  <br>
 There are many great travel information websites available, however, we didn't find any that had all the information you would need when traveling from point A to point B. We want to create an informative site so amazing that it would be the last one you would ever need.
 
 Here's why:
@@ -55,7 +55,7 @@ A list of related resources that we find helpful are listed in the acknowledgeme
 ### Built With
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [React](https://reactjs.org)
-* [Apollo](https://www.apollographql.com)
+* [Express](https://expressjs.com/)
 * [GraphQL](https://graphql.org)
 * [SQLite](https://www.sqlite.org)
 

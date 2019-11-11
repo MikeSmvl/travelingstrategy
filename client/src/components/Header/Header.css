@@ -1,21 +1,25 @@
-.App-header {
-  background: linear-gradient( rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3) ), url('paris.gif') no-repeat;
-  background-size: cover;
-  width: 100%;
-  background-position: center center;
-  height: 420px;
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
+.AppHeader {
+	background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)),
+		url('paris.gif') no-repeat;
+	background-size: cover;
+	width: 100%;
+	background-position: center center;
+	height: 45%;
 }
-.App-header .title {
-  text-align: center;
-  padding-top: 182px;
-  color: white;
-	font-size: 33px;
+.AppHeader .title {
+	text-align: center;
+	padding-top: 10%;
+	color: white;
+	font-size: 40px;
 	font-weight: 750;
+	font-family: 'Source Sans Pro', sans-serif;
 }
-.App-header .subtitle {
-  text-align: center;
-  color: white;
+.AppHeader .subtitle {
+	text-align: center;
+	color: white;
 	font-size: 23px;
 	font-weight: 600;
-  display: block;
+	display: block;
 }

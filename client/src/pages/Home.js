@@ -6,7 +6,7 @@ function Home() {
 	return (
 		<div>
 			<Hero />
-			<CountrySelector origin="Origin" destination="Destination" />
+			<CountrySelector originLabel="Origin" destinationLabel="Destination" />
 		</div>
 	);
 }
