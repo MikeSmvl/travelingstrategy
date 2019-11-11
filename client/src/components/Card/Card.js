@@ -4,7 +4,14 @@ import { Card as RBCard } from 'react-bootstrap';
 import './Card.css';
 
 const Card = (props) => {
-	const { header = '', footer = '', title = '', subtitle = '', children, ...rest } = props;
+	const {
+		header = '',
+		footer = '',
+		title = '',
+		subtitle = '',
+		children,
+		...rest
+	} = props;
 	return (
 		<RBCard {...rest} className="TSCard">
 			{header && <RBCard.Header className="cardHeader">{header}</RBCard.Header>}
@@ -28,7 +35,7 @@ const CardBody = (props) => {
 };
 
 const Divider = () => {
-	return <hr style={{ color: 'rgb(134, 134, 146)' }} />;
+	return <hr className="cardDivider" />;
 };
 
 Card.propTypes = {

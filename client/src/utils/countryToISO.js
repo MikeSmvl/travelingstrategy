@@ -49,7 +49,6 @@ var countriesList = {
 'Colombia' : 'CO',
 'Comoros' : 'KM',
 'Congo' : 'CG',
-'Congo' : 'CD',
 'Cook Islands' : 'CK',
 'Costa Rica' : 'CR',
 'Cote D\'Ivoire' : 'CI',

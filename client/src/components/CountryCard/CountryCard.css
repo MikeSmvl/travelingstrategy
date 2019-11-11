@@ -1,12 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
 .cardHeader {
-  background-color: white;
-  display: flex;
+	background-color: white;
+	display: flex;
 }
 
 .cardTitle {
-  margin-left: 15px;
-  font-family: 'Source Sans Pro', sans-serif;
-  font-size: 20px;
+	margin-left: 15px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-size: 20px;
 }

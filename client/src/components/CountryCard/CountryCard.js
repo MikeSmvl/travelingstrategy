@@ -4,23 +4,23 @@ import { Card } from 'react-bootstrap';
 import './CountryCard.css';
 
 const CountryCard = (props) => {
-  const {
-    flagSrc = '',
-    title = '',
-    children,
-    ...rest
-  } = props;
-  return (
-    <Card {...rest}>
-      <Card.Header className="cardHeader">
-        <img src={flagSrc}/>
-        <div className="cardTitle">{title}</div>
-      </Card.Header>
-      <Card.Body>
+	const {
+		flagSrc = '',
+		title = '',
+		children,
+		...rest
+	} = props;
+	return (
+		<Card {...rest}>
+			<Card.Header className="cardHeader">
+				<img alt="" src={flagSrc} />
+				<div className="cardTitle">{title}</div>
+			</Card.Header>
+			<Card.Body>
 				{children}
 			</Card.Body>
-    </Card>
-  );
+		</Card>
+	);
 };
 
 const CountryBody = (props) => {
