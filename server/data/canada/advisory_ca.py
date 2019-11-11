@@ -2,37 +2,57 @@ import urllib.request, json
 import contextlib
 from html.parser import HTMLParser
 import sqlite3
+from bs4 import BeautifulSoup
+import regex
 
-#Html parser
-class MyHTMLParser(HTMLParser): #Initializing lists
-    headers = {}
-    headerName = ''
-    inHeader = False
+#in the file provided h3 is a sign that a new data type starts
+#if the header list is empty then the data is still part of the
+#previous h3
+def p_with_h3(text):
+    header = text.find_all(regex.compile('h3'))
+    if (len(header)>0):
+        return True
+    return False
 
-    #HTML Parser Methods
-    def handle_starttag(self, startTag, attrs):
-        if(startTag == 'h3') | (startTag == 'h4'):
-            self.inHeader = True
+#Uses beaustifull soup to get the information of a particulat subject
+#for example data_type = "Visas"
+#The data type is contained in a h3 header
+def MyBeautifulSoup(entry_exit_html, data_type):
+    data_text = ''
+    soup = BeautifulSoup(entry_exit_html,'lxml')
 
-    def handle_endtag(self, endTag):
-        if(endTag == 'h3') | (endTag == 'h4'):
-            self.inHeader = False
+    header = soup.find_all(regex.compile(r'(h[1-5]|p)'))
+    data_found = False
 
-    def handle_data(self,data):
-        if (self.inHeader == True):
-            self.headerName = data
-            self.headers[data]=''
-            self.inHeader = False
+    for ele in header:
 
-        elif (self.inHeader == False) & (self.headerName != ''):
-            if self.headers[self.headerName] == '':
-                self.headers[self.headerName] = data
-            else:
-                self.headers[self.headerName] = self.headers[self.headerName]+" "+data
+        if (ele.text.strip() == data_type):
+            #if we are in the appropriate header
+            #else we continue until we find it
+            data_found = True
 
-def find_visa(parser):
-    return parser.headers['Visas']
+        elif(ele.name == 'h3'):
+            #if we reach a new h3 header we set the bool to false
+            #we got all the data that was under the previous h3
+            data_found = False
 
+        elif (p_with_h3(ele)):
+            #sometimes h3 is inside another p element
+            data_found = False
+
+        elif (data_found):
+            br = ele.find_all('br')
+            for e in br:
+                #if replacing </br> by <br> does not work with sqlite
+                #we can do " " and take care of it in the front end
+                e.replace_with("<br>")
+            data_text += "<br>"+ele.text.strip()
+
+    return data_text
+
+
+#get the name and abreviation of all countries
+#the canadian gocv has data on
 def get_all_countries():
     all_countries = {}
     with urllib.request.urlopen("https://data.international.gc.ca/travel-voyage/index-alpha-eng.json") as url:
@@ -41,6 +61,8 @@ def get_all_countries():
         all_countries = all_countries.keys()
     return all_countries
 
+#opens the url to the files of all countries
+#get the requiered data and stores it in a dictionary
 def advisory_canada(all_countries):
     countries_data = {}
     for key in all_countries:
@@ -54,37 +76,42 @@ def advisory_canada(all_countries):
             name = country_eng['name']
             advisory_text = country_eng['advisory-text']
             entry_exit_html = country_eng.get('entry-exit')
-            parser = MyHTMLParser()
-            parser.feed(entry_exit_html)
-            visa_info = find_visa(parser)
+            visa_info = MyBeautifulSoup(entry_exit_html,"Visas")
+            print(visa_info)
             info = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
             countries_data[name]=info
     return countries_data
 
-con  = sqlite3.connect('../../countries.sqlite')
-cur = con.cursor()
-#should not create the table every time
-#change in the future
-cur.execute('DROP TABLE IF EXISTS canada')
-con.commit()
-cur.execute('CREATE TABLE canada (country_iso VARCHAR, name VARCHAR, advisory_text VARCHAR, visa_info VARCHAR)')
-con.commit()
+#save the data from the returned dicionnary in a json file
+#and in the sqlite db
+def save_data_db():
 
-all_countries = get_all_countries()
-countries_data = advisory_canada(all_countries)
+    con  = sqlite3.connect('../../countries.sqlite')
+    cur = con.cursor()
 
-for country in countries_data:
-    iso = countries_data[country].get('country-iso')
-    n = countries_data[country].get('name')
-    text = countries_data[country].get('advisory-text')
-    info = countries_data[country].get('visa-info')
-    cur.execute('INSERT INTO canada (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
-con.commit()
-# with open('advisory-ca.json', 'w') as fp:
-#     json.dump(countries_data, fp)
+    #should not create the table every time
+    #change in the future
+    cur.execute('DROP TABLE IF EXISTS canada')
+    con.commit()
+    cur.execute('CREATE TABLE canada (country_iso VARCHAR, name VARCHAR, advisory_text VARCHAR(10000), visa_info VARCHAR)')
+    con.commit()
 
-con.close()
-# with open('advisory-ca.json') as fp:
-#     d  = json.loads(fp.read())
-# print(d['Zimbabwe'].get('visa-info'))
-#for mac : Install Certificates.command run
+    #getting the data from all countries
+    all_countries = get_all_countries()
+    countries_data = advisory_canada(all_countries)
+
+    #saving the data in db
+    for country in countries_data:
+        iso = countries_data[country].get('country-iso')
+        n = countries_data[country].get('name')
+        text = countries_data[country].get('advisory-text')
+        info = countries_data[country].get('visa-info')
+        cur.execute('INSERT INTO canada (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
+    con.commit()
+    con.close()
+
+    #saving the data in json file
+    with open('advisory-ca.json', 'w') as fp:
+        json.dump(countries_data, fp)
+
+
