@@ -2,9 +2,11 @@ import urllib.request, json
 import contextlib
 from html.parser import HTMLParser
 import sqlite3
+import logging
+
 
 #Html parser
-class MyHTMLParser(HTMLParser): #Initializing lists
+class MyHTMLParser (HTMLParser): #Initializing lists
     headers = {}
     headerName = ''
     inHeader = False
@@ -18,7 +20,7 @@ class MyHTMLParser(HTMLParser): #Initializing lists
         if(endTag == 'h3') | (endTag == 'h4'):
             self.inHeader = False
 
-    def handle_data(self,data):
+    def handle_data(self, data):
         if (self.inHeader == True):
             self.headerName = data
             self.headers[data]=''
@@ -41,11 +43,11 @@ def get_all_countries():
         all_countries = all_countries.keys()
     return all_countries
 
-def advisory_canada(all_countries):
+def advisory_canada(all_countries,logger):
     countries_data = {}
     for key in all_countries:
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
-
+        logger.info("Updating{}".format(key))
         with contextlib.closing(urllib.request.urlopen(country_url)) as url:
             country_data = json.loads(url.read().decode())
             country_data = country_data['data']
@@ -62,6 +64,17 @@ def advisory_canada(all_countries):
     return countries_data
 
 def save_to_canada():
+
+    #logging to a file
+    logger =  logging.getLogger(__name__)
+    logger.setLevel(logging.INFO)
+    formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
+
+    file_handler = logging.FileHandler('advisory_ca.log')
+    file_handler.setFormatter(formatter)
+
+    logger.addHandler(file_handler)
+
     con  = sqlite3.connect('../../countries.sqlite')
     cur = con.cursor()
     #should not create the table every time
@@ -72,8 +85,9 @@ def save_to_canada():
     con.commit()
 
     all_countries = get_all_countries()
-    countries_data = advisory_canada(all_countries)
+    countries_data = advisory_canada(all_countries,logger)
 
+    logger.info("Running the advisory-ca script, updating the data from the canadian gov.")
     for country in countries_data:
         iso = countries_data[country].get('country-iso')
         n = countries_data[country].get('name')
@@ -81,11 +95,8 @@ def save_to_canada():
         info = countries_data[country].get('visa-info')
         cur.execute('INSERT INTO canada (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
     con.commit()
-    # with open('advisory-ca.json', 'w') as fp:
-    #     json.dump(countries_data, fp)
+
+    with open('advisory-ca.json', 'w') as fp:
+        json.dump(countries_data, fp)
 
     con.close()
-    # with open('advisory-ca.json') as fp:
-    #     d  = json.loads(fp.read())
-    # print(d['Zimbabwe'].get('visa-info'))
-    #for mac : Install Certificates.command run

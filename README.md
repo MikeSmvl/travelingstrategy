@@ -96,6 +96,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://github.com/MikeSmvl/travelingstrategy/wiki)_
 
+
 <!-- ROADMAP -->
 ## Roadmap
 
