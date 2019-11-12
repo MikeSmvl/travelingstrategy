@@ -13,7 +13,7 @@ import '../App.css';
 function Country({ origin, destination }) {
 	const [advisoryInfo, setAdvisory] = useState({});
 	const [visaInfo, setVisa] = useState({});
-	origin = origin.replace(/\s/g, '')
+
 	useEffect(() => {
 		async function fetchData() {
 			await fetch('http://localhost:4000/', {
@@ -25,7 +25,10 @@ function Country({ origin, destination }) {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					if (!res.data.countryToCountry.length == 0) {
+					if (res.data.countryToCountry == null) {
+						setAdvisory("Not available yet.");
+						setVisa("Not available yet.");
+					} else {
 						setAdvisory(res.data.countryToCountry[0].advisory_text);
 						setVisa(res.data.countryToCountry[0].visa_info);
 					}
