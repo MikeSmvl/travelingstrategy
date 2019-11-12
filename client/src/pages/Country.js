@@ -20,13 +20,18 @@ function Country({ origin, destination }) {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					query: `{ canadaAll(name: "${destination}") { name visa_info advisory_text } }`
+					query: `{ countryToCountry(origin:"${origin}" destination: "${destination}") { name visa_info advisory_text } }`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					setAdvisory(res.data.canadaAll[0].advisory_text);
-					setVisa(res.data.canadaAll[0].visa_info);
+					if (res.data.countryToCountry == null) {
+						setAdvisory("Not available yet.");
+						setVisa("Not available yet.");
+					} else {
+						setAdvisory(res.data.countryToCountry[0].advisory_text);
+						setVisa(res.data.countryToCountry[0].visa_info);
+					}
 				});
 		}
 		fetchData();
