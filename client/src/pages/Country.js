@@ -13,7 +13,7 @@ import '../App.css';
 function Country({ origin, destination }) {
 	const [advisoryInfo, setAdvisory] = useState({});
 	const [visaInfo, setVisa] = useState({});
-
+	origin = origin.replace(/\s/g, '')
 	useEffect(() => {
 		async function fetchData() {
 			await fetch('http://localhost:4000/', {
