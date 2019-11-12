@@ -26,3 +26,19 @@ test("Querying Canada to France", () =>{
 tester.test(true, query)
 });
 
+
+test("Querying Germany to France", () =>{
+  const query = `
+  {
+    countryToCountry(origin: "Gernmany", destination: "France"){
+      country_iso,
+      name,
+      advisory_text,
+      visa_info
+    }
+  }
+`;
+tester.test(true, query)
+});
+
+
