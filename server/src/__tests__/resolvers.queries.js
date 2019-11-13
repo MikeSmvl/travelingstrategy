@@ -12,7 +12,7 @@ const schemaCode = new graphql.GraphQLSchema({
 
 const tester = new EasyGraphQLTester(schemaCode)
 
-test("Querying Canada to France", () =>{
+it("Querying Canada to France", () =>{
   const query = `
   {
     canadaAll(name: "France"){
@@ -27,7 +27,7 @@ tester.test(true, query)
 });
 
 
-test("Querying Germany to France", () =>{
+it("Querying Germany to France", () =>{
   const query = `
   {
     countryToCountry(origin: "Gernmany", destination: "France"){
@@ -41,4 +41,16 @@ test("Querying Germany to France", () =>{
 tester.test(true, query)
 });
 
-
+it("Querying Canada Table", () =>{
+  const query = `
+  {
+    countryTable(name:"Canada"){
+      country_iso,
+      name,
+      advisory_text,
+      visa_info
+    }
+  }
+`;
+tester.test(true, query)
+});
