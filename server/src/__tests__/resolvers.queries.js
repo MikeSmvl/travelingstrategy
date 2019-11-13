@@ -23,14 +23,24 @@ it("Querying Canada to France", () =>{
     }
   }
 `;
-tester.test(true, query)
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.error != undefined){
+        console("There is no error in the query parameters")
+      }
+      else{
+        console.log(result.errors[0].message)
+      }
+    })
+    .catch(err => console.log(err))
 });
 
 
 it("Querying Germany to France", () =>{
   const query = `
   {
-    countryToCountry(origin: "Gernmany", destination: "France"){
+    countryToCountry(origin: "Germany", destination: "France"){
       country_iso,
       name,
       advisory_text,
@@ -38,7 +48,14 @@ it("Querying Germany to France", () =>{
     }
   }
 `;
-tester.test(true, query)
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.errors != undefined){
+        console.log(result.errors[0].message)
+      }
+    })
+    .catch(err => console.log(err))
 });
 
 it("Querying Canada Table", () =>{
@@ -52,5 +69,15 @@ it("Querying Canada Table", () =>{
     }
   }
 `;
-tester.test(true, query)
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          console("There is no error in the query parameters")
+        }
+        else{
+          console.log(result.errors[0].message)
+        }
+      })
+      .catch(err => console.log(err))
 });

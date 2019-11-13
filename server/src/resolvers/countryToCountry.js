@@ -17,7 +17,7 @@ var countryToCountry = {
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            logger.info("Trying to query 'SELECT * FROM "+args.origin+";'")
+            logger.info("Trying to query 'SELECT * FROM "+args.origin+" WHERE name="+args.destination+";")
             db.all(`SELECT * FROM '${args.origin}' WHERE name='${args.destination}';`, function(err, rows) {
                 if(err){
                     logger.error(err)
