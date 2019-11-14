@@ -1,6 +1,5 @@
 const { GraphQLObjectType} = require('graphql');
-const {addCanadaToCountry,deleteCanadaToCountry} = require('./canadaMutations')
-const {addCountryToCountry} = require('./countryMutations')
+const {addCountryToCountry, deleteCountryToCountry} = require('./countryMutations')
 const logger = require('../logger/logger.js')
 
 logger.info("Mutating with GraphQL")

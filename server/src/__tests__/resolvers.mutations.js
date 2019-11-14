@@ -16,8 +16,8 @@ describe("Test for mutation", () => {
     let error;
     try{
       const mutation = `
-        mutation AddCanadaToCountry($input: CanadaInput!) {
-          addCanadaToCountry(input: $input) {
+        mutation addCountryToCountry($input: CanadaInput!) {
+          addCanadaToCountry(origin:"Australia", input: $input) {
               country_iso,
               name,
               advisory_text,
@@ -33,7 +33,7 @@ describe("Test for mutation", () => {
           visa_info: "Test"
         }
       });
-    } 
+    }
     catch (err) {
       error=err;
     }
