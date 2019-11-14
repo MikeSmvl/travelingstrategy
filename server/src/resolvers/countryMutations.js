@@ -30,4 +30,29 @@ var addCountryToCountry = {
   }
 }
 
-module.exports = {addCountryToCountry}
+var deleteCountryToCountry = {
+  type: graphql.GraphQLList(Country),
+    args: {
+      origin: {
+        type: new graphql.GraphQLNonNull(graphql.GraphQLString)
+      },
+      input: {
+          type: inputCountry
+      }
+    },
+    resolve: function (source, args) {
+      return new Promise((resolve, reject) => {
+          logger.info("Trying to query 'DELETE FROM "+args.origin+",(country_iso,name,advisory_text, visa_info) VALUES("+args.input.country_iso+","+args.input.name+","+args.input.advisory_text+","+args.input.visa_info+");'")
+          db.run(`DELETE FROM '${args.origin}'(country_iso,name,advisory_text, visa_info) VALUES(?,?,?,?);`,[args.input.country_iso, args.input.name, args.input.advisory_text, args.input.visa_info ], function(err, rows) {
+              if(err){
+                  logger.error(err);
+                  reject(err);
+              }
+              logger.info("Trying to query 'DELETE FROM "+args.origin+",(country_iso,name,advisory_text, visa_info) VALUES("+args.input.country_iso+","+args.input.name+","+args.input.advisory_text+","+args.input.visa_info+");' successfully queried")
+              resolve(rows);
+          });
+      });
+  }
+}
+
+module.exports = {addCountryToCountry, deleteCountryToCountry}

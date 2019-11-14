@@ -9,7 +9,6 @@ logger.info("Querying with GraphQL")
 var queryType = new graphql.GraphQLObjectType({
     name: 'Query',
     fields: {
-        canadaAll,
         countryTable,
         countryToCountry
     }

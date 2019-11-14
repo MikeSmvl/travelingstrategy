@@ -7,8 +7,7 @@ logger.info("Mutating with GraphQL")
 const mutationType = new GraphQLObjectType({
     name: 'Mutation',
     fields: {
-        addCanadaToCountry,
-        deleteCanadaToCountry,
+        deleteCountryToCountry,
         addCountryToCountry
     }
 });
