@@ -1,11 +1,11 @@
 {
   "name": "client",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/components/**/*.js",
     "storybook": "start-storybook -p 9009 -s public",
@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@fullpage/react-fullpage": "^0.1.16",
+    "@material-ui/core": "^4.6.0",
+    "@material-ui/icons": "^4.5.1",
     "@storybook/addon-a11y": "^5.2.5",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-backgrounds": "^5.2.5",
@@ -24,6 +26,7 @@
     "@storybook/react": "^5.2.5",
     "@storybook/theming": "^5.2.5",
     "bootstrap": "^4.3.1",
+    "google-maps-stub": "^1.0.1",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
     "less": "^3.10.3",
@@ -31,16 +34,23 @@
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
     "react-dom": "^16.11.0",
+    "react-google-autocomplete": "^1.1.2",
+    "react-google-places-autocomplete": "^1.5.3",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.2.0"
+    "react-scripts": "3.2.0",
+    "react-typed": "^1.2.0",
+    "require-context.macro": "^1.2.2"
   },
   "devDependencies": {
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.15.1",
     "eslint": "^6.1.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
-    "eslint-plugin-react-hooks": "^1.7.0"
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "react-test-renderer": "^16.11.0"
   },
   "eslintConfig": {
     "extends": "react-app"

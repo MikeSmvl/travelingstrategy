@@ -1,0 +1,101 @@
+.homeHero {
+	margin-top: 200px;
+}
+
+.homeTitle {
+	font: normal normal normal 65px/1.4em georgia, palatino, 'book antiqua',
+		'palatino linotype', serif;
+	color: white;
+	text-align: center;
+	font-weight: bold;
+}
+
+.homeTyped {
+	font: normal normal normal 65px/1.4em georgia, palatino, 'book antiqua',
+		'palatino linotype', serif;
+	color: white;
+	text-align: center;
+}
+
+.homeSubtitle {
+	font: normal normal normal 20px/1.4em georgia, palatino, 'book antiqua',
+		'palatino linotype', serif;
+	color: white;
+	text-align: center;
+}
+
+header video {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	min-width: 100%;
+	min-height: 100%;
+	width: 100%;
+	height: auto;
+	z-index: -1;
+	-ms-transform: translateX(-50%) translateY(-50%);
+	-moz-transform: translateX(-50%) translateY(-50%);
+	-webkit-transform: translateX(-50%) translateY(-50%);
+	transform: translateX(-50%) translateY(-50%);
+	object-fit: cover;
+}
+
+.container {
+	text-align: center;
+}
+
+@media screen and (max-width: 576px) {
+	.container {
+		min-height: 100px;
+	}
+
+	.homeTitle {
+		font: normal normal normal 25px/1.4em georgia, palatino, 'book antiqua',
+			'palatino linotype', serif;
+		color: white;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.homeTyped {
+		font: normal normal normal 25px/1.4em georgia, palatino, 'book antiqua',
+			'palatino linotype', serif;
+		color: white;
+		text-align: center;
+	}
+
+	.homeSubtitle {
+		font: normal normal normal 10px/1.4em georgia, palatino, 'book antiqua',
+			'palatino linotype', serif;
+		color: white;
+		text-align: center;
+	}
+}
+
+@media (max-width: 1080px) and (min-width: 577px) {
+	.container {
+		min-height: 200px;
+	}
+
+	.homeTitle {
+		font: normal normal normal 45px/1.4em georgia, palatino, 'book antiqua',
+			'palatino linotype', serif;
+		color: white;
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.homeTyped {
+		font: normal normal normal 45px/1.4em georgia, palatino, 'book antiqua',
+			'palatino linotype', serif;
+		color: white;
+		text-align: center;
+	}
+
+	.homeSubtitle {
+		font: normal normal normal 15px/1.4em georgia, palatino, 'book antiqua',
+			'palatino linotype', serif;
+		color: white;
+		text-align: center;
+	}
+}

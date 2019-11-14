@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+.subtitle {
+	text-align: center;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 15px;
+	padding-top: 13px;
+	padding-bottom: 2px;
+	color: rgb(134, 134, 146);
+	font-weight: 600;
+}
+
+.subtitleDivider {
+	border: solid 0.8px #ff6e61;
+	margin-top: 0;
+	width: 70px;
+	color: rgb(134, 134, 146);
+}

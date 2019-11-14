@@ -86,6 +86,7 @@ def advisory_canada(all_countries):
 #and in the sqlite db
 def save_data_db():
 
+    #chanhge root
     con  = sqlite3.connect('../../countries.sqlite')
     cur = con.cursor()
 
@@ -113,5 +114,3 @@ def save_data_db():
     #saving the data in json file
     with open('advisory-ca.json', 'w') as fp:
         json.dump(countries_data, fp)
-
-

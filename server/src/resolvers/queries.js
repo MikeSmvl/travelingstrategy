@@ -1,10 +1,17 @@
 const graphql = require('graphql');
-const books = require('./allBooks')
+const canadaAll = require('./canadaToAll')
+const countryTable = require('./countryToAll')
+const countryToCountry = require('./countryToCountry')
+const logger = require('../logger/logger.js')
+
+logger.info("Querying with GraphQL")
 
 var queryType = new graphql.GraphQLObjectType({
     name: 'Query',
     fields: {
-        books
+        canadaAll,
+        countryTable,
+        countryToCountry
     }
 });
 

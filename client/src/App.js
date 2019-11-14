@@ -1,27 +1,48 @@
 import * as React from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	useLocation
 } from 'react-router-dom';
-import Country from './pages/Country';
 import Home from './pages/Home';
+import Country from './pages/Country';
+import Navbar from './components/Navbar/Navbar';
 
-function App() {
+// A custom hook that builds on useLocation to parse
+// the query string for you.
+function useQuery() {
+	return new URLSearchParams(useLocation().search);
+}
+
+function Application() {
+	const query = useQuery();
+	console.log(query);
+
 	return (
-    <Router>
-      <div>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/country">
-            <Country />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+		<div>
+			<Navbar
+				title="Traveling Strategy"
+				textRight="Login"
+				hrefBrand="/"
+				hrefRight="#login"
+			/>
+			<Switch>
+				<Route exact path="/">
+					<Route exact path="/" component={Home} />
+				</Route>
+				<Route path="/country">
+					<Country origin={query.get('origin')} destination={query.get('destination')} />
+				</Route>
+			</Switch>
+		</div>
 	);
 }
 
-export default App;
+export default function App() {
+	return (
+		<Router>
+			<Application />
+		</Router>
+	);
+}

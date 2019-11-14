@@ -1,73 +1,83 @@
-const fs = require("fs");
-const path = require("path");
 const EasyGraphQLTester = require("easygraphql-tester");
 const graphql = require("graphql");
-const schemaCode = fs.readFileSync(path.join(__dirname, "../graphql/", "schema.graphql"), "utf8");
-const books = require("../resolvers/allBooks");
-const Book = require('../classes/book')
 
-const schema = new graphql.GraphQLSchema({
-  Book
+const fs = require('fs')
+const path = require('path')
+const queries = require('../resolvers/queries')
+
+
+const schemaCode = new graphql.GraphQLSchema({
+  query: queries
+});
+
+const tester = new EasyGraphQLTester(schemaCode)
+
+it("Querying Canada to France", () =>{
+  const query = `
+  {
+    canadaAll(name: "France"){
+      country_iso,
+      name,
+      advisory_text,
+      visa_info
+    }
+  }
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.error != undefined){
+        console("There is no error in the query parameters")
+      }
+      else{
+        console.log(result.errors[0].message)
+      }
+    })
+    .catch(err => console.log(err))
 });
 
 
-describe("Test schema", () => {
-  let tester;
-  console.log(schema);
-  console.log(books);
-  beforeAll(() => {
-    tester = new EasyGraphQLTester(schema,books);
-  });
-describe("Queries", () => {
-    test("Query books by title and author", async () => {
-      const query = `
-        {
-          query { 
-            books { 
-              title
-              author
-            } 
-          }
-        }
-      `;
-      // args="";
-      // const result = await tester.graphql(query, {}, {}, args);
-      // expect(result.data.books.author).to.be.eq("J.K. Rowling");
-      // First arg: false, there is no field notValidField
-      // Second arg: query to test
-      tester.test(false, query);
-    });
+it("Querying Germany to France", () =>{
+  const query = `
+  {
+    countryToCountry(origin: "Germany", destination: "France"){
+      country_iso,
+      name,
+      advisory_text,
+      visa_info
+    }
+  }
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.errors != undefined){
+        console.log(result.errors[0].message)
+      }
+    })
+    .catch(err => console.log(err))
+});
 
-    test("Query books by title", async () => {
-      const query = `
-        {
-          query { 
-            books { 
-              title
-            } 
-          }
+it("Querying Canada Table", () =>{
+  const query = `
+  {
+    countryTable(name:"Canada"){
+      country_iso,
+      name,
+      advisory_text,
+      visa_info
+    }
+  }
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          console("There is no error in the query parameters")
         }
-      `;
-      // args="";
-      // const result = await tester.graphql(query, {}, {});
-      // expect(result.data.books.title).to.be.eq("Harry Potter and the Chamber of Secrets");
-      tester.test(false, query);
-    });
-
-    test("Query books by author", async () => {
-      const query = `
-        {
-          query { 
-            books { 
-              author
-            } 
-          }
+        else{
+          console.log(result.errors[0].message)
         }
-      `;
-      // args="";
-      // const result = await tester.graphql(query, {}, {});
-      // expect(result.data.books.author).to.be.eq("J.K. Rowling");
-      tester.test(false, query);
-    });
-  });
+      })
+      .catch(err => console.log(err))
 });
