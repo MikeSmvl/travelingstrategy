@@ -10,7 +10,7 @@ from selenium.webdriver.chrome.options import Options
 
 #Get the path of all the pages australia has advisory detail on
 def get_url_of_countries():
-
+    info = {}
     try:
         #this is the link to the first page
         url = 'https://smartraveller.gov.au/countries/pages/list.aspx'
@@ -39,29 +39,44 @@ def get_url_of_countries():
             if (cols[1]==''):
                 cols[1]='No advisory from the australian government'
 
-            print(cols[0],"\n",cols[1])
+            name = cols[0]
+            advisory_text = cols[1]
             a = tr.find('a', attrs = {'href':reg})
             href = a['href']
-            print(href)
-
-
+            info[name] = {"href":href,"advisory-text":advisory_text}
     finally:
         driver.close()
         driver.quit()
 
+    return info
+
 
 #this function is to parse only one country
 #after getting its url from
-def parse_a_country(url,driver):
+def parse_a_country(url,driver,data_type):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    strong = soup.find_all('strong')
+    findheaders = soup.find_all(regex.compile(r'(h3|p)'))
+    data_found = False
+    data_text = ""
+    for ele in findheaders:
+
+        if (ele.text.strip() == data_type):
+            #if we are in the appropriate header
+            #else we continue until we find it
+            data_found = True
+
+        elif(ele.name == 'h3'):
+            #if we reach a new h3 header we set the bool to false
+            #we got all the data that was under the previous h3
+            data_found = False
+
+        elif (data_found):
+            data_text += " "+ele.text.strip()
 
 
-    print("RESULT")
-    for l in strong:
-        print(l)
+    return data_text
 
 #the two functions bleow should be puth in chrome driver class
 def create_driver():
@@ -74,10 +89,27 @@ def create_driver():
 def quit_driver(driver):
     driver.quit()
 
-driver = create_driver()
-parse_a_country('https://smartraveller.gov.au/Countries/americas/south/Pages/paraguay.aspx',driver)
-parse_a_country('https://smartraveller.gov.au/Countries/americas/south/Pages/paraguay.aspx',driver)
-quit_driver(driver)
+def run():
 
-# with open('./advisory-aus.json', 'w') as outfile:
-#     json.dump(nodata, outfile)
+    url = get_url_of_countries() #this function create its own driver -- to change
+    data = {}
+    driver = create_driver()
+
+    for country in url:
+        driver.implicitly_wait(5)
+        name = country
+        print(name,"okey")
+        href = url[country].get('href')
+        advisory_text = url[country].get('advisory-text')
+        link = "https://smartraveller.gov.au{}".format(href,sep='')
+        visa_info = parse_a_country(link,driver,"Visas")
+        if (visa_info == ''):
+            visa_info = "na"
+        country_iso = "na"
+        data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
+
+    with open('./advisory-aus.json', 'w') as outfile:
+        json.dump(data, outfile)
+
+
+run()

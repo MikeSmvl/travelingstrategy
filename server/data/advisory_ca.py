@@ -77,7 +77,7 @@ def advisory_canada(all_countries):
             advisory_text = country_eng['advisory-text']
             entry_exit_html = country_eng.get('entry-exit')
             visa_info = MyBeautifulSoup(entry_exit_html,"Visas")
-            print(visa_info)
+            #print(visa_info)
             info = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
             countries_data[name]=info
     return countries_data
