@@ -11,7 +11,7 @@ const schemaCode = new graphql.GraphQLSchema({
 const tester = new EasyGraphQLTester(schemaCode)
 
 
-describe("Test for mutation", () => {
+describe("Inserting Canada to Country", () => {
   it("Mutation", () => {
     let error;
     try{
@@ -33,7 +33,36 @@ describe("Test for mutation", () => {
           visa_info: "Test"
         }
       });
-    } 
+    }
+    catch (err) {
+      error=err;
+    }
+  });
+});
+
+describe("Deleting Canada to Country", () => {
+  it("Mutation", () => {
+    let error;
+    try{
+      const mutation = `
+        mutation DeleteCanadaToCountry($input: CanadaInput!) {
+          DeleteCanadaToCountry(input: $input) {
+              country_iso,
+              name,
+              advisory_text,
+              visa_info
+          }
+        }
+      `;
+      tester.mock(mutation, {
+        input: {
+          country_iso:"",
+          name: "",
+          advisory_text:"",
+          visa_info: ""
+        }
+      });
+    }
     catch (err) {
       error=err;
     }
