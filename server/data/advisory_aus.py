@@ -6,6 +6,7 @@ import regex
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from helper_class.country_names import find_iso
 
 
 #Get the path of all the pages australia has advisory detail on
@@ -89,7 +90,7 @@ def create_driver():
 def quit_driver(driver):
     driver.quit()
 
-def run():
+def save_to_australia():
 
     url = get_url_of_countries() #this function create its own driver -- to change
     data = {}
@@ -111,5 +112,6 @@ def run():
     with open('./advisory-aus.json', 'w') as outfile:
         json.dump(data, outfile)
 
-
-run()
+with open('./advisory-aus.json') as file:
+    aus = json.load(file)
+    find_iso(aus)
