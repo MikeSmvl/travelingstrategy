@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
+from helper_class.sqlite_advisories import sqlite_advisories
 
 
 #Get the path of all the pages australia has advisory detail on
@@ -90,6 +91,20 @@ def create_driver():
 def quit_driver(driver):
     driver.quit()
 
+def save_into_db(data):
+    # create an an sqlite_advisory object
+    sqlite = sqlite_advisories('australia')
+    sqlite.delete_table()
+    sqlite.create_table()
+    for country in data:
+        iso = data[country].get('country-iso')
+        name = data[country].get('name')
+        text = data[country].get('advisory-text')
+        visa_info = data[country].get('visa-info')
+        sqlite.new_row(iso,name,text,visa_info)
+    sqlite.commit()
+    sqlite.close()
+
 def save_to_australia():
 
     url = get_url_of_countries() #this function create its own driver -- to change
@@ -110,11 +125,9 @@ def save_to_australia():
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
 
     data = find_all_iso(data)
+
     with open('./advisory-aus.json', 'w') as outfile:
         json.dump(data, outfile)
 
-with open('./advisory-aus.json') as file:
-    aus = json.load(file)
-    a = find_all_iso(aus)
-    with open('./advisory-aus.json', 'w') as outfile:
-        json.dump(a, outfile)
+    save_into_db(data)
+

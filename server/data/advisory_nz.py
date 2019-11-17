@@ -1,7 +1,7 @@
 import sqlite3
 
 def save_to_newZealand():
-    con  = sqlite3.connect('../../countries.sqlite')
+    con  = sqlite3.connect('../countries.sqlite')
     cur = con.cursor()
     #should not create the table every time
     #change in the future
@@ -16,3 +16,5 @@ def save_to_newZealand():
     con.commit()
 
     con.close()
+
+save_to_newZealand()
