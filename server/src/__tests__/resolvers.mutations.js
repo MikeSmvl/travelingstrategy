@@ -12,12 +12,12 @@ const tester = new EasyGraphQLTester(schemaCode)
 
 
 describe("Inserting Canada to Country", () => {
-  it("Mutation", () => {
+  it("Add mutation", () => {
     let error;
     try{
       const mutation = `
-        mutation AddCanadaToCountry($input: CanadaInput!) {
-          addCanadaToCountry(input: $input) {
+        mutation addCountryToCountry($input: CanadaInput!) {
+          addCanadaToCountry(origin:"Australia", input: $input) {
               country_iso,
               name,
               advisory_text,
@@ -38,15 +38,12 @@ describe("Inserting Canada to Country", () => {
       error=err;
     }
   });
-});
-
-describe("Deleting Canada to Country", () => {
-  it("Mutation", () => {
+  it("Delete Mutation", () => {
     let error;
     try{
       const mutation = `
-        mutation DeleteCanadaToCountry($input: CanadaInput!) {
-          DeleteCanadaToCountry(input: $input) {
+        mutation deleteCountryToCountry($input: CanadaInput!) {
+          deleteCanadaToCountry(origin:"Australia", input: $input) {
               country_iso,
               name,
               advisory_text,
@@ -56,10 +53,10 @@ describe("Deleting Canada to Country", () => {
       `;
       tester.mock(mutation, {
         input: {
-          country_iso:"",
-          name: "",
-          advisory_text:"",
-          visa_info: ""
+          country_iso:"Test",
+          name: "Test",
+          advisory_text:"Test",
+          visa_info: "Test"
         }
       });
     }
