@@ -84,10 +84,10 @@ def advisory_canada(all_countries):
 
 #save the data from the returned dicionnary in a json file
 #and in the sqlite db
-def save_data_db():
+def save_to_canada():
 
     #chanhge root
-    con  = sqlite3.connect('../../countries.sqlite')
+    con  = sqlite3.connect('../countries.sqlite')
     cur = con.cursor()
 
     #should not create the table every time
