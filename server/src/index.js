@@ -10,7 +10,7 @@ const mutations = require('./resolvers/mutations');
 
 const schema = new graphql.GraphQLSchema({
     query: queries,
-    mutation: mutations
+    // mutation: mutations
 });
 
 const cors = require("cors");
