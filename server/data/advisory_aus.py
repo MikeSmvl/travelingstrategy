@@ -77,10 +77,9 @@ def parse_a_country(url,driver,data_type):
         elif (data_found):
             data_text += " "+ele.text.strip()
 
-
     return data_text
 
-#the two functions bleow should be puth in chrome driver class
+#the two functions below should be puth in chrome driver class
 def create_driver():
     chrome_options = Options()
     chrome_options.add_argument("--headless")

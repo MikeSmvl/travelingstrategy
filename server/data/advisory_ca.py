@@ -14,7 +14,7 @@ def p_with_h3(text):
         return True
     return False
 
-#Uses beaustifull soup to get the information of a particulat subject
+#Uses beaustiful soup to get the information of a particular subject
 #for example data_type = "Visas"
 #The data type is contained in a h3 header
 def MyBeautifulSoup(entry_exit_html, data_type):
@@ -52,7 +52,7 @@ def MyBeautifulSoup(entry_exit_html, data_type):
 
 
 #get the name and abreviation of all countries
-#the canadian gocv has data on
+#the canadian gotv has data on
 def get_all_countries():
     all_countries = {}
     with urllib.request.urlopen("https://data.international.gc.ca/travel-voyage/index-alpha-eng.json") as url:
@@ -82,7 +82,7 @@ def advisory_canada(all_countries):
             countries_data[name]=info
     return countries_data
 
-#save the data from the returned dicionnary in a json file
+#save the data from the returned dicionary in a json file
 #and in the sqlite db
 def save_to_canada():
 
