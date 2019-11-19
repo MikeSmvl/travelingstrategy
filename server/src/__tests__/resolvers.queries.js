@@ -15,7 +15,7 @@ const tester = new EasyGraphQLTester(schemaCode)
 it("Querying Canada to France", () =>{
   const query = `
   {
-    canadaAll(name: "France"){
+    countryToCountry(origin: "Germany", destination: "France"){
       country_iso,
       name,
       advisory_text,
