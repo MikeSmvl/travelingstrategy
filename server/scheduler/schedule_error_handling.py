@@ -8,7 +8,7 @@ from schedule import Scheduler
 logger =  logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-formatter = logging.Formatter('%(asctime)s:%(levelname)s:%(name)s:%(message)s')
+formatter = logging.Formatter('%(asctime)s:%(levelname)s:[%(filename)s: %(lineno)s - %(funcName)20s() ]:%(name)s:%(message)s')
 
 file_handler = logging.FileHandler('scheduler.log')
 file_handler.setFormatter(formatter)
