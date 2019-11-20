@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 
+#Some countries have link, others are listed and others have links while being listed
 def get_countries_languages():
     info = {}
     try:
@@ -12,7 +13,7 @@ def get_countries_languages():
 
         #set up the headless chrome driver
         chrome_options = Options()
-        # chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--headless")
         # create a new chrome session
         driver = webdriver.Chrome(options=chrome_options)
         driver.implicitly_wait(19)
@@ -22,72 +23,111 @@ def get_countries_languages():
         soup=BeautifulSoup(driver.page_source, 'html.parser')
 
         # #patter of the link to the country page that the href should match
-        # reg = regex.compile(r'\/Countries\/\w+-*\w*\/\w*-*\w*\/*Pages\/\w+-*\w*\.aspx')
         table = soup.find('table', {'class':"wikitable"})
         tbody = table.find('tbody')
         table_rows = tbody.find_all('tr')
-        # print(table_rows)
         for tr in table_rows:
             table_columns = tr.find_all('td')
             number_of_columns = len(table_columns)
             index = 0
+            country = ""
+            official_languages = [] #array of offcial languages
+            regional_languages = []
+            minority_languages = []
+            national_languages = []
+            widely_spoken_languages = []
             if(number_of_columns > 0):
-                print("Country-------------------------")
+                a_tag= table_columns[index].find('a')
+                if(a_tag != None): #The headers do not count
+                    a_tag_text = a_tag.string
+                    if((not re.findall("[0-9]", a_tag_text)) and (not re.findall("\[", a_tag_text))):
+                        if(index == 0):
+                            country = a_tag_text
+            index = 1
+            if(number_of_columns > 0):
                 while(index < number_of_columns):
-                    a_tags_array = table_columns[index].find_all('a')
-                    for a_tag in a_tags_array:
-                        if(a_tag != None):
-                            a_tag_text = a_tag.string
-                            if((not re.findall("[0-9]", a_tag_text)) and (not re.findall("\[", a_tag_text))):
-                                if(index == 0):
-                                    country = a_tag_text
-                                    print("county: ",country)
-                                elif(index == 1):
-                                    official_languages = a_tag_text
-                                    print("official_languages: ",official_languages)
-                                elif(index == 2):
-                                    regional_languages = a_tag_text
-                                    print("regional_languages: ",regional_languages)
-                                elif(index == 3):
-                                    minority_languages = a_tag_text
-                                    print("minority_languages: ",minority_languages)
-                                elif(index == 4):
-                                    national_languages = a_tag_text
-                                    print("national_languages: ",national_languages)
-                                elif(index == 1):
-                                    widely_spoken = a_tag_text
-                                    print("widely_spoken: ",widely_spoken)
+                    li_tags_array = table_columns[index].find_all('li') #For languages displayed as a list
+                    a_tags_array = table_columns[index].find_all('a') #For languages displayed as a list
+
+                    if(len(li_tags_array) > 0): #Listed
+                        for li_tag in li_tags_array:
+                            if(li_tag != None): #The headers do not count
+                                a_tag = li_tag.find('a') #countries with links
+                                if(a_tag != None):
+                                    a_tag_text = a_tag.string
+                                    if(((not re.findall("[0-9]", a_tag_text)) or (not re.findall("\[", a_tag_text))) and (not (re.findall("languages", a_tag_text)))):
+                                        if(index == 1):
+                                            official_languages.append(a_tag_text)
+                                        elif(index == 2):
+                                            regional_languages.append(a_tag_text)
+                                        elif(index == 3):
+                                            minority_languages.append(a_tag_text)
+                                        elif(index == 4):
+                                            national_languages.append(a_tag_text)
+                                        elif(index == 5):
+                                            widely_spoken_languages.append(a_tag_text)
+                                else:
+                                    li_tag_text = li_tag.string
+                                    if(((not re.findall("[0-9]", a_tag_text)) or (not re.findall("\[", a_tag_text))) and (not (re.findall("languages", a_tag_text)))):
+                                        if(index == 1):
+                                            official_languages.append(li_tag_text)
+                                        elif(index == 2):
+                                            regional_languages.append(li_tag_text)
+                                        elif(index == 3):
+                                            minority_languages.append(li_tag_text)
+                                        elif(index == 4):
+                                            national_languages.append(li_tag_text)
+                                        elif(index == 5):
+                                            widely_spoken_languages.append(li_tag_text)
+                    else: #Not Listed
+                        if(len(a_tags_array) > 0): #Not Listed
+                            a_tag = table_columns[index].find('a') #countries with links
+                            if(a_tag != None): #Not listed Not Linked
+                                a_tag_text = a_tag.string
+                                if(((not re.findall("[0-9]", a_tag_text)) or (not re.findall("\[", a_tag_text))) and (not (re.findall("languages", a_tag_text)))):
+                                    if(index == 1):
+                                        official_languages.append(a_tag_text)
+                                    elif(index == 2):
+                                        regional_languages.append(a_tag_text)
+                                    elif(index == 3):
+                                        minority_languages.append(a_tag_text)
+                                    elif(index == 4):
+                                        national_languages.append(a_tag_text)
+                                    elif(index == 5):
+                                        widely_spoken_languages.append(a_tag_text)
+                        else: #Case where not listed not linked directly in td
+                            td_tag = table_columns[index]
+                            if(td_tag != None):
+                                td_tag_text = td_tag.string.strip('\n') #remove carriage return
+                                if(((not re.findall("[0-9]", td_tag_text)) or (not re.findall("\[", td_tag_text))) and (not (re.findall("languages", td_tag_text)))):
+                                    if(not(td_tag_text == "")):
+                                        if(index == 1):
+                                            official_languages.append(td_tag_text)
+                                        elif(index == 2):
+                                            regional_languages.append(td_tag_text)
+                                        elif(index == 3):
+                                            minority_languages.append(td_tag_text)
+                                        elif(index == 4):
+                                            national_languages.append(td_tag_text)
+                                        elif(index == 5):
+                                            widely_spoken_languages.append(td_tag_text)
                     index+=1
-                print("----------------------END-------------")
+            if(not(country == "")):
+                print("------------------")
+                print("country: "+country)
+                print("official_languages: ",official_languages)
+                print("regional_languages: ",regional_languages)
+                print("minority_languages: ",minority_languages)
+                print("national_languages: ",national_languages)
+                print("widely_spoken_languages: ",widely_spoken_languages)
+                print("------------------")
 
 
-            # print(len(table_columns))
-            # for td in table_columns:
-            #     a_tag = td.find('a')
-            #     print("----------------------TD--------------")
-            #     print(td)
-            #     if(a_tag != None):
-            #         a_tag_text = a_tag.string
-            #         if(not re.findall("[0-9]", a_tag_text)):
-            #             country = a_tag_text
-            #             print("----------------------END TD--------------")
-            # print("---------------------")
-            # print(count)
-            # print(tr)
-        #     cols = tr.find_all('td')
-        #     cols = [ele.text.strip() for ele in cols]
 
-        #     if (cols[1]==''):
-        #         cols[1]='No advisory from the australian government'
-
-        #     name = cols[0]
-        #     advisory_text = cols[1]
-        #     a = tr.find('a', attrs = {'href':reg})
-        #     href = a['href']
-        #     info[name] = {"href":href,"advisory-text":advisory_text}
     finally:
         driver.close()
         driver.quit()
+
 
 def save_to_languages():
     con  = sqlite3.connect('../countries.sqlite')
