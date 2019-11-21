@@ -37,3 +37,6 @@ class integrationTest(unittest.TestCase):
 class DataBaseClass():
     def __init__(self,connection_string='test_database'):
         self.connection = sqlite3.connect(connection_string)
+
+if __name__ == '__main__':
+    unittest.main()
