@@ -3,9 +3,11 @@ import re
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+import pycountry
 
 #Some countries have link, others are listed and others have links while being listed
 def get_countries_languages():
+    array_of_country_info = []
     info = {}
     try:
         #this is the link to the first page
@@ -18,7 +20,6 @@ def get_countries_languages():
         driver = webdriver.Chrome(options=chrome_options)
         driver.implicitly_wait(19)
         driver.get(url)
-        
         # #Selenium hands the page source to Beautiful Soup
         soup=BeautifulSoup(driver.page_source, 'html.parser')
 
@@ -112,22 +113,34 @@ def get_countries_languages():
                                         elif(index == 5):
                                             widely_spoken_languages.append(td_tag_text)
                     index+=1
+            country = find_iso(country)
             if(not(country == "")):
-                print("------------------")
-                print("country: "+country)
-                print("official_languages: ",official_languages)
-                print("regional_languages: ",regional_languages)
-                print("minority_languages: ",minority_languages)
-                print("national_languages: ",national_languages)
-                print("widely_spoken_languages: ",widely_spoken_languages)
-                print("------------------")
+                info = {
+                    "country_iso": country,
+                    "official_languages": official_languages,
+                    "regional_languages": regional_languages,
+                    "minority_languages": minority_languages,
+                    "national_languages": national_languages,
+                    "widely_spoken_languages": widely_spoken_languages
+                }
+                array_of_country_info.append(info)
 
-
-
+        print(array_of_country_info)
+        return(array_of_country_info)
     finally:
         driver.close()
         driver.quit()
 
+def find_iso(country):
+    iso = ""
+    try:
+        country = pycountry.countries.search_fuzzy(country)[0]
+        iso = country.alpha_2
+
+    except LookupError:
+        print("The following is not an official country :", country)
+
+    return iso
 
 def save_to_languages():
     con  = sqlite3.connect('../countries.sqlite')
