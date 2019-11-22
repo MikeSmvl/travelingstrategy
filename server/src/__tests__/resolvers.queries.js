@@ -1,9 +1,8 @@
 const EasyGraphQLTester = require("easygraphql-tester");
 const graphql = require("graphql");
-
-const fs = require('fs')
-const path = require('path')
 const queries = require('../resolvers/queries')
+const logger = require('../logger/logger.js')
+
 
 
 const schemaCode = new graphql.GraphQLSchema({
@@ -27,13 +26,13 @@ it("Querying Canada to France", () =>{
   tester.graphql(query, undefined, undefined, { isLocal: false })
     .then(result => {
       if(result.error != undefined){
-        console("There is no error in the query parameters")
+        logger.error(__filename +result.errors[0].message)
       }
       else{
-        console.log(result.errors[0].message)
+        logger.info(__filename +"There is no error in the query parameters")
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => logger.error(__filename +" "+err))
 });
 
 
@@ -51,11 +50,14 @@ it("Querying Germany to France", () =>{
   tester.test(true, query)
   tester.graphql(query, undefined, undefined, { isLocal: false })
     .then(result => {
-      if(result.errors != undefined){
-        console.log(result.errors[0].message)
+      if(result.error != undefined){
+        logger.error(__filename +result.errors[0].message)
+      }
+      else{
+        logger.info(__filename +"There is no error in the query parameters")
       }
     })
-    .catch(err => console.log(err))
+    .catch(err => logger.error(__filename +" "+err))
 });
 
 it("Querying Canada Table", () =>{
@@ -73,11 +75,11 @@ it("Querying Canada Table", () =>{
   tester.graphql(query, undefined, undefined, { isLocal: false })
       .then(result => {
         if(result.error != undefined){
-          console("There is no error in the query parameters")
+          logger.error(__filename +result.errors[0].message)
         }
         else{
-          console.log(result.errors[0].message)
+          logger.info(__filename +"There is no error in the query parameters")
         }
       })
-      .catch(err => console.log(err))
+      .catch(err => logger.error(__filename +" "+err))
 });

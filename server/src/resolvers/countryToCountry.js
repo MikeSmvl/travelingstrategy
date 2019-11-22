@@ -17,13 +17,13 @@ var countryToCountry = {
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            logger.info("Trying to query 'SELECT * FROM "+args.origin+" WHERE name="+args.destination+";")
+            logger.info(__filename +"Trying to query 'SELECT * FROM "+args.origin+" WHERE name="+args.destination+";")
             db.all(`SELECT * FROM '${args.origin}' WHERE name='${args.destination}';`, function(err, rows) {
                 if(err){
                     logger.error(err)
                     reject(err);
                 }
-                logger.info("'SELECT * FROM "+args.name+";' successfully queried")
+                logger.info(__filename +"'SELECT * FROM "+args.name+";' successfully queried")
                 resolve(rows);
             });
         });

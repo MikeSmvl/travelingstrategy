@@ -3,7 +3,7 @@ const countryTable = require('./countryToAll')
 const countryToCountry = require('./countryToCountry')
 const logger = require('../logger/logger.js')
 
-logger.info("Querying with GraphQL")
+logger.info(__filename +"Querying with GraphQL")
 
 var queryType = new graphql.GraphQLObjectType({
     name: 'Query',
