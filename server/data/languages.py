@@ -1,9 +1,11 @@
 import sqlite3
 import re
+import pycountry
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
-import pycountry
+from helper_class.country_names import find_iso_of_country
 
 #Some countries have link, others are listed and others have links while being listed
 def get_countries_languages():
@@ -113,7 +115,7 @@ def get_countries_languages():
                                         elif(index == 5):
                                             widely_spoken_languages.append(td_tag_text)
                     index+=1
-            country = find_iso(country)
+            country = find_iso_of_country(country)
             if(not(country == "")):
                 info = {
                     "country_iso": country,
@@ -125,22 +127,11 @@ def get_countries_languages():
                 }
                 array_of_country_info.append(info)
 
-        print(array_of_country_info)
         return(array_of_country_info)
     finally:
         driver.close()
         driver.quit()
 
-def find_iso(country):
-    iso = ""
-    try:
-        country = pycountry.countries.search_fuzzy(country)[0]
-        iso = country.alpha_2
-
-    except LookupError:
-        print("The following is not an official country :", country)
-
-    return iso
 
 def save_to_languages():
     con  = sqlite3.connect('../countries.sqlite')

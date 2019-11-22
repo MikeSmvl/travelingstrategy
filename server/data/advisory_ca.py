@@ -115,3 +115,6 @@ def save_to_canada():
     with open('advisory-ca.json', 'w') as fp:
         json.dump(countries_data, fp)
 
+if __name__ == '__main__':
+    save_to_canada()
+
