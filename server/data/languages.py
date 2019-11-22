@@ -132,6 +132,18 @@ def get_countries_languages():
         driver.close()
         driver.quit()
 
+def get_concatinated_values(array_values):
+    print(isinstance(array_values, str))
+    concatinated_values = ""
+    count = 1
+    if(not array_values == None):
+        for value in array_values:
+            if(count< len(array_values)):
+                concatinated_values += value + ", "
+            else:
+                concatinated_values += value
+            count+=1
+    return concatinated_values
 
 def save_to_languages():
     con  = sqlite3.connect('../countries.sqlite')
@@ -143,12 +155,21 @@ def save_to_languages():
     cur.execute('CREATE TABLE languages (country_iso VARCHAR, primary_languages VARCHAR, other_languages VARCHAR, minority_languages VARCHAR, national_languages VARCHAR, widely_spoken VARCHAR)')
     con.commit()
 
-    # hard coded values
+    countries_data = get_countries_languages()
+    for country in countries_data:
+        print(country)   
+        country_iso = country.get('country-iso')
+        print(country.get('primary_languages'))
+        primary_languages = get_concatinated_values(country.get('primary_languages'))
+        other_languages = get_concatinated_values(country.get('other_languages'))
+        minority_languages = get_concatinated_values(country.get('minority_languages'))   
+        national_languages = get_concatinated_values(country.get('national_languages'))   
+        widely_spoken = get_concatinated_values(country.get('widely_spoken'))   
 
-    cur.execute('INSERT INTO languages (country_iso,primary_languages,other_languages, minority_languages, national_languages, widely_spoken ) values("CA","English", "French", "Arabic", "Spanish", "Italian" )')
+        cur.execute('INSERT INTO languages (country_iso,primary_languages,other_languages, minority_languages, national_languages, widely_spoken ) values( ?, ?, ?, ?, ?, ?)',(country_iso,primary_languages,other_languages, minority_languages, national_languages, widely_spoken))
+   
     con.commit()
-
     con.close()
 
 if __name__ == '__main__':
-    get_countries_languages()
+    save_to_languages()
