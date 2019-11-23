@@ -115,10 +115,11 @@ def get_countries_languages():
                                         elif(index == 5):
                                             widely_spoken_languages.append(td_tag_text)
                     index+=1
-            country = find_iso_of_country(country)
-            if(not(country == "")):
+            country_iso = find_iso_of_country(country)
+            if(not(country_iso == "")):
                 info = {
-                    "country_iso": country,
+                    "country_iso": country_iso,
+                    "country_name": country,
                     "official_languages": official_languages,
                     "regional_languages": regional_languages,
                     "minority_languages": minority_languages,
@@ -133,16 +134,12 @@ def get_countries_languages():
         driver.quit()
 
 def get_concatinated_values(array_values):
-    print(isinstance(array_values, str))
     concatinated_values = ""
-    count = 1
-    if(not array_values == None):
-        for value in array_values:
-            if(count< len(array_values)):
-                concatinated_values += value + ", "
-            else:
-                concatinated_values += value
-            count+=1
+    seperator = ', '
+    if(array_values == None or (array_values != None and len(array_values) <= 0)):
+        return ""
+    for value in array_values:
+        concatinated_values = seperator.join(array_values)
     return concatinated_values
 
 def save_to_languages():
@@ -152,22 +149,20 @@ def save_to_languages():
     # change in the future
     cur.execute('DROP TABLE IF EXISTS languages')
     con.commit()
-    cur.execute('CREATE TABLE languages (country_iso VARCHAR, primary_languages VARCHAR, other_languages VARCHAR, minority_languages VARCHAR, national_languages VARCHAR, widely_spoken VARCHAR)')
+    cur.execute('CREATE TABLE languages (country_iso VARCHAR, country_name VARCHAR, official_languages VARCHAR, regional_languages VARCHAR, minority_languages VARCHAR, national_languages VARCHAR, widely_spoken_languages VARCHAR)')
     con.commit()
 
     countries_data = get_countries_languages()
     for country in countries_data:
-        print(country)   
-        country_iso = country.get('country-iso')
-        print(country.get('primary_languages'))
-        primary_languages = get_concatinated_values(country.get('primary_languages'))
-        other_languages = get_concatinated_values(country.get('other_languages'))
-        minority_languages = get_concatinated_values(country.get('minority_languages'))   
-        national_languages = get_concatinated_values(country.get('national_languages'))   
-        widely_spoken = get_concatinated_values(country.get('widely_spoken'))   
+        country_iso = country.get('country_iso')
+        country_name = country.get('country_name')
+        official_languages = get_concatinated_values(country.get('official_languages'))
+        regional_languages = get_concatinated_values(country.get('regional_languages'))
+        minority_languages = get_concatinated_values(country.get('minority_languages'))
+        national_languages = get_concatinated_values(country.get('national_languages'))
+        widely_spoken_languages = get_concatinated_values(country.get('widely_spoken_languages'))
 
-        cur.execute('INSERT INTO languages (country_iso,primary_languages,other_languages, minority_languages, national_languages, widely_spoken ) values( ?, ?, ?, ?, ?, ?)',(country_iso,primary_languages,other_languages, minority_languages, national_languages, widely_spoken))
-   
+        cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
     con.commit()
     con.close()
 
