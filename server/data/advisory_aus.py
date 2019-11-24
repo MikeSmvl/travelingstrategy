@@ -29,7 +29,7 @@ def get_url_of_countries():
         soup=BeautifulSoup(driver.page_source, 'lxml')
 
         #patter of the link to the country page that the href should match
-        reg = regex.compile(r'\/Countries\/\w+-*\w*\/\w*-*\w*\/*Pages\/\w+-*\w*\.aspx')
+        reg = regex.compile(r'\/destinations\/\w+-*\w*\/\w+-*\w*')
         table = soup.find('table')
         table_body = table.find('tbody')
         table_rows = table_body.find_all('tr')
@@ -38,14 +38,17 @@ def get_url_of_countries():
             cols = tr.find_all('td')
             cols = [ele.text.strip() for ele in cols]
 
-            if (cols[1]==''):
-                cols[1]='No advisory from the australian government'
+            if (cols[2]==''):
+                cols[2]='No advisory from the australian government'
 
+            print(cols[0],cols[2])
             name = cols[0]
-            advisory_text = cols[1]
+            advisory_text = cols[2]
             a = tr.find('a', attrs = {'href':reg})
-            href = a['href']
-            info[name] = {"href":href,"advisory-text":advisory_text}
+            if (a != None):
+                print(a['href'])
+                href = a['href']
+                info[name] = {"href":href,"advisory-text":advisory_text}
     finally:
         driver.close()
         driver.quit()
@@ -129,3 +132,4 @@ def save_to_australia():
 
     save_into_db(data)
 
+get_url_of_countries()
