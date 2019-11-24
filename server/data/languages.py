@@ -12,20 +12,20 @@ def get_countries_languages():
     array_of_country_info = []
     info = {}
     try:
-        #this is the link to the first page
+        # this is the link to the first page
         url = 'https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory'
 
-        #set up the headless chrome driver
+        # set up the headless chrome driver
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         # create a new chrome session
         driver = webdriver.Chrome(options=chrome_options)
         driver.implicitly_wait(19)
         driver.get(url)
-        # #Selenium hands the page source to Beautiful Soup
+        # Selenium hands the page source to Beautiful Soup
         soup=BeautifulSoup(driver.page_source, 'html.parser')
 
-        # #patter of the link to the country page that the href should match
+        # patter of the link to the country page that the href should match
         table = soup.find('table', {'class':"wikitable"})
         tbody = table.find('tbody')
         table_rows = tbody.find_all('tr')
@@ -165,6 +165,3 @@ def save_to_languages():
         cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
     con.commit()
     con.close()
-
-if __name__ == '__main__':
-    save_to_languages()
