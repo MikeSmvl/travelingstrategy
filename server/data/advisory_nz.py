@@ -10,11 +10,7 @@ from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 
-
-
-
-
-def get_url_of_countries():
+def get_url_of_countries_nz():
     info = {}
     try:
         #this is the link to the first page
@@ -44,7 +40,6 @@ def get_url_of_countries():
             name = cols[1]
             a = tr.find('a', attrs = {'href':reg})
             info[name] = {"href":a['href']}
-           
 
     finally:
         driver.close()
@@ -52,38 +47,28 @@ def get_url_of_countries():
 
     return info
 
-
-
-
 #the two functions below should be puth in chrome driver class
-def create_driver():
+def create_driver_nz():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
     driver = webdriver.Chrome(options=chrome_options)
     driver.implicitly_wait(19)
     return driver
 
-def quit_driver(driver):
+def quit_driver_nz(driver):
     driver.quit()
 
-
-
-
-
 def save_to_new_zealend():
-
-    url = get_url_of_countries() #this function create its own driver -- to change
+    url = get_url_of_countries_nz() #this function create its own driver -- to change
     data = {}
-    driver = create_driver()
+    driver = create_driver_nz()
     visas = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens",driver)
 
-    print("hello")
     for country in url:
         driver.implicitly_wait(5)
         name = country
-        print(name,"okey")
         href = url[country].get("href")
-        
+
         link = "https://safetravel.govt.nz/{}".format(href,sep='')
         advisory_text = parse_a_country_advisory(link,driver)
 
@@ -92,9 +77,6 @@ def save_to_new_zealend():
             if(countryVisa ==  country):
                visa_text = visas[countryVisa].get('visa')
                break;
-
-
-
 
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_text}
@@ -105,11 +87,7 @@ def save_to_new_zealend():
 
     save_into_db(data)
 
-
-
-
-
-def parse_a_country_advisory(url,driver):
+def parse_a_country_advisory(url, driver):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
@@ -120,13 +98,11 @@ def parse_a_country_advisory(url,driver):
 
     return warning
 
-    
-
-def parse_a_country_visa(url,driver):
+def parse_a_country_visa(url, driver):
     info ={}
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
-    soup=BeautifulSoup(driver.page_source, 'lxml')
+    soup = BeautifulSoup(driver.page_source, 'lxml')
     visa = " "
     table = soup.find('table')
     table_body = table.find('tbody')
@@ -143,8 +119,8 @@ def parse_a_country_visa(url,driver):
          elif( x < 80):
            visaLength = len(cols[1])-4
            visa = cols[1][0:visaLength]
-         else: 
-           visaLength = len(cols[1])-5  
+         else:
+           visaLength = len(cols[1])-5
            visa = cols[1][0:visaLength]
          if(visa[len(visa)-1: len(visa)] == ']'):
               if(x < 5):
@@ -153,20 +129,16 @@ def parse_a_country_visa(url,driver):
               elif( x < 80):
                 visaLength = len(visa)-4
                 visa = visa[0:visaLength]
-              else: 
-                visaLength = len(visa)-5  
+              else:
+                visaLength = len(visa)-5
                 visa = visa[0:visaLength]
          if(name == "Angola"):
            visaLength = len(visa)-2
            visa = visa[0:visaLength]
-            
-            
+
          info[name] = {"visa":visa}
 
     return info
-
-
-
 
 def save_into_db(data):
     # create an an sqlite_advisory object
@@ -181,6 +153,3 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
-
-driver = create_driver()
-save_to_new_zealend()
