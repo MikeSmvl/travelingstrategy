@@ -49,7 +49,7 @@ class parseTest(unittest.TestCase):
     # Tests for Language parser
     def test_get_concatinated_values(self):
         # tests comma seperating function
-        test_value = "Charles Karl Steven"
+        test_value = ["Charles", "Karl", "Steven"]
         value = get_concatinated_values(test_value)
         self.assertTrue("Charles, Karl, Steven", value)
 
