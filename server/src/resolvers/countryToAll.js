@@ -14,13 +14,13 @@ var countryTable = {
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            logger.info("Trying to query 'SELECT * FROM "+args.name+";'")
+            logger.info(__filename +"Trying to query 'SELECT * FROM "+args.name+";'")
             db.all(`SELECT * FROM '${args.name}';`, function(err, rows) {
                 if(err){
-                    logger.error(err)
+                    logger.error(__filename +" "+err)
                     reject(err);
                 }
-                logger.info("'SELECT * FROM "+args.name+";' successfully queried")
+                logger.info(__filename +"'SELECT * FROM "+args.name+";' successfully queried")
                 resolve(rows);
             });
         });

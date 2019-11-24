@@ -4,7 +4,7 @@ const countryToCountry = require('./countryToCountry')
 const {country_languages,languages_table} = require('./languages')
 const logger = require('../logger/logger.js')
 
-logger.info("Querying with GraphQL")
+logger.info(__filename +"Querying with GraphQL")
 
 var queryType = new graphql.GraphQLObjectType({
     name: 'Query',
