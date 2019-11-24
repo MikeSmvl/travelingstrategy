@@ -94,7 +94,7 @@ def save_to_canada():
     #change in the future
     cur.execute('DROP TABLE IF EXISTS canada')
     con.commit()
-    cur.execute('CREATE TABLE canada (country_iso VARCHAR, name VARCHAR, advisory_text VARCHAR(10000), visa_info VARCHAR)')
+    cur.execute('CREATE TABLE ca(country_iso VARCHAR, name VARCHAR, advisory_text VARCHAR(10000), visa_info VARCHAR)')
     con.commit()
 
     #getting the data from all countries
@@ -107,14 +107,11 @@ def save_to_canada():
         n = countries_data[country].get('name')
         text = countries_data[country].get('advisory-text')
         info = countries_data[country].get('visa-info')
-        cur.execute('INSERT INTO canada (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
+        cur.execute('INSERT INTO ca(country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
     con.commit()
     con.close()
 
     #saving the data in json file
     with open('advisory-ca.json', 'w') as fp:
         json.dump(countries_data, fp)
-
-if __name__ == '__main__':
-    save_to_canada()
 

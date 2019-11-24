@@ -38,6 +38,29 @@ function Country({ origin, destination }) {
 		fetchData();
 	}, [origin, destination]);
 
+	// useEffect(() => {
+	// 	async function fetchData() {
+	// 		await fetch('http://localhost:4000/', {
+	// 			method: 'POST',
+	// 			headers: { 'Content-Type': 'application/json' },
+	// 			body: JSON.stringify({
+	// 				query: `{ countryToCountry(origin:"${origin}" destination: "${destination}") { name visa_info advisory_text } }`
+	// 			})
+	// 		})
+	// 			.then((res) => res.json())
+	// 			.then((res) => {
+	// 				if (res.data.countryToCountry === null || res.data.countryToCountry.length === 0) {
+	// 					setAdvisory('Not available yet.');
+	// 					setVisa('Not available yet.');
+	// 				} else {
+	// 					setAdvisory(res.data.countryToCountry[0].advisory_text);
+	// 					setVisa(res.data.countryToCountry[0].visa_info);
+	// 				}
+	// 			});
+	// 	}
+	// 	fetchData();
+	// }, [languages]);
+
 	if (!origin || !destination) {
 		return <Redirect to="/" />;
 	}
