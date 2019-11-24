@@ -8,6 +8,7 @@ import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryCode from '../utils/countryToISO';
+import getCountryName from '../utils/ISOToCountry';
 import '../App.css';
 
 function Country({ origin, destination }) {
@@ -25,9 +26,9 @@ function Country({ origin, destination }) {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					if (res.data.countryToCountry == null) {
-						setAdvisory("Not available yet.");
-						setVisa("Not available yet.");
+					if (res.data.countryToCountry === null || res.data.countryToCountry.length === 0) {
+						setAdvisory('Not available yet.');
+						setVisa('Not available yet.');
 					} else {
 						setAdvisory(res.data.countryToCountry[0].advisory_text);
 						setVisa(res.data.countryToCountry[0].visa_info);
@@ -35,7 +36,7 @@ function Country({ origin, destination }) {
 				});
 		}
 		fetchData();
-	}, []);
+	}, [origin, destination]);
 
 	if (!origin || !destination) {
 		return <Redirect to="/" />;
@@ -53,11 +54,12 @@ function Country({ origin, destination }) {
 				navigationPosition="left"
 				navigationTooltips={['Basics', 'Health & Safety', 'Money']}
 				anchors={['basics', 'health', 'money']}
+				scrollOverflow
 				render={({ state, fullpageApi }) => {
 					return (
 						<ReactFullpage.Wrapper>
 							<div className="section App">
-								<Header title={destination} />
+								<Header title={getCountryName(destination)} />
 								<Subtitle text="Important Basics" />
 								<Row
 									className="justify-content-center"

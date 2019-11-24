@@ -35,7 +35,7 @@ const CountrySelector = (props) => {
 							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setOrigin(place.formatted_address);
+								setOrigin(place.address_components.pop().short_name);
 							}}
 						/>
 						{!validOrig
@@ -51,7 +51,7 @@ const CountrySelector = (props) => {
 							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setDestination(place.formatted_address);
+								setDestination(place.address_components.pop().short_name);
 							}}
 						/>
 						{!validDest
@@ -64,13 +64,7 @@ const CountrySelector = (props) => {
 					>
 						{origin && destination ? (
 							<Link
-								to={`/country?origin=${origin
-									.split(',')
-									.pop(-1)
-									.trim()}&destination=${destination
-									.split(',')
-									.pop(-1)
-									.trim()}`}
+								to={`/country?origin=${origin}&destination=${destination}`}
 							>
 								<Button variant="outline-primary" type="submit">
                   Compare
