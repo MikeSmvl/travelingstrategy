@@ -113,7 +113,6 @@ def save_to_australia():
     for country in url:
         driver.implicitly_wait(5)
         name = country
-        print(name,"okey")
         href = url[country].get('href')
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
