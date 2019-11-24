@@ -54,6 +54,7 @@ function Country({ origin, destination }) {
 				navigationPosition="left"
 				navigationTooltips={['Basics', 'Health & Safety', 'Money']}
 				anchors={['basics', 'health', 'money']}
+				scrollOverflow
 				render={({ state, fullpageApi }) => {
 					return (
 						<ReactFullpage.Wrapper>
