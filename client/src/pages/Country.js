@@ -8,6 +8,7 @@ import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryCode from '../utils/countryToISO';
+import getCountryName from '../utils/ISOToCountry';
 import '../App.css';
 
 function Country({ origin, destination }) {
@@ -59,7 +60,7 @@ function Country({ origin, destination }) {
 					return (
 						<ReactFullpage.Wrapper>
 							<div className="section App">
-								<Header title={destination} />
+								<Header title={getCountryName(destination)} />
 								<Subtitle text="Important Basics" />
 								<Row
 									className="justify-content-center"
