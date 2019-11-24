@@ -26,10 +26,9 @@ function Country({ origin, destination }) {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					console.log(res)
 					if (res.data.countryToCountry === null || res.data.countryToCountry.length === 0) {
-						setAdvisory("Not available yet.");
-						setVisa("Not available yet.");
+						setAdvisory('Not available yet.');
+						setVisa('Not available yet.');
 					} else {
 						setAdvisory(res.data.countryToCountry[0].advisory_text);
 						setVisa(res.data.countryToCountry[0].visa_info);
