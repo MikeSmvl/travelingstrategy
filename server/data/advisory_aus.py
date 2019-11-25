@@ -103,7 +103,7 @@ def quit_driver(driver):
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('australia')
+    sqlite = sqlite_advisories('AU')
     sqlite.delete_table()
     sqlite.create_table()
     for country in data:
@@ -132,12 +132,10 @@ def save_to_australia():
             visa_info = "na"
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
-
+    driver.quit()
     data = find_all_iso(data)
 
     with open('./advisory-aus.json', 'w') as outfile:
         json.dump(data, outfile)
 
-    # save_into_db(data)
-
-save_to_australia()
+    save_into_db(data)
