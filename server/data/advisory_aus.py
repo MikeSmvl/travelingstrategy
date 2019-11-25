@@ -41,12 +41,11 @@ def get_url_of_countries():
             if (cols[2]==''):
                 cols[2]='No advisory from the australian government'
 
-            print(cols[0],cols[2])
+
             name = cols[0]
             advisory_text = cols[2]
             a = tr.find('a', attrs = {'href':reg})
             if (a != None):
-                print(a['href'])
                 href = a['href']
                 info[name] = {"href":href,"advisory-text":advisory_text}
     finally:
@@ -79,7 +78,7 @@ def parse_a_country(url,driver,data_type,next_data_type):
             data_found = False
 
         elif (data_found):
-            if not more_info.match(ele.txt):
+            if not more_info.match(txt):
                 data_text += "<p>"+txt
 
     return data_text
@@ -132,18 +131,19 @@ def save_to_australia():
     with open('./advisory-aus.json', 'w') as outfile:
         json.dump(data, outfile)
 
-    save_into_db(data)
+    # save_into_db(data)
 
 
-url = 'https://www.smartraveller.gov.au/destinations/americas/colombia'
+# url = 'https://www.smartraveller.gov.au/destinations/americas/colombia'
 
-#set up the headless chrome driver
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-# create a new chrome session
-driver = webdriver.Chrome(options=chrome_options)
-driver.implicitly_wait(19)
-driver.get(url)
+# #set up the headless chrome driver
+# chrome_options = Options()
+# chrome_options.add_argument("--headless")
+# # create a new chrome session
+# driver = webdriver.Chrome(options=chrome_options)
+# driver.implicitly_wait(19)
+# driver.get(url)
 
-visas = parse_a_country(url,driver,'Visas','Other formalities')
-print(visas)
+# visas = parse_a_country(url,driver,'Visas','Other formalities')
+# print(visas)
+save_to_australia()
