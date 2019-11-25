@@ -16,7 +16,7 @@ const CountryCard = (props) => {
 				<img alt="" src={flagSrc} />
 				<div className="cardTitle">{title}</div>
 			</Card.Header>
-			<Card.Body>
+			<Card.Body className="cardBody">
 				{children}
 			</Card.Body>
 		</Card>

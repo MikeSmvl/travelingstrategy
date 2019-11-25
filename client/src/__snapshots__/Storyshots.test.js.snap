@@ -154,7 +154,7 @@ Array [
         </div>
       </div>
       <div
-        className="card-body"
+        className="cardBody card-body"
       >
         <p
           className="card-text"
@@ -217,7 +217,7 @@ Array [
         </div>
       </div>
       <div
-        className="card-body"
+        className="cardBody card-body"
       >
         <p
           className="card-text"
