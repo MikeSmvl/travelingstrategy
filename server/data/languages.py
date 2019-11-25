@@ -55,8 +55,10 @@ def get_countries_languages():
                     if(len(li_tags_array) > 0): #Listed
                         for li_tag in li_tags_array:
                             if(li_tag != None): #The headers do not count
-                                a_tag = li_tag.find('a') #countries with links
-                                if(a_tag != None):
+                                a_tag = li_tag.find('a')
+                                super_script_tag = li_tag.find('sup')
+                                li_tag_text = li_tag.string
+                                if(a_tag != None and super_script_tag == None): #countries with links and that don't have a superscript number
                                     a_tag_text = a_tag.string
                                     if(((not re.findall("[0-9]", a_tag_text)) or (not re.findall("\[", a_tag_text))) and (not (re.findall("languages", a_tag_text)))):
                                         if(index == 1):
@@ -70,8 +72,12 @@ def get_countries_languages():
                                         elif(index == 5):
                                             widely_spoken_languages.append(a_tag_text)
                                 else:
-                                    li_tag_text = li_tag.string
-                                    if(((not re.findall("[0-9]", a_tag_text)) or (not re.findall("\[", a_tag_text))) and (not (re.findall("languages", a_tag_text)))):
+                                    li_tag_text = li_tag.text
+                                    if(re.findall("\[",li_tag_text)): #if it has brackets
+                                        index_of_bracket = li_tag_text.index("[")
+                                        li_tag_text = li_tag_text[:index_of_bracket]
+
+                                    if(((not re.findall("[0-9]", li_tag_text)) or (not re.findall("\[", li_tag_text))) and (not (re.findall("languages", li_tag_text)))):
                                         if(index == 1):
                                             official_languages.append(li_tag_text)
                                         elif(index == 2):
@@ -83,10 +89,11 @@ def get_countries_languages():
                                         elif(index == 5):
                                             widely_spoken_languages.append(li_tag_text)
                     else: #Not Listed
-                        if(len(a_tags_array) > 0): #Not Listed
+                        if(len(a_tags_array) > 0):
                             a_tag = table_columns[index].find('a') #countries with links
-                            if(a_tag != None): #Not listed Not Linked
-                                a_tag_text = a_tag.string
+                            super_script_tag = li_tag.find('sup')
+                            a_tag_text = a_tag.text
+                            if(a_tag != None and super_script_tag == None): #Not listed Not Linked
                                 if(((not re.findall("[0-9]", a_tag_text)) or (not re.findall("\[", a_tag_text))) and (not (re.findall("languages", a_tag_text)))):
                                     if(index == 1):
                                         official_languages.append(a_tag_text)
@@ -98,10 +105,36 @@ def get_countries_languages():
                                         national_languages.append(a_tag_text)
                                     elif(index == 5):
                                         widely_spoken_languages.append(a_tag_text)
-                        else: #Case where not listed not linked directly in td
+
+                            else: #If not listed linked and superscripted
+                                td_tag = table_columns[index]
+                                if(td_tag != None):
+                                    td_tag_text = td_tag.text.strip('\n') #remove carriage return
+
+                                    if(re.findall("\[",td_tag_text)): #if it has brackets
+                                            index_of_bracket = td_tag_text.index("[")
+                                            td_tag_text = td_tag_text[:index_of_bracket]
+                                    if(((not re.findall("[0-9]", td_tag_text)) or (not re.findall("\[", td_tag_text))) and (not (re.findall("languages", td_tag_text)))):
+                                        if(not(td_tag_text == "")):
+                                            if(index == 1):
+                                                official_languages.append(td_tag_text)
+                                            elif(index == 2):
+                                                regional_languages.append(td_tag_text)
+                                            elif(index == 3):
+                                                minority_languages.append(td_tag_text)
+                                            elif(index == 4):
+                                                national_languages.append(td_tag_text)
+                                            elif(index == 5):
+                                                widely_spoken_languages.append(td_tag_text)
+                        else: #Case where not listed not linked in td
                             td_tag = table_columns[index]
                             if(td_tag != None):
-                                td_tag_text = td_tag.string.strip('\n') #remove carriage return
+                                td_tag_text = td_tag.text.strip('\n') #remove carriage return
+
+                                if(re.findall("\[",td_tag_text)): #if it has brackets
+                                        index_of_bracket = td_tag_text.index("[")
+                                        td_tag_text = td_tag_text[:index_of_bracket]
+
                                 if(((not re.findall("[0-9]", td_tag_text)) or (not re.findall("\[", td_tag_text))) and (not (re.findall("languages", td_tag_text)))):
                                     if(not(td_tag_text == "")):
                                         if(index == 1):
@@ -165,3 +198,6 @@ def save_to_languages():
         cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
     con.commit()
     con.close()
+
+if __name__ == '__main__':
+    save_to_languages()
