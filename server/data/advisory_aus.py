@@ -57,14 +57,15 @@ def get_url_of_countries():
 
 #this function is to parse only one country
 #after getting its url from
-def parse_a_country(url,driver,data_type,next_data_type):
+def parse_a_country(url,driver,data_type):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    findheaders = soup.find_all(regex.compile(r'(h4|p)'))
+    findheaders = soup.find_all(regex.compile(r'(h4|p|div)'))
     data_found = False
     data_text = ""
     more_info = regex.compile(r'More information:')
+    count = 0
     for ele in findheaders:
         txt = ele.text.strip()
         if (txt == data_type):
@@ -72,14 +73,18 @@ def parse_a_country(url,driver,data_type,next_data_type):
             #else we continue until we find it
             data_found = True
 
-        elif(txt == next_data_type):
+        elif((ele.name == 'div') & data_found):
+            count += 1
             #if we reach a new h3 header we set the bool to false
             #we got all the data that was under the previous h3
-            data_found = False
+            if count == 2:
+                data_found = False
+                count = 0
 
         elif (data_found):
             if not more_info.match(txt):
-                data_text += "<p>"+txt
+                print(txt)
+                data_text += "<br>"+txt
 
     return data_text
 
@@ -134,16 +139,14 @@ def save_to_australia():
     # save_into_db(data)
 
 
-# url = 'https://www.smartraveller.gov.au/destinations/americas/colombia'
+url = 'https://www.smartraveller.gov.au/destinations/americas/colombia'
 
-# #set up the headless chrome driver
-# chrome_options = Options()
-# chrome_options.add_argument("--headless")
-# # create a new chrome session
-# driver = webdriver.Chrome(options=chrome_options)
-# driver.implicitly_wait(19)
-# driver.get(url)
+#set up the headless chrome driver
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+# create a new chrome session
+driver = webdriver.Chrome(options=chrome_options)
+driver.implicitly_wait(19)
+driver.get(url)
 
-# visas = parse_a_country(url,driver,'Visas','Other formalities')
-# print(visas)
-save_to_australia()
+visas = parse_a_country(url,driver,'Visas','Other formalities')
