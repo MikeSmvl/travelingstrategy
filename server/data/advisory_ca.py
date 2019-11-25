@@ -107,7 +107,9 @@ def save_to_canada():
         n = countries_data[country].get('name')
         text = countries_data[country].get('advisory-text')
         info = countries_data[country].get('visa-info')
+
         cur.execute('INSERT INTO CA (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
+
     con.commit()
     con.close()
 

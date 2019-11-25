@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 sys.path.append('../')
 from advisory_ca import MyBeautifulSoup, get_all_countries, advisory_canada
 from advisory_aus import get_url_of_countries, parse_a_country, create_driver, quit_driver
+from languages import get_concatinated_values
 from advisory_nz import get_url_of_countries_nz, create_driver_nz, quit_driver_nz, parse_a_country_visa, parse_a_country_advisory
 
 class parseTest(unittest.TestCase):
@@ -46,6 +47,12 @@ class parseTest(unittest.TestCase):
         quit_driver(driver)
         self.assertFalse("", data)
 
+    # Tests for Language parser
+    def test_get_concatinated_values(self):
+        # tests comma seperating function
+        test_value = ["Charles", "Karl", "Steven"]
+        value = get_concatinated_values(test_value)
+        self.assertTrue("Charles, Karl, Steven", value)
     # Tests for new zealand's parser
 
     def test_australia_getCountry(self):
