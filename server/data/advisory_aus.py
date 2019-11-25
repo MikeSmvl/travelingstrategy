@@ -64,6 +64,7 @@ def parse_a_country(url,driver,data_type):
     findheaders = soup.find_all(regex.compile(r'(h4|p|div)'))
     data_found = False
     data_text = ""
+    previous_text = ""
     more_info = regex.compile(r'More information:')
     count = 0
     for ele in findheaders:
@@ -83,8 +84,9 @@ def parse_a_country(url,driver,data_type):
 
         elif (data_found):
             if not more_info.match(txt):
-                print(txt)
-                data_text += "<br>"+txt
+                if not (txt == previous_text):
+                    data_text += "<br>"+txt
+                    previous_text = txt
 
     return data_text
 
@@ -125,7 +127,7 @@ def save_to_australia():
         href = url[country].get('href')
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
-        visa_info = parse_a_country(link,driver,'Visas','Other formalities')
+        visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
             visa_info = "na"
         country_iso = "na"
@@ -138,15 +140,4 @@ def save_to_australia():
 
     # save_into_db(data)
 
-
-url = 'https://www.smartraveller.gov.au/destinations/americas/colombia'
-
-#set up the headless chrome driver
-chrome_options = Options()
-chrome_options.add_argument("--headless")
-# create a new chrome session
-driver = webdriver.Chrome(options=chrome_options)
-driver.implicitly_wait(19)
-driver.get(url)
-
-visas = parse_a_country(url,driver,'Visas','Other formalities')
+save_to_australia()
