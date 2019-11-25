@@ -63,6 +63,7 @@ def save_to_new_zealend():
     data = {}
     driver = create_driver_nz()
     visas = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens",driver)
+    counter_country = 0
 
     for country in url:
         driver.implicitly_wait(5)
@@ -82,8 +83,13 @@ def save_to_new_zealend():
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_text}
         data = find_all_iso(data)
 
-        with open('./advisory-aus.json', 'w') as outfile:
-             json.dump(data, outfile)
+        if ((counter_country%50) == 0):
+            quit_driver_nz(driver)
+            driver = create_driver_nz()
+        counter_country += 1
+
+    with open('./advisory-nz.json', 'w') as outfile:
+        json.dump(data, outfile)
 
     save_into_db(data)
 
@@ -142,7 +148,7 @@ def parse_a_country_visa(url, driver):
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('newzealand')
+    sqlite = sqlite_advisories('NZ')
     sqlite.delete_table()
     sqlite.create_table()
     for country in data:
@@ -153,3 +159,5 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
+
+save_to_new_zealend()

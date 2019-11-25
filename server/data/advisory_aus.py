@@ -29,7 +29,7 @@ def get_url_of_countries():
         soup=BeautifulSoup(driver.page_source, 'lxml')
 
         #patter of the link to the country page that the href should match
-        reg = regex.compile(r'\/Countries\/\w+-*\w*\/\w*-*\w*\/*Pages\/\w+-*\w*\.aspx')
+        reg = regex.compile(r'\/destinations\/\w+-*\w*\/\w+-*\w*')
         table = soup.find('table')
         table_body = table.find('tbody')
         table_rows = table_body.find_all('tr')
@@ -38,14 +38,16 @@ def get_url_of_countries():
             cols = tr.find_all('td')
             cols = [ele.text.strip() for ele in cols]
 
-            if (cols[1]==''):
-                cols[1]='No advisory from the australian government'
+            if (cols[2]==''):
+                cols[2]='No advisory from the australian government'
+
 
             name = cols[0]
-            advisory_text = cols[1]
+            advisory_text = cols[2]
             a = tr.find('a', attrs = {'href':reg})
-            href = a['href']
-            info[name] = {"href":href,"advisory-text":advisory_text}
+            if (a != None):
+                href = a['href']
+                info[name] = {"href":href,"advisory-text":advisory_text}
     finally:
         driver.close()
         driver.quit()
@@ -59,23 +61,32 @@ def parse_a_country(url,driver,data_type):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    findheaders = soup.find_all(regex.compile(r'(h3|p)'))
+    findheaders = soup.find_all(regex.compile(r'(h4|p|div)'))
     data_found = False
     data_text = ""
+    previous_text = ""
+    more_info = regex.compile(r'More information:')
+    count = 0
     for ele in findheaders:
-
-        if (ele.text.strip() == data_type):
+        txt = ele.text.strip()
+        if (txt == data_type):
             #if we are in the appropriate header
             #else we continue until we find it
             data_found = True
 
-        elif(ele.name == 'h3'):
+        elif((ele.name == 'div') & data_found):
+            count += 1
             #if we reach a new h3 header we set the bool to false
             #we got all the data that was under the previous h3
-            data_found = False
+            if count == 2:
+                data_found = False
+                count = 0
 
         elif (data_found):
-            data_text += " "+ele.text.strip()
+            if not more_info.match(txt):
+                if not (txt == previous_text):
+                    data_text += "<br>"+txt
+                    previous_text = txt
 
     return data_text
 
@@ -92,7 +103,7 @@ def quit_driver(driver):
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('australia')
+    sqlite = sqlite_advisories('AU')
     sqlite.delete_table()
     sqlite.create_table()
     for country in data:
@@ -116,16 +127,15 @@ def save_to_australia():
         href = url[country].get('href')
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
-        visa_info = parse_a_country(link,driver,"Visas")
+        visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
             visa_info = "na"
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
-
+    driver.quit()
     data = find_all_iso(data)
 
     with open('./advisory-aus.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
-
