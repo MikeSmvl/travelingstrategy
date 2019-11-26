@@ -9,12 +9,12 @@ const schemaCode = new graphql.GraphQLSchema({
   query: queries
 });
 
-const tester = new EasyGraphQLTester(schemaCode)
+const tester = new EasyGraphQLTester(schemaCode);
 
 it("Querying Canada to France", () =>{
   const query = `
   {
-    countryToCountry(origin: "Germany", destination: "France"){
+    countryToCountry(origin: "CA", destination: "FR"){
       country_iso,
       name,
       advisory_text,
@@ -39,7 +39,7 @@ it("Querying Canada to France", () =>{
 it("Querying Germany to France", () =>{
   const query = `
   {
-    countryToCountry(origin: "Germany", destination: "France"){
+    countryToCountry(origin: "DE", destination: "FR"){
       country_iso,
       name,
       advisory_text,
@@ -63,7 +63,7 @@ it("Querying Germany to France", () =>{
 it("Querying Canada Table", () =>{
   const query = `
   {
-    countryTable(name:"Canada"){
+    countryTable(country_iso:"CA"){
       country_iso,
       name,
       advisory_text,
