@@ -36,4 +36,29 @@ it("Querying Canada language Table", () =>{
       .catch(err => logger.error(__filename +" "+err))
 });
 
-
+it("Querying language Table", () =>{
+  const query = `
+  {
+    languages_table{
+      country_iso,
+      country_name,
+      official_languages,
+      regional_languages,
+      minority_languages,
+      national_languages,
+      widely_spoken_languages
+  }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
