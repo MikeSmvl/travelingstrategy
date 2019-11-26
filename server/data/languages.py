@@ -176,5 +176,3 @@ def save_to_languages():
     con.commit()
     con.close()
 
-if __name__ == '__main__':
-    save_to_languages()
