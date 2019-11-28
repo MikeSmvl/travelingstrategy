@@ -2,6 +2,8 @@ from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver
 from helper_class.chrome_driver import quit_driver
+from helper_class.sqlite_advisories import sqlite_advisories
+
 
 # Used to translate using the googletrans library
 import json
@@ -34,24 +36,39 @@ def get_url_of_countries():
 
     return info
 
-def parse_country_advisory():
-    urls = get_url_of_countries()
-    print(urls)
+
+def parse_one_country_advisory(url):
+    driver = create_driver()
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    advisory_div = soup.find("div", {"class": "application-notice help-notice"})
+    advisory_p_tag = advisory_div.find("p")
+    advisory = advisory_p_tag.decode_contents() #This will keep the a tag so that the embassy info is displayed
+
+    return advisory
 
 
+def save_to_db():
+    advisory = parse_one_country_advisory("https://www.gov.uk/foreign-travel-advice/{}/travel-advice-help-and-support".format('afghanistan',sep=''))
 
-def translate_text(text, dest_language="en"):
-    translator = Translator()
-    try:
-        translation = translator.translate(text=text, dest=dest_language)
-    except json.decoder.JSONDecodeError:
-        # api call restriction
-        process = subprocess.Popen(["nordvpn", "d"], stdout=subprocess.PIPE)
-        process.wait()
-        process = subprocess.Popen(["nordvpn", "c", "canada"], stdout=subprocess.PIPE)
-        process.wait()
-        return Process_Data.translate_text(text=text, dest_language=dest_language)
-    return translation
+    # create an an sqlite_advisory object
+    sqlite = sqlite_advisories('GB')
+    sqlite.delete_table()
+    sqlite.create_table()
+    # for country in data:
+        # iso = data[country].get('country-iso')
+        # name = data[country].get('name')
+        # text = data[country].get('advisory-text')
+        # visa_info = data[country].get('visa-info')
+    iso = 'AF'
+    name = 'Afghanistan'
+    text = advisory
+    visa_info = ""
+    sqlite.new_row(iso,name,text,visa_info)
+    sqlite.commit()
+    sqlite.close()
+
 
 if __name__ == '__main__':
-    parse_country_advisory()
+    save_to_db()
