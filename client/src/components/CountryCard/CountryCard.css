@@ -1,15 +1,16 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
-.cardHeader {
-	background-color: white;
+.countryCardHeader {
+	background-color: rgb(232, 233, 241, 0.5);
 	display: flex;
 }
 
-.cardTitle {
+.countryCardTitle {
 	margin-left: 15px;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: 20px;
+	line-height: 3;
 }
-.cardBody {
+.countryCardBody {
 	text-align: left;
 }

@@ -160,9 +160,10 @@ function Country({ origin, destination, languages }) {
 										</CountryCard>
 									</Col>
 									<Col xs="10" sm="4">
-										<Card header="Visa Info" style={{ textAlign: 'left' }}>
-											<CardBody>
-												{JSON.stringify(visaInfo).replace(/(^")|("$)/g, '')}
+										<Card header="Visa Info">
+											<CardBody style={{ paddingTop: '0' }}>
+												<div dangerouslySetInnerHTML={{ __html: JSON.stringify(visaInfo).replace(/(^")|("$)/g, '') }} />
+												{}
 											</CardBody>
 										</Card>
 									</Col>
@@ -170,6 +171,7 @@ function Country({ origin, destination, languages }) {
 										<Card header="Advisory">
 											<CardBody>
 												<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }} />
+												{' '}
 												{JSON.stringify(advisoryInfo).replace(/(^")|("$)/g, '')}
 											</CardBody>
 										</Card>
