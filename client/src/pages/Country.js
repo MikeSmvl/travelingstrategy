@@ -11,17 +11,38 @@ import getCountryCode from '../utils/countryToISO';
 import getCountryName from '../utils/ISOToCountry';
 import '../App.css';
 
-function Country({ origin, destination, languages }) {
+function Languages(object) {
+	const items = [];
+	const keys = Object.keys(object);
+	keys.forEach((key) => {
+		const title = key.split('_').join(' ');
+		if (object[key] !== '') {
+			items.push(
+				<div style={{ paddingBottom: '5px' }}>
+					{title}:{' '}
+					{JSON.stringify(object[key]).replace(
+						/(^")|("$)/g,
+						''
+					)}
+				</div>
+			);
+		}
+	});
+
+	return (
+		<div>
+			{items}
+		</div>
+	);
+}
+
+function Country({ origin, destination }) {
 	const [advisoryInfo, setAdvisory] = useState({});
 	const [visaInfo, setVisa] = useState({});
-	const [officialLanguages, setOfficial] = useState({});
-	const [regionalLanguages, setRegional] = useState({});
-	const [minorityLanguages, setMinority] = useState({});
-	const [nationalLanguages, setNational] = useState({});
-	const [widelySpokenLanguages, setWidely] = useState({});
+	const [languagesInfo, setLanguages] = useState({});
 
 	useEffect(() => {
-		async function fetchData() {
+		async function fetchVisa() {
 			await fetch('http://localhost:4000/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -63,30 +84,26 @@ function Country({ origin, destination, languages }) {
 						res.data.country_languages === null
 						|| res.data.country_languages.length === 0
 					) {
-						setOfficial('Not available yet.');
-						setRegional('Not available yet.');
-						setMinority('Not available yet.');
-						setNational('Not available yet.');
-						setWidely('Not available yet.');
+						setLanguages('Not available yet.');
 					} else {
-						setOfficial(res.data.country_languages[0].official_languages);
-						setRegional(res.data.country_languages[0].regional_languages);
-						setMinority(res.data.country_languages[0].minority_languages);
-						setNational(res.data.country_languages[0].national_languages);
-						setWidely(res.data.country_languages[0].widely_spoken_languages);
+						setLanguages(res.data.country_languages[0]);
 					}
 				});
 		}
-		fetchData();
+		fetchVisa();
 		fetchLanguages();
-	}, [origin, destination, languages]);
+	}, [origin, destination]);
+
+	const countryCode = getCountryCode(destination);
+	const src = `https://www.countryflags.io/${countryCode}/flat/64.png`;
 
 	if (!origin || !destination) {
 		return <Redirect to="/" />;
 	}
 
-	const countryCode = getCountryCode(destination);
-	const src = `https://www.countryflags.io/${countryCode}/flat/64.png`;
+	if (!visaInfo && !languagesInfo) {
+		return <div />;
+	}
 	return (
 		<div>
 			<ReactFullpage
@@ -111,49 +128,10 @@ function Country({ origin, destination, languages }) {
 									<Col xs="10" sm="4">
 										<CountryCard flagSrc={src} title="Country Flag">
 											<CardBody>
-												{officialLanguages && (
+												{Languages(languagesInfo)}
+												{languagesInfo === 'Not available yet.' && (
 													<div style={{ paddingBottom: '5px' }}>
-														Official Languages:{' '}
-														{JSON.stringify(officialLanguages).replace(
-															/(^")|("$)/g,
-															''
-														)}
-													</div>
-												)}
-												{regionalLanguages && (
-													<div style={{ paddingBottom: '5px' }}>
-														Regional Languages:{' '}
-														{JSON.stringify(regionalLanguages).replace(
-															/(^")|("$)/g,
-															''
-														)}
-													</div>
-												)}
-												{minorityLanguages && (
-													<div style={{ paddingBottom: '5px' }}>
-														Minority Languages:{' '}
-														{JSON.stringify(minorityLanguages).replace(
-															/(^")|("$)/g,
-															''
-														)}
-													</div>
-												)}
-												{nationalLanguages && (
-													<div style={{ paddingBottom: '5px' }}>
-														National Languages:{' '}
-														{JSON.stringify(nationalLanguages).replace(
-															/(^")|("$)/g,
-															''
-														)}
-													</div>
-												)}
-												{widelySpokenLanguages && (
-													<div style={{ paddingBottom: '5px' }}>
-														Widely Spoken Languages:{' '}
-														{JSON.stringify(widelySpokenLanguages).replace(
-															/(^")|("$)/g,
-															''
-														)}
+														Not Available yet.
 													</div>
 												)}
 											</CardBody>

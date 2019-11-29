@@ -13,4 +13,5 @@
 }
 .countryCardBody {
 	text-align: left;
+	text-transform: capitalize;
 }
