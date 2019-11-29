@@ -162,7 +162,7 @@ function Country({ origin, destination, languages }) {
 									<Col xs="10" sm="4">
 										<Card header="Visa Info">
 											<CardBody style={{ paddingTop: '0' }}>
-												<div dangerouslySetInnerHTML={{ __html: JSON.stringify(visaInfo).replace(/(^")|("$)/g, '') }} />
+												<div dangerouslySetInnerHTML={{ __html: visaInfo }} />
 												{}
 											</CardBody>
 										</Card>
