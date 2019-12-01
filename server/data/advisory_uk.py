@@ -3,11 +3,7 @@ import regex
 from helper_class.chrome_driver import create_driver
 from helper_class.chrome_driver import quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
-
-
-# Used to translate using the googletrans library
-import json
-
+from helper_class.country_names import find_iso_of_country
 
 def get_url_of_countries():
     info = {}
@@ -37,38 +33,48 @@ def get_url_of_countries():
     return info
 
 
-def parse_one_country_advisory(url):
+def parse_one_country_advisory(url,href):
     driver = create_driver()
     driver.get(url)
+    advisory=""
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    advisory_div = soup.find("div", {"class": "application-notice help-notice"})
-    advisory_p_tag = advisory_div.find("p")
-    advisory = advisory_p_tag.decode_contents() #This will keep the a tag so that the embassy info is displayed
+    advisory_div = soup.find("div", {"class": "gem-c-govspeak govuk-govspeak direction-ltr"})
+    advisory_paragraph1 = advisory_div.findAll("p")[0]
+    advisory_paragraph2 = advisory_div.findAll("p")[1]
+    advisory = advisory_paragraph1.text +" "+advisory_paragraph2.text
+    quit_driver(driver)
 
     return advisory
 
 
-def save_to_db():
-    advisory = parse_one_country_advisory("https://www.gov.uk/foreign-travel-advice/{}/travel-advice-help-and-support".format('afghanistan',sep=''))
+def parse_all_countries_advisory():
+    data = {}
+    urls = get_url_of_countries()
+    for country in urls:
+        href = urls[country].get("href")
+        link = "https://www.gov.uk{}".format(href,sep='')
+        advisory = parse_one_country_advisory(link,href)
+        data[country]= {"advisory": advisory}
+    return data
 
+
+def save_to_db():
+    data = parse_all_countries_advisory()
     # create an an sqlite_advisory object
     sqlite = sqlite_advisories('GB')
     sqlite.delete_table()
     sqlite.create_table()
-    # for country in data:
-        # iso = data[country].get('country-iso')
-        # name = data[country].get('name')
-        # text = data[country].get('advisory-text')
-        # visa_info = data[country].get('visa-info')
-    iso = 'AF'
-    name = 'Afghanistan'
-    text = advisory
-    visa_info = ""
-    sqlite.new_row(iso,name,text,visa_info)
+    for country in data:
+        iso = find_iso_of_country(country)
+        if(iso != ""):
+            name = country
+            advisory = data[country].get('advisory')
+            visa_info = " "
+            sqlite.new_row(iso,name,advisory,visa_info)
+
     sqlite.commit()
     sqlite.close()
-
 
 if __name__ == '__main__':
     save_to_db()
