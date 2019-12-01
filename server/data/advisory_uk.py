@@ -31,8 +31,10 @@ def get_url_of_countries():
         #retrieving links for all countries
         for country in countries:
             country_name = country.text
-            href = country['href']
-            info[country_name] = {"href":href}
+            country_iso = find_iso_of_country(country_name)
+            if(country_iso != ""): #Countries that don't have iso are not official counntries
+                href = country['href']
+                info[country_iso] = {"href":href}
     finally:
         driver.close()
         driver.quit()
@@ -65,8 +67,9 @@ def parse_all_countries_advisory():
         data[country]= {"advisory": advisory}
     return data
 
-def parse_a_country_visa(url, driver):
+def parse_all_country_visa(url):
     info ={}
+    driver = create_driver()
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup = BeautifulSoup(driver.page_source, 'lxml')
@@ -104,62 +107,41 @@ def parse_a_country_visa(url, driver):
            visa = visa[0:visaLength]
 
          info[name] = {"visa":visa}
+    quit_driver(driver)
 
     return info
 
 
 def save_to_UK():
-    url = get_url_of_countries() #this function create its own driver -- to change
-    data = {}
-    driver = create_driver()
-    visas = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens",driver)
-    counter_country = 0
-
-    for country in url:
-        driver.implicitly_wait(5)
-        name = country
-        href = url[country].get("href")
-
-        link = "https://safetravel.govt.nz/{}".format(href,sep='')
-        advisory_text = parse_a_country_advisory(link)
-
-        visa_text= ""
-        for countryVisa in visas:
-            if(countryVisa ==  country):
-               visa_text = visas[countryVisa].get('visa')
-               break;
-
-        country_iso = "na"
-        data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_text}
-        data = find_all_iso(data)
-
-        if ((counter_country%50) == 0):
-            quit_driver(driver)
-            driver = create_driver()
-        counter_country += 1
-
-    with open('./advisory-uk.json', 'w') as outfile:
-        json.dump(data, outfile)
-
-    save_into_db(data)
-
-
-def save_to_db():
     data = parse_all_countries_advisory()
+    visas = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens")
+    info = {}
+    array_info = []
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('GB')
+    sqlite = sqlite_advisories('GB') #The UK iso is GB
     sqlite.delete_table()
     sqlite.create_table()
-    for country in data:
+    for country in visas:
         iso = find_iso_of_country(country)
         if(iso != ""):
-            name = country
-            advisory = data[country].get('advisory')
-            visa_info = " "
-            sqlite.new_row(iso,name,advisory,visa_info)
+            try:
+                name = country
+                advisory = data[iso].get('advisory') #dictionary for the travel advisory is iso{advisory:text}
+                visa_info = visas[country].get('visa') #dictionary for visa info is country{visa:text}
+                info = {
+                    "country_iso" : iso,
+                    "name": name,
+                    "advisory": advisory,
+                    "visa_info": visa_info
+                }
+                array_info.append(info)
+                sqlite.new_row(iso,name,advisory,visa_info)
+            except KeyError:
+                print("This country doesn't have advisory info: ",country)
+                print("Its ISO is: ",iso)
 
     sqlite.commit()
     sqlite.close()
 
-if __name__ == '__main__':
-    save_into_db()
+    with open('./advisory-uk.json', 'w') as outfile:
+        json.dump(array_info, outfile)
