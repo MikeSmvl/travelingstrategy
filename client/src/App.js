@@ -17,7 +17,6 @@ function useQuery() {
 
 function Application() {
 	const query = useQuery();
-	console.log(query);
 
 	return (
 		<div>

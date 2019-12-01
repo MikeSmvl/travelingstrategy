@@ -7,7 +7,6 @@ const Subtitle = (props) => {
 	return (
 		<>
 			<div className="subtitle">{text}</div>
-			<hr className="subtitleDivider" />
 		</>
 	);
 };
