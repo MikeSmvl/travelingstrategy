@@ -18,7 +18,7 @@ function Languages(object) {
 		const title = key.split('_').join(' ');
 		if (object[key] !== '') {
 			items.push(
-				<div style={{ paddingBottom: '5px' }}>
+				<div key={key} style={{ paddingBottom: '5px' }}>
 					{title}:{' '}
 					{JSON.stringify(object[key]).replace(
 						/(^")|("$)/g,
@@ -40,14 +40,29 @@ function Country({ origin, destination }) {
 	const [advisoryInfo, setAdvisory] = useState({});
 	const [visaInfo, setVisa] = useState({});
 	const [languagesInfo, setLanguages] = useState({});
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		async function fetchVisa() {
+		async function fetchData() {
+			setIsLoading(true)
 			await fetch('http://localhost:4000/', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					query: `{ countryToCountry(origin:"${origin}" destination: "${destination}") { name visa_info advisory_text } }`
+					query: `{
+						countryToCountry(origin:"${origin}" destination: "${destination}") {
+							name
+							visa_info
+							advisory_text
+						}
+						country_languages(country_iso: "${destination}"){
+							official_languages,
+							regional_languages,
+							minority_languages,
+							national_languages,
+							widely_spoken_languages
+						}
+					}`
 				})
 			})
 				.then((res) => res.json())
@@ -58,40 +73,17 @@ function Country({ origin, destination }) {
 					) {
 						setAdvisory('Not available yet.');
 						setVisa('Not available yet.');
+						setLanguages('Not available yet.');
+						setIsLoading(false)
 					} else {
 						setAdvisory(res.data.countryToCountry[0].advisory_text);
 						setVisa(res.data.countryToCountry[0].visa_info);
-					}
-				});
-		}
-		async function fetchLanguages() {
-			await fetch('http://localhost:4000/', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					query: `{country_languages(country_iso: "${destination}"){
-						official_languages,
-						regional_languages,
-						minority_languages,
-						national_languages,
-						widely_spoken_languages
-					  }}`
-				})
-			})
-				.then((res) => res.json())
-				.then((res) => {
-					if (
-						res.data.country_languages === null
-						|| res.data.country_languages.length === 0
-					) {
-						setLanguages('Not available yet.');
-					} else {
 						setLanguages(res.data.country_languages[0]);
+						setIsLoading(false)
 					}
 				});
 		}
-		fetchVisa();
-		fetchLanguages();
+		fetchData()
 	}, [origin, destination]);
 
 	const countryCode = getCountryCode(destination);
@@ -100,13 +92,9 @@ function Country({ origin, destination }) {
 	if (!origin || !destination) {
 		return <Redirect to="/" />;
 	}
-
-	if (!visaInfo && !languagesInfo) {
-		return <div />;
-	}
 	return (
 		<div>
-			<ReactFullpage
+			{!isLoading && <ReactFullpage
 				licenseKey="CF1896AE-3B194629-99B627C1-841383E5"
 				scrollingSpeed={1000} /* Options here */
 				sectionsColor={['rgb(232, 233, 241)', 'rgb(255, 222, 206)']}
@@ -115,6 +103,9 @@ function Country({ origin, destination }) {
 				navigationTooltips={['Basics', 'Health & Safety', 'Money']}
 				anchors={['basics', 'health', 'money']}
 				scrollOverflow
+				normalScrollElements=".scrolling-card"
+				responsiveWidth={800}
+        afterResponsive={function(isResponsive){}}
 				render={({ state, fullpageApi }) => {
 					return (
 						<ReactFullpage.Wrapper>
@@ -138,10 +129,9 @@ function Country({ origin, destination }) {
 										</CountryCard>
 									</Col>
 									<Col xs="10" sm="4">
-										<Card header="Visa Info">
-											<CardBody style={{ paddingTop: '0' }}>
-												<div dangerouslySetInnerHTML={{ __html: visaInfo }} />
-												{}
+										<Card className="scrolling-card" header="Visa Info" style={{height: '400px', overflow: 'scroll'}}>
+											<CardBody className="scrolling-card" style={{ paddingTop: '0' }}>
+												<div className="scrolling-card" dangerouslySetInnerHTML={{ __html: visaInfo}} />
 											</CardBody>
 										</Card>
 									</Col>
@@ -167,7 +157,7 @@ function Country({ origin, destination }) {
 						</ReactFullpage.Wrapper>
 					);
 				}}
-			/>
+			/>}
 		</div>
 	);
 }
