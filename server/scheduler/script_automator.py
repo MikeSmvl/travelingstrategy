@@ -10,6 +10,7 @@ sys.path.append('../data')
 from advisory_ca import save_to_canada
 from advisory_aus import save_to_australia
 from advisory_nz import save_to_new_zealand
+from advisory_uk import save_to_UK
 from error_email import send_email
 
 #logging to a file
@@ -33,6 +34,7 @@ def start_scheduler():
     scheduler.every().day.do(save_to_canada)
     scheduler.every().day.do(save_to_australia)
     scheduler.every().day.do(save_to_new_zealand)
+    scheduler.every().day.do(save_to_UK)
 
     while True:
       scheduler.run_pending()
