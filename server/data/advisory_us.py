@@ -67,12 +67,55 @@ def get_name_and_advisory_of_countries():
 
 
 
-def parse_a_country_visa(url, driver):
+def parse_a_country_visa():
+    info ={}
+    driver = create_driver()
+    driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens")
+    #Selenium hands the page source to Beautiful Soup
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+    visa = " "
+    table = soup.find('table')
+    table_body = table.find('tbody')
+    table_rows = table_body.find_all('tr')
+    x = 0
+    for tr in table_rows:
+         x = x+1
+         cols = tr.find_all('td')
+         cols = [ele.text.strip() for ele in cols]
+         name = cols[0]
+         if(x < 5):
+           visaLength = len(cols[1])-3
+           visa = cols[1][0:visaLength]
+         elif( x < 80):
+           visaLength = len(cols[1])-4
+           visa = cols[1][0:visaLength]
+         else:
+           visaLength = len(cols[1])-5
+           visa = cols[1][0:visaLength]
+         if(visa[len(visa)-1: len(visa)] == ']'):
+              if(x < 5):
+                visaLength = len(visa)-3
+                visa = visa[0:visaLength]
+              elif( x < 80):
+                visaLength = len(visa)-4
+                visa = visa[0:visaLength]
+              else:
+                visaLength = len(visa)-5
+                visa = visa[0:visaLength]
+         if(name == "Angola"):
+           visaLength = len(visa)-2
+           visa = visa[0:visaLength]
+
+         info[name] = {"visa":visa}      
     return info
+
 
 def save_to_united_states():
     name_advisory = get_name_and_advisory_of_countries()
     info ={}
+
+    visas = parse_a_country_visa()
+
     for name in sorted (name_advisory.keys()):
        info[name] = name_advisory[name]
 
@@ -84,10 +127,16 @@ def save_to_united_states():
         driver.implicitly_wait(5)
         name = country
         advisory = info[country]
-        visa = ""
 
+        visa_text= ""
+        for countryVisa in visas:
+            if(countryVisa ==  country):
+               visa_text = visas[countryVisa].get('visa')
+               break;
+      
         country_iso = "na"
-        data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory,'visa-info':visa}
+        data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory,'visa-info':visa_text}
+
         if ((counter_country%50) == 0):
           quit_driver(driver)
           driver = create_driver()
@@ -120,4 +169,3 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
-save_to_united_states()
