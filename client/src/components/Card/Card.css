@@ -4,11 +4,14 @@
 	font-family: 'Open Sans', sans-serif;
 }
 
+.TScardBody {
+	text-align: left;
+}
+
 .cardHeader {
 	background-color: white;
 	color: rgb(134, 134, 146);
 	font-size: large;
-	align-items: center;
 }
 
 .cardDivider {

@@ -12,11 +12,11 @@ const CountryCard = (props) => {
 	} = props;
 	return (
 		<Card {...rest}>
-			<Card.Header className="cardHeader">
+			<Card.Header className="countryCardHeader">
 				<img alt="" src={flagSrc} />
-				<div className="cardTitle">{title}</div>
+				<div className="countryCardTitle">{title}</div>
 			</Card.Header>
-			<Card.Body className="cardBody">
+			<Card.Body className="countryCardBody">
 				{children}
 			</Card.Body>
 		</Card>
