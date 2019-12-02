@@ -7,8 +7,6 @@ from helper_class.country_names import find_iso_of_country
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 
-
-# Used to translate using the googletrans library
 import json
 
 
