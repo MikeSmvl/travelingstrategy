@@ -7,11 +7,20 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from helper_class.country_names import find_iso_of_country
+from helper_class.chrome_driver import create_driver
+from helper_class.chrome_driver import quit_driver
 
 def get_electrical_sockets():
     info = {}
     try:
         url = 'https://www.worldstandards.eu/electricity/plug-voltage-by-country/'
+        
+        driver = create_driver()
+        driver.get(url)
+
+        #Selenium hands the page source to Beautiful Soup
+        soup=BeautifulSoup(driver.page_source, 'lxml')
+        
         return info
 
     finally:
