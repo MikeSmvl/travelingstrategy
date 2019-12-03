@@ -19,5 +19,4 @@ app.use("/", ExpressGraphQL({ schema: schema, graphiql: true}));
 
 app.listen(4000, () => {
     console.log("🚀 GraphQL server running at http://localhost:4000.");
-    console.log("🚀 GraphQL server running at http://localhost:4000.");
 });

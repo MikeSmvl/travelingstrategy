@@ -23,7 +23,6 @@ def quit_driver(driver):
     driver.quit()
 
 
-
 def get_name_and_advisory_of_countries():
     try:
         #this is the link to the first page
@@ -64,7 +63,6 @@ def get_name_and_advisory_of_countries():
         driver.quit()
 
     return info
-
 
 
 def parse_a_country_visa():
@@ -143,16 +141,10 @@ def save_to_united_states():
         counter_country += 1
     data = find_all_iso(data)
 
-
-
     with open('./advisory-us.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
-
-
-
-
 
 
 def save_into_db(data):
@@ -169,3 +161,4 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
+save_to_united_states()
