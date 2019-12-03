@@ -3,9 +3,9 @@
 import xlrd 
 from helper_class.country_names import find_iso_of_country
 
-def main():   
+def get_countries_sockets():   
     # Give the location of the file 
-    loc = ("C:/Users/Admin/Desktop/SOEN490/travelingstrategy/server/data/Plugs.xlsx") 
+    loc = "server/data/Plugs.xlsx" 
   
     # To open Workbook 
     wb = xlrd.open_workbook(loc) 
@@ -28,4 +28,4 @@ def main():
         print(info)
 
 if __name__ == '__main__':
-    main()
+    get_countries_sockets()
