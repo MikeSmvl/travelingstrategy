@@ -62,7 +62,7 @@ def get_name_and_advisory_of_countries():
     finally:
         driver.close()
         driver.quit()
-       
+
     return info
 
 
@@ -70,7 +70,7 @@ def get_name_and_advisory_of_countries():
 def parse_a_country_visa():
     info ={}
     driver = create_driver()
-    driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens")
+    driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens")
     #Selenium hands the page source to Beautiful Soup
     soup = BeautifulSoup(driver.page_source, 'lxml')
     visa = " "
@@ -106,7 +106,7 @@ def parse_a_country_visa():
            visaLength = len(visa)-2
            visa = visa[0:visaLength]
 
-         info[name] = {"visa":visa}      
+         info[name] = {"visa":visa}
     return info
 
 
@@ -133,7 +133,7 @@ def save_to_united_states():
             if(countryVisa ==  country):
                visa_text = visas[countryVisa].get('visa')
                break;
-      
+
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory,'visa-info':visa_text}
 

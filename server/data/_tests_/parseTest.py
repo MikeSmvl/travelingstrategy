@@ -9,6 +9,7 @@ from advisory_ca import MyBeautifulSoup, get_all_countries, advisory_canada
 from advisory_aus import get_url_of_countries, parse_a_country, create_driver, quit_driver
 from languages import get_concatinated_values
 from advisory_nz import get_url_of_countries_nz, create_driver_nz, quit_driver_nz, parse_a_country_visa, parse_a_country_advisory
+from advisory_us import get_name_and_advisory_of_countries, parse_a_country_visa as parse_a_country_visa_us
 
 class parseTest(unittest.TestCase):
 
@@ -53,11 +54,12 @@ class parseTest(unittest.TestCase):
         test_value = ["Charles", "Karl", "Steven"]
         value = get_concatinated_values(test_value)
         self.assertTrue("Charles, Karl, Steven", value)
+
     # Tests for new zealand's parser
 
-    def test_australia_getCountry(self):
+    def test_nz_getCountry(self):
         # tests get url
-        urls = get_url_of_countries()
+        urls = get_url_of_countries_nz()
         self.assertFalse("", urls)
 
     def test_parse_advisory(self):
@@ -72,6 +74,18 @@ class parseTest(unittest.TestCase):
         driver = create_driver_nz()
         urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens", driver)
         quit_driver_nz(driver)
+        self.assertFalse("", urls)
+
+    # Tests for USA's parser
+
+    def test_parse_advisory_us(self):
+        # tests getting advisory
+        urls = get_name_and_advisory_of_countries()
+        self.assertFalse("", urls)
+
+    def tests_us_parse(self):
+        # tests parsing visa
+        urls = parse_a_country_visa_us()
         self.assertFalse("", urls)
 
 if __name__ == '__main__':
