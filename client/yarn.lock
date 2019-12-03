@@ -3707,6 +3707,13 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+city-timezones@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/city-timezones/-/city-timezones-1.1.0.tgz#f67b8e6d6e59284a38a88227d8af1883e140d366"
+  integrity sha512-3FOK3btpIZV8e6Jv06f0NkkSKgKPAwifKHTVomKsqrM59X7KwgYs3aOFJDS9+eBThMIwUsA4n+rgzu8fZthNaQ==
+  dependencies:
+    lodash ">=4.17.11"
+
 class-utils@^0.3.5:
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/class-utils/-/class-utils-0.3.6.tgz#f93369ae8b9a7ce02fd41faad0ca83033190c463"
@@ -8220,7 +8227,7 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-"lodash@>=3.5 <5", lodash@^4.0.1, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5:
+"lodash@>=3.5 <5", lodash@>=4.17.11, lodash@^4.0.1, lodash@^4.15.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -12012,6 +12019,11 @@ space-separated-tokens@^1.0.0:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/space-separated-tokens/-/space-separated-tokens-1.1.4.tgz#27910835ae00d0adfcdbd0ad7e611fb9544351fa"
   integrity sha512-UyhMSmeIqZrQn2UdjYpxEkwY9JUrn8pP+7L4f91zRzOQuI8MF1FGLfYU9DKCYeLdo7LXMxwrX5zKFy7eeeVHuA==
+
+spacetime@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/spacetime/-/spacetime-6.3.0.tgz#64f1ce779cb0cac14494f7c304f747d2cdf84e71"
+  integrity sha512-zOZJgt49OxFjsyX0vEUwIxKJH55lQ03n94qzqLa0miSacGIyaTTrbMEbsYyVYi9B7yBc0wcV/QhLVx791mfpEA==
 
 spdx-correct@^3.0.0:
   version "3.1.0"
