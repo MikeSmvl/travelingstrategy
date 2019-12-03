@@ -82,28 +82,10 @@ def parse_a_country_visa():
          cols = tr.find_all('td')
          cols = [ele.text.strip() for ele in cols]
          name = cols[0]
-         if(x < 5):
-           visaLength = len(cols[1])-3
-           visa = cols[1][0:visaLength]
-         elif( x < 80):
-           visaLength = len(cols[1])-4
-           visa = cols[1][0:visaLength]
-         else:
-           visaLength = len(cols[1])-5
-           visa = cols[1][0:visaLength]
-         if(visa[len(visa)-1: len(visa)] == ']'):
-              if(x < 5):
-                visaLength = len(visa)-3
-                visa = visa[0:visaLength]
-              elif( x < 80):
-                visaLength = len(visa)-4
-                visa = visa[0:visaLength]
-              else:
-                visaLength = len(visa)-5
-                visa = visa[0:visaLength]
-         if(name == "Angola"):
-           visaLength = len(visa)-2
-           visa = visa[0:visaLength]
+      
+         visaPosition = cols[1].find('[')
+         visa = cols[1][0 : visaPosition]
+         print(visa)
 
          info[name] = {"visa":visa}
     return info
@@ -161,4 +143,3 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
-save_to_united_states()
