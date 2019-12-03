@@ -4,34 +4,29 @@ import { Card as RBCard } from 'react-bootstrap';
 import './Card.css';
 
 const Card = (props) => {
-	const {
-		header = '',
-		footer = '',
-		title = '',
-		subtitle = '',
-		children,
-		...rest
-	} = props;
+	const { header = '', footer = '', children, ...rest } = props;
 	return (
 		<RBCard {...rest} className="TSCard">
 			{header && <RBCard.Header className="cardHeader">{header}</RBCard.Header>}
-			<RBCard.Body>
-				{title && <RBCard.Title>{title}</RBCard.Title>}
-				{subtitle && (
-					<RBCard.Subtitle className="mb-2 text-muted">
-						{subtitle}
-					</RBCard.Subtitle>
-				)}
-				{children}
-			</RBCard.Body>
+			{children}
 			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
 		</RBCard>
 	);
 };
 
 const CardBody = (props) => {
-	const { children, ...rest } = props;
-	return <RBCard.Text {...rest}>{children}</RBCard.Text>;
+	const { children, title = '', subtitle = '', ...rest } = props;
+	return (
+		<RBCard.Body {...rest} className="TScardBody">
+			{title && <RBCard.Title>{title}</RBCard.Title>}
+			{subtitle && (
+				<RBCard.Subtitle className="mb-2 text-muted">
+					{subtitle}
+				</RBCard.Subtitle>
+			)}
+			<RBCard.Text>{children}</RBCard.Text>
+		</RBCard.Body>
+	);
 };
 
 const Divider = () => {

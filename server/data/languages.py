@@ -51,7 +51,6 @@ def get_countries_languages():
                         languages.append(get_languages_not_displayed_in_list(languages,a_tags_array, table_columns,index))
                     index+=1
             array_of_country_info = get_country_info_object(languages, array_of_country_info, country)
-        print(array_of_country_info)
         return(array_of_country_info)
 
     finally:
@@ -172,7 +171,11 @@ def save_to_languages():
         national_languages = get_concatinated_values(country.get('national_languages'))
         widely_spoken_languages = get_concatinated_values(country.get('widely_spoken_languages'))
 
-        cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
+        #For Great britain it retrieves the country many times but it has languages only one time
+        country_has_no_languages = not (official_languages=="" and regional_languages=="" and minority_languages=="" and national_languages=="" and widely_spoken_languages=="")
+
+        if(country_has_no_languages):
+            cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
+
     con.commit()
     con.close()
-

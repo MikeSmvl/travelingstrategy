@@ -12,28 +12,22 @@ Array [
   >
     <div
       className="TSCard card"
+      subtitle="Subtitle"
+      title="Title"
     >
       <div
         className="cardHeader card-header"
       >
         Header
       </div>
+      <hr
+        className="cardDivider"
+      />
       <div
-        className="card-body"
+        className="TScardBody card-body"
       >
-        <div
-          className="card-title h5"
-        >
-          Title
-        </div>
-        <div
-          className="mb-2 text-muted card-subtitle h6"
-        >
-          Subtitle
-        </div>
-        <hr
-          className="cardDivider"
-        />
+        
+        
         <p
           className="card-text"
         >
@@ -85,10 +79,12 @@ Array [
   >
     <div
       className="TSCard card"
+      subtitle=""
+      title=""
     >
       
       <div
-        className="card-body"
+        className="TScardBody card-body"
       >
         
         
@@ -141,20 +137,20 @@ Array [
       className="card"
     >
       <div
-        className="cardHeader card-header"
+        className="countryCardHeader card-header"
       >
         <img
           alt=""
           src="https://www.countryflags.io/fr/flat/64.png"
         />
         <div
-          className="cardTitle"
+          className="countryCardTitle"
         >
           Title
         </div>
       </div>
       <div
-        className="cardBody card-body"
+        className="countryCardBody card-body"
       >
         <p
           className="card-text"
@@ -204,20 +200,20 @@ Array [
       className="card"
     >
       <div
-        className="cardHeader card-header"
+        className="countryCardHeader card-header"
       >
         <img
           alt=""
           src="https://www.countryflags.io/dk/flat/64.png"
         />
         <div
-          className="cardTitle"
+          className="countryCardTitle"
         >
           
         </div>
       </div>
       <div
-        className="cardBody card-body"
+        className="countryCardBody card-body"
       >
         <p
           className="card-text"
@@ -527,9 +523,6 @@ Array [
       >
         Health & Safety
       </div>
-      <hr
-        className="subtitleDivider"
-      />
     </div>
   </div>,
   <button
@@ -573,9 +566,6 @@ Array [
     >
       
     </div>
-    <hr
-      className="subtitleDivider"
-    />
   </div>,
   <button
     className="info__show-button"
