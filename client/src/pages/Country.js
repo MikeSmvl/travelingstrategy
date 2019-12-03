@@ -9,6 +9,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryCode from '../utils/countryToISO';
 import getCountryName from '../utils/ISOToCountry';
+import getTimeZone from '../utils/timeZone';
 import '../App.css';
 
 function Languages(object) {
@@ -41,6 +42,8 @@ function Country({ origin, destination }) {
 	const [visaInfo, setVisa] = useState({});
 	const [languagesInfo, setLanguages] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
+
+	getTimeZone()
 
 	useEffect(() => {
 		async function fetchData() {
