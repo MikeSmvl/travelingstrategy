@@ -65,6 +65,7 @@ def get_name_and_advisory_of_countries():
     return info
 
 
+
 def parse_a_country_visa():
     info ={}
     driver = create_driver()
@@ -145,7 +146,6 @@ def save_to_united_states():
         json.dump(data, outfile)
 
     save_into_db(data)
-
 
 def save_into_db(data):
     # create an an sqlite_advisory object
