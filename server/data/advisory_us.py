@@ -82,10 +82,9 @@ def parse_a_country_visa():
          cols = tr.find_all('td')
          cols = [ele.text.strip() for ele in cols]
          name = cols[0]
-      
+
          visaPosition = cols[1].find('[')
          visa = cols[1][0 : visaPosition]
-         print(visa)
 
          info[name] = {"visa":visa}
     return info
