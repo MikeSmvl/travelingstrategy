@@ -15,7 +15,6 @@ def remove_duplicate_countries():
     dataFrame.to_excel(writer, 'e_sockets')
     #saving the new data
     writer.save()
-    print(dataFrame)
 
 def get_countries_sockets():   
     # Give the location of the file 
@@ -42,6 +41,22 @@ def get_countries_sockets():
         }
         print(info)
 
+def save_electrical_sockets():
+    con  = sqlite3.connect('../countries.sqlite')
+    cur = con.cursor()
+
+    cur.execute('DROP TABLE IF EXISTS sockets')
+    con.commit()
+    cur.execute('CREATE TABLE sockets (country_iso VARCHAR, country_name VARCHAR, types VARCHAR)')
+    con.commit()
+
+
+    socket_data = get_electrical_sockets()
+    # something needs to change here
+
+    con.commit()
+    con.close()
+    
 if __name__ == '__main__':
     # remove_duplicate_countries()
     get_countries_sockets()
