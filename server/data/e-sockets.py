@@ -1,17 +1,32 @@
 
 # Reading an excel file using Python 
 import xlrd 
+import pandas as pd
 from helper_class.country_names import find_iso_of_country
+
+def remove_duplicate_countries():
+    #accessing excel sheet as dataframes
+    df = pd.read_excel('./Plugs.xlsx')  
+    #removing duplicates and joining by the plug type attribute
+    dataFrame = df.groupby(['Location','Electric Potential','Frequency'])['Plug Type'].apply(', '.join).reset_index()
+    #create a write to create a new excel sheet without any of the duplicates
+    writer = pd.ExcelWriter('./e_sockets.xlsx')
+    #saving the contents into the new excel file
+    dataFrame.to_excel(writer, 'e_sockets')
+    #saving the new data
+    writer.save()
+    print(dataFrame)
 
 def get_countries_sockets():   
     # Give the location of the file 
-    loc = "server/data/Plugs.xlsx" 
+    loc = "./e_sockets.xlsx" 
   
     # To open Workbook 
     wb = xlrd.open_workbook(loc) 
     sheet = wb.sheet_by_index(0) 
     sheet.cell_value(0, 0) 
   
+    #loop for every row and grab the values 
     for row in range(sheet.nrows):
         country_name = sheet.cell_value(row, 0)
         plug_type = sheet.cell_value(row, 1)
@@ -28,4 +43,5 @@ def get_countries_sockets():
         print(info)
 
 if __name__ == '__main__':
+    # remove_duplicate_countries()
     get_countries_sockets()
