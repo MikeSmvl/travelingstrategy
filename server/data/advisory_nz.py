@@ -159,5 +159,3 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
-
-save_to_new_zealend()
