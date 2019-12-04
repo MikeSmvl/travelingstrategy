@@ -20,8 +20,8 @@ def remove_duplicate_countries():
 
 def get_countries_sockets():   
     # Give the location of the file 
-    #loc = "./e_sockets.xlsx" #mac
-    loc = "server/data/e_sockets.xlsx"  #pc
+    loc = "./e_sockets.xlsx" #mac
+    # loc = "server/data/e_sockets.xlsx"  #pc
   
     # To open Workbook 
     wb = xlrd.open_workbook(loc) 
@@ -67,7 +67,4 @@ def save_electrical_sockets():
         cur.execute('INSERT INTO sockets (country_iso,country_name,plug_type,electric_potential,frequency) values( ?, ?, ?, ?, ?)',(country_iso,country_name,plug_type,electric_potential,frequency))
     con.commit()
     con.close()
-    
-if __name__ == '__main__':
-    # remove_duplicate_countries()
-     save_electrical_sockets()
+
