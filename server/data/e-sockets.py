@@ -2,7 +2,9 @@
 # Reading an excel file using Python 
 import xlrd 
 import pandas as pd
+import sqlite3
 from helper_class.country_names import find_iso_of_country
+import pycountry
 
 def remove_duplicate_countries():
     #accessing excel sheet as dataframes
@@ -18,45 +20,54 @@ def remove_duplicate_countries():
 
 def get_countries_sockets():   
     # Give the location of the file 
-    loc = "./e_sockets.xlsx" 
+    #loc = "./e_sockets.xlsx" #mac
+    loc = "server/data/e_sockets.xlsx"  #pc
   
     # To open Workbook 
     wb = xlrd.open_workbook(loc) 
     sheet = wb.sheet_by_index(0) 
     sheet.cell_value(0, 0) 
-  
+    arrayOfInfo = []
     #loop for every row and grab the values 
     for row in range(sheet.nrows):
         country_name = sheet.cell_value(row, 0)
-        plug_type = sheet.cell_value(row, 1)
-        electric_potential = sheet.cell_value(row, 2)
-        frequency = sheet.cell_value(row, 3)
+        electric_potential = sheet.cell_value(row, 1)
+        frequency = sheet.cell_value(row, 2)
+        plug_type = sheet.cell_value(row, 3)
         iso = find_iso_of_country(country_name)
         info = {
             "name":country_name,
             "iso": iso,
-            "plug type": plug_type,
-            "electric potential": electric_potential,
+            "plug_type": plug_type,
+            "electric_potential": electric_potential,
             "frequency": frequency
         }
-        print(info)
+        arrayOfInfo.append(info)
+
+    return arrayOfInfo
 
 def save_electrical_sockets():
     con  = sqlite3.connect('../countries.sqlite')
     cur = con.cursor()
-
+    # should not create the table every time
+    # change in the future
     cur.execute('DROP TABLE IF EXISTS sockets')
     con.commit()
-    cur.execute('CREATE TABLE sockets (country_iso VARCHAR, country_name VARCHAR, types VARCHAR)')
+    cur.execute('CREATE TABLE sockets (country_iso VARCHAR, country_name VARCHAR, plug_type VARCHAR, electric_potential VARCHAR, frequency VARCHAR)')
     con.commit()
 
-
-    socket_data = get_electrical_sockets()
-    # something needs to change here
-
+    countries_data = get_countries_sockets()
+    for country in countries_data:
+        country_iso = country.get('iso')
+        country_name = country.get('name')
+        plug_type = country.get('plug_type')
+        electric_potential = country.get('electric_potential')
+        frequency = country.get('frequency')
+        print(country)
+        cur.execute('INSERT INTO sockets (country_iso,country_name,plug_type,electric_potential,frequency) values( ?, ?, ?, ?, ?)',(country_iso,country_name,plug_type,electric_potential,frequency))
     con.commit()
     con.close()
     
 if __name__ == '__main__':
     # remove_duplicate_countries()
-    get_countries_sockets()
+     save_electrical_sockets()
