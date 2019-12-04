@@ -9,17 +9,8 @@ from advisory_ca import MyBeautifulSoup, get_all_countries, advisory_canada
 from advisory_aus import get_url_of_countries, parse_a_country, create_driver, quit_driver
 from languages import get_concatinated_values
 from advisory_nz import get_url_of_countries_nz, create_driver_nz, quit_driver_nz, parse_a_country_visa, parse_a_country_advisory
-<<<<<<< HEAD
-<<<<<<< HEAD
-from advisory_us import get_name_and_advisory_of_countries, parse_a_country_visa as parse_a_country_visa_us
-=======
-from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
->>>>>>> origin/master
-=======
 from advisory_us import get_name_and_advisory_of_countries, parse_a_country_visa as parse_a_country_visa_us
 from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
-
->>>>>>> 84581e3d9cfd176ea4b944229d077c5a23967543
 
 class parseTest(unittest.TestCase):
 
