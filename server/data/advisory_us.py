@@ -4,24 +4,9 @@ import time
 import json
 from bs4 import BeautifulSoup
 import regex
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
+from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
-
-
-#the two functions below should be puth in chrome driver class
-def create_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(19)
-    return driver
-
-def quit_driver(driver):
-    driver.quit()
-
 
 def get_name_and_advisory_of_countries():
     try:
@@ -29,11 +14,7 @@ def get_name_and_advisory_of_countries():
         url = 'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html/'
 
         #set up the headless chrome driver
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        # create a new chrome session
-        driver = webdriver.Chrome(options=chrome_options)
-        driver.implicitly_wait(19)
+        driver = create_driver()
         driver.get(url)
 
         #Selenium hands the page source to Beautiful Soup

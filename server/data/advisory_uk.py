@@ -1,10 +1,8 @@
 from bs4 import BeautifulSoup
 import regex
-from helper_class.chrome_driver import create_driver
-from helper_class.chrome_driver import quit_driver
+from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
-from helper_class.country_names import find_iso_of_country
-from helper_class.country_names import find_all_iso
+from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 
 import json
