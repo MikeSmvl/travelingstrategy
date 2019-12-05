@@ -1,6 +1,7 @@
 const cityTimezones = require('city-timezones');
+var country = require('country-list-js');
 
-function getTimeZone(city){
+function getTimeZone(city,destinationCountry){
     var timeAtLocation
 
     try{
@@ -23,18 +24,27 @@ function getTimeZone(city){
         console.log("Could not get timezone of "+city)
         var firstE = city.indexOf("e")
         city = city.substr(0,firstE) + "é" + city.substr(firstE+1) // replacing the first e with é
-        handleErrorForSomeCities(city,firstE)
+        handleErrorForSomeCities(city,destinationCountry, firstE)
     }
     return timeAtLocation
 
 }
 
-function handleErrorForSomeCities(city, firstE){
+function handleErrorForSomeCities(city,destinationCountry, firstE){
+    var timeZone
     if(firstE >= 0){
         city = city.substr(0,firstE) + "é" + city.substr(firstE+1) // replacing the first e with é
-        return getTimeZone(city)
+        timeZone = getTimeZone(city,destinationCountry)
+        return timeZone
     }
-    return null
+    else{ // Return the time zone of the capital of the country of destination
+        console.log("Getting time zone of the capital of the country of destination("+destinationCountry+")")
+        var countryOfDestination = country.findByIso2(destinationCountry)
+        timeZone = getTimeZone(countryOfDestination.capital)
+        var timeZoneOfCapital = "Time in the capital "+ countryOfDestination.capital+ " "+timeZone
+        console.log(timeZoneOfCapital)
+        return(timeZoneOfCapital)
+    }
 }
 
 export default getTimeZone;
