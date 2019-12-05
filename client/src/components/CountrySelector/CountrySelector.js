@@ -55,7 +55,7 @@ const CountrySelector = (props) => {
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
 								setDestinationCountry(place.address_components.pop().short_name);
-								setDestinationCity(place.address_components[0].short_name);
+								setDestinationCity(place.address_components[0].long_name);
 								console.log(place.address_components[0].long_name)
 							}}
 						/>

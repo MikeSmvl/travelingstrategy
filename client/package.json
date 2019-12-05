@@ -27,6 +27,7 @@
     "@storybook/theming": "^5.2.5",
     "bootstrap": "^4.3.1",
     "city-timezones": "^1.1.0",
+    "country-list-js": "^3.1.5",
     "google-maps-stub": "^1.0.1",
     "graphql": "^14.5.8",
     "graphql-tag": "^2.10.1",
