@@ -43,7 +43,7 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 	const [languagesInfo, setLanguages] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 
-	getTimeZone()
+	getTimeZone(destinationCity)
 
 	useEffect(() => {
 		async function fetchData() {
