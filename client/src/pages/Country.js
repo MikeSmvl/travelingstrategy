@@ -43,8 +43,6 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 	const [languagesInfo, setLanguages] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 
-	getTimeZone(destinationCity, destinationCountry)
-
 	useEffect(() => {
 		async function fetchData() {
 			setIsLoading(true);
@@ -113,7 +111,9 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 						return (
 							<ReactFullpage.Wrapper>
 								<div className="section App">
-									<Header title={getCountryName(destinationCountry)} />
+									<Header title={getCountryName(destinationCountry)}
+									title2={destinationCity}
+									title3={getTimeZone(originCity, destinationCity, originCountry, destinationCountry)} />
 									<Subtitle text="Important Basics" />
 									<Row
 										className="justify-content-center"
