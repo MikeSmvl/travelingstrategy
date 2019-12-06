@@ -28,3 +28,11 @@ iso_list = ["AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR",
 
 # Currency API
 currency_api_link = 'https://restcountries.eu/rest/v2/alpha/'
+# Gasoline, rent, and grocery API
+gas_rent_grocery_api = 'http://knoema.com/api/1.0/data/'
+# Median 2-bedroom apartment rent in New York
+new_york_rent = 5102
+# Median salary in New York
+new_york_salary = 51270
+# Median grocery bill in New York per month
+new_york_grocery = 625
