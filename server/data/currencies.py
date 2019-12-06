@@ -1,7 +1,7 @@
 import sqlite3
 from helper_class.api_helper import api
+from helper_class.url_helper import url
 from lib.config import currency_api_link, iso_list
-from lib.url_conversion import url
 from time import sleep
 
 for country in iso_list:

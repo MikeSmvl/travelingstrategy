@@ -1,3 +1,6 @@
+# Database
+sqlite_db = '../countries.sqlite'
+
 # ISO List
 iso_list = ["AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR",
             "AM", "AW", "AU", "AT", "AZ", "BS", "BH", "BD", "BB", "BY", "BE",
