@@ -1,5 +1,5 @@
 # Database
-sqlite_db = '../countries.sqlite'
+sqlite_db = 'countries.sqlite'
 
 # ISO List
 iso_list = ["AF", "AX", "AL", "DZ", "AS", "AD", "AO", "AI", "AQ", "AG", "AR",

@@ -1,10 +1,12 @@
 import sqlite3
-from config import sqlite_db
+import os
 
+# Get relative path to the server folder where the database (countries.sqlite) file is located
+base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 class database:
 
-    def __init__(self):
-        self.db = sqlite3.connect('./dberino.sqlite')
+    def __init__(self, db_name):
+        self.db = sqlite3.connect(f'{base_dir}/{db_name}')
 
     def add_table(self, table_name, **columns):
         """
