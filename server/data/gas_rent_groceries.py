@@ -3,6 +3,13 @@ from lib.config import iso_list, new_york_rent, new_york_salary, new_york_grocer
 import datetime
 from helper_class.api_helper import api
 from lib.database import database
+from helper_class.logger import Logger
+from helper_class.flags import Flags
+
+# Initialize flags and logger
+flags = Flags()
+level = flags.get_logger_level()
+logger = Logger(level=level) if level != None else Logger()
 
 # get current date (especially interested in the week_number)
 current_date = datetime.date.today()
@@ -20,6 +27,7 @@ groceries_api = 'http://knoema.com/api/1.0/data/COOFLIIND2016?time=&uiMode=last&
 
 def fincancials_data(api_link, data_type) :
   try:
+    logger.info(f'Beginning {data_type} price parsing')
     api_url = api(api_link)
     json_data = api_url.get_json()['data']
     for i in json_data:
@@ -27,21 +35,24 @@ def fincancials_data(api_link, data_type) :
         try:
           if i['RegionId'] == country:
             data_to_insert = i['Value']
-            print('Country:', i['RegionId'], '-> Current', data_type, 'cost:', data_to_insert)
+            logger.success(f'Country: {country} -> Current {data_type} cost: {data_to_insert}')
             if data_type == 'gasoline':
+              logger.info('Inserting data into database.')
               db.insert('financials', str(country), str(data_to_insert), '', '')
             elif data_type == 'rent':
+              logger.info('Inserting data into database.')
               where_claus = f'country={country}'
               column_value = f'rent={data_to_insert}'
               db.update('financials', table_name, column_value)
             elif data_type == 'groceries':
+              logger.info('Inserting data into database.')
               where_claus = f'country={country}'
               column_value = f'groceries={data_to_insert}'
               db.update('financials', table_name, column_value)
         except Exception as e:
-          print(f'Could not get {data_type} data for {country} because of the following error: {e}')
+          logger.error(f'Could not get {data_type} data for {country} because of the following error: {e}')
   except Exception as e:
-    print(f'Could not get response from api because of the following error: {e}')
+    logger.error(f'Could not get response from api because of the following error: {e}')
 
 fincancials_data(gasoline_api, 'gasoline')
 fincancials_data(rent_api, 'rent')
