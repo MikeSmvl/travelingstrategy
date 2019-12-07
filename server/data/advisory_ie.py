@@ -10,10 +10,8 @@ from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 import helper_class.chrome_driver as driver
 
-def find_all_url():
-
+def find_all_url(my_driver):
     url_to_all = {}
-    my_driver = driver.create_driver()
     url_main = 'https://www.dfa.ie/travel/travel-advice/'
     my_driver.get(url_main)
     soup = BeautifulSoup(my_driver.page_source, 'lxml')
@@ -24,14 +22,9 @@ def find_all_url():
         href = "https://www.dfa.ie"+name['href']
         url_to_all[name.text]={"href":href}
 
-
     return url_to_all
 
-def get_one_advisory(url):
-
-    my_driver = driver.create_driver()
-    my_driver.get(url)
-    soup = BeautifulSoup(my_driver.page_source, 'lxml')
+def get_one_advisory(url,my_driver,soup):
 
     reg = regex.compile(r'shaded\ssecurity-status\s\w+')
     section = soup.find('section', attrs = {'class':reg})
@@ -51,11 +44,8 @@ def get_one_advisory(url):
 
     return advisory_text;
 
-def get_one_visa(url,to_find):
+def get_one_info(url,to_find,my_driver,soup):
 
-    my_driver = driver.create_driver()
-    my_driver.get(url)
-    soup = BeautifulSoup(my_driver.page_source, 'lxml')
     par = soup.find_all(regex.compile(r'(p|strong|h3)'))
     re_txt = regex.compile(to_find,regex.IGNORECASE)
     data_found = False
@@ -67,7 +57,12 @@ def get_one_visa(url,to_find):
         if (re_txt.search(txt)):
             data_not_to_save  = True
 
-        elif ((p.name == 'p' or p.name == 'h3') and data_found):
+        elif (( p.name == 'h3') and data_found):
+            # if(len(p.find_all('strong')) > 0):
+            data_found = False
+            break
+
+        elif (( p.name == 'p') and data_found):
             if(len(p.find_all('strong')) > 0):
                 data_found = False
                 break
@@ -80,4 +75,37 @@ def get_one_visa(url,to_find):
             data = data + txt
 
     print(data)
+    return data
 
+
+def find_all_ierland():
+
+    my_driver = driver.create_driver()
+
+    all_url = find_all_url(my_driver)
+    data = find_all_iso(all_url)
+
+    for country in data:
+        c = data[country]
+        url = c['href']
+        my_driver.implicitly_wait(5)
+        my_driver.get(url)
+        soup = BeautifulSoup(my_driver.page_source, 'lxml')
+        c['visa-info'] = get_one_info(url,'visa/passport',my_driver,soup)
+        c['advisory-text'] = get_one_advisory(url,my_driver,soup)
+        c['name'] = country
+        if (c['visa-info']==''):
+            c['visa-info'] = get_one_info(url,'Entry requirements',my_driver,soup)
+
+    driver.quit_driver(my_driver)
+    with open('./advisory-ie.json', 'w') as outfile:
+        json.dump(data, outfile)
+
+find_all_ierland()
+# url  = 'https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/albania/'
+# my_driver = driver.create_driver()
+# my_driver.get(url)
+# soup = BeautifulSoup(my_driver.page_source, 'lxml')
+
+# get_one_info(url,'visa/passport',my_driver,soup)
+# driver.quit_driver(my_driver)
