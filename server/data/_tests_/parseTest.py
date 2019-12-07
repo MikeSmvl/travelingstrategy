@@ -9,6 +9,7 @@ from advisory_ca import MyBeautifulSoup, get_all_countries, advisory_canada
 from advisory_aus import get_url_of_countries, parse_a_country, create_driver, quit_driver
 from languages import get_concatinated_values
 from advisory_nz import get_url_of_countries_nz, create_driver_nz, quit_driver_nz, parse_a_country_visa, parse_a_country_advisory
+from advisory_us import get_name_and_advisory_of_countries, parse_a_country_visa as parse_a_country_visa_us
 from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
 
 class parseTest(unittest.TestCase):
@@ -76,6 +77,17 @@ class parseTest(unittest.TestCase):
         urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens", driver)
         quit_driver_nz(driver)
         self.assertFalse("", urls)
+
+    # Tests for USA's parser
+
+    def test_parse_advisory_us(self):
+        # tests getting advisory
+        urls = get_name_and_advisory_of_countries()
+        self.assertFalse("", urls)
+
+    def tests_us_parse(self):
+        # tests parsing visa
+        urls = parse_a_country_visa_us()
 
     # Tests for United Kingdom's parser
 
