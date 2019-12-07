@@ -51,30 +51,33 @@ def get_one_advisory(url):
 
     return advisory_text;
 
-def get_one_visa(url):
+def get_one_visa(url,to_find):
 
     my_driver = driver.create_driver()
     my_driver.get(url)
     soup = BeautifulSoup(my_driver.page_source, 'lxml')
-    par = soup.find_all(regex.compile(r'(p|strong)'))
+    par = soup.find_all(regex.compile(r'(p|strong|h3)'))
+    re_txt = regex.compile(to_find,regex.IGNORECASE)
     data_found = False
     data_not_to_save = False
     data = ""
+
     for p in par:
         txt = p.text
-        if (txt == 'Entry requirements (visa/passport)'):
+        if (re_txt.search(txt)):
             data_not_to_save  = True
 
-        elif (p.name == 'p' and data_found):
+        elif ((p.name == 'p' or p.name == 'h3') and data_found):
             if(len(p.find_all('strong')) > 0):
                 data_found = False
                 break
 
-        if (data_found):
-            data = data + txt
-
-        elif (data_not_to_save):
+        if (data_not_to_save):
             data_found = True
             data_not_to_save = False
 
+        elif (data_found):
+            data = data + txt
+
     print(data)
+
