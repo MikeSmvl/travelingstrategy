@@ -24,7 +24,6 @@ def find_all_url():
         href = "https://www.dfa.ie"+name['href']
         url_to_all[name.text]={"href":href}
 
-    quit_driver(my_driver)
 
     return url_to_all
 
@@ -52,5 +51,30 @@ def get_one_advisory(url):
 
     return advisory_text;
 
-out = get_one_advisory('https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/afghanistan/')
-print(out)
+def get_one_visa(url):
+
+    my_driver = driver.create_driver()
+    my_driver.get(url)
+    soup = BeautifulSoup(my_driver.page_source, 'lxml')
+    par = soup.find_all(regex.compile(r'(p|strong)'))
+    data_found = False
+    data_not_to_save = False
+    data = ""
+    for p in par:
+        txt = p.text
+        if (txt == 'Entry requirements (visa/passport)'):
+            data_not_to_save  = True
+
+        elif (p.name == 'p' and data_found):
+            if(len(p.find_all('strong')) > 0):
+                data_found = False
+                break
+
+        if (data_found):
+            data = data + txt
+
+        elif (data_not_to_save):
+            data_found = True
+            data_not_to_save = False
+
+    print(data)
