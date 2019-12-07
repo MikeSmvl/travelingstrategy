@@ -4,6 +4,9 @@ import os
 # Get relative path to the server folder where the database (countries.sqlite) file is located
 base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 class database:
+    """
+    Class used to interact with sqlite database.
+    """
 
     def __init__(self, db_name):
         self.db = sqlite3.connect(f'{base_dir}/{db_name}')
