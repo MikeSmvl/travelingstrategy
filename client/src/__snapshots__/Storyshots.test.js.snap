@@ -275,12 +275,12 @@ Array [
       <div
         className="title2"
       >
-        
+        TimeZone
       </div>
       <div
         className="title3"
       >
-        
+        TimeDifference
       </div>
       <div
         className="subtitle"
@@ -341,12 +341,12 @@ Array [
       <div
         className="title2"
       >
-        
+        TimeZone
       </div>
       <div
         className="title3"
       >
-        
+        TimeDifference
       </div>
       <div
         className="subtitle"
