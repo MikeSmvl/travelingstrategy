@@ -9,7 +9,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryCode from '../utils/countryToISO';
 import getCountryName from '../utils/ISOToCountry';
-import getTimeZone from '../utils/timeZone';
+import findTimeZoneDifference from '../utils/timeZone';
 import '../App.css';
 
 function Languages(object) {
@@ -113,7 +113,7 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 								<div className="section App">
 									<Header title={getCountryName(destinationCountry)}
 									title2={destinationCity}
-									title3={getTimeZone(originCity, destinationCity, originCountry, destinationCountry)} />
+									title3={findTimeZoneDifference(originCity, destinationCity, originCountry, destinationCountry)} />
 									<Subtitle text="Important Basics" />
 									<Row
 										className="justify-content-center"
