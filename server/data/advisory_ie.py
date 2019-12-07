@@ -77,6 +77,30 @@ def get_one_info(url,to_find,my_driver,soup):
     print(data)
     return data
 
+def parse_a_country_visa():
+    info ={}
+    my_driver = driver.create_driver()
+    my_driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens")
+    #Selenium hands the page source to Beautiful Soup
+    soup = BeautifulSoup(my_driver.page_source, 'lxml')
+    visa = " "
+    table = soup.find('table')
+    table_body = table.find('tbody')
+    table_rows = table_body.find_all('tr')
+    x = 0
+    for tr in table_rows:
+         x = x+1
+         cols = tr.find_all('td')
+         cols = [ele.text.strip() for ele in cols]
+         name = cols[0]
+
+         visaPosition = cols[1].find('[')
+         visa = cols[1][0 : visaPosition]
+
+         info[name] = {"visa":visa}
+    print(info)
+    return info
+
 
 def find_all_ierland():
 
@@ -101,7 +125,9 @@ def find_all_ierland():
     with open('./advisory-ie.json', 'w') as outfile:
         json.dump(data, outfile)
 
-find_all_ierland()
+
+#find_all_ierland()
+parse_a_country_visa()
 # url  = 'https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/albania/'
 # my_driver = driver.create_driver()
 # my_driver.get(url)
