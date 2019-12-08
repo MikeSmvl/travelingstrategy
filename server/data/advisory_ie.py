@@ -10,12 +10,16 @@ from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 import helper_class.chrome_driver as driver
 
+
+#Find all the urls to each country from the
+#irish gov website
 def find_all_url(my_driver):
     url_to_all = {}
     url_main = 'https://www.dfa.ie/travel/travel-advice/'
     my_driver.get(url_main)
     soup = BeautifulSoup(my_driver.page_source, 'lxml')
 
+    #pattern of the href in the tag
     reg = regex.compile(r'\/travel\/travel-advice\/a-z-list-of-countries\/\w+\/')
     a = soup.findAll('a', attrs = {'href':reg})
     for name in a:
@@ -24,6 +28,7 @@ def find_all_url(my_driver):
 
     return url_to_all
 
+#get the advisory of all countries going from ierland
 def get_one_advisory(url,my_driver,soup):
 
     reg = regex.compile(r'shaded\ssecurity-status\s\w+')
@@ -31,6 +36,7 @@ def get_one_advisory(url,my_driver,soup):
     advisory = section['class'][2]
     advisory_text = ""
 
+    #find the hilighted box and asssign its text to the advisory
     if (advisory == 'normal'):
         advisory_text = "Normal precautions"
     elif (advisory == 'high-caution'):
@@ -44,8 +50,10 @@ def get_one_advisory(url,my_driver,soup):
 
     return advisory_text;
 
+#getting the header and the text that goes with it
 def get_one_info(url,to_find,my_driver,soup):
 
+    #on the irish gov it is strong or h3
     par = soup.find_all(regex.compile(r'(p|strong|h3)'))
     re_txt = regex.compile(to_find,regex.IGNORECASE)
     data_found = False
@@ -67,10 +75,12 @@ def get_one_info(url,to_find,my_driver,soup):
                 data_found = False
                 break
 
+        #when the data is found we skip the first one
+        #which is usually the title
         if (data_not_to_save):
             data_found = True
             data_not_to_save = False
-
+        #on the second round we save the data
         elif (data_found):
             data = data + "<br>"+txt
 
@@ -97,13 +107,13 @@ def parse_a_country_visa():
          visa = cols[1][0 : visaPosition]
 
          info[name] = {"visa":visa}
-
+    #make the iso the key then return the data
     find_all_iso(info)
     data_new = replace_key_by_iso(info)
     info = data_new;
     return info
 
-
+#function to replave name by iso
 def replace_key_by_iso(data):
     data_new = {}
     for k in data:
@@ -113,7 +123,24 @@ def replace_key_by_iso(data):
     return data_new
 
 
+def save_into_db(data):
+    # create an an sqlite_advisory object
+    sqlite = sqlite_advisories('IE')
+    sqlite.delete_table()
+    sqlite.create_table()
+    for country in data:
+        iso = data[country].get('country-iso')
+        name = data[country].get('name')
+        text = data[country].get('advisory-text')
+        visa_info = data[country].get('visa-info')
+        sqlite.new_row(iso,name,text,visa_info)
+    sqlite.commit()
+    sqlite.close()
 
+
+#here we go through all countries and save all the data
+#it comves ftom the irish gov website
+#for the visa info half comes form wiki
 def find_all_ierland():
 
     my_driver = driver.create_driver()
@@ -150,18 +177,12 @@ def find_all_ierland():
                 c['visa-info'] = visa_wiki[iso].get('visa-info')+ "<br>" + c['visa-info']
             except:
                 print(c)
-
+    #dump the data into js to be deleted later
     driver.quit_driver(my_driver)
     with open('./advisory-ie.json', 'w') as outfile:
         json.dump(data, outfile)
 
+    save_into_db(data)
 
-find_all_ierland()
-#parse_a_country_visa()
-# url  = 'https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/albania/'
-# my_driver = driver.create_driver()
-# my_driver.get(url)
-# soup = BeautifulSoup(my_driver.page_source, 'lxml')
 
-# get_one_info(url,'visa/passport',my_driver,soup)
-# driver.quit_driver(my_driver)
+#find_all_ierland()
