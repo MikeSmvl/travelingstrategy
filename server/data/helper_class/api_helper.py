@@ -21,6 +21,7 @@ class ApiHelper:
             return response
         except Exception as error_msg:
             print(f'Could not initialize api because of the following error: {error_msg}')
+            raise
 
 
     def get_code(self):
