@@ -133,8 +133,8 @@ class parseTest(unittest.TestCase):
         quit_driver(my_driver)
         self.assertFalse("", info)
 
-    def tests_ie_parse_visa_wiki(self):
-        # tests parsing visa
+    def test_ie_parse_visa_wiki(self):
+        # tests parsing visa from wiki for ie
         driver = create_driver_nz()
         urls = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", driver)
         quit_driver_nz(driver)
