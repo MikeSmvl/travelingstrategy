@@ -166,3 +166,29 @@ it("Querying socket table for Canada", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+
+it("Querying for sockets of all countries", () =>{
+  const query = `
+  {
+    sockets_table{
+      country_iso,
+      country_name,
+      plug_type,
+      electric_potential,
+      frequency
+  }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
