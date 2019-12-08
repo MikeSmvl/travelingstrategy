@@ -97,16 +97,46 @@ class parseTest(unittest.TestCase):
         self.assertFalse("", urls)
 
     def test_parse_one_country_uk(self):
-        #driver = create_driver_nz()
+        # tests parsing of 1 country, Afghanistan
         urls = parse_one_country_advisory("https://www.gov.uk/foreign-travel-advice/afghanistan", "foreign-travel-advice/afghanistan")
-        #quit_driver_nz(driver)
         self.assertFalse("", urls)
 
     def tests_uk_parse_visa(self):
         # tests parsing visa
         driver = create_driver_nz()
-        urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens", driver)
+        urls = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens", driver)
         quit_driver_nz(driver)
+        self.assertFalse("", urls)
+
+    # Tests for Ireland's parser
+
+    def test_get_urls_ie(self):
+        # tests getting the urls fromt the gov't site
+        driver = create_driver_nz()
+        urls = find_all_url(driver)
+        quit_driver_nz(driver)
+        self.assertFalse("", urls)
+
+    def test_get_advisory_ie(self):
+        # tests getting single advisory
+        advis = get_one_advisory(url, my_driver, soup)
+        self.assertFalse("", advis)
+
+     def test_get_info_ie(self):
+         # tests getting visa info
+        my_driver = create_driver;
+        my_driver.implicitly_wait(5)
+        my_driver.get(url)
+        soup = BeautifulSoup(my_driver.page_source, 'lxml')
+        info = get_one_info('https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/canada/', 'visa/passport', my_driver, soup)
+        quit_driver(my_driver)
+        self.assertFalse("", info)
+
+    def test_ie_parse_visa_wiki(self):
+        # tests parsing visa from wiki for ie
+        my_driver = create_driver;
+        urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
+        quit_driver_nz(my_driver)
         self.assertFalse("", urls)
 
 if __name__ == '__main__':
