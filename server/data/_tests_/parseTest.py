@@ -4,7 +4,7 @@ import unittest
 import sqlite3
 from bs4 import BeautifulSoup
 
-sys.path.append('../')
+sys.path.append('')
 from advisory_ca import MyBeautifulSoup, get_all_countries, advisory_canada
 from advisory_aus import get_url_of_countries, parse_a_country, create_driver, quit_driver
 from languages import get_concatinated_values
