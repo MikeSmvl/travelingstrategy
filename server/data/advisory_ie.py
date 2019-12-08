@@ -28,15 +28,15 @@ def find_all_url(my_driver):
 
     return url_to_all
 
-#get the advisory of all countries going from ierland
-def get_one_advisory(url,my_driver,soup):
+#get the advisory of all countries going from ireland
+def get_one_advisory(url, my_driver, soup):
 
     reg = regex.compile(r'shaded\ssecurity-status\s\w+')
     section = soup.find('section', attrs = {'class':reg})
     advisory = section['class'][2]
     advisory_text = ""
 
-    #find the hilighted box and asssign its text to the advisory
+    #find the highlighted box and asssign its text to the advisory
     if (advisory == 'normal'):
         advisory_text = "Normal precautions"
     elif (advisory == 'high-caution'):
@@ -51,7 +51,7 @@ def get_one_advisory(url,my_driver,soup):
     return advisory_text;
 
 #getting the header and the text that goes with it
-def get_one_info(url,to_find,my_driver,soup):
+def get_one_info(url, to_find, my_driver, soup):
 
     #on the irish gov it is strong or h3
     par = soup.find_all(regex.compile(r'(p|strong|h3)'))
@@ -113,7 +113,7 @@ def parse_a_country_visa():
     info = data_new;
     return info
 
-#function to replave name by iso
+#function to replace name by iso
 def replace_key_by_iso(data):
     data_new = {}
     for k in data:
@@ -139,9 +139,9 @@ def save_into_db(data):
 
 
 #here we go through all countries and save all the data
-#it comves ftom the irish gov website
-#for the visa info half comes form wiki
-def find_all_ierland():
+#it comes from the irish gov website
+#for the visa info half comes from wiki
+def find_all_ireland():
 
     my_driver = driver.create_driver()
 
@@ -161,7 +161,7 @@ def find_all_ierland():
         if (c['visa-info']==''):
             c['visa-info'] = get_one_info(url,'Entry requirements',my_driver,soup)
         iso = c['country-iso']
-        #handeling some exception, had to do research
+        #handling some exceptions, had to do research
         if (iso == 'AI'):
             c['visa-info']='Visa not required for 3 months'
         elif (iso == 'BM'):
