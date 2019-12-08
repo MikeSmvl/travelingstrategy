@@ -74,7 +74,6 @@ def get_one_info(url,to_find,my_driver,soup):
         elif (data_found):
             data = data + "<br>"+txt
 
-    print(data)
     return data
 
 def parse_a_country_visa():
@@ -99,11 +98,9 @@ def parse_a_country_visa():
 
          info[name] = {"visa":visa}
 
-    print(x)
     find_all_iso(info)
     data_new = replace_key_by_iso(info)
     info = data_new;
-    print(info)
     return info
 
 
@@ -136,14 +133,31 @@ def find_all_ierland():
         c['name'] = country
         if (c['visa-info']==''):
             c['visa-info'] = get_one_info(url,'Entry requirements',my_driver,soup)
+        iso = c['country-iso']
+        #handeling some exception, had to do research
+        if (iso == 'AI'):
+            c['visa-info']='Visa not required for 3 months'
+        elif (iso == 'BM'):
+            c['visa-info'] = 'Visa not required for 21 days (extendable)'
+        elif (iso == 'MQ'):
+            iso ='FR'
+        elif (iso == 'MS'):
+            c['visa-info'] = 'Visa not required for 6 months'
+        elif (iso == 'RE'):
+            iso = 'FR'
+        else:
+            try:
+                c['visa-info'] = visa_wiki[iso].get('visa-info')+ "<br>" + c['visa-info']
+            except:
+                print(c)
 
     driver.quit_driver(my_driver)
     with open('./advisory-ie.json', 'w') as outfile:
         json.dump(data, outfile)
 
 
-#find_all_ierland()
-parse_a_country_visa()
+find_all_ierland()
+#parse_a_country_visa()
 # url  = 'https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/albania/'
 # my_driver = driver.create_driver()
 # my_driver.get(url)
