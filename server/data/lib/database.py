@@ -3,9 +3,9 @@ import os
 
 # Get relative path to the server folder where the database (countries.sqlite) file is located
 base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-class database:
+class Database:
     """
-    Class used to interact with sqlite database.
+    Class used to interact with sqlite database
     """
 
     def __init__(self, db_name):
@@ -77,6 +77,26 @@ class database:
             table_name, self.cols, where))
 
 
+    def insert_or_update(self, table_name, *data):
+        """
+        Insert if row does not exist else update
+
+        :param table_name:  Name of the table to be used.
+        :param where: Condition to be used for update.
+        :param **columns: Columns and values that will replace rows where condition is met.
+        """
+        self.data = ""
+
+        for value in data:
+            self.data += '"'+value+'"'+','
+        self.data = self.data[0:len(self.data)-1]
+
+        self.db.execute("INSERT OR REPLACE INTO {} values({})".format(
+            table_name, self.data
+        ))
+        self.db.commit()
+
+
     def get_items(self, table_name, where=1):
         """
         Get row(s) in table where condition is met
@@ -93,16 +113,25 @@ class database:
         else:
             return {}
 
-    # return list of tables
+
     def get_tables(self):
+        """
+        Return list of tables
+        """
         self.tables = self.db.execute("SELECT name FROM sqlite_master")
         return list(self.tables)
 
-    # execute sqlite query
+
     def query(self, query_string):
+        """
+        Execute sqlite query
+        """
         self.db.execute(query_string)
         self.db.commit()
 
-    # close database connection
+
     def close_connection(self):
+        """
+        Close database connection
+        """
         self.db.close()

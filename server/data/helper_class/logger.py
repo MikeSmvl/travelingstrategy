@@ -11,54 +11,54 @@ path.append(helper_folder_path)
 from color import ColoredFormatter
 
 class Logger(object):
-		"""
-		Class used to log events grouped by levels: (Info, Success, Debug, Warning, Error, Critical)
-		"""
+    """
+    Class used to log events grouped by levels: (Info, Success, Debug, Warning, Error, Critical)
+    """
 
-		def __init__(self, name='logger', level=logging.DEBUG):
-				# Initialize logger
-				self.logger = logging.getLogger(name)
+    def __init__(self, name='logger', level=logging.DEBUG):
+        # Initialize logger
+        self.logger = logging.getLogger(name)
 
-				# Create success logging level
-				self.SUCCESS = 25 # Place success level between WARNING and INFO
-				logging.addLevelName(self.SUCCESS, 'SUCCESS')
-				setattr(self.logger, 'success', lambda message, *args: self.logger._log(self.SUCCESS, message, args))
+        # Create success logging level
+        self.SUCCESS = 25 # Place success level between WARNING and INFO
+        logging.addLevelName(self.SUCCESS, 'SUCCESS')
+        setattr(self.logger, 'success', lambda message, *args: self.logger._log(self.SUCCESS, message, args))
 
-				# Set level
-				self.logger.setLevel(level)
+        # Set level
+        self.logger.setLevel(level)
 
-				# Create handler and use color formatter
-				formatter = ColoredFormatter()
-				sh = StreamHandler()
-				sh.setFormatter(formatter)
+        # Create handler and use color formatter
+        formatter = ColoredFormatter()
+        sh = StreamHandler()
+        sh.setFormatter(formatter)
 
-				# Add handler to logging
-				self.logger.addHandler(sh)
+        # Add handler to logging
+        self.logger.addHandler(sh)
 
-		def success(self, msg, *args, **kwargs):
-				if self.logger.isEnabledFor(self.SUCCESS):
-						self.logger._log(self.SUCCESS, msg, args, **kwargs)
+    def success(self, msg, *args, **kwargs):
+        if self.logger.isEnabledFor(self.SUCCESS):
+            self.logger._log(self.SUCCESS, msg, args, **kwargs)
 
-		def debug(self, msg):
-				self.logger.debug(msg)
+    def debug(self, msg):
+        self.logger.debug(msg)
 
-		def info(self, msg):
-				self.logger.info(msg)
+    def info(self, msg):
+        self.logger.info(msg)
 
-		def warning(self, msg):
-				self.logger.warning(msg)
+    def warning(self, msg):
+        self.logger.warning(msg)
 
-		def error(self, msg):
-				self.logger.error(msg)
+    def error(self, msg):
+        self.logger.error(msg)
 
-		def critical(self, msg):
-				self.logger.critical(msg)
+    def critical(self, msg):
+        self.logger.critical(msg)
 
 if __name__ == '__main__':
-		logger = Logger()
-		logger.info('info')
-		logger.success('success')
-		logger.debug('debug')
-		logger.warning('warning')
-		logger.error('error')
-		logger.critical('critical')
+    LOGGER = Logger()
+    LOGGER.info('info')
+    LOGGER.success('success')
+    LOGGER.debug('debug')
+    LOGGER.warning('warning')
+    LOGGER.error('error')
+    LOGGER.critical('critical')
