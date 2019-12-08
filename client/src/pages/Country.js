@@ -9,6 +9,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryCode from '../utils/countryToISO';
 import getCountryName from '../utils/ISOToCountry';
+import findTimeZoneDifference from '../utils/timeZone';
 import '../App.css';
 
 function Languages(object) {
@@ -36,7 +37,7 @@ function Languages(object) {
 	);
 }
 
-function Country({ origin, destination }) {
+function Country({ originCountry, destinationCountry, originCity, destinationCity }) {
 	const [advisoryInfo, setAdvisory] = useState({});
 	const [visaInfo, setVisa] = useState({});
 	const [languagesInfo, setLanguages] = useState({});
@@ -50,12 +51,12 @@ function Country({ origin, destination }) {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						countryToCountry(origin:"${origin}" destination: "${destination}") {
+						countryToCountry(origin:"${originCountry}" destination: "${destinationCountry}") {
 							name
 							visa_info
 							advisory_text
 						}
-						country_languages(country_iso: "${destination}"){
+						country_languages(country_iso: "${destinationCountry}"){
 							official_languages,
 							regional_languages,
 							minority_languages,
@@ -84,12 +85,12 @@ function Country({ origin, destination }) {
 				});
 		}
 		fetchData();
-	}, [origin, destination]);
+	}, [originCountry, destinationCountry]);
 
-	const countryCode = getCountryCode(destination);
+	const countryCode = getCountryCode(destinationCountry);
 	const src = `https://www.countryflags.io/${countryCode}/flat/64.png`;
 
-	if (!origin || !destination) {
+	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
 	return (
@@ -110,7 +111,9 @@ function Country({ origin, destination }) {
 						return (
 							<ReactFullpage.Wrapper>
 								<div className="section App">
-									<Header title={getCountryName(destination)} />
+									<Header title={getCountryName(destinationCountry)}
+									title2={destinationCity}
+									title3={findTimeZoneDifference(originCity, destinationCity, originCountry, destinationCountry)} />
 									<Subtitle text="Important Basics" />
 									<Row
 										className="justify-content-center"

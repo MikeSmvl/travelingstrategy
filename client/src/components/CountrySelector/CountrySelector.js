@@ -5,17 +5,19 @@ import { Link } from 'react-router-dom';
 import './CountrySelector.css';
 
 const CountrySelector = (props) => {
-	const [origin, setOrigin] = useState('');
-	const [destination, setDestination] = useState('');
+	const [originCountry, setOriginCountry] = useState('');
+	const [destinationCountry, setDestinationCountry] = useState('');
+	const [originCity, setOriginCity] = useState('');
+	const [destinationCity, setDestinationCity] = useState('');
 	const [validOrig, setValidOrig] = useState(true);
 	const [validDest, setValidDest] = useState(true);
 
 	const handleSubmit = (event) => {
-		if (!origin || !destination) {
+		if (!originCountry || !destinationCountry) {
 			event.preventDefault();
 			event.stopPropagation();
-			if (!origin) setValidOrig(false);
-			if (!destination) setValidDest(false);
+			if (!originCountry) setValidOrig(false);
+			if (!destinationCountry) setValidDest(false);
 		}
 	};
 
@@ -32,10 +34,11 @@ const CountrySelector = (props) => {
 							type="text"
 							required
 							placeholder={originLabel}
-							types={['(regions)']}
+							types={['(cities)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setOrigin(place.address_components.pop().short_name);
+								setOriginCountry(place.address_components.pop().short_name);
+								setOriginCity(place.address_components[0].short_name);
 							}}
 						/>
 						{!validOrig
@@ -48,10 +51,12 @@ const CountrySelector = (props) => {
 							type="text"
 							required
 							placeholder={destinationLabel}
-							types={['(regions)']}
+							types={['(cities)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setDestination(place.address_components.pop().short_name);
+								setDestinationCountry(place.address_components.pop().short_name);
+								setDestinationCity(place.address_components[0].long_name);
+								console.log(place.address_components[0].long_name)
 							}}
 						/>
 						{!validDest
@@ -62,9 +67,9 @@ const CountrySelector = (props) => {
 						sm="auto"
 						style={{ display: 'flex', alignItems: 'center' }}
 					>
-						{origin && destination ? (
+						{originCountry && destinationCountry ? (
 							<Link
-								to={`/country?origin=${origin}&destination=${destination}`}
+								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&originCity=${originCity}&destinationCity=${destinationCity}`}
 							>
 								<Button variant="outline-primary" type="submit">
                   Compare
