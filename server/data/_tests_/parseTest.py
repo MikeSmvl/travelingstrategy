@@ -135,9 +135,9 @@ class parseTest(unittest.TestCase):
 
     def test_ie_parse_visa_wiki(self):
         # tests parsing visa from wiki for ie
-        driver = create_driver_nz()
-        urls = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", driver)
-        quit_driver_nz(driver)
+        my_driver = create_driver;
+        urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
+        quit_driver_nz(my_driver)
         self.assertFalse("", urls)
 
 if __name__ == '__main__':

@@ -72,7 +72,7 @@ def get_one_info(url,to_find,my_driver,soup):
             data_not_to_save = False
 
         elif (data_found):
-            data = data + txt
+            data = data + "<br>"+txt
 
     print(data)
     return data
@@ -98,8 +98,23 @@ def parse_a_country_visa():
          visa = cols[1][0 : visaPosition]
 
          info[name] = {"visa":visa}
+
+    print(x)
+    find_all_iso(info)
+    data_new = replace_key_by_iso(info)
+    info = data_new;
     print(info)
     return info
+
+
+def replace_key_by_iso(data):
+    data_new = {}
+    for k in data:
+        iso = data[k].get('country-iso')
+        visa_info = data[k].get('visa')
+        data_new[iso] = {'name':k,'visa-info':visa_info}
+    return data_new
+
 
 
 def find_all_ierland():
@@ -108,6 +123,7 @@ def find_all_ierland():
 
     all_url = find_all_url(my_driver)
     data = find_all_iso(all_url)
+    visa_wiki = parse_a_country_visa()
 
     for country in data:
         c = data[country]
