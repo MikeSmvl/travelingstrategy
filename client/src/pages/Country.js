@@ -1,24 +1,23 @@
-import React, {useState, useEffect} from 'react';
-import {Redirect} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import {Row, Col} from 'react-bootstrap/';
+import { Row, Col } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import {Card, CardBody, Divider} from '../components/Card/Card';
+import { Card, CardBody, Divider } from '../components/Card/Card';
 import Header from '../components/Header/Header';
-import {CountryCard} from '../components/CountryCard/CountryCard';
+import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
-import {languages, flagSrc} from '../utils/parsingTools';
+import { languages, flagSrc } from '../utils/parsingTools';
 import '../App.css';
 
-function Country({origin, destination}) {
+function Country({ origin, destination }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
 	const [visaInfo, setVisa] = useState('Not available yet.');
 	const [languagesInfo, setLanguages] = useState('Not available yet.');
 	const [isLoading, setIsLoading] = useState(false);
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
-	const [voltageOrigin, setVoltageOrigin] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
 
 	useEffect(() => {
@@ -26,7 +25,7 @@ function Country({origin, destination}) {
 			setIsLoading(true);
 			await fetch('http://localhost:4000/', {
 				method: 'POST',
-				headers: {'Content-Type': 'application/json'},
+				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
 						countryToCountry(origin:"${origin}" destination: "${destination}") {
@@ -49,8 +48,8 @@ function Country({origin, destination}) {
 					}`
 				})
 			})
-				.then(res => res.json())
-				.then(res => {
+				.then((res) => res.json())
+				.then((res) => {
 					setAdvisory(res.data.countryToCountry[0].advisory_text);
 					setVisa(res.data.countryToCountry[0].visa_info);
 					setLanguages(res.data.country_languages[0]);
@@ -67,65 +66,65 @@ function Country({origin, destination}) {
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!origin || !destination) {
-		return <Redirect to='/' />;
+		return <Redirect to="/" />;
 	}
 	return (
 		<div>
 			{!isLoading && (
 				<ReactFullpage
-					licenseKey='CF1896AE-3B194629-99B627C1-841383E5'
+					licenseKey="CF1896AE-3B194629-99B627C1-841383E5"
 					scrollingSpeed={1000} /* Options here */
 					sectionsColor={['rgb(232, 233, 241)', 'rgb(255, 222, 206)']}
 					navigation
-					navigationPosition='left'
+					navigationPosition="left"
 					navigationTooltips={['Basics', 'Health & Safety', 'Money']}
 					anchors={['basics', 'health', 'money']}
 					scrollOverflow
-					normalScrollElements='.scrolling-card'
+					normalScrollElements=".scrolling-card"
 					responsiveWidth={800}
-					render={({state, fullpageApi}) => {
+					render={({ state, fullpageApi }) => {
 						return (
 							<ReactFullpage.Wrapper>
-								<div className='section App'>
+								<div className="section App">
 									<Header title={getCountryName(destination)} />
-									<Subtitle text='Important Basics' />
+									<Subtitle text="Important Basics" />
 									<Row
-										className='justify-content-center'
-										style={{padding: '5px 25px'}}>
-										<Col xs='10' sm='4'>
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+										<Col xs="10" sm="4">
 											<CountryCard
 												flagSrc={flagSrc(destination)}
-												title='Country Flag'>
+												title="Country Flag"
+											>
 												<CardBody>
-													{languages(languagesInfo)}
-													{languagesInfo === 'Not available yet.' && (
-														<div style={{paddingBottom: '5px'}}>
-															Not Available yet.
-														</div>
-													)}
+													{languagesInfo !== 'Not available yet.'
+														&& languages(languagesInfo)}
 												</CardBody>
 											</CountryCard>
 										</Col>
-										<Col xs='10' sm='4'>
+										<Col xs="10" sm="4">
 											<Card
-												className='scrolling-card'
-												header='Visa Info'
-												style={{height: '400px', overflow: 'scroll'}}>
+												className="scrolling-card"
+												header="Visa Info"
+												style={{ maxHeight: '400px', overflow: 'scroll' }}
+											>
 												<CardBody
-													className='scrolling-card'
-													style={{paddingTop: '0'}}>
+													className="scrolling-card"
+													style={{ paddingTop: '0' }}
+												>
 													<div
-														className='scrolling-card'
-														dangerouslySetInnerHTML={{__html: visaInfo}}
+														className="scrolling-card"
+														dangerouslySetInnerHTML={{ __html: visaInfo }}
 													/>
 												</CardBody>
 											</Card>
 										</Col>
-										<Col xs='10' sm='4'>
-											<Card header='Advisory'>
+										<Col xs="10" sm="4">
+											<Card header="Advisory">
 												<CardBody>
 													<ErrorOutlineOutlinedIcon
-														style={{color: '#dc3545'}}
+														style={{ color: '#dc3545' }}
 													/>{' '}
 													{JSON.stringify(advisoryInfo).replace(
 														/(^")|("$)/g,
@@ -137,23 +136,26 @@ function Country({origin, destination}) {
 									</Row>
 								</div>
 
-								<div className='section'>
-									<Subtitle text='Electricity & Financials' />
-									<Col xs='10' sm='4'>
-										<Card header='Sockets & Plugs'>
+								<div className="section">
+									<Subtitle text="Electricity & Financials" />
+									<Col xs="10" sm="4">
+										<Card header="Sockets & Plugs">
 											<CardBody>
 												<p>
-													{getCountryName(destination)} uses <b style={{color: '#FF9A8D'}}>{voltage}</b> and{' '}
-													<b style={{color: '#FF9A8D'}}>{frequency}</b> for electrical sockets. Plugs are of{' '}
-													<b style={{color: '#FF9A8D'}}>{socketType}</b>:
+													{getCountryName(destination)} uses{' '}
+													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+													electrical sockets. Plugs are of{' '}
+													<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
 												</p>
 												<Divider />
-												{socketType != 'Not available yet' &&
-													socketArray.map((item, index) => (
+												{socketType !== 'Not available yet'
+													&& socketArray.map((item) => (
 														<img
-															key={index}
+															key={item}
 															src={require(`../socketImages/${item}.png`)}
-															style={{width: '200px'}}
+															style={{ width: '200px' }}
+															alt=""
 														/>
 													))}
 											</CardBody>
@@ -161,8 +163,8 @@ function Country({origin, destination}) {
 									</Col>
 								</div>
 
-								<div className='section'>
-									<Subtitle text='Health & Safety' />
+								<div className="section">
+									<Subtitle text="Health & Safety" />
 								</div>
 							</ReactFullpage.Wrapper>
 						);
