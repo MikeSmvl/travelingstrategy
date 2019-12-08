@@ -32,9 +32,7 @@ function findTimeZoneDifference(originCity,destinationCity,originCountry,destina
         timeZoneAtdestination = "Time in the capital the country of destination "+ capitalIfDestinationNotFound + " "+timeZoneAtdestination
     }
 
-    console.log("Time at origin:"+dateAtOrigin)
-    console.log("Time at destination:"+dateAtDestination)
-    console.log("Time difference: "+timeDifference)
+    console.log("Time at origin:"+dateAtOrigin +", time at destination:"+dateAtDestination+", time difference: "+timeDifference+".")
 
     if(timeDifference>0){ //Showing time difference with +
         timeZoneAndDifference = timeZoneAtdestination + " (+"+timeDifference+"H from "+originCity+")"
@@ -67,9 +65,7 @@ function getTimeZone(city,destinationCountry, originOrDestination){
 
         timeAtLocation = (new Date()).toLocaleString([], options)
         timeAtLocation = timeAtLocation.substr(0,timeAtLocation.length-3) //Removing seconds
-        console.log("city: "+city)
-        console.log("time-zone: "+timezone)
-        console.log("time At Location: "+timeAtLocation)
+        console.log("city: "+city+", time-zone: "+timezone+", time At Location: "+timeAtLocation+".")
     }
     catch(error){
         console.log("Could not get timezone of "+city)
