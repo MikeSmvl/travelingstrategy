@@ -35,9 +35,9 @@ const CountrySelector = (props) => {
 							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								var iso = place.address_components.pop().short_name
+								const iso = place.address_components.pop().short_name;
 								// If it isn't a number, assume correct ISO was retrieved
-								if (isNaN(iso)) {
+								if (Number.isNaN(iso)) {
 									setOrigin(iso);
 								} else {
 									// Else pop one more time
@@ -58,9 +58,9 @@ const CountrySelector = (props) => {
 							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								var iso = place.address_components.pop().short_name
+								const iso = place.address_components.pop().short_name;
 								// If it isn't a number, assume correct ISO was retrieved
-								if (isNaN(iso)) {
+								if (Number.isNaN(iso)) {
 									setDestination(iso);
 								} else {
 									// Else pop one more time
