@@ -40,6 +40,7 @@ function Country({ origin, destination }) {
 	const [advisoryInfo, setAdvisory] = useState({});
 	const [visaInfo, setVisa] = useState({});
 	const [languagesInfo, setLanguages] = useState({});
+	const [currencyInfo, setCurrency] = useState({});
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
@@ -62,6 +63,11 @@ function Country({ origin, destination }) {
 							national_languages,
 							widely_spoken_languages
 						}
+						currencies(country: "${destination}"){
+							name
+							symbol
+							code
+						}
 					}`
 				})
 			})
@@ -74,11 +80,13 @@ function Country({ origin, destination }) {
 						setAdvisory('Not available yet.');
 						setVisa('Not available yet.');
 						setLanguages('Not available yet.');
+						setCurrency('Not available yet.');
 						setIsLoading(false);
 					} else {
 						setAdvisory(res.data.countryToCountry[0].advisory_text);
 						setVisa(res.data.countryToCountry[0].visa_info);
 						setLanguages(res.data.country_languages[0]);
+						setCurrency(res.data.currencies[0]);
 						setIsLoading(false);
 					}
 				});
@@ -153,6 +161,20 @@ function Country({ origin, destination }) {
 
 								<div className="section">
 									<Subtitle text="Money" />
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+										<Col xs="10" sm="4">
+											<Card header="Currency">
+												<CardBody>
+													<pre><strong>Name:</strong> {currencyInfo.name}</pre>
+													<pre><strong>Code:</strong> {currencyInfo.code}</pre>
+													<pre><strong>Symbol:</strong> {currencyInfo.symbol}</pre>
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
 								</div>
 							</ReactFullpage.Wrapper>
 						);

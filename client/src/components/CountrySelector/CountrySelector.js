@@ -35,7 +35,14 @@ const CountrySelector = (props) => {
 							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setOrigin(place.address_components.pop().short_name);
+								var iso = place.address_components.pop().short_name
+								// If it isn't a number, assume correct ISO was retrieved
+								if (isNaN(iso)) {
+									setOrigin(iso);
+								} else {
+									// Else pop one more time
+									setOrigin(place.address_components.pop().short_name);
+								}
 							}}
 						/>
 						{!validOrig
@@ -51,7 +58,14 @@ const CountrySelector = (props) => {
 							types={['(regions)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setDestination(place.address_components.pop().short_name);
+								var iso = place.address_components.pop().short_name
+								// If it isn't a number, assume correct ISO was retrieved
+								if (isNaN(iso)) {
+									setDestination(iso);
+								} else {
+									// Else pop one more time
+									setDestination(place.address_components.pop().short_name);
+								}
 							}}
 						/>
 						{!validDest
