@@ -31,7 +31,7 @@ function Application() {
 					<Route exact path="/" component={Home} />
 				</Route>
 				<Route path="/country">
-					<Country origin={query.get('origin')} destination={query.get('destination')} />
+					<Country originCountry={query.get('originCountry')} destinationCountry={query.get('destinationCountry')} originCity={query.get('originCity')} destinationCity={query.get('destinationCity')}/>
 				</Route>
 			</Switch>
 		</div>
