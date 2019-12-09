@@ -56,7 +56,7 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								setDestinationCountry(place.address_components.pop().short_name);
 								setDestinationCity(place.address_components[0].long_name);
-								console.log(place.address_components[0].long_name)
+								console.log(place.address_components[0].long_name);
 							}}
 						/>
 						{!validDest

@@ -12,7 +12,12 @@ import findTimeZoneDifference from '../utils/timeZone';
 import { languages, flagSrc } from '../utils/parsingTools';
 import '../App.css';
 
-function Country({ originCountry, destinationCountry, originCity, destinationCity }) {
+function Country({
+	originCountry,
+	destinationCountry,
+	originCity,
+	destinationCity
+}) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
 	const [visaInfo, setVisa] = useState('Not available yet.');
 	const [languagesInfo, setLanguages] = useState('Not available yet.');
@@ -87,9 +92,16 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 						return (
 							<ReactFullpage.Wrapper>
 								<div className="section App">
-									<Header title={getCountryName(destinationCountry)}
-									title2={destinationCity}
-									title3={findTimeZoneDifference(originCity, destinationCity, originCountry, destinationCountry)} />
+									<Header
+										title={getCountryName(destinationCountry)}
+										title2={destinationCity}
+										title3={findTimeZoneDifference(
+											originCity,
+											destinationCity,
+											originCountry,
+											destinationCountry
+										)}
+									/>
 									<Subtitle text="Important Basics" />
 									<Row
 										className="justify-content-center"
@@ -102,7 +114,7 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 											>
 												<CardBody>
 													{languagesInfo !== 'Not available yet.'
-														&& languages(languagesInfo)}
+                            && languages(languagesInfo)}
 												</CardBody>
 											</CountryCard>
 										</Col>
@@ -148,19 +160,22 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 													{getCountryName(destinationCountry)} uses{' '}
 													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
 													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
-													electrical sockets. Plugs are of{' '}
+                          electrical sockets. Plugs are of{' '}
 													<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
 												</p>
 												<Divider />
 												{socketType !== 'Not available yet'
-													&& socketArray.map((item) => (
-														<img
-															key={item}
-															src={require(`../socketImages/${item}.png`)}
-															style={{ width: '200px' }}
-															alt=""
-														/>
-													))}
+                          && socketArray.map((item) => (
+                          	/* eslint-disable */
+                            // eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
+                            <img
+                              key={item}
+                              src={require(`../socketImages/${item}.png`)}
+                              style={{ width: '200px' }}
+                              alt=''
+                            />
+                            /* eslint-enable */
+                          ))}
 											</CardBody>
 										</Card>
 									</Col>
