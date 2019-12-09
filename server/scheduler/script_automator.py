@@ -11,6 +11,8 @@ from advisory_ca import save_to_canada
 from advisory_aus import save_to_australia
 from advisory_nz import save_to_new_zealand
 from advisory_uk import save_to_UK
+from advisory_us import save_to_united_states
+from advisory_ie import find_all_ierland
 from error_email import send_email
 
 #logging to a file
@@ -35,6 +37,8 @@ def start_scheduler():
     scheduler.every().day.do(save_to_australia)
     scheduler.every().day.do(save_to_new_zealand)
     scheduler.every().day.do(save_to_UK)
+    scheduler.every().day.do(find_all_ierland)
+    scheduler.every().day.do(save_to_united_states)
 
     while True:
       scheduler.run_pending()

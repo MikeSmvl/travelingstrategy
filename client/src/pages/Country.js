@@ -8,10 +8,11 @@ import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
+import findTimeZoneDifference from '../utils/timeZone';
 import { languages, flagSrc } from '../utils/parsingTools';
 import '../App.css';
 
-function Country({ origin, destination }) {
+function Country({ originCountry, destinationCountry, originCity, destinationCity }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
 	const [visaInfo, setVisa] = useState('Not available yet.');
 	const [languagesInfo, setLanguages] = useState('Not available yet.');
@@ -28,19 +29,19 @@ function Country({ origin, destination }) {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						countryToCountry(origin:"${origin}" destination: "${destination}") {
+						countryToCountry(origin:"${originCountry}" destination: "${destinationCountry}") {
 							name
 							visa_info
 							advisory_text
 						}
-						country_languages(country_iso: "${destination}"){
+						country_languages(country_iso: "${destinationCountry}"){
 							official_languages,
 							regional_languages,
 							minority_languages,
 							national_languages,
 							widely_spoken_languages
 						}
-						country_socket(country_iso: "${destination}") {
+						country_socket(country_iso: "${destinationCountry}") {
 							plug_type,
 							electric_potential,
 							frequency
@@ -61,11 +62,11 @@ function Country({ origin, destination }) {
 				});
 		}
 		fetchData();
-	}, [origin, destination]);
+	}, [originCountry, destinationCountry]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
-	if (!origin || !destination) {
+	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
 	return (
@@ -86,7 +87,9 @@ function Country({ origin, destination }) {
 						return (
 							<ReactFullpage.Wrapper>
 								<div className="section App">
-									<Header title={getCountryName(destination)} />
+									<Header title={getCountryName(destinationCountry)}
+									title2={destinationCity}
+									title3={findTimeZoneDifference(originCity, destinationCity, originCountry, destinationCountry)} />
 									<Subtitle text="Important Basics" />
 									<Row
 										className="justify-content-center"
@@ -94,7 +97,7 @@ function Country({ origin, destination }) {
 									>
 										<Col xs="10" sm="4">
 											<CountryCard
-												flagSrc={flagSrc(destination)}
+												flagSrc={flagSrc(destinationCountry)}
 												title="Country Flag"
 											>
 												<CardBody>
@@ -142,7 +145,7 @@ function Country({ origin, destination }) {
 										<Card header="Sockets & Plugs">
 											<CardBody>
 												<p>
-													{getCountryName(destination)} uses{' '}
+													{getCountryName(destinationCountry)} uses{' '}
 													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
 													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
 													electrical sockets. Plugs are of{' '}

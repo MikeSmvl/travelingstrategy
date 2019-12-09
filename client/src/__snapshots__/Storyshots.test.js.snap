@@ -273,6 +273,16 @@ Array [
         Paris
       </div>
       <div
+        className="title2"
+      >
+        TimeZone
+      </div>
+      <div
+        className="title3"
+      >
+        TimeDifference
+      </div>
+      <div
         className="subtitle"
       >
         France
@@ -327,6 +337,16 @@ Array [
         className="title"
       >
         Paris
+      </div>
+      <div
+        className="title2"
+      >
+        TimeZone
+      </div>
+      <div
+        className="title3"
+      >
+        TimeDifference
       </div>
       <div
         className="subtitle"

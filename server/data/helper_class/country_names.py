@@ -89,8 +89,8 @@ def handle_iso_error(name, all_names,all_official_names):
         return "Western Sahara"
     elif (re.search('Sovereign Military Order of Malta',name)):
         return "Malta"
-    elif (re.search('Swaziland',name)):
-        return "Swatini"
+    elif (name == 'Lichenstein'):
+        return "Liechtenstein"
 
     return ""
 
