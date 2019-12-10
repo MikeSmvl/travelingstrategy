@@ -1,7 +1,7 @@
 import findTimeZoneDifference from '../utils/timeZone';
 
 describe('Getting time zone', () => {
-	it('Time difference from Ottawa to Paris positive difference', () => {
+	it('Time difference from Ottawa to Paris ', () => {
 		const cityOrigin = 'Ottawa';
 		const countryOrigin = 'Canada';
 		const cityDestination = 'Paris';
@@ -13,7 +13,7 @@ describe('Getting time zone', () => {
 			countryDestination
 		);
 		console.log(timeDifference);
-		expect(timeDifference).toMatch(/\+\d+H from Ottawa/);
+		expect(timeDifference).toMatch(/\d+H from Ottawa/);
 	});
 
 	it('Time difference from Melbourne to Ottawa', () => {
@@ -28,6 +28,6 @@ describe('Getting time zone', () => {
 			countryDestination
 		);
 		console.log(timeDifference);
-		expect(timeDifference).toMatch(/\-\d+H from Melbourne/);
+		expect(timeDifference).toMatch(/\d+H from Melbourne/);
 	});
 });
