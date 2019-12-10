@@ -46,15 +46,24 @@ function findTimeZoneDifference(originCity,destinationCity,originCountry,destina
 /**
  * The function returns the time at a given city
  * @param {*} city This is the city for which we need the time
- * @param {*} destinationCountry  If we don't find the time of city we get the time in the capital
+ * @param {*} countryOfCity  If we don't find the time of city we get the time in the capital
  * @param {*} originOrDestination To mention if the city is the origin or destination
  */
-function getTimeZone(city,destinationCountry, originOrDestination){
+function getTimeZone(city,countryOfCity, originOrDestination){
     console.log("Getting time in:"+city)
     var timeAtLocation
-
     try{
-        var timezone = cityTimezones.lookupViaCity(city)[0].timezone
+        var timezone, index
+        var arrayOfTimezones = cityTimezones.lookupViaCity(city)
+
+        //When citites have the same names if searches for the match in countries as well
+        for(index = 0; index < arrayOfTimezones.length; index++){
+            if(arrayOfTimezones[index].iso2 === countryOfCity){
+                timezone = arrayOfTimezones[index].timezone
+            }
+        }
+
+        // var timezone = cityTimezones.lookupViaCity(city)[0].timezone
         var options = { // Format of Time Zone
             timeZone: timezone,
             year: 'numeric', month: 'numeric', day: 'numeric',
@@ -71,7 +80,7 @@ function getTimeZone(city,destinationCountry, originOrDestination){
         console.log("Could not get timezone of "+city)
         var firstE = city.indexOf("e")
         city = city.substr(0,firstE) + "é" + city.substr(firstE+1) // replacing the first e with é
-        timeAtLocation = handleErrorForSomeCities(city,destinationCountry, firstE,originOrDestination)
+        timeAtLocation = handleErrorForSomeCities(city,countryOfCity, firstE,originOrDestination)
         return timeAtLocation
     }
     return timeAtLocation
@@ -82,18 +91,18 @@ function getTimeZone(city,destinationCountry, originOrDestination){
  * If the city chosen to find the time cannot be found in the library
  * We find the timezone in the capital of the country
  */
-function handleErrorForSomeCities(city,destinationCountry, firstE,originOrDestination){
+function handleErrorForSomeCities(city,countryOfCity, firstE,originOrDestination){
     var timeZone
     if(firstE >= 0){
         city = city.substr(0,firstE) + "é" + city.substr(firstE+1) // replacing the first e with é
-        timeZone = getTimeZone(city,destinationCountry, originOrDestination)
+        timeZone = getTimeZone(city,countryOfCity, originOrDestination)
         return timeZone
     }
     else{ // Return the time zone of the capital of the country of destination
-        console.log("Getting time zone of the capital of the country of destination("+destinationCountry+")")
-        var countryForCapital = country.findByIso2(destinationCountry)
+        console.log("Getting time zone of the capital of the country of destination("+countryOfCity+")")
+        var countryForCapital = country.findByIso2(countryOfCity)
 
-        timeZone = getTimeZone(countryForCapital.capital,destinationCountry)
+        timeZone = getTimeZone(countryForCapital.capital,countryOfCity)
 
         if(originOrDestination === "origin"){
             originNotFound = true
