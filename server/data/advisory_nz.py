@@ -58,7 +58,7 @@ def create_driver_nz():
 def quit_driver_nz(driver):
     driver.quit()
 
-def save_to_new_zealend():
+def save_to_new_zealand():
     url = get_url_of_countries_nz() #this function create its own driver -- to change
     data = {}
     driver = create_driver_nz()
