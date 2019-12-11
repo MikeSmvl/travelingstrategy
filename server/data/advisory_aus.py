@@ -8,6 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
 
 
 #Get the path of all the pages australia has advisory detail on
@@ -120,6 +121,9 @@ def save_to_australia():
     url = get_url_of_countries() #this function create its own driver -- to change
     data = {}
     driver = create_driver()
+    wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
+    wiki_visa = wiki_visa_parser(wiki_visa_url,driver)
+    print(wiki_visa.visa_parser_table())
 
     for country in url:
         driver.implicitly_wait(5)
