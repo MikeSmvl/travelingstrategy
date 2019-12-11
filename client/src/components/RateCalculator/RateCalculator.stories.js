@@ -7,7 +7,7 @@ import { withA11y } from '@storybook/addon-a11y';
 
 import RateCalculator from './RateCalculator';
 
-const stories = storiesOf('Card', module);
+const stories = storiesOf('RateCalculator', module);
 
 stories.addDecorator(withKnobs);
 stories.addDecorator(withInfo);
