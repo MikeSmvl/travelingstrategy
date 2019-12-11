@@ -42,8 +42,8 @@
 	}
 }
 
-.form-label {
-	color: white !important;
+.country-selector-form .form-label {
+	color: white;
 }
 
 form {
