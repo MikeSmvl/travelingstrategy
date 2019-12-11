@@ -17,9 +17,9 @@ const RateCalculator = (props) => {
 	};
 
 	return (
-		<RBCard className="RateCalculator">
+		<RBCard className="RateCalculator" {...rest}>
 			<RBCard.Header className="title">Rate Converter</RBCard.Header>
-			<RBCard.Body {...rest}>
+			<RBCard.Body>
 				<RBForm.Group as={Row}>
 					<Col sm="7">
 						<RBForm.Control

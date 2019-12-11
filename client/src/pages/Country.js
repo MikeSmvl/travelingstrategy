@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {Redirect} from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col } from 'react-bootstrap/';
+import {Row, Col} from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, Divider } from '../components/Card/Card';
+import {Card, CardBody, Divider} from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
-import { CountryCard } from '../components/CountryCard/CountryCard';
+import {CountryCard} from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import findTimeZoneDifference from '../utils/timeZone';
-import { languages, flagSrc, getRate } from '../utils/parsingTools';
+import {languages, flagSrc, getRate} from '../utils/parsingTools';
 import '../App.css';
 
 function Country({
@@ -21,7 +21,11 @@ function Country({
 }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
 	const [visaInfo, setVisa] = useState('Not available yet.');
-	const [languagesInfo, setLanguages] = useState({'Official Languages': 'TBD', 'Regional Languages': 'TBD', 'Widely Spoken Languages': 'TBD'});
+	const [languagesInfo, setLanguages] = useState({
+		'Official Languages': 'TBD',
+		'Regional Languages': 'TBD',
+		'Widely Spoken Languages': 'TBD'
+	});
 	const [isLoading, setIsLoading] = useState(false);
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
@@ -35,7 +39,7 @@ function Country({
 			setIsLoading(true);
 			await fetch('http://localhost:4000/', {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
 					query: `{
 						countryToCountry(origin:"${originCountry}" destination: "${destinationCountry}") {
@@ -73,16 +77,35 @@ function Country({
 					}`
 				})
 			})
-				.then((res) => res.json())
-				.then((res) => {
-					(res.data.countryToCountry && res.data.countryToCountry.length != 0) && setAdvisory(res.data.countryToCountry[0].advisory_text);
-					(res.data.countryToCountry && res.data.countryToCountry.length != 0) && setVisa(res.data.countryToCountry[0].visa_info);
-					(res.data.country_languages && res.data.country_languages.length != 0) && setLanguages(res.data.country_languages[0]);
-					(res.data.country_socket && res.data.country_socket.length != 0) && setSocketType(res.data.country_socket[0].plug_type);
-					(res.data.country_socket && res.data.country_socket.length != 0) && setVoltage(res.data.country_socket[0].electric_potential);
-					(res.data.country_socket && res.data.country_socket.length != 0) && setFrequency(res.data.country_socket[0].frequency);
-					(res.data.currencies && res.data.currencies.length != 0) && setCurrency(res.data.currencies[0]);
-					(res.data.financials && res.data.financials.length != 0) && setFinancial(res.data.financials[0]);
+				.then(res => res.json())
+				.then(res => {
+					res.data.countryToCountry &&
+						res.data.countryToCountry.length != 0 &&
+						setAdvisory(res.data.countryToCountry[0].advisory_text);
+					res.data.countryToCountry &&
+						res.data.countryToCountry.length != 0 &&
+						setVisa(res.data.countryToCountry[0].visa_info);
+					res.data.country_languages &&
+						res.data.country_languages.length != 0 &&
+						setLanguages(res.data.country_languages[0]);
+					res.data.country_socket &&
+						res.data.country_socket.length != 0 &&
+						setSocketType(res.data.country_socket[0].plug_type);
+					res.data.country_socket &&
+						res.data.country_socket.length != 0 &&
+						setVoltage(res.data.country_socket[0].electric_potential);
+					res.data.country_socket &&
+						res.data.country_socket.length != 0 &&
+						setFrequency(res.data.country_socket[0].frequency);
+					res.data.destinationCurrencies &&
+						res.data.destinationCurrencies.length != 0 &&
+						setCurrency(res.data.destinationCurrencies[0]);
+					res.data.originCurrencies &&
+						res.data.originCurrencies.length != 0 &&
+						setOriginCurrency(res.data.originCurrencies[0]);
+					res.data.financials &&
+						res.data.financials.length != 0 &&
+						setFinancial(res.data.financials[0]);
 					setIsLoading(false);
 				});
 		}
@@ -92,26 +115,26 @@ function Country({
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
-		return <Redirect to="/" />;
+		return <Redirect to='/' />;
 	}
 	return (
 		<div>
 			{!isLoading && (
 				<ReactFullpage
-					licenseKey="CF1896AE-3B194629-99B627C1-841383E5"
+					licenseKey='CF1896AE-3B194629-99B627C1-841383E5'
 					scrollingSpeed={1000} /* Options here */
 					sectionsColor={['rgb(232, 233, 241)', 'rgb(255, 222, 206)']}
 					navigation
-					navigationPosition="left"
+					navigationPosition='left'
 					navigationTooltips={['Basics', 'Health & Safety', 'Money']}
 					anchors={['basics', 'health', 'money']}
 					scrollOverflow
-					normalScrollElements=".scrolling-card"
+					normalScrollElements='.scrolling-card'
 					responsiveWidth={800}
-					render={({ state, fullpageApi }) => {
+					render={({state, fullpageApi}) => {
 						return (
 							<ReactFullpage.Wrapper>
-								<div className="section App">
+								<div className='section App'>
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
@@ -122,44 +145,40 @@ function Country({
 											destinationCountry
 										)}
 									/>
-									<Subtitle text="Important Basics" />
+									<Subtitle text='Important Basics' />
 									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
+										className='justify-content-center'
+										style={{padding: '5px 25px'}}>
+										<Col xs='10' sm='4'>
 											<CountryCard
 												flagSrc={flagSrc(destinationCountry)}
-												title="Country Flag"
-											>
+												title='Country Flag'>
 												<CardBody>
-													{languagesInfo !== 'Not available yet.'
-                            && languages(languagesInfo)}
+													{languagesInfo !== 'Not available yet.' &&
+														languages(languagesInfo)}
 												</CardBody>
 											</CountryCard>
 										</Col>
-										<Col xs="10" sm="4">
+										<Col xs='10' sm='4'>
 											<Card
-												className="scrolling-card"
-												header="Visa Info"
-												style={{ maxHeight: '400px', overflow: 'scroll' }}
-											>
+												className='scrolling-card'
+												header='Visa Info'
+												style={{maxHeight: '400px', overflow: 'scroll'}}>
 												<CardBody
-													className="scrolling-card"
-													style={{ paddingTop: '0' }}
-												>
+													className='scrolling-card'
+													style={{paddingTop: '0'}}>
 													<div
-														className="scrolling-card"
-														dangerouslySetInnerHTML={{ __html: visaInfo }}
+														className='scrolling-card'
+														dangerouslySetInnerHTML={{__html: visaInfo}}
 													/>
 												</CardBody>
 											</Card>
 										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Advisory">
+										<Col xs='10' sm='4'>
+											<Card header='Advisory'>
 												<CardBody>
 													<ErrorOutlineOutlinedIcon
-														style={{ color: '#dc3545' }}
+														style={{color: '#dc3545'}}
 													/>{' '}
 													{JSON.stringify(advisoryInfo).replace(
 														/(^")|("$)/g,
@@ -171,50 +190,69 @@ function Country({
 									</Row>
 								</div>
 
-								<div className="section">
-									<Subtitle text="Electricity & Financials" />
+								<div className='section'>
+									<Subtitle text='Electricity & Financials' />
 									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
-											<Card header="Currency">
+										className='justify-content-center'
+										style={{padding: '5px 25px'}}>
+										<Col xs='10' sm='4'>
+											<Card header='Currency'>
 												<CardBody>
-													<pre><strong>Name:</strong> {currencyInfo.name}</pre>
-													<pre><strong>Code:</strong> {currencyInfo.code}</pre>
-													<pre><strong>Symbol:</strong> {currencyInfo.symbol}</pre>
-													<RateCalculator destinationRate={getRate(originCurrencyInfo.code, currencyInfo.code)} originCurrency={originCurrencyInfo.code} destCurrency={currencyInfo.code} />
+													<pre>
+														<strong>Name:</strong> {currencyInfo.name}
+													</pre>
+													<pre>
+														<strong>Code:</strong> {currencyInfo.code}
+													</pre>
+													<pre>
+														<strong>Symbol:</strong> {currencyInfo.symbol}
+													</pre>
+													<div style={{margin: 'auto'}}>
+														<RateCalculator
+															destinationRate={1.32}
+															originCurrency='CAD'
+															destCurrency='USD'
+														/>
+													</div>
 												</CardBody>
 											</Card>
 										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Prices (in USD)">
+										<Col xs='10' sm='4'>
+											<Card header='Prices (in USD)'>
 												<CardBody>
-													<pre><strong>Gasoline:</strong> {financialInfo.gasoline}$ / Gallon</pre>
-													<pre><strong>Groceries:</strong> {financialInfo.groceries}$ / Week</pre>
-													<pre><strong>Rent:</strong> {financialInfo.rent}$ / Day</pre>
+													<pre>
+														<strong>Gasoline:</strong> {financialInfo.gasoline}$
+														/ Gallon
+													</pre>
+													<pre>
+														<strong>Groceries:</strong>{' '}
+														{financialInfo.groceries}$ / Week
+													</pre>
+													<pre>
+														<strong>Rent:</strong> {financialInfo.rent}$ / Day
+													</pre>
 												</CardBody>
 											</Card>
 										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Sockets & Plugs">
+										<Col xs='10' sm='4'>
+											<Card header='Sockets & Plugs'>
 												<CardBody>
 													<p>
 														{getCountryName(destinationCountry)} uses{' '}
-														<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
-														<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+														<b style={{color: '#FF9A8D'}}>{voltage}</b> and{' '}
+														<b style={{color: '#FF9A8D'}}>{frequency}</b> for
 														electrical sockets. Plugs are of{' '}
-														<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+														<b style={{color: '#FF9A8D'}}>{socketType}</b>:
 													</p>
 													<Divider />
-													{socketType !== 'Not available yet'
-														&& socketArray.map((item) => (
+													{socketType !== 'Not available yet' &&
+														socketArray.map(item => (
 															/* eslint-disable */
 															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
 															<img
 																key={item}
 																src={require(`../socketImages/${item}.png`)}
-																style={{ width: '200px' }}
+																style={{width: '200px'}}
 																alt=''
 															/>
 															/* eslint-enable */
@@ -225,8 +263,8 @@ function Country({
 									</Row>
 								</div>
 
-								<div className="section">
-									<Subtitle text="Health & Safety" />
+								<div className='section'>
+									<Subtitle text='Health & Safety' />
 								</div>
 							</ReactFullpage.Wrapper>
 						);
