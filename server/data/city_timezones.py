@@ -2,6 +2,7 @@ import json
 import datetime
 import pytz
 import sqlite3
+import math
 
 
 def save_cities_timezones():
@@ -21,8 +22,17 @@ def save_cities_timezones():
             country_name = city_info["country"]
             country_iso = city_info["iso2"]
             timezone = city_info["timezone"]
-            lat = round(city_info["lat"]*1000)/ 1000 #to round to .0001
-            lng = round(city_info["lng"]*1000)/ 1000 #to round to .0001
+            temp0 = city_info["lat"]
+            temp = math.trunc(city_info["lat"])
+            temp2 = math.trunc(city_info["lat"])
+            if(city == "Paris"):
+                print("-----------------")
+                print(city)
+                print(temp0)
+                print(temp)
+                print(temp2)
+            lat = math.trunc(city_info["lat"]) #to round to .0001
+            lng = math.trunc(city_info["lng"]) #to round to .0001
             utc_offset = None
 
             if(timezone != None):

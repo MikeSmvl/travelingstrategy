@@ -95,12 +95,6 @@ function Country({
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
-										title3={findTimeZoneDifference(
-											originCity,
-											destinationCity,
-											originCountry,
-											destinationCountry
-										)}
 									/>
 									<Subtitle text="Important Basics" />
 									<Row
