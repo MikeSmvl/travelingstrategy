@@ -85,7 +85,8 @@ function Country({
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setVoltage(res.data.country_socket[0].electric_potential);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setFrequency(res.data.country_socket[0].frequency);
-					(res.data.currencies && res.data.currencies.length !== 0) && setCurrency(res.data.currencies[0]);
+					(res.data.destinationCurrencies && res.data.destinationCurrencies.length !== 0) && setCurrency(res.data.destinationCurrencies[0]);
+					(res.data.originCurrencies && res.data.originCurrencies.length !== 0) && setOriginCurrency(res.data.originCurrencies[0]);
 					(res.data.financials && res.data.financials.length !== 0) && setFinancial(res.data.financials[0]);
 					setIsLoading(false);
 				});
