@@ -12,6 +12,31 @@ import findTimeZoneDifference from '../utils/timeZone';
 import { languages, flagSrc } from '../utils/parsingTools';
 import '../App.css';
 
+function Languages(object) {
+	const items = [];
+	const keys = Object.keys(object);
+	keys.forEach((key) => {
+		const title = key.split('_').join(' ');
+		if (object[key] !== '') {
+			items.push(
+				<div key={key} style={{ paddingBottom: '5px' }}>
+					{title}:{' '}
+					{JSON.stringify(object[key]).replace(
+						/(^")|("$)/g,
+						''
+					)}
+				</div>
+			);
+		}
+	});
+
+	return (
+		<div>
+			{items}
+		</div>
+	);
+}
+
 function Country({
 	originCountry,
 	destinationCountry,
@@ -25,6 +50,8 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [currencyInfo, setCurrency] = useState({});
+	const [financialInfo, setFinancial] = useState({});
 
 	useEffect(() => {
 		async function fetchData() {
@@ -46,22 +73,35 @@ function Country({
 							national_languages,
 							widely_spoken_languages
 						}
+						currencies(country: "${destinationCountry}"){
+							name
+							symbol
+							code
+						}
 						country_socket(country_iso: "${destinationCountry}") {
 							plug_type,
 							electric_potential,
 							frequency
+						}
+						financials(country: "${destinationCountry}") {
+							gasoline
+							groceries
+							rent
 						}
 					}`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
+					console.log(res.data);
 					setAdvisory(res.data.countryToCountry[0].advisory_text);
 					setVisa(res.data.countryToCountry[0].visa_info);
 					setLanguages(res.data.country_languages[0]);
 					setSocketType(res.data.country_socket[0].plug_type);
 					setVoltage(res.data.country_socket[0].electric_potential);
 					setFrequency(res.data.country_socket[0].frequency);
+					setCurrency(res.data.currencies[0]);
+					setFinancial(res.data.financials[0]);
 					setIsLoading(false);
 					console.log('type ', res.data.country_socket[0].plug_type);
 				});
@@ -153,32 +193,55 @@ function Country({
 
 								<div className="section">
 									<Subtitle text="Electricity & Financials" />
-									<Col xs="10" sm="4">
-										<Card header="Sockets & Plugs">
-											<CardBody>
-												<p>
-													{getCountryName(destinationCountry)} uses{' '}
-													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
-													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
-                          electrical sockets. Plugs are of{' '}
-													<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
-												</p>
-												<Divider />
-												{socketType !== 'Not available yet'
-                          && socketArray.map((item) => (
-                          	/* eslint-disable */
-                            // eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
-                            <img
-                              key={item}
-                              src={require(`../socketImages/${item}.png`)}
-                              style={{ width: '200px' }}
-                              alt=''
-                            />
-                            /* eslint-enable */
-                          ))}
-											</CardBody>
-										</Card>
-									</Col>
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+										<Col xs="10" sm="4">
+											<Card header="Currency">
+												<CardBody>
+													<pre><strong>Name:</strong> {currencyInfo.name}</pre>
+													<pre><strong>Code:</strong> {currencyInfo.code}</pre>
+													<pre><strong>Symbol:</strong> {currencyInfo.symbol}</pre>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Prices (in USD)">
+												<CardBody>
+													<pre><strong>Gasoline:</strong> {financialInfo.gasoline}$ / Gallon</pre>
+													<pre><strong>Groceries:</strong> {financialInfo.groceries}$ / Week</pre>
+													<pre><strong>Rent:</strong> {financialInfo.rent}$ / Day</pre>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Sockets & Plugs">
+												<CardBody>
+													<p>
+														{getCountryName(destinationCountry)} uses{' '}
+														<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+														<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+														electrical sockets. Plugs are of{' '}
+														<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+													</p>
+													<Divider />
+													{socketType !== 'Not available yet'
+														&& socketArray.map((item) => (
+															/* eslint-disable */
+															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
+															<img
+																key={item}
+																src={require(`../socketImages/${item}.png`)}
+																style={{ width: '200px' }}
+																alt=''
+															/>
+															/* eslint-enable */
+														))}
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
 								</div>
 
 								<div className="section">

@@ -1,0 +1,11 @@
+.RateCalculator {
+	width: 300px;
+}
+
+.RateCalculator .title {
+	text-align: center;
+}
+
+.RateCalculator .result {
+	margin-left: 12px;
+}
