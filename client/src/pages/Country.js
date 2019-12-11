@@ -12,31 +12,6 @@ import findTimeZoneDifference from '../utils/timeZone';
 import { languages, flagSrc } from '../utils/parsingTools';
 import '../App.css';
 
-function Languages(object) {
-	const items = [];
-	const keys = Object.keys(object);
-	keys.forEach((key) => {
-		const title = key.split('_').join(' ');
-		if (object[key] !== '') {
-			items.push(
-				<div key={key} style={{ paddingBottom: '5px' }}>
-					{title}:{' '}
-					{JSON.stringify(object[key]).replace(
-						/(^")|("$)/g,
-						''
-					)}
-				</div>
-			);
-		}
-	});
-
-	return (
-		<div>
-			{items}
-		</div>
-	);
-}
-
 function Country({
 	originCountry,
 	destinationCountry,
@@ -93,7 +68,6 @@ function Country({
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					console.log(res.data);
 					setAdvisory(res.data.countryToCountry[0].advisory_text);
 					setVisa(res.data.countryToCountry[0].visa_info);
 					setLanguages(res.data.country_languages[0]);
@@ -103,7 +77,6 @@ function Country({
 					setCurrency(res.data.currencies[0]);
 					setFinancial(res.data.financials[0]);
 					setIsLoading(false);
-					console.log('type ', res.data.country_socket[0].plug_type);
 				});
 		}
 		fetchData();
