@@ -39,11 +39,12 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								const iso = place.address_components.pop().short_name;
 								// If it isn't a number, assume correct ISO was retrieved
-								if (!Number.isNaN(iso)) {
+								if (isNaN(iso)) {
 									setOriginCountry(iso);
 								} else {
 									// Else pop one more time
-									setOriginCountry(place.address_components.pop().short_name);
+									const newIso = place.address_components.pop().short_name;
+									setOriginCountry(newIso);
 								}
 								setOriginCity(place.address_components[0].short_name);
 							}}
@@ -63,11 +64,12 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								const iso = place.address_components.pop().short_name;
 								// If it isn't a number, assume correct ISO was retrieved
-								if (!Number.isNaN(iso)) {
+								if (isNaN(iso)) {
 									setDestinationCountry(iso);
 								} else {
 									// Else pop one more time
-									setDestinationCountry(place.address_components.pop().short_name);
+									const newIso = place.address_components.pop().short_name;
+									setDestinationCountry(newIso);
 								}
 								setDestinationCity(place.address_components[0].long_name);
 							}}

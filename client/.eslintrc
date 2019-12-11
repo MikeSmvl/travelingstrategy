@@ -20,6 +20,7 @@
         "import/no-dynamic-require": "off",
         "global-require": "off",
         "no-mixed-spaces-and-tabs": "off",
-        "no-useless-escape": "off"
+        "no-useless-escape": "off",
+        "no-restricted-globals": "off"
     }
 }
