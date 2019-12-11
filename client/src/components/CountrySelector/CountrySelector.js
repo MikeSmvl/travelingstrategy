@@ -39,6 +39,8 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								setOriginCountry(place.address_components.pop().short_name);
 								setOriginCity(place.address_components[0].short_name);
+								console.log(place.geometry.location.lat())
+								console.log(place.geometry.location.lng())
 							}}
 						/>
 						{!validOrig
@@ -56,7 +58,8 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								setDestinationCountry(place.address_components.pop().short_name);
 								setDestinationCity(place.address_components[0].long_name);
-								console.log(place.address_components[0].long_name);
+								console.log(place.geometry.location.lat())
+								console.log(place.geometry.location.lng())
 							}}
 						/>
 						{!validDest
