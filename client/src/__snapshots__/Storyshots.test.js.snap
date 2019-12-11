@@ -11,33 +11,52 @@ Array [
     }
   >
     <div
-      className="TSCard card"
-      subtitle="Subtitle"
-      title="Title"
+      className="RateCalculator card"
     >
       <div
-        className="cardHeader card-header"
+        className="title card-header"
       >
-        Header
+        Rate Converter
       </div>
-      <hr
-        className="cardDivider"
-      />
       <div
-        className="TScardBody card-body"
+        className="card-body"
       >
-        
-        
-        <p
-          className="card-text"
+        <div
+          className="form-group row"
         >
-          This is the body
-        </p>
-      </div>
-      <div
-        className="text-muted card-footer"
-      >
-        Footer
+          <div
+            className="col-sm-7"
+          >
+            <input
+              className="form-control"
+              defaultValue="1"
+              onInput={[Function]}
+            />
+          </div>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            CAD
+          </label>
+        </div>
+        <div
+          className="form-group row"
+        >
+          <label
+            className="form-label col-form-label col-sm-7"
+          >
+            <div
+              className="result"
+            >
+              1.32
+            </div>
+          </label>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            USD
+          </label>
+        </div>
       </div>
     </div>
   </div>,
@@ -78,23 +97,53 @@ Array [
     }
   >
     <div
-      className="TSCard card"
-      subtitle=""
-      title=""
+      className="RateCalculator card"
     >
-      
       <div
-        className="TScardBody card-body"
+        className="title card-header"
       >
-        
-        
-        <p
-          className="card-text"
-        >
-          
-        </p>
+        Rate Converter
       </div>
-      
+      <div
+        className="card-body"
+      >
+        <div
+          className="form-group row"
+        >
+          <div
+            className="col-sm-7"
+          >
+            <input
+              className="form-control"
+              defaultValue="1"
+              onInput={[Function]}
+            />
+          </div>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            CAD
+          </label>
+        </div>
+        <div
+          className="form-group row"
+        >
+          <label
+            className="form-label col-form-label col-sm-7"
+          >
+            <div
+              className="result"
+            >
+              1.32
+            </div>
+          </label>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            USD
+          </label>
+        </div>
+      </div>
     </div>
   </div>,
   <button
