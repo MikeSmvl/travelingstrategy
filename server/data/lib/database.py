@@ -70,7 +70,7 @@ class Database:
         self.cols = ""
 
         for col_name, col_type in columns.items():
-            self.cols += col_name+" "+col_type+","
+            self.cols += col_name+"='"+col_type+"',"
         self.cols = self.cols[0:len(self.cols)-1]
 
         self.db.execute("UPDATE {} SET {} where {}".format(
