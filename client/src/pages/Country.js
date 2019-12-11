@@ -21,7 +21,7 @@ function Country({
 }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
 	const [visaInfo, setVisa] = useState('Not available yet.');
-	const [languagesInfo, setLanguages] = useState('Not available yet.');
+	const [languagesInfo, setLanguages] = useState({'Official Languages': 'TBD', 'Regional Languages': 'TBD', 'Widely Spoken Languages': 'TBD'});
 	const [isLoading, setIsLoading] = useState(false);
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
@@ -75,15 +75,14 @@ function Country({
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					setAdvisory(res.data.countryToCountry[0].advisory_text);
-					setVisa(res.data.countryToCountry[0].visa_info);
-					setLanguages(res.data.country_languages[0]);
-					setSocketType(res.data.country_socket[0].plug_type);
-					setVoltage(res.data.country_socket[0].electric_potential);
-					setFrequency(res.data.country_socket[0].frequency);
-					setCurrency(res.data.destinationCurrencies[0]);
-					setOriginCurrency(res.data.originCurrencies[0])
-					setFinancial(res.data.financials[0]);
+					(res.data.countryToCountry && res.data.countryToCountry.length != 0) && setAdvisory(res.data.countryToCountry[0].advisory_text);
+					(res.data.countryToCountry && res.data.countryToCountry.length != 0) && setVisa(res.data.countryToCountry[0].visa_info);
+					(res.data.country_languages && res.data.country_languages.length != 0) && setLanguages(res.data.country_languages[0]);
+					(res.data.country_socket && res.data.country_socket.length != 0) && setSocketType(res.data.country_socket[0].plug_type);
+					(res.data.country_socket && res.data.country_socket.length != 0) && setVoltage(res.data.country_socket[0].electric_potential);
+					(res.data.country_socket && res.data.country_socket.length != 0) && setFrequency(res.data.country_socket[0].frequency);
+					(res.data.currencies && res.data.currencies.length != 0) && setCurrency(res.data.currencies[0]);
+					(res.data.financials && res.data.financials.length != 0) && setFinancial(res.data.financials[0]);
 					setIsLoading(false);
 				});
 		}

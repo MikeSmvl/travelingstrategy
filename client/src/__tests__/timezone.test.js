@@ -12,7 +12,6 @@ describe('Getting time zone', () => {
 			countryOrigin,
 			countryDestination
 		);
-		console.log(timeDifference);
 		expect(timeDifference).toMatch(/\d+H from Ottawa/);
 	});
 
@@ -27,7 +26,6 @@ describe('Getting time zone', () => {
 			countryOrigin,
 			countryDestination
 		);
-		console.log(timeDifference);
 		expect(timeDifference).toMatch(/\d+H from Melbourne/);
 	});
 });
