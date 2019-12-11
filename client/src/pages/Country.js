@@ -4,12 +4,13 @@ import ReactFullpage from '@fullpage/react-fullpage';
 import { Row, Col } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Card, CardBody, Divider } from '../components/Card/Card';
+import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import findTimeZoneDifference from '../utils/timeZone';
-import { languages, flagSrc } from '../utils/parsingTools';
+import { languages, flagSrc, getRate } from '../utils/parsingTools';
 import '../App.css';
 
 function Country({
@@ -26,6 +27,7 @@ function Country({
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
+	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 
 	useEffect(() => {
@@ -48,11 +50,16 @@ function Country({
 							national_languages,
 							widely_spoken_languages
 						}
-						currencies(country: "${destinationCountry}"){
-							name
-							symbol
-							code
-						}
+						destinationCurrencies: currencies(country: "${destinationCountry}"){
+              name
+              symbol
+              code
+            }
+            originCurrencies: currencies(country: "${originCountry}"){
+              name
+              symbol
+              code
+            }
 						country_socket(country_iso: "${destinationCountry}") {
 							plug_type,
 							electric_potential,
@@ -74,7 +81,8 @@ function Country({
 					setSocketType(res.data.country_socket[0].plug_type);
 					setVoltage(res.data.country_socket[0].electric_potential);
 					setFrequency(res.data.country_socket[0].frequency);
-					setCurrency(res.data.currencies[0]);
+					setCurrency(res.data.destinationCurrencies[0]);
+					setOriginCurrency(res.data.originCurrencies[0])
 					setFinancial(res.data.financials[0]);
 					setIsLoading(false);
 				});
@@ -176,6 +184,7 @@ function Country({
 													<pre><strong>Name:</strong> {currencyInfo.name}</pre>
 													<pre><strong>Code:</strong> {currencyInfo.code}</pre>
 													<pre><strong>Symbol:</strong> {currencyInfo.symbol}</pre>
+													<RateCalculator destinationRate={getRate(originCurrencyInfo.code, currencyInfo.code)} originCurrency={originCurrencyInfo.code} destCurrency={currencyInfo.code} />
 												</CardBody>
 											</Card>
 										</Col>

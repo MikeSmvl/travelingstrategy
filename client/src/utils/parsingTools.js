@@ -33,4 +33,13 @@ const flagSrc = (iso) => {
 	return src;
 }
 
-export { removeQuotes, languages, flagSrc };
+const getRate = (originCurrency, destCurrency) => {
+  const api = `https://api.exchangeratesapi.io/latest?base=${originCurrency}&symbols=${destCurrency}`;
+	fetch(api)
+	.then((resp) => console.log('RESP.JSON ', resp.json())) // Transform the data into json
+  .then((data) =>{
+    console.log('DATAAAAA ', data)
+    })
+}
+
+export { removeQuotes, languages, flagSrc, getRate };

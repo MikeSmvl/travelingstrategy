@@ -5,7 +5,7 @@ import './RateCalculator.css';
 
 const RateCalculator = (props) => {
 	const {
-		destinationRate = 1,
+		destinationRate,
 		originCurrency = '',
 		destCurrency = '',
 		...rest
