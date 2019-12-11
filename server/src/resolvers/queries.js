@@ -3,6 +3,7 @@ const countryTable = require('./countryToAll')
 const countryToCountry = require('./countryToCountry')
 const {country_languages,languages_table} = require('./languages')
 const currencies = require('./currencies')
+const financials = require('./financials')
 const logger = require('../logger/logger.js')
 
 logger.info(__filename +"Querying with GraphQL")
@@ -14,7 +15,8 @@ var queryType = new graphql.GraphQLObjectType({
         countryToCountry,
         country_languages,
         languages_table,
-        currencies
+        currencies,
+        financials
     }
 });
 
