@@ -3,7 +3,7 @@ const countryTable = require('./countryToAll')
 const countryToCountry = require('./countryToCountry')
 const {sockets_table, country_socket} = require('./sockets')
 const {country_languages,languages_table} = require('./languages')
-const time_difference = require('./timezones')
+const {time_difference_origin,time_difference_destination,timezones_table} = require('./timezones')
 const logger = require('../logger/logger.js')
 
 logger.info(__filename +"Querying with GraphQL")
@@ -17,7 +17,9 @@ var queryType = new graphql.GraphQLObjectType({
         languages_table,
         sockets_table,
         country_socket,
-        time_difference
+        time_difference_origin,
+        time_difference_destination,
+        timezones_table
     }
 });
 
