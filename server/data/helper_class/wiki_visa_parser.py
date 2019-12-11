@@ -28,9 +28,5 @@ class wiki_visa_parser():
             visa = cols[1][0 : visaPosition]
 
             info[name] = {"visa":visa}
-        #make the iso the key then return the data
-        # find_all_iso(info)
-        # data_new = replace_key_by_iso(info)
-        # info = data_new;
 
         return info

@@ -122,8 +122,8 @@ def save_to_australia():
     data = {}
     driver = create_driver()
     wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
-    wiki_visa = wiki_visa_parser(wiki_visa_url,driver)
-    print(wiki_visa.visa_parser_table())
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    wiki_visa = wiki_visa_ob.visa_parser_table()
 
     for country in url:
         driver.implicitly_wait(5)
@@ -133,7 +133,10 @@ def save_to_australia():
         link = "https://smartraveller.gov.au{}".format(href,sep='')
         visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
-            visa_info = "na"
+            try:
+                visa_info = visa_wiki[name].get('visa-info')+ "<br>" + visa_info
+            except:
+                print(name)
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
     driver.quit()
@@ -143,3 +146,5 @@ def save_to_australia():
         json.dump(data, outfile)
 
     save_into_db(data)
+
+save_to_australia()
