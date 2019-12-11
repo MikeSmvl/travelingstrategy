@@ -32,8 +32,6 @@ function findTimeZoneDifference(originCity,destinationCity,originCountry,destina
         timeZoneAtdestination = "Time in the capital the country of destination "+ capitalIfDestinationNotFound + " "+timeZoneAtdestination
     }
 
-    console.log("Time at origin:"+dateAtOrigin +", time at destination:"+dateAtDestination+", time difference: "+timeDifference+".")
-
     if(timeDifference>0){ //Showing time difference with +
         timeZoneAndDifference = timeZoneAtdestination + " (+"+timeDifference+"H from "+originCity+")"
     }
@@ -50,7 +48,6 @@ function findTimeZoneDifference(originCity,destinationCity,originCountry,destina
  * @param {*} originOrDestination To mention if the city is the origin or destination
  */
 function getTimeZone(city,destinationCountry, originOrDestination){
-    console.log("Getting time in:"+city)
     var timeAtLocation
 
     try{
@@ -65,7 +62,6 @@ function getTimeZone(city,destinationCountry, originOrDestination){
 
         timeAtLocation = (new Date()).toLocaleString([], options)
         timeAtLocation = timeAtLocation.substr(0,timeAtLocation.length-3) //Removing seconds
-        console.log("city: "+city+", time-zone: "+timezone+", time At Location: "+timeAtLocation+".")
     }
     catch(error){
         console.log("Could not get timezone of "+city)
@@ -90,7 +86,6 @@ function handleErrorForSomeCities(city,destinationCountry, firstE,originOrDestin
         return timeZone
     }
     else{ // Return the time zone of the capital of the country of destination
-        console.log("Getting time zone of the capital of the country of destination("+destinationCountry+")")
         var countryForCapital = country.findByIso2(destinationCountry)
 
         timeZone = getTimeZone(countryForCapital.capital,destinationCountry)
