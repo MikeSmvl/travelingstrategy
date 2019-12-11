@@ -43,8 +43,8 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								setOriginCountry(place.address_components.pop().short_name);
 								setOriginCity(place.address_components[0].short_name);
-								setOriginLat(Math.trunc( place.geometry.location.lat())); //Removing decimals
-								setOriginLng(Math.trunc(place.geometry.location.lng()));
+								setOriginLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals and taking absolute value
+								setOriginLng(Math.abs(Math.trunc(place.geometry.location.lng())));
 							}}
 						/>
 						{!validOrig
@@ -62,8 +62,8 @@ const CountrySelector = (props) => {
 							onPlaceSelected={(place) => {
 								setDestinationCountry(place.address_components.pop().short_name);
 								setDestinationCity(place.address_components[0].long_name);
-								setDestinationLat(Math.trunc( place.geometry.location.lat())); //Removing decimals
-								setDestinationLng(Math.trunc(place.geometry.location.lng()));
+								setDestinationLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals
+								setDestinationLng(Math.abs(Math.trunc(place.geometry.location.lng())));
 							}}
 						/>
 						{!validDest
@@ -77,8 +77,9 @@ const CountrySelector = (props) => {
 						{originCountry && destinationCountry ? (
 							<Link
 								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&
-								originCity=${originCity}&destinationCity=${destinationCity}&originLat=${originLat}&
-								originLng=${originLng}&destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
+								originCity=${originCity}&destinationCity=${destinationCity}&
+								originLat=${originLat}&originLng=${originLng}&
+								destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
 							>
 								<Button variant="outline-primary" type="submit">
                   Compare

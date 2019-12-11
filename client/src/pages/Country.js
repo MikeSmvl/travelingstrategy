@@ -16,7 +16,11 @@ function Country({
 	originCountry,
 	destinationCountry,
 	originCity,
-	destinationCity
+	destinationCity,
+	originLat,
+	originLng,
+	destinationLat,
+	destinationLng
 }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
 	const [visaInfo, setVisa] = useState('Not available yet.');
@@ -25,6 +29,8 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
+	const [timeDestination, setTimeDestination] = useState('Not available yet');
 
 	useEffect(() => {
 		async function fetchData() {
@@ -51,11 +57,18 @@ function Country({
 							electric_potential,
 							frequency
 						}
+						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng}) {
+							utc_offset
+						}
+						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
+							utc_offset
+						}
 					}`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
+					console.log(res)
 					setAdvisory(res.data.countryToCountry[0].advisory_text);
 					setVisa(res.data.countryToCountry[0].visa_info);
 					setLanguages(res.data.country_languages[0]);
@@ -63,6 +76,8 @@ function Country({
 					setVoltage(res.data.country_socket[0].electric_potential);
 					setFrequency(res.data.country_socket[0].frequency);
 					setIsLoading(false);
+					setTimeOrigin(res.data.time_difference_origin[0].utc_offset)
+					setTimeDestination(res.data.time_difference_destination[0].utc_offset)
 					console.log('type ', res.data.country_socket[0].plug_type);
 				});
 		}

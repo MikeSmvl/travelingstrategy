@@ -25,14 +25,8 @@ def save_cities_timezones():
             temp0 = city_info["lat"]
             temp = math.trunc(city_info["lat"])
             temp2 = math.trunc(city_info["lat"])
-            if(city == "Paris"):
-                print("-----------------")
-                print(city)
-                print(temp0)
-                print(temp)
-                print(temp2)
-            lat = math.trunc(city_info["lat"]) #to round to .0001
-            lng = math.trunc(city_info["lng"]) #to round to .0001
+            lat = abs(math.trunc(city_info["lat"])) #to round to .0001
+            lng = abs(math.trunc(city_info["lng"])) #to round to .0001
             utc_offset = None
 
             if(timezone != None):
