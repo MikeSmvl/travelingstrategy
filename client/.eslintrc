@@ -16,6 +16,10 @@
         "react/require-default-props": "off",
         "import/no-unresolved": "off",
         "object-curly-newline": "off",
-        "no-undef": "off"
+        "no-undef": "off",
+        "import/no-dynamic-require": "off",
+        "global-require": "off",
+        "no-mixed-spaces-and-tabs": "off",
+        "no-useless-escape": "off"
     }
 }

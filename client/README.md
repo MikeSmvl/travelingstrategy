@@ -3,11 +3,10 @@
 ## PR Checks
 
 Before making a pull request make sure that all of these criterias are met:
-1. No linting errors
-2. Storybook functions work well and all stories run correctly
-3. All tests are passed
-4. The version number in package.json is updated
-5. A release build can be built locally
+1. No linting errors (yarn lint)
+2. Storybook functions work well and all stories run correctly (yarn storybook)
+3. All tests are passed (yarn test a)
+4. A release build can be built locally (yarn build)
 
 ## Available Scripts
 

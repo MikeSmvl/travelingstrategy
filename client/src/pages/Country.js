@@ -3,13 +3,13 @@ import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Row, Col } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody } from '../components/Card/Card';
+import { Card, CardBody, Divider } from '../components/Card/Card';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
-import getCountryCode from '../utils/countryToISO';
 import getCountryName from '../utils/ISOToCountry';
 import findTimeZoneDifference from '../utils/timeZone';
+import { languages, flagSrc } from '../utils/parsingTools';
 import '../App.css';
 
 function Languages(object) {
@@ -37,12 +37,21 @@ function Languages(object) {
 	);
 }
 
-function Country({ originCountry, destinationCountry, originCity, destinationCity }) {
-	const [advisoryInfo, setAdvisory] = useState({});
-	const [visaInfo, setVisa] = useState({});
-	const [languagesInfo, setLanguages] = useState({});
+function Country({
+	originCountry,
+	destinationCountry,
+	originCity,
+	destinationCity
+}) {
+	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
+	const [visaInfo, setVisa] = useState('Not available yet.');
+	const [languagesInfo, setLanguages] = useState('Not available yet.');
+	const [isLoading, setIsLoading] = useState(false);
+	const [socketType, setSocketType] = useState('Not available yet');
+	const [voltage, setVoltage] = useState('Not available yet');
+	const [frequency, setFrequency] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
-	const [isLoading, setIsLoading] = useState(true);
+	const [financialInfo, setFinancial] = useState({});
 
 	useEffect(() => {
 		async function fetchData() {
@@ -69,34 +78,38 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 							symbol
 							code
 						}
+						country_socket(country_iso: "${destinationCountry}") {
+							plug_type,
+							electric_potential,
+							frequency
+						}
+						financials(country: "${destinationCountry}") {
+							gasoline
+							groceries
+							rent
+						}
 					}`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					if (
-						res.data.countryToCountry === null
-						|| res.data.countryToCountry.length === 0
-					) {
-						setAdvisory('Not available yet.');
-						setVisa('Not available yet.');
-						setLanguages('Not available yet.');
-						setCurrency('Not available yet.');
-						setIsLoading(false);
-					} else {
-						setAdvisory(res.data.countryToCountry[0].advisory_text);
-						setVisa(res.data.countryToCountry[0].visa_info);
-						setLanguages(res.data.country_languages[0]);
-						setCurrency(res.data.currencies[0]);
-						setIsLoading(false);
-					}
+					console.log(res.data);
+					setAdvisory(res.data.countryToCountry[0].advisory_text);
+					setVisa(res.data.countryToCountry[0].visa_info);
+					setLanguages(res.data.country_languages[0]);
+					setSocketType(res.data.country_socket[0].plug_type);
+					setVoltage(res.data.country_socket[0].electric_potential);
+					setFrequency(res.data.country_socket[0].frequency);
+					setCurrency(res.data.currencies[0]);
+					setFinancial(res.data.financials[0]);
+					setIsLoading(false);
+					console.log('type ', res.data.country_socket[0].plug_type);
 				});
 		}
 		fetchData();
 	}, [originCountry, destinationCountry]);
 
-	const countryCode = getCountryCode(destinationCountry);
-	const src = `https://www.countryflags.io/${countryCode}/flat/64.png`;
+	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
@@ -119,39 +132,59 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 						return (
 							<ReactFullpage.Wrapper>
 								<div className="section App">
-									<Header title={getCountryName(destinationCountry)}
-									title2={destinationCity}
-									title3={findTimeZoneDifference(originCity, destinationCity, originCountry, destinationCountry)} />
+									<Header
+										title={getCountryName(destinationCountry)}
+										title2={destinationCity}
+										title3={findTimeZoneDifference(
+											originCity,
+											destinationCity,
+											originCountry,
+											destinationCountry
+										)}
+									/>
 									<Subtitle text="Important Basics" />
 									<Row
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
 										<Col xs="10" sm="4">
-											<CountryCard flagSrc={src} title="Country Flag">
+											<CountryCard
+												flagSrc={flagSrc(destinationCountry)}
+												title="Country Flag"
+											>
 												<CardBody>
-													{Languages(languagesInfo)}
-													{languagesInfo === 'Not available yet.' && (
-														<div style={{ paddingBottom: '5px' }}>
-														Not Available yet.
-														</div>
-													)}
+													{languagesInfo !== 'Not available yet.'
+                            && languages(languagesInfo)}
 												</CardBody>
 											</CountryCard>
 										</Col>
 										<Col xs="10" sm="4">
-											<Card className="scrolling-card" header="Visa Info" style={{ height: '400px', overflow: 'scroll' }}>
-												<CardBody className="scrolling-card" style={{ paddingTop: '0' }}>
-													<div className="scrolling-card" dangerouslySetInnerHTML={{ __html: visaInfo }} />
+											<Card
+												className="scrolling-card"
+												header="Visa Info"
+												style={{ maxHeight: '400px', overflow: 'scroll' }}
+											>
+												<CardBody
+													className="scrolling-card"
+													style={{ paddingTop: '0' }}
+												>
+													<div
+														className="scrolling-card"
+														dangerouslySetInnerHTML={{ __html: visaInfo }}
+													/>
 												</CardBody>
 											</Card>
 										</Col>
 										<Col xs="10" sm="4">
 											<Card header="Advisory">
 												<CardBody>
-													<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }} />
-													{' '}
-													{JSON.stringify(advisoryInfo).replace(/(^")|("$)/g, '')}
+													<ErrorOutlineOutlinedIcon
+														style={{ color: '#dc3545' }}
+													/>{' '}
+													{JSON.stringify(advisoryInfo).replace(
+														/(^")|("$)/g,
+														''
+													)}
 												</CardBody>
 											</Card>
 										</Col>
@@ -159,11 +192,7 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 								</div>
 
 								<div className="section">
-									<Subtitle text="Health & Safety" />
-								</div>
-
-								<div className="section">
-									<Subtitle text="Money" />
+									<Subtitle text="Electricity & Financials" />
 									<Row
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
@@ -177,7 +206,46 @@ function Country({ originCountry, destinationCountry, originCity, destinationCit
 												</CardBody>
 											</Card>
 										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Prices (in USD)">
+												<CardBody>
+													<pre><strong>Gasoline:</strong> {financialInfo.gasoline}$ / Gallon</pre>
+													<pre><strong>Groceries:</strong> {financialInfo.groceries}$ / Week</pre>
+													<pre><strong>Rent:</strong> {financialInfo.rent}$ / Day</pre>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Sockets & Plugs">
+												<CardBody>
+													<p>
+														{getCountryName(destinationCountry)} uses{' '}
+														<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+														<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+														electrical sockets. Plugs are of{' '}
+														<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+													</p>
+													<Divider />
+													{socketType !== 'Not available yet'
+														&& socketArray.map((item) => (
+															/* eslint-disable */
+															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
+															<img
+																key={item}
+																src={require(`../socketImages/${item}.png`)}
+																style={{ width: '200px' }}
+																alt=''
+															/>
+															/* eslint-enable */
+														))}
+												</CardBody>
+											</Card>
+										</Col>
 									</Row>
+								</div>
+
+								<div className="section">
+									<Subtitle text="Health & Safety" />
 								</div>
 							</ReactFullpage.Wrapper>
 						);

@@ -83,3 +83,112 @@ it("Querying Canada Table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+//test for languages
+it("Querying Canada language Table", () =>{
+  const query = `
+  {
+    country_languages(country_iso:"CA"){
+      country_iso,
+      country_name,
+      official_languages,
+      regional_languages,
+      minority_languages,
+      national_languages,
+      widely_spoken_languages
+  }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying language Table", () =>{
+  const query = `
+  {
+    languages_table{
+      country_iso,
+      country_name,
+      official_languages,
+      regional_languages,
+      minority_languages,
+      national_languages,
+      widely_spoken_languages
+  }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+
+//test for plugs
+
+it("Querying socket table for Canada", () =>{
+  const query = `
+  {
+    country_socket(country_iso:"CA"){
+      country_iso,
+      country_name,
+      plug_type,
+      electric_potential,
+      frequency
+  }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+
+it("Querying for sockets of all countries", () =>{
+  const query = `
+  {
+    sockets_table{
+      country_iso,
+      country_name,
+      plug_type,
+      electric_potential,
+      frequency
+  }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
