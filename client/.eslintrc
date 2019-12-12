@@ -20,6 +20,13 @@
         "import/no-dynamic-require": "off",
         "global-require": "off",
         "no-mixed-spaces-and-tabs": "off",
-        "no-useless-escape": "off"
+        "no-useless-escape": "off",
+        "no-restricted-globals": "off",
+        "no-unused-expressions": ["error", {
+            "allowShortCircuit": true,
+            "allowTernary": true,
+            "allowTaggedTemplates": true
+        }],
+        "max-len": "off"
     }
 }

@@ -1,5 +1,6 @@
 .RateCalculator {
 	width: 300px;
+	color: rgb(134, 134, 146);
 }
 
 .RateCalculator .title {
@@ -8,4 +9,5 @@
 
 .RateCalculator .result {
 	margin-left: 12px;
+	color: black;
 }
