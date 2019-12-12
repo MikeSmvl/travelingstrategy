@@ -34,6 +34,9 @@ function Country({
 
 	useEffect(() => {
 		async function fetchData() {
+			console.log(`time_difference_origin(lat_origin:${originLat} lng_origin:${originLng} city_origin:${originCity}) {
+				utc_offset
+			}`)
 			setIsLoading(true);
 			await fetch('http://localhost:4000/', {
 				method: 'POST',
@@ -57,10 +60,10 @@ function Country({
 							electric_potential,
 							frequency
 						}
-						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng}) {
+						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng} city_origin:${originCity}) {
 							utc_offset
 						}
-						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
+						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng} city_destination:${destinationCity}) {
 							utc_offset
 						}
 					}`

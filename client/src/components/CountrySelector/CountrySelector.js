@@ -41,6 +41,7 @@ const CountrySelector = (props) => {
 							types={['(cities)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
+								console.log(place.geometry.location.lat())
 								setOriginCountry(place.address_components.pop().short_name);
 								setOriginCity(place.address_components[0].short_name);
 								setOriginLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals and taking absolute value
