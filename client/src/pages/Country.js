@@ -9,7 +9,7 @@ import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
-import getTimeDifference from '../utils/timeZone';
+import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getRate } from '../utils/parsingTools';
 import '../App.css';
 
@@ -42,9 +42,6 @@ function Country({
 
 	useEffect(() => {
 		async function fetchData() {
-			console.log(`time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
-				utc_offset
-			}`)
 			setIsLoading(true);
 			await fetch('http://localhost:4000/', {
 				method: 'POST',
@@ -105,12 +102,12 @@ function Country({
 					(res.data.financials && res.data.financials.length !== 0) && setFinancial(res.data.financials[0]);
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
-					console.log("===",res.data.time_difference_destination)
 					setIsLoading(false);
 				});
 		}
 		fetchData();
-	}, [originCountry, destinationCountry]);
+	}, [originCountry, destinationCountry,originLat, originLng,
+	 destinationLat, destinationLng]);
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
@@ -137,9 +134,7 @@ function Country({
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
-										title3={setTimeDestination !== 'Not available yet'
-										&&
-										getTimeDifference(timeOrigin,timeDestination)}
+										title3={getTimeDifference(timeOrigin,timeDestination, originCity)}
 									/>
 									<Subtitle text="Important Basics" />
 									<Row

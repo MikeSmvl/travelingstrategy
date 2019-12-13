@@ -22,8 +22,8 @@ def adding_lat_and_lng(cities):
                 city_data = json.loads(url.read().decode())
                 city_data = city_data['results']
                 lat_and_lng = city_data[0]["geometry"]["location"]
-                lat = lat_and_lng["lat"]
-                lng = lat_and_lng["lng"]
+                lat = round(lat_and_lng["lat"]*10000000)/10000000 #7 digits after decimal
+                lng = round(lat_and_lng["lng"]*10000000)/10000000
                 city_object = {
                     "city" : city["city"],
                     "country_name": city["country_name"],
