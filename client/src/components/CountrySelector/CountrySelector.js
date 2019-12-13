@@ -51,8 +51,8 @@ const CountrySelector = (props) => {
 									setOriginCountry(newIso);
 								}
 								setOriginCity(place.address_components[0].short_name);
-								setOriginLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals and taking absolute value
-								setOriginLng(Math.abs(Math.trunc(place.geometry.location.lng())));
+								setOriginLat(Math.round(place.geometry.location.lat() * 10000000)/10000000); //Round to 7 digits after decimal to match backend
+								setOriginLng(Math.round(place.geometry.location.lng() * 10000000)/10000000);
 							}}
 						/>
 						{!validOrig
@@ -78,8 +78,8 @@ const CountrySelector = (props) => {
 									setDestinationCountry(newIso);
 								}
 								setDestinationCity(place.address_components[0].long_name);
-								setDestinationLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals
-								setDestinationLng(Math.abs(Math.trunc(place.geometry.location.lng())));
+								setDestinationLat(Math.round(place.geometry.location.lat() * 10000000)/10000000); //Round to 7 digits after decimal to match backend
+								setDestinationLng(Math.round(place.geometry.location.lng() * 10000000)/10000000);
 							}}
 						/>
 						{!validDest

@@ -9,7 +9,7 @@ import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
-import findTimeZoneDifference from '../utils/timeZone';
+import getTimeDifference from '../utils/timeZone';
 import { languages, flagSrc, getRate } from '../utils/parsingTools';
 import '../App.css';
 
@@ -42,7 +42,7 @@ function Country({
 
 	useEffect(() => {
 		async function fetchData() {
-			console.log(`time_difference_origin(lat_origin:${originLat} lng_origin:${originLng} city_origin:${originCity}) {
+			console.log(`time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
 				utc_offset
 			}`)
 			setIsLoading(true);
@@ -68,7 +68,7 @@ function Country({
 							symbol
 							code
 						}
-							originCurrencies: currencies(country: "${originCountry}"){
+						originCurrencies: currencies(country: "${originCountry}"){
 							name
 							symbol
 							code
@@ -82,6 +82,12 @@ function Country({
 							gasoline
 							groceries
 							rent
+						}
+						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng}) {
+							utc_offset
+						}
+						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
+							utc_offset
 						}
 					}`
 				})
@@ -97,12 +103,14 @@ function Country({
 					(res.data.destinationCurrencies && res.data.destinationCurrencies.length !== 0) && setCurrency(res.data.destinationCurrencies[0]);
 					(res.data.originCurrencies && res.data.originCurrencies.length !== 0) && setOriginCurrency(res.data.originCurrencies[0]);
 					(res.data.financials && res.data.financials.length !== 0) && setFinancial(res.data.financials[0]);
+					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
+					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
+					console.log("===",res.data.time_difference_destination)
 					setIsLoading(false);
 				});
 		}
 		fetchData();
 	}, [originCountry, destinationCountry]);
-
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
@@ -129,6 +137,9 @@ function Country({
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
+										title3={setTimeDestination !== 'Not available yet'
+										&&
+										getTimeDifference(timeOrigin,timeDestination)}
 									/>
 									<Subtitle text="Important Basics" />
 									<Row
