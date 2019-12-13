@@ -41,9 +41,15 @@ const CountrySelector = (props) => {
 							types={['(cities)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								console.log(place.geometry.location.lat())
-								console.log(place.geometry.location.lng())
-								setOriginCountry(place.address_components.pop().short_name);
+								const iso = place.address_components.pop().short_name;
+								// If it isn't a number, assume correct ISO was retrieved
+								if (isNaN(iso)) {
+									setOriginCountry(iso);
+								} else {
+									// Else pop one more time
+									const newIso = place.address_components.pop().short_name;
+									setOriginCountry(newIso);
+								}
 								setOriginCity(place.address_components[0].short_name);
 								setOriginLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals and taking absolute value
 								setOriginLng(Math.abs(Math.trunc(place.geometry.location.lng())));
@@ -62,7 +68,15 @@ const CountrySelector = (props) => {
 							types={['(cities)']}
 							style={{ width: '90%' }}
 							onPlaceSelected={(place) => {
-								setDestinationCountry(place.address_components.pop().short_name);
+								const iso = place.address_components.pop().short_name;
+								// If it isn't a number, assume correct ISO was retrieved
+								if (isNaN(iso)) {
+									setDestinationCountry(iso);
+								} else {
+									// Else pop one more time
+									const newIso = place.address_components.pop().short_name;
+									setDestinationCountry(newIso);
+								}
 								setDestinationCity(place.address_components[0].long_name);
 								setDestinationLat(Math.abs(Math.trunc( place.geometry.location.lat()))); //Removing decimals
 								setDestinationLng(Math.abs(Math.trunc(place.geometry.location.lng())));

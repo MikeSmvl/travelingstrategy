@@ -1,0 +1,13 @@
+.RateCalculator {
+	width: 300px;
+	color: rgb(134, 134, 146);
+}
+
+.RateCalculator .title {
+	text-align: center;
+}
+
+.RateCalculator .result {
+	margin-left: 12px;
+	color: black;
+}
