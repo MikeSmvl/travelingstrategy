@@ -9,6 +9,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.visa_info import parse_a_country_visa
 
 def get_url_of_countries_nz():
     info = {}
@@ -62,7 +63,7 @@ def save_to_new_zealand():
     url = get_url_of_countries_nz() #this function create its own driver -- to change
     data = {}
     driver = create_driver_nz()
-    visas = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens",driver)
+    visas = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens")
     counter_country = 0
 
     for country in url:
@@ -81,12 +82,14 @@ def save_to_new_zealand():
 
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_text}
-        data = find_all_iso(data)
+        
 
         if ((counter_country%50) == 0):
             quit_driver_nz(driver)
             driver = create_driver_nz()
         counter_country += 1
+      
+    data = find_all_iso(data)
 
     with open('./advisory-nz.json', 'w') as outfile:
         json.dump(data, outfile)
@@ -104,47 +107,6 @@ def parse_a_country_advisory(url, driver):
 
     return warning
 
-def parse_a_country_visa(url, driver):
-    info ={}
-    driver.get(url)
-    #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-         x = x+1
-         cols = tr.find_all('td')
-         cols = [ele.text.strip() for ele in cols]
-         name = cols[0]
-         if(x < 5):
-           visaLength = len(cols[1])-3
-           visa = cols[1][0:visaLength]
-         elif( x < 80):
-           visaLength = len(cols[1])-4
-           visa = cols[1][0:visaLength]
-         else:
-           visaLength = len(cols[1])-5
-           visa = cols[1][0:visaLength]
-         if(visa[len(visa)-1: len(visa)] == ']'):
-              if(x < 5):
-                visaLength = len(visa)-3
-                visa = visa[0:visaLength]
-              elif( x < 80):
-                visaLength = len(visa)-4
-                visa = visa[0:visaLength]
-              else:
-                visaLength = len(visa)-5
-                visa = visa[0:visaLength]
-         if(name == "Angola"):
-           visaLength = len(visa)-2
-           visa = visa[0:visaLength]
-
-         info[name] = {"visa":visa}
-
-    return info
 
 def save_into_db(data):
     # create an an sqlite_advisory object
@@ -159,3 +121,5 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
+
+save_to_new_zealand()
