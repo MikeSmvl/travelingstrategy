@@ -1,6 +1,6 @@
 
-# Reading an excel file using Python 
-import xlrd 
+# Reading an excel file using Python
+import xlrd
 import pandas as pd
 import sqlite3
 from helper_class.country_names import find_iso_of_country
@@ -8,7 +8,7 @@ import pycountry
 
 def remove_duplicate_countries():
     #accessing excel sheet as dataframes
-    df = pd.read_excel('./Plugs.xlsx')  
+    df = pd.read_excel('./Plugs.xlsx')
     #removing duplicates and joining by the plug type attribute
     dataFrame = df.groupby(['Location','Electric Potential','Frequency'])['Plug Type'].apply(', '.join).reset_index()
     #create a write to create a new excel sheet without any of the duplicates
@@ -18,17 +18,17 @@ def remove_duplicate_countries():
     #saving the new data
     writer.save()
 
-def get_countries_sockets():   
-    # Give the location of the file 
+def get_countries_sockets():
+    # Give the location of the file
     loc = "./e_sockets.xlsx" #mac
     # loc = "server/data/e_sockets.xlsx"  #pc
-  
-    # To open Workbook 
-    wb = xlrd.open_workbook(loc) 
-    sheet = wb.sheet_by_index(0) 
-    sheet.cell_value(0, 0) 
+
+    # To open Workbook
+    wb = xlrd.open_workbook(loc)
+    sheet = wb.sheet_by_index(0)
+    sheet.cell_value(0, 0)
     arrayOfInfo = []
-    #loop for every row and grab the values 
+    #loop for every row and grab the values
     for row in range(sheet.nrows):
         country_name = sheet.cell_value(row, 0)
         electric_potential = sheet.cell_value(row, 1)
@@ -68,3 +68,4 @@ def save_electrical_sockets():
     con.commit()
     con.close()
 
+save_electrical_sockets()

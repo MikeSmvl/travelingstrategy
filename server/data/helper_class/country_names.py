@@ -91,6 +91,8 @@ def handle_iso_error(name, all_names,all_official_names):
         return "Malta"
     elif (name == 'Lichenstein'):
         return "Liechtenstein"
+    elif (name == 'Trinidad & Tobago'):
+        return "Trinidad and Tobago"
 
     return ""
 

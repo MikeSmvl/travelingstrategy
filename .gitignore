@@ -63,5 +63,8 @@ typings/
 # next.js build output
 .next
 
+# vscode configuration
+.vscode
+
 # python unittest
 __pycache__

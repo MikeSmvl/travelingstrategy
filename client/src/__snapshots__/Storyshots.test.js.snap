@@ -525,6 +525,178 @@ Array [
 ]
 `;
 
+exports[`Storyshots RateCalculator Base usage 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      className="RateCalculator card"
+    >
+      <div
+        className="title card-header"
+      >
+        Rate Converter
+      </div>
+      <div
+        className="card-body"
+      >
+        <div
+          className="form-group row"
+        >
+          <div
+            className="col-sm-7"
+          >
+            <input
+              className="form-control"
+              defaultValue="1"
+              onInput={[Function]}
+            />
+          </div>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            CAD
+          </label>
+        </div>
+        <div
+          className="form-group row"
+        >
+          <label
+            className="form-label col-form-label col-sm-7"
+          >
+            <div
+              className="result"
+            >
+              1.32
+            </div>
+          </label>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            USD
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots RateCalculator Set props 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      className="RateCalculator card"
+    >
+      <div
+        className="title card-header"
+      >
+        Rate Converter
+      </div>
+      <div
+        className="card-body"
+      >
+        <div
+          className="form-group row"
+        >
+          <div
+            className="col-sm-7"
+          >
+            <input
+              className="form-control"
+              defaultValue="1"
+              onInput={[Function]}
+            />
+          </div>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            CAD
+          </label>
+        </div>
+        <div
+          className="form-group row"
+        >
+          <label
+            className="form-label col-form-label col-sm-7"
+          >
+            <div
+              className="result"
+            >
+              1.32
+            </div>
+          </label>
+          <label
+            className="form-label col-form-label col-sm-5"
+          >
+            USD
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
 exports[`Storyshots Subtitle Base usage 1`] = `
 Array [
   <div

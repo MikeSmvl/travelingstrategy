@@ -8,6 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
 
 
 #Get the path of all the pages australia has advisory detail on
@@ -115,11 +116,25 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
+def test(name):
+    url = get_url_of_countries() #this function create its own driver -- to change
+    data = {}
+    driver = create_driver()
+    wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    wiki_visa = wiki_visa_ob.visa_parser_table()
+    print(wiki_visa)
+    print(wiki_visa[name].get('visa'))
+
+
 def save_to_australia():
 
     url = get_url_of_countries() #this function create its own driver -- to change
     data = {}
     driver = create_driver()
+    wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    wiki_visa = wiki_visa_ob.visa_parser_table()
 
     for country in url:
         driver.implicitly_wait(5)
@@ -129,7 +144,10 @@ def save_to_australia():
         link = "https://smartraveller.gov.au{}".format(href,sep='')
         visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
-            visa_info = "na"
+            try:
+                visa_info = wiki_visa[name].get('visa')+ "<br>" + visa_info
+            except:
+                print(name)
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
     driver.quit()
@@ -139,3 +157,4 @@ def save_to_australia():
         json.dump(data, outfile)
 
     save_into_db(data)
+
