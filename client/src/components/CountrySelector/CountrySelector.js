@@ -92,10 +92,7 @@ const CountrySelector = (props) => {
 					>
 						{originCountry && destinationCountry ? (
 							<Link
-								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&
-								originCity=${originCity}&destinationCity=${destinationCity}&
-								originLat=${originLat}&originLng=${originLng}&
-								destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
+								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&originCity=${originCity}&destinationCity=${destinationCity}&originLat=${originLat}&originLng=${originLng}&destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
 							>
 								<Button variant="outline-primary" type="submit">
                   Compare
