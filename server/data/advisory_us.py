@@ -7,6 +7,7 @@ import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.visa_info import parse_a_country_visa
 
 def get_name_and_advisory_of_countries():
     try:
@@ -18,7 +19,7 @@ def get_name_and_advisory_of_countries():
         driver.get(url)
 
         #Selenium hands the page source to Beautiful Soup
-        soup=BeautifulSoup(driver.page_source, 'lxml')
+        soup=BeautifulSoup(driver.page_source, 'lxml') 
 
         #patter of the link to the country page that the href should match
         reg = regex.compile(r'\w+-*')
@@ -47,35 +48,11 @@ def get_name_and_advisory_of_countries():
 
 
 
-def parse_a_country_visa():
-    info ={}
-    driver = create_driver()
-    driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens")
-    #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-         x = x+1
-         cols = tr.find_all('td')
-         cols = [ele.text.strip() for ele in cols]
-         name = cols[0]
-
-         visaPosition = cols[1].find('[')
-         visa = cols[1][0 : visaPosition]
-
-         info[name] = {"visa":visa}
-    return info
-
-
 def save_to_united_states():
     name_advisory = get_name_and_advisory_of_countries()
     info ={}
 
-    visas = parse_a_country_visa()
+    visas = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens")
 
     for name in sorted (name_advisory.keys()):
        info[name] = name_advisory[name]
@@ -123,3 +100,4 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
+save_to_united_states()
