@@ -4,6 +4,7 @@ from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
 
 import json
 
@@ -63,54 +64,15 @@ def parse_all_countries_advisory():
         data[country]= {"advisory": advisory}
     return data
 
-def parse_all_country_visa(url):
-    info ={}
-    driver = create_driver()
-    driver.get(url)
-    #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-         x = x+1
-         cols = tr.find_all('td')
-         cols = [ele.text.strip() for ele in cols]
-         name = cols[0]
-         if(x < 5):
-           visaLength = len(cols[1])-3
-           visa = cols[1][0:visaLength]
-         elif( x < 80):
-           visaLength = len(cols[1])-4
-           visa = cols[1][0:visaLength]
-         else:
-           visaLength = len(cols[1])-5
-           visa = cols[1][0:visaLength]
-         if(visa[len(visa)-1: len(visa)] == ']'):
-              if(x < 5):
-                visaLength = len(visa)-3
-                visa = visa[0:visaLength]
-              elif( x < 80):
-                visaLength = len(visa)-4
-                visa = visa[0:visaLength]
-              else:
-                visaLength = len(visa)-5
-                visa = visa[0:visaLength]
-         if(name == "Angola"):
-           visaLength = len(visa)-2
-           visa = visa[0:visaLength]
-
-         info[name] = {"visa":visa}
-    quit_driver(driver)
-
-    return info
 
 
 def save_to_UK():
+
+    driver = create_driver()
+    wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens"
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    visas = wiki_visa_ob.visa_parser_table()
     data = parse_all_countries_advisory()
-    visas = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens")
     info = {}
     array_info = []
     # create an an sqlite_advisory object
@@ -141,3 +103,5 @@ def save_to_UK():
 
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
+
+save_to_UK()

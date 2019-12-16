@@ -21,8 +21,7 @@ def get_name_and_advisory_of_countries():
         #Selenium hands the page source to Beautiful Soup
         soup=BeautifulSoup(driver.page_source, 'lxml') 
 
-        #patter of the link to the country page that the href should match
-        reg = regex.compile(r'\w+-*')
+        #pattern of the link to the country page that the href should match
         table = soup.find('table')
         table_body = table.find('tbody')
         table_rows = table_body.find_all('tr')
@@ -49,29 +48,30 @@ def get_name_and_advisory_of_countries():
 
 
 def save_to_united_states():
-    name_advisory = get_name_and_advisory_of_countries()
-    info ={}
-
     driver = create_driver()
+    
+    data = {} #Used to store of all the parsed data of each country
+    name_to_advisories ={} #Stores the names and associated advisories
+    name_advisory = get_name_and_advisory_of_countries()
     wiki_visa_url = "https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens"
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
     visas = wiki_visa_ob.visa_parser_table()
 
-    for name in sorted (name_advisory.keys()):
-       info[name] = name_advisory[name]
+    for name in sorted (name_advisory.keys()): #Sorts the dictionary containing  names and advisories
+       name_to_advisories[name] = name_advisory[name]
 
-    data = {}
+
     counter_country = 0
-
-    for country in info:
+    for country in name_to_advisories: #iterates through name_to_advisories to retrieve advisories
         driver.implicitly_wait(5)
         name = country
-        advisory = info[country]
+        advisory = name_to_advisories[country]
 
         visa_text= ""
-        for countryVisa in visas:
+        for countryVisa in visas: # iterates through list of visas to retrieve visas
             if(countryVisa ==  country):
                visa_text = visas[countryVisa].get('visa')
+               del visas[countryVisa]
                break;
 
         country_iso = "na"
@@ -81,12 +81,15 @@ def save_to_united_states():
           quit_driver(driver)
           driver = create_driver()
         counter_country += 1
-    data = find_all_iso(data)
+
+    data = find_all_iso(data)#Sets iso for each country
 
     with open('./advisory-us.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
+
+
 
 def save_into_db(data):
     # create an an sqlite_advisory object
@@ -101,5 +104,3 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
-
-save_to_united_states()
