@@ -10,7 +10,8 @@ from advisory_aus import get_url_of_countries, parse_a_country, create_driver, q
 from languages import get_concatinated_values
 from advisory_nz import get_url_of_countries_nz, create_driver_nz, quit_driver_nz, parse_a_country_visa, parse_a_country_advisory
 from advisory_us import get_name_and_advisory_of_countries, parse_a_country_visa as parse_a_country_visa_us
-from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
+from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory, parse_all_country_visa
+from city_timezones import adding_lat_and_lng, get_cities_info
 
 class parseTest(unittest.TestCase):
 
@@ -122,8 +123,8 @@ class parseTest(unittest.TestCase):
         advis = get_one_advisory(url, my_driver, soup)
         self.assertFalse("", advis)
 
-     def test_get_info_ie(self):
-         # tests getting visa info
+    def test_get_info_ie(self):
+        # tests getting visa info
         my_driver = create_driver;
         my_driver.implicitly_wait(5)
         my_driver.get(url)
@@ -138,6 +139,14 @@ class parseTest(unittest.TestCase):
         urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
         quit_driver_nz(my_driver)
         self.assertFalse("", urls)
+
+    # Tests for timezone parser
+
+    def test_for_timezone_parser(self):
+        # tests getting  city info
+        urls = adding_lat_and_lng(get_cities_info())
+        self.assertFalse("", urls)
+
 
 if __name__ == '__main__':
     unittest.main()
