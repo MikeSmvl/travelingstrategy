@@ -116,16 +116,6 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
-def test(name):
-    url = get_url_of_countries() #this function create its own driver -- to change
-    data = {}
-    driver = create_driver()
-    wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
-    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
-    wiki_visa = wiki_visa_ob.visa_parser_table()
-    print(wiki_visa)
-    print(wiki_visa[name].get('visa'))
-
 
 def save_to_australia():
 
