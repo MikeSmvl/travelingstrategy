@@ -11,7 +11,11 @@ from languages import get_concatinated_values
 from advisory_nz import get_url_of_countries_nz, create_driver_nz, quit_driver_nz, parse_a_country_visa, parse_a_country_advisory
 from advisory_us import get_name_and_advisory_of_countries, parse_a_country_visa as parse_a_country_visa_us
 from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory, parse_all_country_visa
+from advisory_ie import find_all_url, get_one_advisory, get_one_info
 from city_timezones import adding_lat_and_lng, get_cities_info
+
+sys.path.append('../helper_class/')
+from wiki_visa_parser import wiki_visa_parser
 
 class parseTest(unittest.TestCase):
 
@@ -54,9 +58,9 @@ class parseTest(unittest.TestCase):
 
     def test_get_concatinated_values(self):
         # tests comma seperating function
-        test_value = ["Charles", "Karl", "Steven"]
+        test_value = ["English", "French", "Spanish"]
         value = get_concatinated_values(test_value)
-        self.assertTrue("Charles, Karl, Steven", value)
+        self.assertTrue("English, French, Spanish", value)
 
     # Tests for new zealand's parser
 
@@ -89,6 +93,7 @@ class parseTest(unittest.TestCase):
     def tests_us_parse(self):
         # tests parsing visa
         urls = parse_a_country_visa_us()
+        self.assertFalse("", urls)
 
     # Tests for United Kingdom's parser
 
@@ -105,9 +110,11 @@ class parseTest(unittest.TestCase):
     def tests_uk_parse_visa(self):
         # tests parsing visa
         driver = create_driver_nz()
-        urls = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens", driver)
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver_nz(driver)
-        self.assertFalse("", urls)
+        self.assertFalse("", wiki_visa)
 
     # Tests for Ireland's parser
 
@@ -120,14 +127,15 @@ class parseTest(unittest.TestCase):
 
     def test_get_advisory_ie(self):
         # tests getting single advisory
-        advis = get_one_advisory(url, my_driver, soup)
+        my_driver = create_driver()
+        soup = BeautifulSoup(my_driver.page_source, 'lxml')
+        advis = get_one_advisory('https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/canada/', my_driver, soup)
+        quit_driver(my_driver)
         self.assertFalse("", advis)
 
     def test_get_info_ie(self):
         # tests getting visa info
-        my_driver = create_driver;
-        my_driver.implicitly_wait(5)
-        my_driver.get(url)
+        my_driver = create_driver()
         soup = BeautifulSoup(my_driver.page_source, 'lxml')
         info = get_one_info('https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/canada/', 'visa/passport', my_driver, soup)
         quit_driver(my_driver)
@@ -135,17 +143,19 @@ class parseTest(unittest.TestCase):
 
     def test_ie_parse_visa_wiki(self):
         # tests parsing visa from wiki for ie
-        my_driver = create_driver;
-        urls = parse_a_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
-        quit_driver_nz(my_driver)
-        self.assertFalse("", urls)
+        driver = create_driver_nz()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver_nz(driver)
+        self.assertFalse("", wiki_visa)
 
     # Tests for timezone parser
 
-    def test_for_timezone_parser(self):
+    #def test_for_timezone_parser(self):
         # tests getting  city info
-        urls = adding_lat_and_lng(get_cities_info())
-        self.assertFalse("", urls)
+    #    urls = adding_lat_and_lng(get_cities_info())
+    #    self.assertFalse("", urls)
 
 
 if __name__ == '__main__':
