@@ -9,7 +9,9 @@ from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
-from helper_class.chrome_driver.py import create_driver, quit_driver
+from helper_class.chrome_driver import create_driver, quit_driver
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_BZ
 from lib.database import Database
 
@@ -42,6 +44,16 @@ def save_into_db(tableName, data):
     sqlite.commit()
     sqlite.close()
 
+def mexico_all_links(driver):
+    url = 'https://guiadelviajero.sre.gob.mx/'
+    driver.get(url)
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    reg = regex.compile(r'\/103-ficha-de-paises\/')
+    a = soup.findAll('a', attrs = {'href':reg})
+    links = {}
+    for att in a:
+        links[att.text] = 'https://guiadelviajero.sre.gob.mx/'+att['href']
+    return links
 
 def save_to_central_america():
 
@@ -52,21 +64,24 @@ def save_to_central_america():
     dataMX = {}
     dataPA = {}
     driver = create_driver()
-    wiki_visa_ob_BZ = wiki_visa_parser(wiki_visa_url_BZ, driver)
-    wiki_visa_ob_DM = wiki_visa_parser(wiki_visa_url_DM, driver)
-    wiki_visa_ob_DO = wiki_visa_parser(wiki_visa_url_DO, driver)
-    wiki_visa_ob_MX = wiki_visa_parser(wiki_visa_url_MX, driver)
-    wiki_visa_ob_PA = wiki_visa_parser(wiki_visa_url_PA, driver)
-    wiki_visa_BZ = wiki_visa_ob_BZ.visa_parser_table()
-    wiki_visa_DM = wiki_visa_ob_DM.visa_parser_table()
-    wiki_visa_DO = wiki_visa_ob_DO.visa_parser_table()
-    wiki_visa_MX = wiki_visa_ob_MX.visa_parser_table()
-    wiki_visa_PA = wiki_visa_ob_PA.visa_parser_table()
+    mexico_advidory = mexico_all_links(driver)
+    # wiki_visa_ob_BZ = wiki_visa_parser(wiki_visa_url_BZ, driver)
+    # wiki_visa_ob_DM = wiki_visa_parser(wiki_visa_url_DM, driver)
+    # wiki_visa_ob_DO = wiki_visa_parser(wiki_visa_url_DO, driver)
+    # wiki_visa_ob_MX = wiki_visa_parser(wiki_visa_url_MX, driver)
+    # wiki_visa_ob_PA = wiki_visa_parser(wiki_visa_url_PA, driver)
+    # wiki_visa_BZ = wiki_visa_ob_BZ.visa_parser_table()
+    # wiki_visa_DM = wiki_visa_ob_DM.visa_parser_table()
+    # wiki_visa_DO = wiki_visa_ob_DO.visa_parser_table()
+    # wiki_visa_MX = wiki_visa_ob_MX.visa_parser_table()
+    # wiki_visa_PA = wiki_visa_ob_PA.visa_parser_table()
 
     driver.quit()
 
-    save_into_db("BZ", dataBZ)
-    save_into_db("DM", dataDM)
-    save_into_db("DO", dataDO)
-    save_into_db("MX", dataMX)
-    save_into_db("PA", dataPA)
+    # save_into_db("BZ", dataBZ)
+    # save_into_db("DM", dataDM)
+    # save_into_db("DO", dataDO)
+    # save_into_db("MX", dataMX)
+    # save_into_db("PA", dataPA)
+
+save_to_central_america()
