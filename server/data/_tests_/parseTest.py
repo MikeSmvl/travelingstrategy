@@ -125,14 +125,6 @@ class parseTest(unittest.TestCase):
         quit_driver_nz(driver)
         self.assertFalse("", urls)
 
-    def test_get_advisory_ie(self):
-        # tests getting single advisory
-        my_driver = create_driver()
-        soup = BeautifulSoup(my_driver.page_source, 'lxml')
-        advis = get_one_advisory('https://www.dfa.ie/travel/travel-advice/a-z-list-of-countries/canada/', my_driver, soup)
-        quit_driver(my_driver)
-        self.assertFalse("", advis)
-
     def test_get_info_ie(self):
         # tests getting visa info
         my_driver = create_driver()
@@ -149,13 +141,6 @@ class parseTest(unittest.TestCase):
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver_nz(driver)
         self.assertFalse("", wiki_visa)
-
-    # Tests for timezone parser
-
-    #def test_for_timezone_parser(self):
-        # tests getting  city info
-    #    urls = adding_lat_and_lng(get_cities_info())
-    #    self.assertFalse("", urls)
 
 
 if __name__ == '__main__':
