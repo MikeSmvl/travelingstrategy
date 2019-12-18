@@ -12,7 +12,7 @@ from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_BZ
+from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_MX
 from lib.database import Database
 from helper_class.en_vs_es_country_names import get_iso_es
 
@@ -35,13 +35,17 @@ def save_into_db(tableName, data):
     # create an an sqlite_advisory object
     DB.add_table(tableName,country_iso="country_iso"
         ,name="name",advisory_text="advisory_text",visa_info="visa_info")
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        DB.insert(tableNAme,country_iso=iso,name=name,
-            advisory_text=text,visa_info=visa_info)
+    for iso in data:
+        iso = data[iso].get('country_iso')
+        name = data[iso].get('name')
+        text = data[iso].get('advisory_text')
+        visa_info = data[iso].get('visa-info')
+        print(iso,name,text,visa_info)
+        try:
+            DB.insert_or_update(tableName,iso, name,text,visa_info)
+        except:
+            print("None type",iso)
+
 
 
 def mexico_all_links(driver):
@@ -58,11 +62,23 @@ def mexico_all_links(driver):
             c += 1
             name = att.text.strip()
             iso = iso_es[name]
-            href= {'https://guiadelviajero.sre.gob.mx'+att['href']}
-            links[name] = {'advisory_text':href,'country_iso':iso,'name':name}
+            href= 'https://guiadelviajero.sre.gob.mx'+att['href']
+            links[iso] = {'advisory_text':href,'country_iso':iso,'name':name}
         except:
             print("This country's iso was not found:",att.text)
-    #print(links,c)
+    wiki_visa_ob_MX = wiki_visa_parser(wiki_visa_url_MX, driver)
+    visas = wiki_visa_ob_MX.visa_parser_table()
+    visas = replace_key_by_iso(visas)
+    print(visas)
+    data = {}
+    for key in visas:
+        try:
+            data[key] = links[key]
+            info = data[key]
+            info['visa-info'] = visas[key].get('visa-info')
+        except:
+            print("the followinf iso was not foud:",key)
+
     return links
 
 #function to replace name by iso
@@ -77,20 +93,16 @@ def replace_key_by_iso(data):
 
 def save_to_central_america():
 
-    # get urls?
-    dataBZ = {}
-    dataDM = {}
-    dataDO = {}
-    dataMX = {}
-    dataPA = {}
+    #create driver
     driver = create_driver()
-    mexico_advidory = mexico_all_links(driver)
-    # mexico_advidory = replace_key_by_iso(mexico_advidory)
-    # print(mexico_advidory)
+
+    dataMX = mexico_all_links(driver)
+    # print(dataMX)
+    save_into_db('MX', dataMX)
+
     # wiki_visa_ob_BZ = wiki_visa_parser(wiki_visa_url_BZ, driver)
     # wiki_visa_ob_DM = wiki_visa_parser(wiki_visa_url_DM, driver)
     # wiki_visa_ob_DO = wiki_visa_parser(wiki_visa_url_DO, driver)
-    # wiki_visa_ob_MX = wiki_visa_parser(wiki_visa_url_MX, driver)
     # wiki_visa_ob_PA = wiki_visa_parser(wiki_visa_url_PA, driver)
     # wiki_visa_BZ = wiki_visa_ob_BZ.visa_parser_table()
     # wiki_visa_DM = wiki_visa_ob_DM.visa_parser_table()
