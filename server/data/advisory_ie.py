@@ -11,6 +11,7 @@ from selenium.webdriver.common.keys import Keys
 import helper_class.chrome_driver as driver
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
 
 
 #Find all the urls to each country from the
@@ -88,33 +89,6 @@ def get_one_info(url, to_find, my_driver, soup):
 
     return data
 
-def parse_a_country_visa():
-    info = {}
-    my_driver = driver.create_driver()
-    my_driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens")
-    #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(my_driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-        x = x+1
-        cols = tr.find_all('td')
-        cols = [ele.text.strip() for ele in cols]
-        name = cols[0]
-
-        visa_position = cols[1].find('[')
-        visa = cols[1][0 : visa_position]
-
-        info[name] = {"visa":visa}
-    #make the iso the key then return the data
-    find_all_iso(info)
-    data_new = replace_key_by_iso(info)
-    info = data_new
-    return info
-
 #function to replace name by iso
 def replace_key_by_iso(data):
     data_new = {}
@@ -149,7 +123,8 @@ def find_all_ireland():
 
     all_url = find_all_url(my_driver)
     data = find_all_iso(all_url)
-    visa_wiki = parse_a_country_visa()
+    wiki_visa_ob = wiki_visa_parser("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
+    visas = wiki_visa_ob.visa_parser_table()
 
     for country in data:
         c = data[country]
@@ -176,7 +151,7 @@ def find_all_ireland():
             iso = 'FR'
         else:
             try:
-                c['visa-info'] = visa_wiki[iso].get('visa-info')+ "<br>" + c['visa-info']
+                c['visa-info'] = visas[country].get('visa')+ "<br>" + c['visa-info']
             except Exception as error_msg:
                 print(c, error_msg)
     #dump the data into js to be deleted later

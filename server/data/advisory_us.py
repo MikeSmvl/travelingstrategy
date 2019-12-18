@@ -7,6 +7,7 @@ import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
 
 def get_name_and_advisory_of_countries():
     try:
@@ -18,10 +19,9 @@ def get_name_and_advisory_of_countries():
         driver.get(url)
 
         #Selenium hands the page source to Beautiful Soup
-        soup=BeautifulSoup(driver.page_source, 'lxml')
+        soup=BeautifulSoup(driver.page_source, 'lxml') 
 
-        #patter of the link to the country page that the href should match
-        reg = regex.compile(r'\w+-*')
+        #pattern of the link to the country page that the href should match
         table = soup.find('table')
         table_body = table.find('tbody')
         table_rows = table_body.find_all('tr')
@@ -47,52 +47,31 @@ def get_name_and_advisory_of_countries():
 
 
 
-def parse_a_country_visa():
-    info ={}
-    driver = create_driver()
-    driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens")
-    #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-         x = x+1
-         cols = tr.find_all('td')
-         cols = [ele.text.strip() for ele in cols]
-         name = cols[0]
-
-         visaPosition = cols[1].find('[')
-         visa = cols[1][0 : visaPosition]
-
-         info[name] = {"visa":visa}
-    return info
-
-
 def save_to_united_states():
-    name_advisory = get_name_and_advisory_of_countries()
-    info ={}
-
-    visas = parse_a_country_visa()
-
-    for name in sorted (name_advisory.keys()):
-       info[name] = name_advisory[name]
-
-    data = {}
     driver = create_driver()
-    counter_country = 0
+    
+    data = {} #Used to store of all the parsed data of each country
+    name_to_advisories ={} #Stores the names and associated advisories
+    name_advisory = get_name_and_advisory_of_countries()
+    wiki_visa_url = "https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens"
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    visas = wiki_visa_ob.visa_parser_table()
 
-    for country in info:
+    for name in sorted (name_advisory.keys()): #Sorts the dictionary containing  names and advisories
+       name_to_advisories[name] = name_advisory[name]
+
+
+    counter_country = 0
+    for country in name_to_advisories: #iterates through name_to_advisories to retrieve advisories
         driver.implicitly_wait(5)
         name = country
-        advisory = info[country]
+        advisory = name_to_advisories[country]
 
         visa_text= ""
-        for countryVisa in visas:
+        for countryVisa in visas: # iterates through list of visas to retrieve visas
             if(countryVisa ==  country):
                visa_text = visas[countryVisa].get('visa')
+               del visas[countryVisa]
                break;
 
         country_iso = "na"
@@ -102,12 +81,15 @@ def save_to_united_states():
           quit_driver(driver)
           driver = create_driver()
         counter_country += 1
-    data = find_all_iso(data)
+
+    data = find_all_iso(data)#Sets iso for each country
 
     with open('./advisory-us.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
+
+
 
 def save_into_db(data):
     # create an an sqlite_advisory object
@@ -122,4 +104,3 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
-
