@@ -45,6 +45,7 @@ def get_country_traffic_side():
                             traffic_side = "right"
                         info = {
                                 "country_iso": country_iso,
+                                "country_name": country,
                                 "traffic_side": traffic_side
                                 }
                         already_parsed.append(country_iso)
@@ -58,13 +59,15 @@ def get_country_traffic_side():
         driver.quit()
 
 def save_traffic_side():
-    DB.add_table('traffic', country_iso='text', traffic_side='text')
+    DB.drop_table('traffic')
+    DB.add_table('traffic', country_iso='text', country_name="text", traffic_side='text')
     traffic_info = get_country_traffic_side()
 
     for country_traffic in traffic_info:
         country_iso = country_traffic.get("country_iso")
+        country_name = country_traffic.get("country_name")
         traffic_side = country_traffic.get("traffic_side")
-        DB.insert_or_update('traffic', country_iso, traffic_side)
+        DB.insert_or_update('traffic', country_iso,country_name, traffic_side)
 
 
 if __name__ == '__main__':

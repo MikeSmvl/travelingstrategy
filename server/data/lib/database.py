@@ -28,6 +28,10 @@ class Database:
         self.db.execute("CREATE TABLE IF NOT EXISTS {}({})".format(
             table_name, self.cols))
 
+    def drop_table(self, table_name):
+        self.db.execute("DROP TABLE IF EXISTS {}".format(
+            table_name))
+
 
     def insert(self, table_name, *data):
         """
