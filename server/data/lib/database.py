@@ -58,6 +58,11 @@ class Database:
             table_name, self.where))
         self.db.commit()
 
+    def drop(self, table_name):
+        self.db.execute("DROP TABLE IF EXISTS {}".format(
+            table_name))
+        self.db.commit()
+
 
     def update(self, table_name, where, **columns):
         """

@@ -12,7 +12,7 @@ from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_MX
+from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_MX,wiki_visa_url_BZ,wiki_visa_url_DM,wiki_visa_url_PA,wiki_visa_url_DO
 from lib.database import Database
 from helper_class.en_vs_es_country_names import get_iso_es
 
@@ -31,8 +31,9 @@ DB = Database(sqlite_db)
 # Create table if it does not exist Mexico, MX
 # Create table if it does not exist Panama, PA
 
-def save_into_db(tableName, data):
+def save_into_db_MX(tableName, data):
     # create an an sqlite_advisory object
+    DB.drop(tableName)
     DB.add_table(tableName,country_iso="country_iso"
         ,name="name",advisory_text="advisory_text",visa_info="visa_info")
     for iso in data:
@@ -40,12 +41,27 @@ def save_into_db(tableName, data):
         name = data[iso].get('name')
         text = data[iso].get('advisory_text')
         visa_info = data[iso].get('visa-info')
-        print(iso,name,text,visa_info)
+
+        # print(iso,name,text,visa_info)
         try:
             DB.insert_or_update(tableName,iso, name,text,visa_info)
         except:
             print("None type",iso)
 
+
+def save_into_db(tableName, data):
+    # create an an sqlite_advisory object
+    DB.drop(tableName)
+    DB.add_table(tableName,country_iso="country_iso"
+        ,name="name",advisory_text="advisory_text",visa_info="visa_info")
+    for iso in data:
+        name = data[iso].get('name')
+        text = 'Not availible'
+        visa_info = data[iso].get('visa-info')
+        try:
+            DB.insert_or_update(tableName,iso, name,text,visa_info)
+        except:
+            print("None type",iso)
 
 
 def mexico_all_links(driver):
@@ -96,26 +112,42 @@ def save_to_central_america():
     #create driver
     driver = create_driver()
 
-    dataMX = mexico_all_links(driver)
-    # print(dataMX)
-    save_into_db('MX', dataMX)
+    #Mexico
+    data_MX = mexico_all_links(driver)
+    save_into_db_MX('MX', data_MX)
 
-    # wiki_visa_ob_BZ = wiki_visa_parser(wiki_visa_url_BZ, driver)
-    # wiki_visa_ob_DM = wiki_visa_parser(wiki_visa_url_DM, driver)
-    # wiki_visa_ob_DO = wiki_visa_parser(wiki_visa_url_DO, driver)
-    # wiki_visa_ob_PA = wiki_visa_parser(wiki_visa_url_PA, driver)
-    # wiki_visa_BZ = wiki_visa_ob_BZ.visa_parser_table()
-    # wiki_visa_DM = wiki_visa_ob_DM.visa_parser_table()
-    # wiki_visa_DO = wiki_visa_ob_DO.visa_parser_table()
-    # wiki_visa_MX = wiki_visa_ob_MX.visa_parser_table()
-    # wiki_visa_PA = wiki_visa_ob_PA.visa_parser_table()
+    #create obj set belize as first url
+    driver = create_driver()
+    wiki_visa = wiki_visa_parser(wiki_visa_url_BZ, driver)
+    visa_BZ = wiki_visa.visa_parser_table()
+    visa_BZ = replace_key_by_iso(visa_BZ)
+
+    Dominica
+    driver.close()
+    driver = create_driver()
+    wiki_visa = wiki_visa_parser(wiki_visa_url_DM, driver)
+    visa_DM = wiki_visa.visa_parser_table()
+    visa_DM = replace_key_by_iso(visa_DM)
+
+    #Dominican Republic
+    driver.close()
+    driver = create_driver()
+    wiki_visa = wiki_visa_parser(wiki_visa_url_DO, driver)
+    visa_DO = wiki_visa.visa_parser_table()
+    visa_DO = replace_key_by_iso(visa_DO)
+
+    #Panama
+    driver.close()
+    driver = create_driver()
+    wiki_visa = wiki_visa_parser(wiki_visa_url_PA, driver)
+    visa_PA = wiki_visa.visa_parser_table()
+    visa_PA = replace_key_by_iso(visa_PA)
 
     driver.quit()
 
-    # save_into_db("BZ", dataBZ)
-    # save_into_db("DM", dataDM)
-    # save_into_db("DO", dataDO)
-    # save_into_db("MX", dataMX)
-    # save_into_db("PA", dataPA)
+    save_into_db("BZ", visa_BZ)
+    save_into_db("DM", visa_DM)
+    save_into_db("DO", visa_DO)
+    save_into_db("PA", visa_PA)
 
 save_to_central_america()
