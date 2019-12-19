@@ -1,9 +1,18 @@
 import sqlite3
 from bs4 import BeautifulSoup
 from helper_class.chrome_driver import create_driver, quit_driver
-from helper_class.country_names import find_iso_of_country, find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
-from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.country_names import find_iso_of_country
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+from lib.database import Database
+from lib.config import sqlite_db
+import pycountry
+
+
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database(sqlite_db)
 
 def get_country_traffic_side():
     array_of_country_info = []
@@ -30,6 +39,10 @@ def get_country_traffic_side():
                 country_iso = find_iso_of_country(country)
                 if(country_iso != ""):
                     if country_iso not in already_parsed: # Only parse the main traffic side of a country
+                        if "left" in traffic_side:
+                            traffic_side = "left"
+                        else:
+                            traffic_side = "right"
                         info = {
                                 "country_iso": country_iso,
                                 "traffic_side": traffic_side
@@ -44,5 +57,15 @@ def get_country_traffic_side():
         driver.close()
         driver.quit()
 
+def save_traffic_side():
+    DB.add_table('traffic', country_iso='text', traffic_side='text')
+    traffic_info = get_country_traffic_side()
+
+    for country_traffic in traffic_info:
+        country_iso = country_traffic.get("country_iso")
+        traffic_side = country_traffic.get("traffic_side")
+        DB.insert_or_update('traffic', country_iso, traffic_side)
+
+
 if __name__ == '__main__':
-    print(get_country_traffic_side())
+    save_traffic_side()
