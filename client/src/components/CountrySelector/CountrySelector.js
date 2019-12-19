@@ -9,6 +9,10 @@ const CountrySelector = (props) => {
 	const [destinationCountry, setDestinationCountry] = useState('');
 	const [originCity, setOriginCity] = useState('');
 	const [destinationCity, setDestinationCity] = useState('');
+	const [originLat, setOriginLat] = useState('');
+	const [destinationLat, setDestinationLat] = useState('');
+	const [originLng, setOriginLng] = useState('');
+	const [destinationLng, setDestinationLng] = useState('');
 	const [validOrig, setValidOrig] = useState(true);
 	const [validDest, setValidDest] = useState(true);
 
@@ -47,6 +51,8 @@ const CountrySelector = (props) => {
 									setOriginCountry(newIso);
 								}
 								setOriginCity(place.address_components[0].short_name);
+								setOriginLat(Math.round(place.geometry.location.lat() * 10000000)/10000000); //Round to 7 digits after decimal to match backend
+								setOriginLng(Math.round(place.geometry.location.lng() * 10000000)/10000000);
 							}}
 						/>
 						{!validOrig
@@ -72,6 +78,8 @@ const CountrySelector = (props) => {
 									setDestinationCountry(newIso);
 								}
 								setDestinationCity(place.address_components[0].long_name);
+								setDestinationLat(Math.round(place.geometry.location.lat() * 10000000)/10000000); //Round to 7 digits after decimal to match backend
+								setDestinationLng(Math.round(place.geometry.location.lng() * 10000000)/10000000);
 							}}
 						/>
 						{!validDest
@@ -84,7 +92,7 @@ const CountrySelector = (props) => {
 					>
 						{originCountry && destinationCountry ? (
 							<Link
-								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&originCity=${originCity}&destinationCity=${destinationCity}`}
+								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&originCity=${originCity}&destinationCity=${destinationCity}&originLat=${originLat}&originLng=${originLng}&destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
 							>
 								<Button variant="outline-primary" type="submit">
                   Compare

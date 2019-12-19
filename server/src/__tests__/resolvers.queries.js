@@ -192,3 +192,86 @@ it("Querying for sockets of all countries", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+//test for timezones
+
+it("Querying timezone table", () =>{
+  const query = `
+  {
+    timezones_table{
+      city,
+      country_name,
+      country_iso,
+      timezone,
+      lat,
+      lng,
+      utc_offset
+    }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying time difference origin", () =>{
+  const query = `
+  {
+    time_difference_origin(lat_origin:32.4464635, lng_origin:62.1454133){
+      city,
+      country_name,
+      country_iso,
+      timezone,
+      lat,
+      lng,
+      utc_offset
+    }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying time difference destination", () =>{
+  const query = `
+  {
+    time_difference_destination(lat_destination:22.6786807, lng_destination:-12.7106394){
+      city,
+      country_name,
+      country_iso,
+      timezone,
+      lat,
+      lng,
+      utc_offset
+    }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
