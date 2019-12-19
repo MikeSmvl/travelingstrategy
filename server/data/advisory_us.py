@@ -39,10 +39,10 @@ def get_name_and_advisory_of_countries():
              name = cols[0][0:nameLength]
              if(name != 'W'):
                advisory = cols[1]
-               info[name] = advisory
-               if(advisory != 'Exercise Normal Precautions' ):
+               listToStr = ' '.join(map(str, advisory))
+               if(listToStr  != 'Level 1: Exercise Normal Precautions' ):
                  advisory += '</br>'+parse_a_country_additional_advisory_info(link,driver) 
-                 print(advisory)
+             info[name] = advisory
           counter += 1
     finally:
         driver.close()
@@ -62,7 +62,7 @@ def parse_a_country_additional_advisory_info(url, driver):
         listToStr = ' '.join(map(str, a.get('class'))) 
         if(listToStr == 'showThreat'):
             if(a.get('title')!='Tool Tip: Other'):
-             warning = a.get('data-tooltip') +'</br>'
+             warning += a.get('data-tooltip') +'</br>'
              print (warning)
 
     return warning
