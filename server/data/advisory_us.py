@@ -31,19 +31,41 @@ def get_name_and_advisory_of_countries():
         for tr in table_rows:
           if(counter != 0):
              cols = tr.find_all('td')
-             cols = [ele.text.strip() for ele in cols]
+             href = cols[0].find('a').get('href')# gets url for each country that is needed for additional advisory info
+             link = "https://travel.state.gov/{}".format(href,sep='')
 
+             cols = [ele.text.strip() for ele in cols]
              nameLength = len(cols[0])-16
              name = cols[0][0:nameLength]
              if(name != 'W'):
                advisory = cols[1]
                info[name] = advisory
+               if(advisory != 'Exercise Normal Precautions' ):
+                 advisory += '</br>'+parse_a_country_additional_advisory_info(link,driver) 
+                 print(advisory)
           counter += 1
     finally:
         driver.close()
         driver.quit()
 
     return info
+
+
+def parse_a_country_additional_advisory_info(url, driver):
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    warning = " "
+    div_id = soup.find("div", {"id": "container tooltipalert"})
+    a_tags = div_id.find_all('a')
+    for a in a_tags:
+        listToStr = ' '.join(map(str, a.get('class'))) 
+        if(listToStr == 'showThreat'):
+            if(a.get('title')!='Tool Tip: Other'):
+             warning = a.get('data-tooltip') +'</br>'
+             print (warning)
+
+    return warning
 
 
 
@@ -104,3 +126,5 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
+
+save_to_united_states()
