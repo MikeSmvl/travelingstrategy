@@ -14,8 +14,8 @@ describe('Header component', () => {
 
 	it('renders without crashing given props', () => {
 		const props = {
-			title: 'France',
-			subtitle: 'Paris'
+			title: '',
+			subtitle: ''
 		};
 		const wrapper = shallow(<Header {...props} />);
 		const title = wrapper.find('.title').text();
