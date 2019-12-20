@@ -300,7 +300,7 @@ function Country({
 														<b style={{color: '#FF1C00'}}
 														>
 														Warning</b><br></br>
-														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets {trafficSide} hand
+														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
 													</p>}
 												</CardBody>
 											</Card>
