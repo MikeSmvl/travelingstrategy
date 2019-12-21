@@ -155,4 +155,4 @@ def save_to_central_america():
     save_into_db("DO", visa_DO)
     save_into_db("PA", visa_PA)
 
-save_to_central_america()
+#save_to_central_america()
