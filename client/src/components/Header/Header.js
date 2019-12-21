@@ -21,6 +21,7 @@ const Header = (props) => {
 				key={pic}
 				src={require(`../Header/pictures/${number}.gif`)}
 				alt=''
+				style={{width:"100", height:"100", position:"absolute", zIndex:"-1"}}
 			/>
 			<div className="title">
 				{title}
