@@ -9,7 +9,7 @@ import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
-import findTimeZoneDifference from '../utils/timeZone';
+import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getRate } from '../utils/parsingTools';
 import '../App.css';
 
@@ -17,9 +17,14 @@ function Country({
 	originCountry,
 	destinationCountry,
 	originCity,
-	destinationCity
+	destinationCity,
+	originLat,
+	originLng,
+	destinationLat,
+	destinationLng
 }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
+	const [advisoryLink, setAdvisoryLink] = useState('');
 	const [visaInfo, setVisa] = useState('Not available yet.');
 	const [languagesInfo, setLanguages] = useState({
 		'Official Languages': 'TBD',
@@ -30,6 +35,8 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
+	const [timeDestination, setTimeDestination] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
@@ -45,6 +52,7 @@ function Country({
 						countryToCountry(origin:"${originCountry}" destination: "${destinationCountry}") {
 							name
 							visa_info
+							advisory_link
 							advisory_text
 						}
 						country_languages(country_iso: "${destinationCountry}"){
@@ -55,15 +63,15 @@ function Country({
 							widely_spoken_languages
 						}
 						destinationCurrencies: currencies(country: "${destinationCountry}"){
-              name
-              symbol
-              code
-            }
-            originCurrencies: currencies(country: "${originCountry}"){
-              name
-              symbol
-              code
-            }
+							name
+							symbol
+							code
+						}
+						originCurrencies: currencies(country: "${originCountry}"){
+							name
+							symbol
+							code
+						}
 						country_socket(country_iso: "${destinationCountry}") {
 							plug_type,
 							electric_potential,
@@ -74,12 +82,19 @@ function Country({
 							groceries
 							rent
 						}
+						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng}) {
+							utc_offset
+						}
+						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
+							utc_offset
+						}
 					}`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisory(res.data.countryToCountry[0].advisory_text);
+					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisoryLink(res.data.countryToCountry[0].advisory_link);
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setVisa(res.data.countryToCountry[0].visa_info);
 					(res.data.country_languages && res.data.country_languages.length !== 0) && setLanguages(res.data.country_languages[0]);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
@@ -88,12 +103,14 @@ function Country({
 					(res.data.destinationCurrencies && res.data.destinationCurrencies.length !== 0) && setCurrency(res.data.destinationCurrencies[0]);
 					(res.data.originCurrencies && res.data.originCurrencies.length !== 0) && setOriginCurrency(res.data.originCurrencies[0]);
 					(res.data.financials && res.data.financials.length !== 0) && setFinancial(res.data.financials[0]);
+					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
+					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					setIsLoading(false);
 				});
 		}
 		fetchData();
-	}, [originCountry, destinationCountry]);
-
+	}, [originCountry, destinationCountry,originLat, originLng,
+	 destinationLat, destinationLng]);
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
@@ -120,12 +137,7 @@ function Country({
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
-										title3={findTimeZoneDifference(
-											originCity,
-											destinationCity,
-											originCountry,
-											destinationCountry
-										)}
+										title3={getTimeDifference(timeOrigin,timeDestination, originCity)}
 									/>
 									<Subtitle text="Important Basics" />
 									<Row
@@ -170,6 +182,9 @@ function Country({
 														/(^")|("$)/g,
 														''
 													)}
+													<div
+														dangerouslySetInnerHTML={{ __html: advisoryLink }}
+													/>
 												</CardBody>
 											</Card>
 										</Col>
