@@ -67,17 +67,20 @@ def save_into_db(tableName, data):
 
 
 def mexico_all_links(driver):
+
+    #the mexican website provides advisory in spanish
+    #we can display the link
     url = 'https://guiadelviajero.sre.gob.mx/'
     driver.get(url)
     soup=BeautifulSoup(driver.page_source, 'lxml')
     reg = regex.compile(r'\/103-ficha-de-paises\/')
     a = soup.findAll('a', attrs = {'href':reg})
+
     links = {}
     iso_es = get_iso_es()
-    c = 0
+
     for att in a:
         try:
-            c += 1
             name = att.text.strip()
             iso = iso_es[name]
             href= 'https://guiadelviajero.sre.gob.mx'+att['href']
@@ -85,10 +88,12 @@ def mexico_all_links(driver):
             links[iso] = {'advisory_text':href,'country_iso':iso,'name':name}
         except:
             print("This country's iso was not found:",att.text)
+
+    #get the visa for mexico like for other countries from wikipedia
     wiki_visa_ob_MX = wiki_visa_parser(wiki_visa_url_MX, driver)
     visas = wiki_visa_ob_MX.visa_parser_table()
     visas = replace_key_by_iso(visas)
-    print(visas)
+
     data = {}
     for key in visas:
         try:
@@ -110,6 +115,8 @@ def replace_key_by_iso(data):
         data_new[iso] = {'name': k, 'visa-info':visa_info}
     return data_new
 
+#main function to be run to get the visa and advisory for 5 countries
+#in central america
 def save_to_central_america():
 
     #create driver
@@ -119,27 +126,27 @@ def save_to_central_america():
     data_MX = mexico_all_links(driver)
     save_into_db_MX('MX', data_MX)
 
-    #create obj set belize as first url
+    #create obj driver and set belize as first url
     driver = create_driver()
     wiki_visa = wiki_visa_parser(wiki_visa_url_BZ, driver)
     visa_BZ = wiki_visa.visa_parser_table()
     visa_BZ = replace_key_by_iso(visa_BZ)
 
-    # #Dominica
+    #Dominica
     driver.close()
     driver = create_driver()
     wiki_visa = wiki_visa_parser(wiki_visa_url_DM, driver)
     visa_DM = wiki_visa.visa_parser_table()
     visa_DM = replace_key_by_iso(visa_DM)
 
-    # #Dominican Republic
+    #Dominican Republic
     driver.close()
     driver = create_driver()
     wiki_visa = wiki_visa_parser(wiki_visa_url_DO, driver)
     visa_DO = wiki_visa.visa_parser_table()
     visa_DO = replace_key_by_iso(visa_DO)
 
-    # #Panama
+    #Panama
     driver.close()
     driver = create_driver()
     wiki_visa = wiki_visa_parser(wiki_visa_url_PA, driver)
@@ -148,6 +155,7 @@ def save_to_central_america():
 
     driver.quit()
 
+    #save the data into the DB
     save_into_db("BZ", visa_BZ)
     save_into_db("DM", visa_DM)
     save_into_db("DO", visa_DO)
