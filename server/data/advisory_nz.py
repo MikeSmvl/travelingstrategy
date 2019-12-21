@@ -97,7 +97,25 @@ def parse_a_country_advisory(url, driver):
     for tag in soup.findAll('i'):
       if tag.parent.name == 'h1':
           warning = tag.parent.text.strip()
-
+    for tag in soup.findAll('strong'):
+        if(tag.text.strip().lower() == "border crossings"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "civil unrest"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "crime"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "violent crime"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "landmines"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "local travel"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "road travel"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "seismic activity"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "terrorism"):
+            warning += '</br>' + tag.parent.text.strip()
     return warning
 
 
@@ -114,4 +132,6 @@ def save_into_db(data):
         sqlite.new_row(iso,name,text,visa_info)
     sqlite.commit()
     sqlite.close()
+
+save_to_new_zealand()
 
