@@ -106,6 +106,8 @@ def parse_a_country_advisory(url, driver):
             warning += '</br>' + tag.parent.text.strip()
         elif(tag.text.strip().lower() == "violent crime"):
             warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "kidnapping"):
+            warning += '</br>' + tag.parent.text.strip()
         elif(tag.text.strip().lower() == "landmines"):
             warning += '</br>' + tag.parent.text.strip()
         elif(tag.text.strip().lower() == "local travel"):
