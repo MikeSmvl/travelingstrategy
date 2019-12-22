@@ -13,11 +13,14 @@ var time_difference_origin = {
         },
         lng_origin: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLFloat)
+        },
+        country_origin:{
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         }
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            query = `SELECT * FROM timezones WHERE (lat=${args.lat_origin} and lng=${args.lng_origin});`
+            query = `SELECT * FROM timezones WHERE (lat=${args.lat_origin} and lng=${args.lng_origin} and country_iso ="${args.country_origin}");`
             logger.info("Trying to query "+query)
             db.all(query, function(err, rows) {
                 if(err){
@@ -39,11 +42,14 @@ var time_difference_destination = {
         },
         lng_destination: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLFloat)
+        },
+        country_destination:{
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         }
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            query = `SELECT * FROM timezones WHERE (lat=${args.lat_destination} and lng=${args.lng_destination});`
+            query = `SELECT * FROM timezones WHERE (lat=${args.lat_destination} and lng=${args.lng_destination} and country_iso ="${args.country_destination}");`
             logger.info("Trying to query "+query)
             db.all(query, function(err, rows) {
                 if(err){
