@@ -54,28 +54,45 @@ def get_one_advisory(url, my_driver, soup):
     div_tab2 = soup.find("div", { "id" : "tab2" })
     div_tab2_relevant = div_tab2.find("div", { "class" : "gen-content-landing__block" })
 
+
+    print("1111111111111111111111111111111111111111111111111111111111111",url)
     count = 0
     for tag in div_tab2_relevant:
+        print(tag)
         if(tag.name == 'h3'):
             if(tag.find('strong')):
-               advisory_text += '</br>' +  tag.find('strong').text.strip() + ": "
-               count = count +2
-            else:
-               advisory_text += '</br>' + tag.text +": "
-               count = count +2
+               if(tag.find('strong').text.strip().lower() == 'terrorism' or tag.find('strong').text.strip().lower() == 'social unrest' or tag.find('strong').text.strip().lower() == 'crime'):
+                 advisory_text += '</br>' +  tag.find('strong').text.strip() + ": "
+                 count = count +2
+            elif(tag.text.lower() == 'terrorism' or tag.text.lower() == 'social unrest' or tag.text.lower() == 'crime'):
+                advisory_text += '</br>' + tag.text +": "
+                count = count +2
         elif(tag.name == 'h2'):
             if(tag.find('strong')):
-               advisory_text += '</br>' + tag.find('strong').text.strip() + ": "
-               count =  count + 2
-            else:
+              if(tag.find('strong').text.strip().lower() == 'terrorism' or tag.find('strong').text.strip().lower() == 'social unrest' or tag.find('strong').text.strip().lower() == 'crime'):
+                advisory_text += '</br>' + tag.find('strong').text.strip() + ": "
+                count =  count + 2
+            elif(tag.text.lower() == 'terrorism' or tag.text.lower() == 'social unrest' or tag.text.lower() == 'crime'):
                advisory_text += '</br>' + tag.text + ": "
                count =  count + 2
                print(count)
+        elif(tag.name == 'p' and tag.find('strong')):
+            if(tag.find('strong').text.lower() == 'terrorism' or tag.find('strong').text.lower() == 'social unrest' or tag.find('strong').text.lower() == 'crime'):
+               advisory_text += '</br>' +  tag.find('strong').text.strip() + ": "
+               print("            aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",advisory_text)
+               count = count + 4
+        elif(count == 4):
+             count = 3
+        elif(count == 3):
+              print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",tag)
+              advisory_text += tag.text
+              count = 0
         elif(count ==2):
-            count = 1
+              count = 1
         elif(count == 1):
-            advisory_text += tag.text
-            count = 0
+              #print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",tag)
+              advisory_text += tag.text
+              count = 0
 
     print ("dddddddddddddddddddddddddddddddddddddddddddddddddddd",advisory_text)
     return advisory_text
