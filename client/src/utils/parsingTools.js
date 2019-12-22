@@ -42,4 +42,13 @@ const getRate = (originCurrency, destCurrency) => {
     })
 }
 
-export { removeQuotes, languages, flagSrc, getRate };
+const getOtherTrafficSide = (trafficSide) => {
+	if(trafficSide == "left"){
+		return "right"
+	}
+	else{
+		return "left"
+	}
+}
+
+export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide };
