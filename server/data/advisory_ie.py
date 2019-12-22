@@ -51,6 +51,33 @@ def get_one_advisory(url, my_driver, soup):
     else:
         advisory_text = "No advisory"
 
+    div_tab2 = soup.find("div", { "id" : "tab2" })
+    div_tab2_relevant = div_tab2.find("div", { "class" : "gen-content-landing__block" })
+
+    count = 0
+    for tag in div_tab2_relevant:
+        if(tag.name == 'h3'):
+            if(tag.find('strong')):
+               advisory_text += '</br>' +  tag.find('strong').text.strip() + ": "
+               count = count +2
+            else:
+               advisory_text += '</br>' + tag.text +": "
+               count = count +2
+        elif(tag.name == 'h2'):
+            if(tag.find('strong')):
+               advisory_text += '</br>' + tag.find('strong').text.strip() + ": "
+               count =  count + 2
+            else:
+               advisory_text += '</br>' + tag.text + ": "
+               count =  count + 2
+               print(count)
+        elif(count ==2):
+            count = 1
+        elif(count == 1):
+            advisory_text += tag.text
+            count = 0
+
+    print ("dddddddddddddddddddddddddddddddddddddddddddddddddddd",advisory_text)
     return advisory_text
 
 #getting the header and the text that goes with it
@@ -160,3 +187,5 @@ def find_all_ireland():
         json.dump(data, outfile)
 
     save_into_db(data)
+
+find_all_ireland()
