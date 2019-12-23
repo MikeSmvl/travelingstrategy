@@ -24,6 +24,7 @@ function Country({
 	destinationLng
 }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
+	const [advisoryLink, setAdvisoryLink] = useState('');
 	const [visaInfo, setVisa] = useState('Not available yet.');
 	const [languagesInfo, setLanguages] = useState({
 		'Official Languages': 'TBD',
@@ -52,6 +53,7 @@ function Country({
 						countryToCountry(origin:"${originCountry}" destination: "${destinationCountry}") {
 							name
 							visa_info
+							advisory_link
 							advisory_text
 						}
 						country_languages(country_iso: "${destinationCountry}"){
@@ -96,6 +98,7 @@ function Country({
 				.then((res) => res.json())
 				.then((res) => {
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisory(res.data.countryToCountry[0].advisory_text);
+					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisoryLink(res.data.countryToCountry[0].advisory_link);
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setVisa(res.data.countryToCountry[0].visa_info);
 					(res.data.country_languages && res.data.country_languages.length !== 0) && setLanguages(res.data.country_languages[0]);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
@@ -184,6 +187,9 @@ function Country({
 														/(^")|("$)/g,
 														''
 													)}
+													<div
+														dangerouslySetInnerHTML={{ __html: advisoryLink }}
+													/>
 												</CardBody>
 											</Card>
 										</Col>
