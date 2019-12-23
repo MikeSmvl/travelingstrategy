@@ -29,11 +29,15 @@ def get_url_of_for_letter(dictionnary, letter):
     finally:
         driver.close()
         driver.quit()
-    print(dictionnary)
-
     return dictionnary
 
+def get_url_of_all_countries():
+    countries_url = {}
+    alphabet = list(string.ascii_lowercase) #The urls are separeted by alphabet letters
+    for letter in alphabet:
+        get_url_of_for_letter(countries_url,letter)
 
+    return countries_url
 
 def save_to_SG():
     driver = create_driver()
@@ -56,6 +60,5 @@ def save_to_SG():
 
     quit_driver(driver)
 if __name__ == '__main__':
-    info = {}
-    get_url_of_for_letter(info, 'a')
+    print(get_url_of_all_countries())
     # save_to_SG()
