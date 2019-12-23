@@ -39,6 +39,20 @@ def get_url_of_all_countries():
 
     return countries_url
 
+
+ #Taking the first paragraph of the safety & security section
+def parse_one_country_advisory(url):
+    driver = create_driver()
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    advisory_div = soup.findAll("div", {"class": "acc-content ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active"})[1]
+    advisory_paragraph = advisory_div.findAll("span")[0].text
+    advisory_paragraph1 = advisory_paragraph.split('\n')[0]
+    quit_driver(driver)
+
+    return advisory_paragraph1
+
 def save_to_SG():
     driver = create_driver()
     wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens"
@@ -60,5 +74,6 @@ def save_to_SG():
 
     quit_driver(driver)
 if __name__ == '__main__':
-    print(get_url_of_all_countries())
+    # countries_url = get_url_of_all_countries()
+    parse_one_country_advisory("https://www.mfa.gov.sg/countries-regions/a/austria/travel-page")
     # save_to_SG()
