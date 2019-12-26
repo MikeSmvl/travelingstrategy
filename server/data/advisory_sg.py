@@ -46,18 +46,59 @@ def parse_one_country_advisory(url):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    advisory_div = soup.findAll("div", {"class": "acc-content ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active"})[1]
-    advisory_paragraph = advisory_div.findAll("span")[0].text
-    advisory_paragraph1 = advisory_paragraph.split('\n')[0]
+    advisory_paragraph1=""
+
+    try:
+        advisory_div = soup.findAll("div", {"class": "acc-content ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active"})[1]
+        advisory_paragraph = advisory_div.findAll("span")[0].text
+        advisory_paragraph1 = advisory_paragraph.split('\n')[0]
+    except IndexError:
+        try:
+            advisory_div = soup.findAll("div", {"class": "acc-content ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active"})[1]
+            advisory_paragraph = advisory_div.findAll("p")[0].text
+            advisory_paragraph1 = advisory_paragraph.split('\n')[0]
+        except IndexError:
+            try:
+                advisory_div = soup.findAll("div", {"class": "acc-content ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active"})[1]
+                advisory_paragraph = advisory_div.text
+                advisory_paragraph1 = advisory_paragraph.split('\n')[1]
+            except IndexError:
+                try:
+                    advisory_div = soup.findAll("div", {"class": "alert-section"})[0]
+                    advisory_paragraph = advisory_div.findAll("p")[0].text
+                    advisory_paragraph1 = advisory_paragraph.split('\n')[0]
+                except IndexError:
+                    advisory_div = soup.findAll("div", {"class": "space"})[0]
+                    advisory_paragraph = advisory_div.findAll("p")[1].text
+                    advisory_paragraph1 = advisory_paragraph.split('\n')[0]
+
+    advisory_paragraph1 = advisory_paragraph1.lstrip()
     quit_driver(driver)
 
     return advisory_paragraph1
+
+def parse_all_countries_advisories():
+    data = {}
+    countries_url = get_url_of_all_countries()
+    for country in countries_url:
+        href = countries_url[country].get("href")
+        link = "https://www.mfa.gov.sg{}".format(href,sep='')
+        try:
+            advisory = parse_one_country_advisory(link)
+            data[country]= {"advisory": advisory}
+            print(href)
+        except IndexError:
+            print("Not retrieved: ", country)
+            print("Link :", link)
+    return data
+
 
 def save_to_SG():
     driver = create_driver()
     wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens"
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
     visas = wiki_visa_ob.visa_parser_table()
+    advisories = parse_all_countries_advisories()
     info = {}
     array_info = []
 
@@ -75,5 +116,6 @@ def save_to_SG():
     quit_driver(driver)
 if __name__ == '__main__':
     # countries_url = get_url_of_all_countries()
-    parse_one_country_advisory("https://www.mfa.gov.sg/countries-regions/a/austria/travel-page")
+    # print(parse_one_country_advisory("https://www.mfa.gov.sg/countries-regions/k/kuwait/travel-page"))
     # save_to_SG()
+    print(parse_all_countries_advisories())
