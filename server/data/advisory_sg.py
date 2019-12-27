@@ -105,7 +105,7 @@ def save_to_SG():
     advisories = parse_all_countries_advisories()
     info = {}
     array_info = []
-    
+
     # create an an sqlite_advisory object
     sqlite = sqlite_advisories('SG') #The UK iso is GB
     sqlite.delete_table()
@@ -129,7 +129,10 @@ def save_to_SG():
 
     sqlite.commit()
     sqlite.close()
-
     quit_driver(driver)
+
+    with open('./advisory-sg.json', 'w') as outfile:
+        json.dump(array_info, outfile)
+
 if __name__ == '__main__':
     save_to_SG()
