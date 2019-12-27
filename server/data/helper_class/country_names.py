@@ -60,15 +60,15 @@ def find_all_iso(data):
 def handle_iso_error(name, all_names,all_official_names):
     if (re.search('Laos',name)):
         return "Lao People's Democratic Republic"
-    elif (name == 'Macau'):
+    elif (re.search('Macau',name)):
         return "Macao"
     elif (re.search('Republic of Korea',name) or re.search('South Korea',name)):
         return "Korea, Republic of"
     elif (re.search('North Korea',name)):
         return "Korea, Democratic People's Republic of"
-    if (name == 'Cape Verde'):
+    if (re.search('Cape Verde',name)):
         return "Cabo Verde"
-    elif (name == 'Democratic Republic of the Congo'):
+    elif (re.search('Democratic Republic of the Congo',name)):
         return "Congo, The Democratic Republic of the"
     elif (re.search('Ivory Coast',name)):
         return "Côte d'Ivoire"
@@ -80,9 +80,9 @@ def handle_iso_error(name, all_names,all_official_names):
         return "Western Sahara"
     elif (re.search('Sovereign Military Order of Malta',name)):
         return "Malta"
-    elif (name == 'Lichenstein'):
+    elif (re.search('Lichenstein',name)):
         return "Liechtenstein"
-    elif (name == 'Trinidad & Tobago'):
+    elif (re.search('Trinidad & Tobago',name)):
         return "Trinidad and Tobago"
 
     for n in all_names:

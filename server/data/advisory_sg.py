@@ -2,10 +2,15 @@ from bs4 import BeautifulSoup
 import string
 # import regex
 from helper_class.chrome_driver import create_driver, quit_driver
-# from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 
+"""The Singaporian page orders the countries
+    alphabetcally and has a page for each letter.
+    This method returns the urls for every country
+    that start with a given letter.
+"""
 def get_url_of_for_letter(dictionnary, letter):
     try:
         #this is the link to the first page
@@ -21,11 +26,11 @@ def get_url_of_for_letter(dictionnary, letter):
 
         # #retrieving links for all countries of the alphabet
         for country in countries:
-            country_name = country.text
+            country_name = country.text.lstrip().rstrip()
             country_iso = find_iso_of_country(country_name)
             if(country_iso != ""): #Countries that don't have iso are not official counntries
                 href = country['href']
-                dictionnary[country_iso] = {"href":href}
+                dictionnary[country_name] = {"href":href}
     finally:
         driver.close()
         driver.quit()
@@ -48,7 +53,7 @@ def parse_one_country_advisory(url):
     soup=BeautifulSoup(driver.page_source, 'lxml')
     advisory_paragraph1=""
 
-    try:
+    try: #The html are made differently for certain countries pages
         advisory_div = soup.findAll("div", {"class": "acc-content ui-accordion-content ui-corner-bottom ui-helper-reset ui-widget-content ui-accordion-content-active"})[1]
         advisory_paragraph = advisory_div.findAll("span")[0].text
         advisory_paragraph1 = advisory_paragraph.split('\n')[0]
@@ -86,9 +91,8 @@ def parse_all_countries_advisories():
         try:
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
-            print(href)
         except IndexError:
-            print("Not retrieved: ", country)
+            print("This country doesn't have advisory info: ", country)
             print("Link :", link)
     return data
 
@@ -101,21 +105,31 @@ def save_to_SG():
     advisories = parse_all_countries_advisories()
     info = {}
     array_info = []
+    
+    # create an an sqlite_advisory object
+    sqlite = sqlite_advisories('SG') #The UK iso is GB
+    sqlite.delete_table()
+    sqlite.create_table()
 
-    for country in visas:
-        iso = find_iso_of_country(country)
-        visa_info = visas[country].get('visa')
-        info = {
-                "country_iso" : iso,
-                "visa_info": visa_info
-                }
-        array_info.append(info)
+    for country in advisories:
+        try:
+            iso = find_iso_of_country(country)
+            visa_info = visas[country].get('visa')
+            advisory = advisories[country].get('advisory')
+            info = {
+                    "country_iso" : iso,
+                    "name": country,
+                    "advisory": advisory,
+                    "visa_info": visa_info
+                    }
+            array_info.append(info)
+            sqlite.new_row(iso,country,advisory,visa_info)
+        except KeyError:
+            print("This country doesn't have visa info:", country)
 
-    print(array_info)
+    sqlite.commit()
+    sqlite.close()
 
     quit_driver(driver)
 if __name__ == '__main__':
-    # countries_url = get_url_of_all_countries()
-    # print(parse_one_country_advisory("https://www.mfa.gov.sg/countries-regions/k/kuwait/travel-page"))
-    # save_to_SG()
-    print(parse_all_countries_advisories())
+    save_to_SG()
