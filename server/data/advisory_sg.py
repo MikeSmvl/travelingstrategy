@@ -1,10 +1,11 @@
 from bs4 import BeautifulSoup
 import string
-# import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+import json
+
 
 """The Singaporian page orders the countries
     alphabetcally and has a page for each letter.
@@ -96,6 +97,51 @@ def parse_all_countries_advisories():
             print("Link :", link)
     return data
 
+def save_info(sqlite,visas,advisories, array_info):
+    for country in visas:
+        try:
+            iso = find_iso_of_country(country)
+            visa_info = visas[country].get('visa')
+            advisory = advisories[country].get('advisory') #if the country doesn't have advisory info it throws an index error
+            info = {
+                    "country_iso" : iso,
+                    "name": country,
+                    "advisory": advisory,
+                    "visa_info": visa_info
+                    }
+            array_info.append(info)
+            sqlite.new_row(iso,country,advisory,visa_info)
+        except KeyError: #if the country doesn't have advisory info
+            print("This country doesn't have advisory info:", country)
+            iso = find_iso_of_country(country)
+            visa_info = visas[country].get('visa')
+            advisory = None
+            info = {
+                    "country_iso" : iso,
+                    "name": country,
+                    "advisory": advisory,
+                    "visa_info": visa_info
+                    }
+            array_info.append(info)
+            sqlite.new_row(iso,country,advisory,visa_info)
+    for country in advisories: #countries that don't have visa info but have advisory info
+        if not country in visas:
+            print("This country doesn't have visa information: ", country)
+            iso = find_iso_of_country(country)
+            visa_info = None
+            advisory = advisories[country].get('advisory')
+            info = {
+                    "country_iso" : iso,
+                    "name": country,
+                    "advisory": advisory,
+                    "visa_info": visa_info
+                    }
+            array_info.append(info)
+            sqlite.new_row(iso,country,advisory,visa_info)
+
+    return array_info
+
+
 
 def save_to_SG():
     driver = create_driver()
@@ -111,21 +157,7 @@ def save_to_SG():
     sqlite.delete_table()
     sqlite.create_table()
 
-    for country in advisories:
-        try:
-            iso = find_iso_of_country(country)
-            visa_info = visas[country].get('visa')
-            advisory = advisories[country].get('advisory')
-            info = {
-                    "country_iso" : iso,
-                    "name": country,
-                    "advisory": advisory,
-                    "visa_info": visa_info
-                    }
-            array_info.append(info)
-            sqlite.new_row(iso,country,advisory,visa_info)
-        except KeyError:
-            print("This country doesn't have visa info:", country)
+    array_info = save_info(sqlite,visas,advisories,array_info)
 
     sqlite.commit()
     sqlite.close()
