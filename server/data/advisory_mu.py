@@ -2,6 +2,7 @@ from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country
 from helper_class.sqlite_advisories import sqlite_advisories
+import json
 
 
 def save_to_MU():
@@ -34,6 +35,9 @@ def save_to_MU():
     sqlite.commit()
     sqlite.close()
     quit_driver(driver)
+
+    with open('./advisory-mu.json', 'w') as outfile:
+        json.dump(array_info, outfile)
 
 
 if __name__ == '__main__':

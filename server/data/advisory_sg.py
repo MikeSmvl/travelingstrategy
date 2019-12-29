@@ -153,7 +153,7 @@ def save_to_SG():
     array_info = []
 
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('SG') #Singapore is SG
+    sqlite = sqlite_advisories('SG') #The UK iso is GB
     sqlite.delete_table()
     sqlite.create_table()
 
