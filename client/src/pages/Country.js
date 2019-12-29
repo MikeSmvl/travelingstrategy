@@ -10,7 +10,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { languages, flagSrc, getRate, getOtherTrafficSide } from '../utils/parsingTools';
+import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
 import '../App.css';
 
 function Country({
@@ -41,6 +41,7 @@ function Country({
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
+	const [rate, setRate] = useState('');
 
 	useEffect(() => {
 		async function fetchData() {
@@ -111,11 +112,36 @@ function Country({
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
 					setIsLoading(false);
+					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code)
 				});
 		}
+
+		async function fetchRate(originCode, destinationCode) {
+			fetch(`https://api.exchangeratesapi.io/latest?base=${originCode}&symbols=${destinationCode}`)
+			.then(
+				function(response) {
+					if (response.status !== 200) {
+						console.log('Exchange Rate API did not return HTTP 200')
+						setIsLoading(false);
+						return;
+					}
+
+					// Set the currency rate from origin to destination
+					response.json().then(function(data) {
+						setRate(data.rates[destinationCode].toFixed(2))
+						setIsLoading(false);
+					});
+				}
+			)
+			.catch(function(err) {
+				console.log('Fetch Error :-S', err);
+				setIsLoading(false);
+			});
+		}
+
 		fetchData();
-	}, [originCountry, destinationCountry,originLat, originLng,
-	 destinationLat, destinationLng]);
+	}, [originCountry, destinationCountry,originLat, originLng, destinationLat, destinationLng]);
+
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
@@ -222,10 +248,7 @@ function Country({
 														}}
 													>
 														<RateCalculator
-															destinationRate={getRate(
-																originCurrencyInfo.code,
-																currencyInfo.code
-															)}
+															destinationRate={rate}
 															originCurrency={originCurrencyInfo.code}
 															destCurrency={currencyInfo.code}
 														/>
