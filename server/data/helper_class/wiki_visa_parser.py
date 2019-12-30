@@ -31,3 +31,6 @@ class wiki_visa_parser():
                     info[name] = {"visa":visa}
 
         return info
+
+    def set_url(self, url):
+        self.url = url

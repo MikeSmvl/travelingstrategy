@@ -114,5 +114,5 @@ def save_to_canada():
     con.close()
 
     #saving the data in json file
-    with open('advisory-ca.json', 'w') as fp:
-        json.dump(countries_data, fp)
+    # with open('advisory-ca.json', 'w') as fp:
+    #     json.dump(countries_data, fp)

@@ -10,7 +10,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { languages, flagSrc, getRate } from '../utils/parsingTools';
+import { languages, flagSrc, getRate, getOtherTrafficSide } from '../utils/parsingTools';
 import '../App.css';
 
 function Country({
@@ -24,6 +24,7 @@ function Country({
 	destinationLng
 }) {
 	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
+	const [advisoryLink, setAdvisoryLink] = useState('');
 	const [visaInfo, setVisa] = useState('Not available yet.');
 	const [languagesInfo, setLanguages] = useState({
 		'Official Languages': 'TBD',
@@ -39,6 +40,7 @@ function Country({
 	const [currencyInfo, setCurrency] = useState({});
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
+	const [trafficSide, setTrafficSide] = useState('Not available yet');
 
 	useEffect(() => {
 		async function fetchData() {
@@ -51,6 +53,7 @@ function Country({
 						countryToCountry(origin:"${originCountry}" destination: "${destinationCountry}") {
 							name
 							visa_info
+							advisory_link
 							advisory_text
 						}
 						country_languages(country_iso: "${destinationCountry}"){
@@ -80,11 +83,14 @@ function Country({
 							groceries
 							rent
 						}
-						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng}) {
+						time_difference_origin(lat_origin:${originLat} lng_origin:${originLng} country_origin:"${originCountry}") {
 							utc_offset
 						}
-						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng}) {
+						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng} country_destination:"${destinationCountry}") {
 							utc_offset
+						}
+						trafficSide(iso:"${destinationCountry}"){
+							traffic_side
 						}
 					}`
 				})
@@ -92,6 +98,7 @@ function Country({
 				.then((res) => res.json())
 				.then((res) => {
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisory(res.data.countryToCountry[0].advisory_text);
+					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisoryLink(res.data.countryToCountry[0].advisory_link);
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setVisa(res.data.countryToCountry[0].visa_info);
 					(res.data.country_languages && res.data.country_languages.length !== 0) && setLanguages(res.data.country_languages[0]);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
@@ -102,6 +109,7 @@ function Country({
 					(res.data.financials && res.data.financials.length !== 0) && setFinancial(res.data.financials[0]);
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
+					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
 					setIsLoading(false);
 				});
 		}
@@ -119,7 +127,7 @@ function Country({
 				<ReactFullpage
 					licenseKey="CF1896AE-3B194629-99B627C1-841383E5"
 					scrollingSpeed={1000} /* Options here */
-					sectionsColor={['rgb(232, 233, 241)', 'rgb(255, 222, 206)']}
+					sectionsColor={['rgb(232, 233, 241)', 'rgb(255, 222, 206)', 'rgb(228, 221, 241)']}
 					navigation
 					navigationPosition="left"
 					navigationTooltips={['Basics', 'Health & Safety', 'Money']}
@@ -181,6 +189,9 @@ function Country({
 															/(^")|("$)/g,
 															''
 														)}
+														<div
+														dangerouslySetInnerHTML={{ __html: advisoryLink }}
+													/>
 													</CardBody>
 												</Card>)}
 										</Col>
@@ -269,7 +280,41 @@ function Country({
 										</Col>
 									</Row>
 								</div>
-
+								<div className="section">
+									<Subtitle text="Miscellaneous" />
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+									<Col xs="10" sm="4" >
+										<Card header="Traffic Flow">
+											<CardBody>
+											{trafficSide !== 'Not available yet'
+														&&<p>
+													In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
+													<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
+												</p>}
+												<Divider />
+												{trafficSide !== 'Not available yet'
+														&& <img
+																key={trafficSide}
+																src={require(`../trafficImages/${trafficSide}.png`)}
+																style={{width: '200px'}}
+																alt=''
+															/>}
+												{trafficSide !== 'Not available yet'
+														&&<p style={{textAlign: 'center'}}>
+														<br></br>
+														<b style={{color: '#FF1C00'}}
+														>
+														Warning</b><br></br>
+														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
+													</p>}
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
+								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
 								</div>

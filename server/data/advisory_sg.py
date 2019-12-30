@@ -92,7 +92,7 @@ def parse_all_countries_advisories():
         try:
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
-        except IndexError:
+        except IndexError as e:
             print("This country doesn't have advisory info: ", country)
             print("Link :", link)
     return data
@@ -141,8 +141,6 @@ def save_info(sqlite,visas,advisories, array_info):
 
     return array_info
 
-
-
 def save_to_SG():
     driver = create_driver()
     wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens"
@@ -165,6 +163,7 @@ def save_to_SG():
 
     with open('./advisory-sg.json', 'w') as outfile:
         json.dump(array_info, outfile)
-
+# def test():
+#     print(parse_one_country_advisory("https://www.mfa.gov.sg/countries-regions/c/canada/travel-page"))
 if __name__ == '__main__':
     save_to_SG()
