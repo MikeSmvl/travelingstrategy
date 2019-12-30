@@ -116,6 +116,7 @@ def save_into_db(data):
     sqlite.commit()
     sqlite.close()
 
+#unsafe areas
 def regional_advice_level(driver,url):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
@@ -172,8 +173,27 @@ def save_to_australia():
 
     save_into_db(data)
 
-driver = create_driver()
-data = regional_advice_level(driver,'https://www.smartraveller.gov.au/destinations/africa/nigeria')
-driver.quit()
+def all_unsafe_areas():
+    url = get_url_of_countries() #this function create its own driver -- to change
+    data = {}
+    driver = create_driver()
 
-print(data)
+    for country in url:
+        href = url[country].get('href')
+        link = "https://smartraveller.gov.au{}".format(href,sep='')
+
+        unsafe_areas = regional_advice_level(driver,link)
+        data[country] = {'unsafe_areas':unsafe_areas}
+        print(data[country])
+
+    data = find_all_iso(data)
+    driver.quit()
+    #saving the data in json file
+    with open('unsafe-areas-au.json', 'w') as fp:
+        json.dump(data, fp)
+
+
+all_unsafe_areas()
+
+
+
