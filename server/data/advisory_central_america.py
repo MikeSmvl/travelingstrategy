@@ -12,7 +12,7 @@ from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_MX, wiki_visa_url_BZ, wiki_visa_url_DM, wiki_visa_url_PA, wiki_visa_url_DO
+from lib.config import iso_list, sqlite_db, wiki_visa_url_MX, wiki_visa_url_BZ, wiki_visa_url_DM, wiki_visa_url_PA, wiki_visa_url_DO
 from lib.database import Database
 from helper_class.en_vs_es_country_names import get_iso_es
 

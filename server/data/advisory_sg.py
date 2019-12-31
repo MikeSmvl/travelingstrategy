@@ -5,7 +5,7 @@ from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 import json
-
+from lib.config import wiki_visa_url_SG
 
 """The Singaporian page orders the countries
     alphabetcally and has a page for each letter.
@@ -143,7 +143,7 @@ def save_info(sqlite,visas,advisories, array_info):
 
 def save_to_SG():
     driver = create_driver()
-    wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens"
+    wiki_visa_url = wiki_visa_url_SG
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
     visas = wiki_visa_ob.visa_parser_table()
     advisories = parse_all_countries_advisories()

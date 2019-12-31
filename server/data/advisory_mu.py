@@ -3,11 +3,11 @@ from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country
 from helper_class.sqlite_advisories import sqlite_advisories
 import json
-
+from lib.config import wiki_visa_url_MU
 
 def save_to_MU():
     driver = create_driver()
-    wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens"
+    wiki_visa_url = wiki_visa_url_MU
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
     visas = wiki_visa_ob.visa_parser_table()
     info = {}
