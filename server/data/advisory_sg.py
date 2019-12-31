@@ -163,7 +163,6 @@ def save_to_SG():
 
     with open('./advisory-sg.json', 'w') as outfile:
         json.dump(array_info, outfile)
-# def test():
-#     print(parse_one_country_advisory("https://www.mfa.gov.sg/countries-regions/c/canada/travel-page"))
-if __name__ == '__main__':
-    save_to_SG()
+
+#if __name__ == '__main__':
+#    save_to_SG()
