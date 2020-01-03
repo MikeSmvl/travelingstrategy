@@ -90,6 +90,8 @@ def handle_iso_error(name, all_names,all_official_names):
         return "Liechtenstein"
     elif (name == 'Trinidad & Tobago'):
         return "Trinidad and Tobago"
+    elif (re.search('U.S. Virgin Islands', name)):
+        return "United States Virgin Islands "
 
     for n in all_names:
         if (re.search(n,name)):
