@@ -5,6 +5,9 @@ import sqlite3
 from bs4 import BeautifulSoup
 import regex
 
+from helper_class.chrome_driver import create_driver, quit_driver
+from bs4 import BeautifulSoup
+
 #in the file provided h3 is a sign that a new data type starts
 #if the header list is empty then the data is still part of the
 #previous h3
@@ -61,6 +64,22 @@ def get_all_countries():
         all_countries = all_countries.keys()
     return all_countries
 
+
+def additional_advisory_info():
+    url = 'https://travel.gc.ca/travelling/advisories'
+    #set up the headless chrome driver
+    driver = create_driver()
+    driver.get(url)
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+
+    table = soup.find('table')
+    table_body = table.find('tbody')
+    table_rows = table_body.find_all('tr')
+    for tr in table_rows:
+       cols = tr.find_all('td')
+       href = cols[1]
+       print (href)
+
 #opens the url to the files of all countries
 #get the requiered data and stores it in a dictionary
 def advisory_canada(all_countries):
@@ -116,3 +135,5 @@ def save_to_canada():
     #saving the data in json file
     with open('advisory-ca.json', 'w') as fp:
         json.dump(countries_data, fp)
+
+additional_advisory_info()
