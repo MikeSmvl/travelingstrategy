@@ -64,8 +64,9 @@ def get_all_countries():
         all_countries = all_countries.keys()
     return all_countries
 
-
-def additional_advisory_info():
+#gets the url for each country 
+#calls parse_additional_advisory_info and passes url
+def get_additional_advisory_info_url():
     url = 'https://travel.gc.ca/travelling/advisories'
     #set up the headless chrome driver
     driver = create_driver()
@@ -77,8 +78,45 @@ def additional_advisory_info():
     table_rows = table_body.find_all('tr')
     for tr in table_rows:
        cols = tr.find_all('td')
-       href = cols[1]
-       print (href)
+       href = cols[1].find('a').get('href')
+       link = "https://travel.gc.ca{}".format(href,sep='')
+       parse_additional_advisory_info(link,driver) 
+
+def parse_additional_advisory_info(url, driver):
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    warning = " "
+    print ("111111",url)
+    advisory_list = soup.find("div", {"class": "tabpanels"})
+    security_list = advisory_list.find("details", {"id": "security"})
+    advisories = security_list.find("div", {"class": "tgl-panel"})
+    
+    count = 0
+    for tag in advisories:
+        if(tag.name == 'h3'):
+          print (tag)
+          if(tag.text.strip().lower() == "crime"):
+              count  = 1
+              print("crime")
+          elif(tag.text.strip().lower() == "kidnappings"):
+              count  = 1
+              print("kidnappings")
+          elif(tag.text.strip().lower() == "landmines"):
+              count  = 1
+              print("landmines")
+          elif(tag.text.strip().lower() == "terrorism"):
+              count  = 1
+              print("terrorism")
+        elif(count == 1):
+          warning += '</br>' + tag.text.strip()
+          count = 0
+     
+    print( warning )
+
+    return warning
+
+
 
 #opens the url to the files of all countries
 #get the requiered data and stores it in a dictionary
@@ -136,4 +174,4 @@ def save_to_canada():
     with open('advisory-ca.json', 'w') as fp:
         json.dump(countries_data, fp)
 
-additional_advisory_info()
+get_additional_advisory_info_url()
