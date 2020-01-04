@@ -15,6 +15,7 @@ from advisory_us import save_to_united_states
 from advisory_ie import find_all_ierland
 from error_email import send_email
 from advisory_central_america_advisory import save_to_central_america
+from advisory_caribbean import save_to_caribbea
 
 #logging to a file
 #logging level ERROR.This means its a serious problem as the software was not able to perform some functions
@@ -41,7 +42,7 @@ def start_scheduler():
     scheduler.every().day.do(find_all_ierland)
     scheduler.every().day.do(save_to_united_states)
     scheduler.every().day.do(save_to_central_america
-
+    scheduler.every().day.do(save_to_caribbea)
 
     while True:
       scheduler.run_pending()
