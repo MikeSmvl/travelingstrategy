@@ -4,7 +4,9 @@ from html.parser import HTMLParser
 import sqlite3
 from bs4 import BeautifulSoup
 import regex
+import time
 
+from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.chrome_driver import create_driver, quit_driver
 from bs4 import BeautifulSoup
 
@@ -67,6 +69,7 @@ def get_all_countries():
 #gets the url for each country 
 #calls parse_additional_advisory_info and passes url
 def get_additional_advisory_info_url():
+  try:
     url = 'https://travel.gc.ca/travelling/advisories'
     #set up the headless chrome driver
     driver = create_driver()
@@ -76,45 +79,51 @@ def get_additional_advisory_info_url():
     table = soup.find('table')
     table_body = table.find('tbody')
     table_rows = table_body.find_all('tr')
+    additional_advisory = {}
     for tr in table_rows:
        cols = tr.find_all('td')
        href = cols[1].find('a').get('href')
        link = "https://travel.gc.ca{}".format(href,sep='')
-       parse_additional_advisory_info(link,driver) 
+       country = link[34:len(link)]
+       country = country.replace('-', ' ')
+       iso = find_iso_of_country(country)
+       print(iso)
+       additional_advisory[iso] = parse_additional_advisory_info(link, driver) 
+  finally:
+      quit_driver(driver)
+      return additional_advisory
+       
 
 def parse_additional_advisory_info(url, driver):
-    driver.get(url)
-    #Selenium hands the page source to Beautiful Soup
-    soup=BeautifulSoup(driver.page_source, 'lxml')
-    warning = " "
-    print ("111111",url)
-    advisory_list = soup.find("div", {"class": "tabpanels"})
-    security_list = advisory_list.find("details", {"id": "security"})
-    advisories = security_list.find("div", {"class": "tgl-panel"})
+       time.sleep(1)
+       driver.get(url)
+       #Selenium hands the page source to Beautiful Soup
+       soup=BeautifulSoup(driver.page_source, 'lxml')
+       warning = " "
+       advisory_list = soup.find("div", {"class": "tabpanels"})
+       security_list = advisory_list.find("details", {"id": "security"})
+       advisories = security_list.find("div", {"class": "tgl-panel"})
     
-    count = 0
-    for tag in advisories:
-        if(tag.name == 'h3'):
-          print (tag)
-          if(tag.text.strip().lower() == "crime"):
+       count = 0
+       tag_type =""
+       for tag in advisories:
+          if(tag.name == 'h3'):
+            if(tag.text.strip().lower() == "crime"):
               count  = 1
-              print("crime")
-          elif(tag.text.strip().lower() == "kidnappings"):
+              tag_type = 'Crime'
+            elif(tag.text.strip().lower() == "kidnapping"):
               count  = 1
-              print("kidnappings")
-          elif(tag.text.strip().lower() == "landmines"):
+              tag_type = 'Kidnapping'
+            elif(tag.text.strip().lower() == "landmines"):
               count  = 1
-              print("landmines")
-          elif(tag.text.strip().lower() == "terrorism"):
+              tag_type = 'Landmines'
+            elif(tag.text.strip().lower() == "terrorism"):
               count  = 1
-              print("terrorism")
-        elif(count == 1):
-          warning += '</br>' + tag.text.strip()
-          count = 0
-     
-    print( warning )
-
-    return warning
+              tag_type = 'Terrorism'
+          elif(count == 1):
+            warning += '</br>'+ tag_type +" "+ tag.text.strip()
+            count = 0
+       return warning
 
 
 
@@ -122,6 +131,7 @@ def parse_additional_advisory_info(url, driver):
 #get the requiered data and stores it in a dictionary
 def advisory_canada(all_countries):
     countries_data = {}
+    additional_advisory_info = get_additional_advisory_info_url()
     for key in all_countries:
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
 
@@ -131,7 +141,12 @@ def advisory_canada(all_countries):
             country_iso = key
             country_eng = country_data['eng']
             name = country_eng['name']
-            advisory_text = country_eng['advisory-text']
+            print (name, "   ", country_iso)
+            if(country_iso in additional_advisory_info):
+              additional_advisory_info[country_iso]
+              advisory_text = country_eng['advisory-text']+ " " + additional_advisory_info[country_iso]
+            else:
+             advisory_text = country_eng['advisory-text']
             entry_exit_html = country_eng.get('entry-exit')
             visa_info = MyBeautifulSoup(entry_exit_html,"Visas")
             #print(visa_info)
@@ -174,4 +189,4 @@ def save_to_canada():
     with open('advisory-ca.json', 'w') as fp:
         json.dump(countries_data, fp)
 
-get_additional_advisory_info_url()
+save_to_canada()
