@@ -4,6 +4,9 @@ from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+from lib.database import Database
 import json
 from lib.config import wiki_visa_url_SG
 
@@ -12,6 +15,10 @@ from lib.config import wiki_visa_url_SG
     This method returns the urls for every country
     that start with a given letter.
 """
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+
 def get_url_of_for_letter(dictionnary, letter):
     try:
         #this is the link to the first page
@@ -79,27 +86,31 @@ def parse_one_country_advisory(url):
                     advisory_paragraph1 = advisory_paragraph.split('\n')[0]
 
     advisory_paragraph1 = advisory_paragraph1.lstrip()
+    LOGGER.info({advisory_paragraph1})
     quit_driver(driver)
 
     return advisory_paragraph1
 
 def parse_all_countries_advisories():
+    LOGGER.info(f'Beginning parsing for all countries advisories')
     data = {}
     countries_url = get_url_of_all_countries()
     for country in countries_url:
+        LOGGER.info(f'parsing for {country}')
         href = countries_url[country].get("href")
         link = "https://www.mfa.gov.sg{}".format(href,sep='')
         try:
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
         except IndexError as e:
-            print("This country doesn't have advisory info: ", country)
-            print("Link :", link)
+            LOGGER.error("This country doesn't have advisory info: ", country)
+            LOGGER.info("Link :", link)
     return data
 
 def save_info(sqlite,visas,advisories, array_info):
     for country in visas:
         try:
+            LOGGER.info(f'Saving information for {country}')
             iso = find_iso_of_country(country)
             visa_info = visas[country].get('visa')
             advisory = advisories[country].get('advisory') #if the country doesn't have advisory info it throws an index error
@@ -111,8 +122,9 @@ def save_info(sqlite,visas,advisories, array_info):
                     }
             array_info.append(info)
             sqlite.new_row(iso,country,advisory,visa_info)
+            LOGGER.success(f'{country} was sucesfully saved to the database')
         except KeyError: #if the country doesn't have advisory info
-            print("This country doesn't have advisory info:", country)
+            LOGGER.error("This country doesn't have advisory info:", country)
             iso = find_iso_of_country(country)
             visa_info = visas[country].get('visa')
             advisory = None
@@ -126,7 +138,7 @@ def save_info(sqlite,visas,advisories, array_info):
             sqlite.new_row(iso,country,advisory,visa_info)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
-            print("This country doesn't have visa information: ", country)
+            LOGGER.error("This country doesn't have visa information: ", country)
             iso = find_iso_of_country(country)
             visa_info = None
             advisory = advisories[country].get('advisory')
@@ -142,6 +154,7 @@ def save_info(sqlite,visas,advisories, array_info):
     return array_info
 
 def save_to_SG():
+    LOGGER.info(f'Saving Singapore into the databse')
     driver = create_driver()
     wiki_visa_url = wiki_visa_url_SG
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
@@ -159,10 +172,11 @@ def save_to_SG():
 
     sqlite.commit()
     sqlite.close()
+    LOGGER.success(f'Singapore was sucesfully saved to the database')
     quit_driver(driver)
 
     with open('./advisory-sg.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-#if __name__ == '__main__':
-#    save_to_SG()
+if __name__ == '__main__':
+   save_to_SG()
