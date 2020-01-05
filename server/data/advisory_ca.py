@@ -93,10 +93,9 @@ def get_additional_advisory_info_url():
       quit_driver(driver)
       return additional_advisory
        
-
+#Acquires additional advisory information
 def parse_additional_advisory_info(url, driver):
-       time.sleep(1)
-       driver.get(url)
+       time.sleep(1) #prevents error
        #Selenium hands the page source to Beautiful Soup
        soup=BeautifulSoup(driver.page_source, 'lxml')
        warning = " "
@@ -106,7 +105,8 @@ def parse_additional_advisory_info(url, driver):
     
        count = 0
        tag_type =""
-       for tag in advisories:
+       for tag in advisories: 
+          #Finds and selects only these sections of advisory info
           if(tag.name == 'h3'):
             if(tag.text.strip().lower() == "crime"):
               count  = 1
