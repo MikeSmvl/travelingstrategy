@@ -88,15 +88,17 @@ def save_to_new_zealand():
     save_into_db(data)
 
 
-
+#Gets passed url and retrives relevant additional advisory info
 def parse_a_country_advisory(url, driver):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
     warning = " "
+    #Retrieves main advisory 
     for tag in soup.findAll('i'):
       if tag.parent.name == 'h1':
           warning = tag.parent.text.strip()
+    #Finds and selects only these sections of additional advisory info
     for tag in soup.findAll('strong'):
         if(tag.text.strip().lower() == "border crossings"):
             warning += '</br>' + tag.parent.text.strip()

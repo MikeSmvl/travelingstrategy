@@ -39,9 +39,7 @@ def get_name_and_advisory_of_countries():
              name = cols[0][0:nameLength]
              if(name != 'W'):
                advisory = cols[1]
-               listToStr = ' '.join(map(str, advisory))
-               if(listToStr  != 'Level 1: Exercise Normal Precautions' ):
-                 advisory += '</br>'+parse_a_country_additional_advisory_info(link,driver) 
+               advisory += '</br>'+parse_a_country_additional_advisory_info(link,driver) 
              info[name] = advisory
           counter += 1
     finally:
@@ -50,7 +48,7 @@ def get_name_and_advisory_of_countries():
 
     return info
 
-
+#Retrieves all the tooltips which contain additional advisory info
 def parse_a_country_additional_advisory_info(url, driver):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
@@ -60,10 +58,9 @@ def parse_a_country_additional_advisory_info(url, driver):
     a_tags = div_id.find_all('a')
     for a in a_tags:
         listToStr = ' '.join(map(str, a.get('class'))) 
-        if(listToStr == 'showThreat'):
+        if(listToStr == 'showThreat'): #if tooltip is marked as showThreat then this country is marked as having this threat
             if(a.get('title')!='Tool Tip: Other'):
              warning += a.get('data-tooltip') +'</br>'
-             print (warning)
 
     return warning
 
