@@ -44,6 +44,29 @@ function Country({
 	const [rate, setRate] = useState('');
 
 	useEffect(() => {
+		async function fetchRate(originCode, destinationCode) {
+			fetch(`https://api.exchangeratesapi.io/latest?base=${originCode}&symbols=${destinationCode}`)
+				.then(
+					(response) => {
+						if (response.status !== 200) {
+							console.log('Exchange Rate API did not return HTTP 200');
+							setIsLoading(false);
+							return;
+						}
+
+						// Set the currency rate from origin to destination
+						response.json().then((data) => {
+							setRate(data.rates[destinationCode].toFixed(2));
+							setIsLoading(false);
+						});
+					}
+				)
+				.catch((err) => {
+					console.log('Fetch Error :-S', err);
+					setIsLoading(false);
+				});
+		}
+
 		async function fetchData() {
 			setIsLoading(true);
 			await fetch('http://localhost:4000/', {
@@ -112,35 +135,12 @@ function Country({
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
 					setIsLoading(false);
-					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code)
+					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
 		}
 
-		async function fetchRate(originCode, destinationCode) {
-			fetch(`https://api.exchangeratesapi.io/latest?base=${originCode}&symbols=${destinationCode}`)
-			.then(
-				function(response) {
-					if (response.status !== 200) {
-						console.log('Exchange Rate API did not return HTTP 200')
-						setIsLoading(false);
-						return;
-					}
-
-					// Set the currency rate from origin to destination
-					response.json().then(function(data) {
-						setRate(data.rates[destinationCode].toFixed(2))
-						setIsLoading(false);
-					});
-				}
-			)
-			.catch(function(err) {
-				console.log('Fetch Error :-S', err);
-				setIsLoading(false);
-			});
-		}
-
 		fetchData();
-	}, [originCountry, destinationCountry,originLat, originLng, destinationLat, destinationLng]);
+	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
@@ -168,7 +168,7 @@ function Country({
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
-										title3={getTimeDifference(timeOrigin,timeDestination, originCity)}
+										title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
 									/>
 									<Subtitle text="Important Basics" />
 									<Row
@@ -307,30 +307,36 @@ function Country({
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
-									<Col xs="10" sm="4" >
-										<Card header="Traffic Flow">
-											<CardBody>
-											{trafficSide !== 'Not available yet'
-														&&<p>
+										<Col xs="10" sm="4">
+											<Card header="Traffic Flow">
+												<CardBody>
+													{trafficSide !== 'Not available yet'
+														&& (
+															<p>
 													In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
-													<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
-												</p>}
-												<Divider />
-												{trafficSide !== 'Not available yet'
-														&& <img
+																<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
+															</p>
+														)}
+													<Divider />
+													{trafficSide !== 'Not available yet'
+														&& (
+															<img
 																key={trafficSide}
 																src={require(`../trafficImages/${trafficSide}.png`)}
-																style={{width: '200px'}}
-																alt=''
-															/>}
-												{trafficSide !== 'Not available yet'
-														&&<p style={{textAlign: 'center'}}>
-														<br></br>
-														<b style={{color: '#FF1C00'}}
-														>
-														Warning</b><br></br>
+																style={{ width: '200px' }}
+																alt=""
+															/>
+														)}
+													{trafficSide !== 'Not available yet'
+														&& (
+															<p style={{ textAlign: 'center' }}>
+																<br />
+																<b style={{ color: '#FF1C00' }}>
+														Warning
+																</b><br />
 														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
-													</p>}
+															</p>
+														)}
 												</CardBody>
 											</Card>
 										</Col>
