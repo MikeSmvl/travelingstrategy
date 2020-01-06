@@ -6,6 +6,7 @@ from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from selenium.webdriver.common.by import By
+from lib.database import Database
 import time
 
 import json
@@ -61,7 +62,9 @@ def parse_all_countries_advisory():
     urls = get_url_of_countries()
     driver = create_driver()
 
+    
     for country in urls:
+       
         href = urls[country].get("href")
         link = "https://www.gov.uk{}".format(href,sep='')
         advisory = parse_one_country_advisory(link,href)
@@ -83,11 +86,9 @@ def parse_additional_advisory_info(link, driver):
     
        count = 0
        tag_type =" "
-       print ("linkkkkkkkkkkkkkkkkkkkkkk    " ,link)
 
        try:       
           for tag in advisories: 
-             print (tag)
              #Finds and selects only these sections of advisory info
              if(tag.name == 'h3'):
                if(tag.text.strip().lower() == "crime"):
@@ -107,7 +108,7 @@ def parse_additional_advisory_info(link, driver):
              elif(count == 1):
                warning += '</br>'+ tag_type +" "+ tag.text.strip()
                count = 0
-          print ("warninnggggggggggggggggggggggggggggggggggggg   ",warning)   
+
        except : 
            print('No additional information') 
        return warning
@@ -123,11 +124,14 @@ def save_to_UK():
     data = parse_all_countries_advisory()
     info = {}
     array_info = []
-    # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('GB') #The UK iso is GB
-    sqlite.delete_table()
-    sqlite.create_table()
+    # create an an sqlite_advisory object]
+    db = Database("countries.sqlite")
+    db.add_table("GB", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
+
+
     for country in visas:
+        
         iso = find_iso_of_country(country)
         if(iso != ""):
             try:
@@ -141,13 +145,15 @@ def save_to_UK():
                     "visa_info": visa_info
                 }
                 array_info.append(info)
-                sqlite.new_row(iso,name,advisory,visa_info)
+                db.insert("GB",iso,name,advisory,visa_info)
+                #sqlite.new_row(iso,name,advisory,visa_info)
             except KeyError:
                 print("This country doesn't have advisory info: ",country)
                 print("Its ISO is: ",iso)
 
-    sqlite.commit()
-    sqlite.close()
+    db.close_connection()
+    #sqlite.commit()
+    #sqlite.close()
 
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
