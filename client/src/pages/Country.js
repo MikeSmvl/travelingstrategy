@@ -161,37 +161,39 @@ function Country({
 											</CountryCard>
 										</Col>
 										<Col xs="10" sm="4">
-											<Card
-												className="scrolling-card"
-												header="Visa Info"
-												style={{ maxHeight: '400px', overflow: 'scroll' }}
-											>
-												<CardBody
+											{visaInfo !== null && (
+												<Card
 													className="scrolling-card"
-													style={{ paddingTop: '0' }}
+													header="Visa Info"
+													style={{ maxHeight: '400px', overflow: 'scroll' }}
 												>
-													<div
+													<CardBody
 														className="scrolling-card"
-														dangerouslySetInnerHTML={{ __html: visaInfo }}
-													/>
-												</CardBody>
-											</Card>
+														style={{ paddingTop: '0' }}
+													>
+														<div
+															className="scrolling-card"
+															dangerouslySetInnerHTML={{ __html: visaInfo }}
+														/>
+													</CardBody>
+												</Card>)}
 										</Col>
 										<Col xs="10" sm="4">
-											<Card header="Advisory">
-												<CardBody>
-													<ErrorOutlineOutlinedIcon
-														style={{ color: '#dc3545' }}
-													/>{' '}
-													{JSON.stringify(advisoryInfo).replace(
-														/(^")|("$)/g,
-														''
-													)}
-													<div
+											{advisoryInfo !== null && (
+												<Card header="Advisory">
+													<CardBody>
+														<ErrorOutlineOutlinedIcon
+															style={{ color: '#dc3545' }}
+														/>{' '}
+														{JSON.stringify(advisoryInfo).replace(
+															/(^")|("$)/g,
+															''
+														)}
+														<div
 														dangerouslySetInnerHTML={{ __html: advisoryLink }}
 													/>
-												</CardBody>
-											</Card>
+													</CardBody>
+												</Card>)}
 										</Col>
 									</Row>
 								</div>
