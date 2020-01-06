@@ -1,57 +1,64 @@
 import sqlite3
-import re
-import pycountry
-import numpy as np
-
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
+from helper_class.chrome_driver import create_driver, quit_driver
+from helper_class.country_names import find_iso_of_country
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+from lib.database import Database
+from lib.config import sqlite_db
+import pycountry
 
 
-#Some countries have link, others are listed and others have links while being listed
-def get_canabais_law():
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database(sqlite_db)
+
+def get_country_canabais_law():
     array_of_country_info = []
-    info = {}
+    already_parsed = []
     try:
         # this is the link to the first page
         url = 'https://en.wikipedia.org/wiki/Legality_of_cannabis'
-
-        # set up the headless chrome driver
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
-        # create a new chrome session
-        driver = webdriver.Chrome(options=chrome_options)
-        driver.implicitly_wait(19)
+        driver = create_driver()
         driver.get(url)
         # Selenium hands the page source to Beautiful Soup
         soup=BeautifulSoup(driver.page_source, 'html.parser')
-
-        # patter of the link to the country page that the href should match
-        table = soup.find('table', {'class':"wikitable"})
+        table = soup.find('table')
         tbody = table.find('tbody')
-        table_rows = tbody.find_all('tr')
-
-        for tr in table_rows: #each row
-            table_columns = tr.find_all('td')
-            number_of_columns = len(table_columns)
-            country = ""
-            languages = [[],[],[],[],[]]
-            if(number_of_columns > 0): #Headers don't have column tags
-                country = get_country_name(number_of_columns,table_columns[0]) #first column is the country name
-            index = 1 # languages start on the second column
-            if(number_of_columns > 0): #Headers don't have column tags
-                while(index < number_of_columns):
-                    li_tags_array = table_columns[index].find_all('li') #For languages displayed as a list
-                    a_tags_array = table_columns[index].find_all('a') #For languages displayed as a list
-
-                    if(len(li_tags_array) > 0): #Listed
-                        languages.append(get_languages_displayed_in_list(languages, li_tags_array,index))
-                    else: #Not Listed
-                        languages.append(get_languages_not_displayed_in_list(languages,a_tags_array, table_columns,index))
-                    index+=1
-            array_of_country_info = get_country_info_object(languages, array_of_country_info, country)
-        return(array_of_country_info)
+        allRows = tbody.findAll('tr')
+        for country_row in allRows:
+            isHeader = country_row.find('th') != None #The header row should be discarded
+            country_iso = find_iso_of_country(isHeader)
+            if(country_iso != ""):
+                    if country_iso not in already_parsed: # Only parse the main traffic side of a country
+                        info = {
+                                "country_iso": country_iso,
+                                "country_name": country,
+                                "recreational": Recreational,
+                                "medical": Medical
+                                }
+                        already_parsed.append(country_iso)
+                        array_of_country_info.append(info)
+                    else:
+                        print("The main land for this country is parsed already", country)
+        return array_of_country_info
 
     finally:
         driver.close()
         driver.quit()
+
+def save_canabais_law():
+    DB.drop_table('canabais')
+    DB.add_table('canabais', country_iso='text', country_name="text", recreational='text', medical='text')
+    canabais_info = get_country_canabais_law()
+
+    for country_canabais in canabais_info:
+        country_iso = country_canabais.get("country_iso")
+        country_name = country_canabais.get("country_name")
+        canabais_law = country_canabais.get("canabais_law")
+        DB.insert_or_update('canabais', country_iso,country_name, Recreational, Medical)
+
+
+if __name__ == '__main__':
+    save_canabais_law()
