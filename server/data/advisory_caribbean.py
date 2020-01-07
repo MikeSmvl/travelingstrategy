@@ -1,4 +1,5 @@
 from helper_class.country_names import find_iso_of_country
+from helper_class.country_names import find_all_iso
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
@@ -15,30 +16,29 @@ LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database(sqlite_db)
 
 def save_into_db(tableName, data):
-  # create an an sqlite_advisory object
-  LOGGER.info(f'Saving {tableName} into the databse')
-  info = {}
-  array_info = []
-  sqlite = sqlite_advisories(tableName)
-  sqlite.delete_table()
-  sqlite.create_table()
-  for country in data:
-      iso = find_iso_of_country(country)
-      if(iso != ""):
-          name = country
-          visa_info = data[country].get('visa') 
-          advisory = None
-          info = {
-              "country_iso" : iso,
-              "name": name,
-              "advisory": advisory,
-              "visa_info": visa_info
-          }
-          array_info.append(info)
-          sqlite.new_row(iso,name,advisory,visa_info)
-  sqlite.commit()
-  sqlite.close()
-  LOGGER.success(f'{tableName} was sucesfully saved to the database')
+    # create an an sqlite_advisory object
+    DB.drop(tableName)
+    DB.add_table(tableName,country_iso="country_iso"
+        ,name="name",advisory_text="advisory_text",visa_info="visa_info")
+    for iso in data:
+        name = data[iso].get('name')
+        text = 'Not availible'
+        visa_info = data[iso].get('visa-info')
+        try:
+            DB.insert(tableName,iso, name,text,visa_info)
+        except:
+            LOGGER.info(f'The following is not an official country: {iso}')
+    LOGGER.success(f'{tableName} was sucesfully saved to the database')
+
+#function to replace name by iso
+def replace_key_by_iso(data):
+    data = find_all_iso(data)
+    data_new = {}
+    for k in data:
+        iso = data[k].get('country-iso')
+        visa_info = data[k].get('visa')
+        data_new[iso] = {'name': k, 'visa-info':visa_info}
+    return data_new
 
 def save_to_caribbea():
 
@@ -47,6 +47,7 @@ def save_to_caribbea():
   driver = create_driver()
   wiki_visa = wiki_visa_parser(wiki_visa_url_AG, driver)
   visa_AG = wiki_visa.visa_parser_table()
+  visa_AG = replace_key_by_iso(visa_AG)
   driver.close()
 
   # Barbados
@@ -54,6 +55,7 @@ def save_to_caribbea():
   driver = create_driver()
   wiki_visa = wiki_visa_parser(wiki_visa_url_BB, driver)
   visa_BB = wiki_visa.visa_parser_table()
+  visa_BB = replace_key_by_iso(visa_BB)
   LOGGER.success(f'Following currency data was retrieved: {visa_BB}')
   driver.close()
 
@@ -62,6 +64,7 @@ def save_to_caribbea():
   driver = create_driver()
   wiki_visa = wiki_visa_parser(wiki_visa_url_BS, driver)
   visa_BS = wiki_visa.visa_parser_table()
+  visa_BS = replace_key_by_iso(visa_BS)
   LOGGER.success(f'Following currency data was retrieved: {visa_BS}')
   driver.close()
 
@@ -70,6 +73,7 @@ def save_to_caribbea():
   driver = create_driver()
   wiki_visa = wiki_visa_parser(wiki_visa_url_GD, driver)
   visa_GD = wiki_visa.visa_parser_table()
+  visa_GD = replace_key_by_iso(visa_GD)
   LOGGER.success(f'Following currency data was retrieved: {visa_GD}')
   driver.close()
 
@@ -78,6 +82,7 @@ def save_to_caribbea():
   driver = create_driver()
   wiki_visa = wiki_visa_parser(wiki_visa_url_JM, driver)
   visa_JM = wiki_visa.visa_parser_table()
+  visa_JM = replace_key_by_iso(visa_JM)
   LOGGER.success(f'Following currency data was retrieved: {visa_JM}')
   driver.close()
 
@@ -86,6 +91,7 @@ def save_to_caribbea():
   driver = create_driver()
   wiki_visa = wiki_visa_parser(wiki_visa_url_TT, driver)
   visa_TT = wiki_visa.visa_parser_table()
+  visa_TT = replace_key_by_iso(visa_TT)
   LOGGER.success(f'Following currency data was retrieved: {visa_TT}')
 
   quit_driver(driver)
