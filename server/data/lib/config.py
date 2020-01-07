@@ -52,3 +52,8 @@ wiki_visa_url_BS = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Bahamian
 wiki_visa_url_GD = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Grenadian_citizens'
 wiki_visa_url_JM = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Jamaican_citizens'
 wiki_visa_url_TT = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Trinidad_and_Tobago_citizens'
+
+# Asia
+wiki_visa_url_SG = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
+wiki_visa_url_MU = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
+

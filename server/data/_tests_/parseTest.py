@@ -12,6 +12,7 @@ from advisory_nz import get_url_of_countries_nz, parse_a_country_advisory
 from advisory_us import get_name_and_advisory_of_countries
 from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
 from advisory_ie import find_all_url, get_one_info
+from advisory_sg import parse_one_country_advisory as parse_one_country_advisory_sg
 from advisory_central_america import mexico_all_links
 from helper_class.chrome_driver import create_driver, quit_driver
 
@@ -238,10 +239,7 @@ class parseTest(unittest.TestCase):
         # tests parsing visa from wiki for Grenada
         driver = create_driver()
         wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Grenadian_citizens'
-        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
-        wiki_visa = wiki_visa_ob.visa_parser_table()
-        quit_driver(driver)
-        self.assertFalse("", wiki_visa)
+
 
     def test_JM_parse_visa_wiki(self):
         # tests parsing visa from wiki for Jamaica
@@ -256,6 +254,30 @@ class parseTest(unittest.TestCase):
         # tests parsing visa from wiki for Trinidad and Tobago
         driver = create_driver()
         wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Trinidad_and_Tobago_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
+
+    def test_sg_parse_advisory(self):
+        data = parse_one_country_advisory_sg("https://www.mfa.gov.sg/countries-regions/c/canada/travel-page")
+        self.assertFalse("", data)
+
+    # Test for Asian countries
+    
+    def test_sg_parse_visa_wiki(self):
+        # tests parsing visa from wiki for ie
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
+    
+    def test_mu_parse_visa_wiki(self):
+        # tests parsing visa from wiki for ie
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
