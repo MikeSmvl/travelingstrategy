@@ -4,9 +4,6 @@ from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
-from helper_class.flags import Flags
-from helper_class.logger import Logger
-from lib.database import Database
 import json
 from lib.config import wiki_visa_url_SG
 
@@ -178,5 +175,5 @@ def save_to_SG():
     with open('./advisory-sg.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-if __name__ == '__main__':
-   save_to_SG()
+# if __name__ == '__main__':
+#    save_to_SG()
