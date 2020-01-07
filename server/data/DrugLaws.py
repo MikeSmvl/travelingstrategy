@@ -29,25 +29,25 @@ def get_countries_canabaislaw():
         tbody = table.find('tbody')
         table_rows = tbody.find_all('tr')
 
-        drugs_info= {}
-        arrayOfInfo = []
+        drug_info= {}
+        arrayOfDrugInfo = []
         for tablerow in table_rows:
             table_columns = tablerow.find_all('td')
-            # iso = find_iso_of_country(country_name)
+            # country_iso = find_iso_of_country(country_name)
+            
             if(len(table_columns)>0):
                 country_name= table_columns[0].text
                 recreational= table_columns[1].text
                 medical= table_columns[2].text
-                iso = find_iso_of_country(country_name)
+                country_iso = find_iso_of_country(country_name)
                 drug_info = {
-                    "name":country_name,
-                    "iso": iso,
+                     "name":country_name,
+                    "iso": country_iso,
                     "recreational": recreational,
                     "medical": medical
-        }
-        arrayOfInfo.append(drug_info)
-        
-        print(arrayOfInfo)
+            }
+            arrayOfDrugInfo.append(drug_info)
+            print(arrayOfDrugInfo)
     finally:
         driver.close()
         driver.quit()
