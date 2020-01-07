@@ -36,3 +36,13 @@ new_york_rent = 5102
 new_york_salary = 51270
 # Median grocery bill in New York per month
 new_york_grocery = 625
+
+# Visa links
+# Central America
+wiki_visa_url_BZ = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Belizean_citizens'
+wiki_visa_url_DM = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominica_citizens'
+wiki_visa_url_DO = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominican_Republic_citizens'
+wiki_visa_url_MX = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mexican_citizens'
+wiki_visa_url_PA = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Panamanian_citizens'
+wiki_visa_url_SG = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
+wiki_visa_url_MU = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'

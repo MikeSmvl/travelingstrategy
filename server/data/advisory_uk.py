@@ -3,7 +3,6 @@ import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from selenium.webdriver.common.by import By
 from lib.database import Database
@@ -42,7 +41,7 @@ def get_url_of_countries():
     return info
 
 
-def parse_one_country_advisory(url,href):
+def parse_one_country_advisory(url, href):
     driver = create_driver()
     driver.get(url)
     advisory=""
@@ -114,7 +113,6 @@ def parse_additional_advisory_info(link, driver):
        return warning
 
 
-
 def save_to_UK():
 
     driver = create_driver()
@@ -158,4 +156,4 @@ def save_to_UK():
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-save_to_UK()
+#save_to_UK()
