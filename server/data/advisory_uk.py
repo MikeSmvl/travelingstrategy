@@ -1,7 +1,6 @@
 from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver, quit_driver
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from selenium.webdriver.common.by import By
@@ -144,16 +143,13 @@ def save_to_UK():
                 }
                 array_info.append(info)
                 db.insert("GB",iso,name,advisory,visa_info)
-                #sqlite.new_row(iso,name,advisory,visa_info)
             except KeyError:
                 print("This country doesn't have advisory info: ",country)
                 print("Its ISO is: ",iso)
 
     db.close_connection()
-    #sqlite.commit()
-    #sqlite.close()
 
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-#save_to_UK()
+save_to_UK()

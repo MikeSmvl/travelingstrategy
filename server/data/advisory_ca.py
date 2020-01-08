@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 import regex
 import time
 from retry import retry
-
+from lib.database import Database
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.chrome_driver import create_driver, quit_driver
 from bs4 import BeautifulSoup
@@ -133,7 +133,7 @@ def parse_additional_advisory_info(url, driver):
 
 #opens the url to the files of all countries
 #get the requiered data and stores it in a dictionary
-@retry(urllib.error, tries=4, delay=3, backoff=2)
+@retry(tries=4, delay=3, backoff=2)
 def advisory_canada(all_countries):
     countries_data = {}
     additional_advisory_info = get_additional_advisory_info_url()
@@ -141,7 +141,7 @@ def advisory_canada(all_countries):
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
 
         print(country_url)
-       # time.sleep(2)
+        # time.sleep(2)
         with contextlib.closing(urllib.request.urlopen(country_url)) as url:
             country_data = json.loads(url.read().decode())
             country_data = country_data['data']
@@ -165,16 +165,8 @@ def advisory_canada(all_countries):
 #and in the sqlite db
 def save_to_canada():
 
-    #chanhge root
-    con  = sqlite3.connect('../countries.sqlite')
-    cur = con.cursor()
-
-    #should not create the table every time
-    #change in the future
-    cur.execute('DROP TABLE IF EXISTS CA')
-    con.commit()
-    cur.execute('CREATE TABLE CA (country_iso VARCHAR, name VARCHAR, advisory_text VARCHAR(10000), visa_info VARCHAR)')
-    con.commit()
+    db = Database("countries.sqlite")
+    db.add_table("CA", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     #getting the data from all countries
     all_countries = get_all_countries()
@@ -183,14 +175,13 @@ def save_to_canada():
     #saving the data in db
     for country in countries_data:
         iso = countries_data[country].get('country-iso')
-        n = countries_data[country].get('name')
-        text = countries_data[country].get('advisory-text')
-        info = countries_data[country].get('visa-info')
+        name = countries_data[country].get('name')
+        advisory = countries_data[country].get('advisory-text')
+        visa = countries_data[country].get('visa-info')
 
-        cur.execute('INSERT INTO CA (country_iso,name,advisory_text,visa_info) values(?,?,?,?)',(iso,n,text,info))
+        db.insert("CA",iso,name,advisory,visa)
 
-    con.commit()
-    con.close()
+    db.close_connection()
 
     #saving the data in json file
     with open('advisory-ca.json', 'w') as fp:
