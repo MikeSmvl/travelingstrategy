@@ -80,8 +80,48 @@ def get_countries_cocainelaw():
         driver.close()
         driver.quit()
 
+def get_countries_methaphetaminelaw():
+    try:
+        # this is the link to the first page
+        url = 'https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine'
+        driver = create_driver()
+        driver.get(url)
+        # Selenium hands the page source to Beautiful Soup
+        soup=BeautifulSoup(driver.page_source, 'html.parser')
+        # patter of the link to the country page that the href should match
+        table = soup.find('table', {'class':"wikitable"})
+        tbody = table.find('tbody')
+        table_rows = tbody.find_all('tr')
+
+        methaphetamine_info= {}
+        arraymethaphetamineInfo = []
+        for tablerow in table_rows:
+            table_columns = tablerow.find_all('td')            
+            if(len(table_columns)>0):
+                country_name= table_columns[0].text
+                methaphetamine_possession= table_columns[1].text
+                methaphetamine_sale= table_columns[2].text
+                methaphetamine_transport= table_columns[3].text
+                methaphetamine_cultivation= table_columns[4].text
+                country_iso = find_iso_of_country(country_name)
+                methaphetamine_info = {
+                    "name":country_name,
+                    "iso": country_iso,
+                    "methaphetamine-possession": methaphetamine_possession,
+                    "methaphetamine-sale": methaphetamine_sale,
+                    "methaphetamine-transport": methaphetamine_transport,
+                    "methaphetamine-cultivation": methaphetamine_cultivation
+            }
+            arraymethaphetamineInfo .append(methaphetamine_info)
+            return arraymethaphetamineInfo
+    finally:
+        driver.close()
+        driver.quit()
+
     
 
 if __name__ == "__main__":
     get_countries_canabaislaw()
     get_countries_cocainelaw()
+    get_countries_methaphetaminelaw()
+    
