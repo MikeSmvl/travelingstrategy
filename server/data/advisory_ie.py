@@ -10,9 +10,8 @@ from selenium.webdriver.common.keys import Keys
 
 import helper_class.chrome_driver as driver
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
-
+from lib.database import Database
 
 #Find all the urls to each country from the
 #irish gov website
@@ -57,7 +56,7 @@ def get_one_advisory(url, my_driver, soup):
 
     count = 0
     for tag in div_tab2_relevant:
-        print(tag)
+        
         if(tag.name == 'h3'):
             if(tag.find('strong')):
                if(tag.find('strong').text.strip().lower() == 'terrorism' or tag.find('strong').text.strip().lower() == 'social unrest' or tag.find('strong').text.strip().lower() == 'crime'):
@@ -88,6 +87,14 @@ def get_one_advisory(url, my_driver, soup):
         elif(count == 1):
               advisory_text += tag.text
               count = 0
+  
+   
+
+    if(len(advisory_text) > 1948):
+        advisory_text_temp = advisory_text[0:1948]
+        position = advisory_text_temp.rfind(".")
+        advisory_text = advisory_text_temp[0:position]
+
     return advisory_text
 
 #getting the header and the text that goes with it
@@ -138,17 +145,15 @@ def replace_key_by_iso(data):
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('IE')
-    sqlite.delete_table()
-    sqlite.create_table()
+    db = Database("countries.sqlite")
+    db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
     for country in data:
         iso = data[country].get('country-iso')
         name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        sqlite.new_row(iso, name, text, visa_info)
-    sqlite.commit()
-    sqlite.close()
+        advisory = data[country].get('advisory-text').replace('"', '')
+        visa = data[country].get('visa-info')
+        db.insert("IE",iso,name,advisory,visa)
+    db.close_connection()
 
 
 #here we go through all countries and save all the data
