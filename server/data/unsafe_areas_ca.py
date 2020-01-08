@@ -61,7 +61,7 @@ def get_regional_advisories(url,driver):
         avoid_all = soup.find('div', attrs={'class':'AdvisoryContainer AvoidAll'})
 
         if not avoid_all:
-            data = "Take normal security precautions, there is no regional advisory."
+            data = "There is no regional advisory, take security precautions based on the general advisory for this country."
             return data
         else:
             h3 = avoid_all.find('h3').text
@@ -79,8 +79,14 @@ def get_regional_advisories(url,driver):
 
 def get_all_regional_advisories():
     driver = create_driver()
-    url = "https://travel.gc.ca/destinations/venezuela"
-    get_regional_advisories(url, driver)
+    all_countries = get_all_links()
+    for country in all_countries:
+        name = all_countries[country]
+        href = name['href']
+        url = "https://travel.gc.ca" + href
+        print(url)
+        data = get_regional_advisories(url, driver)
+        print(data)
 
     quit_driver(driver)
 
