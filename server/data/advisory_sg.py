@@ -123,7 +123,7 @@ def save_info(db,visas,advisories, array_info):
             db.insert("SG",iso,country,advisory,visa)
             LOGGER.success(f'{country} was sucesfully saved to the database')
         except KeyError: #if the country doesn't have advisory info
-            LOGGER.error("This country doesn't have advisory info:", country)
+            LOGGER.error(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
             visa = visas[country].get('visa')
             advisory = "None"
@@ -137,7 +137,7 @@ def save_info(db,visas,advisories, array_info):
             db.insert("SG",iso,country,advisory,visa)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
-            LOGGER.error("This country doesn't have visa information: ", country)
+            LOGGER.error(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
             visa_info = "None"
             advisory = advisories[country].get('advisory')

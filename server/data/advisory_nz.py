@@ -9,8 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from lib.database import Database
 
 def get_url_of_countries_nz(driver):
     info = {}
@@ -125,17 +125,17 @@ def parse_a_country_advisory(url, driver):
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('NZ')
-    sqlite.delete_table()
-    sqlite.create_table()
+
+    db = Database("countries.sqlite")
+    db.add_table("NZ", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
     for country in data:
         iso = data[country].get('country-iso')
         name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        sqlite.new_row(iso,name,text,visa_info)
-    sqlite.commit()
-    sqlite.close()
+        advisory = data[country].get('advisory-text')
+        visa = data[country].get('visa-info')
+        db.insert("NZ",iso,name,advisory,visa)
+    db.close_connection()
 
 save_to_new_zealand()
 
