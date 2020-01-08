@@ -100,8 +100,8 @@ def parse_all_countries_advisories():
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
         except IndexError as e:
-            LOGGER.error("This country doesn't have advisory info: ", country)
-            LOGGER.info("Link :", link)
+            LOGGER.error(f'This country doesn't have advisory info: {country}')
+            LOGGER.info(f'Link : {link}')
     return data
 
 def save_info(sqlite,visas,advisories, array_info):
@@ -121,7 +121,7 @@ def save_info(sqlite,visas,advisories, array_info):
             sqlite.new_row(iso,country,advisory,visa_info)
             LOGGER.success(f'{country} was sucesfully saved to the database')
         except KeyError: #if the country doesn't have advisory info
-            LOGGER.error("This country doesn't have advisory info:", country)
+            LOGGER.error(f'This country doesn\'t have advisory info: {country}')
             iso = find_iso_of_country(country)
             visa_info = visas[country].get('visa')
             advisory = None
@@ -135,7 +135,7 @@ def save_info(sqlite,visas,advisories, array_info):
             sqlite.new_row(iso,country,advisory,visa_info)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
-            LOGGER.error("This country doesn't have visa information: ", country)
+            LOGGER.error(f'This country doesn\'t have visa information: {country}')
             iso = find_iso_of_country(country)
             visa_info = None
             advisory = advisories[country].get('advisory')
