@@ -98,7 +98,7 @@ def get_additional_advisory_info_url():
        
 #Acquires additional advisory information
 def parse_additional_advisory_info(url, driver):
-       time.sleep(1) #prevents error
+       #time.sleep(1) #prevents error
        #Selenium hands the page source to Beautiful Soup
        driver.get(url)
        soup=BeautifulSoup(driver.page_source, 'lxml')
@@ -141,7 +141,7 @@ def advisory_canada(all_countries):
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
 
         print(country_url)
-        # time.sleep(2)
+        time.sleep(5)
         with contextlib.closing(urllib.request.urlopen(country_url)) as url:
             country_data = json.loads(url.read().decode())
             country_data = country_data['data']
@@ -166,6 +166,7 @@ def advisory_canada(all_countries):
 def save_to_canada():
 
     db = Database("countries.sqlite")
+    db.drop_table("CA")
     db.add_table("CA", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     #getting the data from all countries

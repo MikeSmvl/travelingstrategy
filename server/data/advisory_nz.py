@@ -127,6 +127,7 @@ def save_into_db(data):
     # create an an sqlite_advisory object
 
     db = Database("countries.sqlite")
+    db.drop_table("NZ")
     db.add_table("NZ", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     for country in data:

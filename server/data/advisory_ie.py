@@ -146,6 +146,7 @@ def replace_key_by_iso(data):
 def save_into_db(data):
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("IE")
     db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
     for country in data:
         iso = data[country].get('country-iso')

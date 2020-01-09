@@ -60,9 +60,9 @@ def parse_a_country_additional_advisory_info(url, driver):
         listToStr = ' '.join(map(str, a.get('class'))) 
         if(listToStr == 'showThreat'): #if tooltip is marked as showThreat then this country is marked as having this threat
             if(a.get('title')!='Tool Tip: Other'):
-             warning += a.get('data-tooltip') +'</br>'
-
+             warning += a.get('data-tooltip').rstrip("\n") +'</br>'
     return warning
+
 
 
 
@@ -113,6 +113,7 @@ def save_to_united_states():
 def save_into_db(data):
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("US")
     db.add_table("US", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     for country in data:

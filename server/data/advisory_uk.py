@@ -123,6 +123,7 @@ def save_to_UK():
     array_info = []
     # create an an sqlite_advisory object]
     db = Database("countries.sqlite")
+    db.drop_table("GB")
     db.add_table("GB", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
 
