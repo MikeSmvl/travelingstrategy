@@ -1,7 +1,6 @@
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country
-from helper_class.sqlite_advisories import sqlite_advisories
 import json
 from helper_class.flags import Flags
 from helper_class.logger import Logger
@@ -23,27 +22,26 @@ def save_to_MU():
     array_info = []
 
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('MU') #Mauritius is MU
-    sqlite.delete_table()
-    sqlite.create_table()
+    db = Database("countries.sqlite")
+    db.add_table("MU", country_iso="text", name="text", advisory_text="text", visa_info="text")
     for country in visas:
         iso = find_iso_of_country(country)
         if(iso != ""):
             name = country
             LOGGER.info(f'Saving {name}')
-            visa_info = visas[country].get('visa') #dictionary for visa info is country{visa:text}
-            advisory = None
+            visa = visas[country].get('visa') #dictionary for visa info is country{visa:text}
+            advisory = "None"
             info = {
                 "country_iso" : iso,
                 "name": name,
                 "advisory": advisory,
-                "visa_info": visa_info
+                "visa_info": visa
             }
             array_info.append(info)
-            sqlite.new_row(iso,name,advisory,visa_info)
+            print (name,"     ", visa,"    ",advisory)
+            db.insert("MU",iso,name,advisory,visa)
 
-    sqlite.commit()
-    sqlite.close()
+    db.close_connection()
 
     LOGGER.success(f'Mauritius was sucesfully saved to the database')
     quit_driver(driver)

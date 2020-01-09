@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from helper_class.country_names import find_iso_of_country
+from lib.database import Database
 
 
 #Some countries have link, others are listed and others have links while being listed
@@ -152,14 +153,9 @@ def remove_brackets_from_text(tag_text):
     return tag_text
 
 def save_to_languages():
-    con  = sqlite3.connect('../countries.sqlite')
-    cur = con.cursor()
-    # should not create the table every time
-    # change in the future
-    cur.execute('DROP TABLE IF EXISTS languages')
-    con.commit()
-    cur.execute('CREATE TABLE languages (country_iso VARCHAR, country_name VARCHAR, official_languages VARCHAR, regional_languages VARCHAR, minority_languages VARCHAR, national_languages VARCHAR, widely_spoken_languages VARCHAR)')
-    con.commit()
+
+    db = Database("countries.sqlite")
+    db.add_table("languages", country_iso="VARCHAR", country_name="VARCHAR", official_languages="VARCHAR", regional_languages="VARCHAR", minority_languages="REAL", national_languages="VARCHAR",widely_spoken_languages = "VARCHAR")
 
     countries_data = get_countries_languages()
     for country in countries_data:
@@ -176,6 +172,5 @@ def save_to_languages():
 
         if(country_has_no_languages):
             cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
-
-    con.commit()
-    con.close()
+            db.insert("languages",country_iso, country_name, official_languages, regional_languages, minority_languages, national_languages, widely_spoken_languages)
+    db.close_connection()

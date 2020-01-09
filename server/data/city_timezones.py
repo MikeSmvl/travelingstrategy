@@ -1,13 +1,13 @@
 import json
 import datetime
 import pytz
-import sqlite3
 import math
 from bs4 import BeautifulSoup
 from helper_class.chrome_driver import create_driver, quit_driver
 import urllib.request, json,urllib.parse
 import contextlib
 import traceback
+from lib.database import Database
 
 def adding_lat_and_lng(cities):
     not_found = []
@@ -72,14 +72,18 @@ def get_cities_info():
 def save_cities_timezones():
     data = adding_lat_and_lng(get_cities_info())
     # geolocator = Nominatim(user_agent="travelingstrategy")
-    con  = sqlite3.connect('../countries.sqlite')
-    cur = con.cursor()
+    #con  = sqlite3.connect('../countries.sqlite')
+    #cur = con.cursor()
     # should not create the table every time
     # change in the future
-    cur.execute('DROP TABLE IF EXISTS timezones')
-    con.commit()
-    cur.execute('CREATE TABLE timezones (city VARCHAR, country_name VARCHAR, country_iso VARCHAR, timezone VARCHAR, lat REAL, lng REAL, utc_offset int)')
-    con.commit()
+    #cur.execute('DROP TABLE IF EXISTS timezones')
+    #con.commit()
+    #cur.execute('CREATE TABLE timezones (city VARCHAR, country_name VARCHAR, country_iso VARCHAR, timezone VARCHAR, lat REAL, lng REAL, utc_offset int)')
+    #SScon.commit()
+
+    db = Database("countries.sqlite")
+    db.add_table("timezones", city="VARCHAR", country_name="VARCHAR", country_iso="VARCHAR", timezone="VARCHAR", la="REAL", lng="REAL",utc_offset = "int")
+
 
     for city_info in data:
         city = city_info["city"]
@@ -90,10 +94,9 @@ def save_cities_timezones():
         lng = city_info["lng"]
         utc_offset = city_info["utc_offset"]
 
-        cur.execute('INSERT INTO timezones (city,country_name,country_iso,timezone,lat,lng,utc_offset) values( ?, ?, ?, ?, ?, ?, ?)',(city,country_name,country_iso,timezone,lat,lng,utc_offset))
+        db.insert("timezones",city, country_name, country_iso, timezone, lat, lng, utc_offset)
+    db.close_connection()
 
-    con.commit()
-    con.close()
 
 if __name__ == '__main__':
     save_cities_timezones()
