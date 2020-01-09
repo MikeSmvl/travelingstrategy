@@ -64,9 +64,10 @@ def get_regional_advisories(url,driver):
             data = "There is no regional advisory, take security precautions based on the general advisory for this country."
             return data
         else:
-            h3 = avoid_all.find('h3').text
-            more_info = avoid_all.find('p').text
-            data = data + "</br>" + h3 + "</br>" + more_info
+            # h3 = avoid_all.find('h3').text
+            # more_info = avoid_all.find('p').text
+            # data = data + "</br>" + h3 + "</br>" + more_info
+            data = "There is no regional advisory, take security precautions based on the general advisory for this country."
             return data
 
     for adv in regional_adv:
@@ -76,19 +77,37 @@ def get_regional_advisories(url,driver):
 
     return data
 
+def save_regional_advisories(data):
+    DB = database.Database(config.sqlite_db)
+    tableName = "unsafe_areas"
+    # create an an sqlite_advisory object
+    DB.drop(tableName)
+    DB.add_table(tableName,country_iso="country_iso"
+        ,name="name",unsafe_areas="unsafe_areas")
+
+    for country in data:
+        info = data[country]
+        country_iso = info.get('country-iso')
+        unsafe_areas = info.get('unsafe_areas')
+
+        try:
+            DB.insert(tableName,country_iso, country,unsafe_areas)
+        except:
+            print('Was not able to save the data')
+
+
 # All unsafe areas
 def get_all_regional_advisories():
     driver = create_driver()
     all_countries = get_all_links()
+    data = {}
     for country in all_countries:
         name = all_countries[country]
         href = name['href']
         url = "https://travel.gc.ca" + href
-        print(url)
-        data = get_regional_advisories(url, driver)
-        print(data)
+        regional_advisory = get_regional_advisories(url, driver)
+        data[country] = {'unsafe_areas':regional_advisory}
 
+    data = find_all_iso(data)
+    save_regional_advisories(data)
     quit_driver(driver)
-
-
-get_all_regional_advisories()
