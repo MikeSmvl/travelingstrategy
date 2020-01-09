@@ -76,7 +76,7 @@ def get_regional_advisories(url,driver):
 
     return data
 
-
+# All unsafe areas
 def get_all_regional_advisories():
     driver = create_driver()
     all_countries = get_all_links()

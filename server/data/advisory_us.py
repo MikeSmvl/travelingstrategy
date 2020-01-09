@@ -6,8 +6,8 @@ from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from lib.database import Database
 
 def get_name_and_advisory_of_countries():
     try:
@@ -31,19 +31,38 @@ def get_name_and_advisory_of_countries():
         for tr in table_rows:
           if(counter != 0):
              cols = tr.find_all('td')
-             cols = [ele.text.strip() for ele in cols]
+             href = cols[0].find('a').get('href')# gets url for each country that is needed for additional advisory info
+             link = "https://travel.state.gov/{}".format(href,sep='')
 
+             cols = [ele.text.strip() for ele in cols]
              nameLength = len(cols[0])-16
              name = cols[0][0:nameLength]
              if(name != 'W'):
                advisory = cols[1]
-               info[name] = advisory
+               advisory += '</br>'+parse_a_country_additional_advisory_info(link,driver) 
+             info[name] = advisory
           counter += 1
     finally:
         driver.close()
         driver.quit()
 
     return info
+
+#Retrieves all the tooltips which contain additional advisory info
+def parse_a_country_additional_advisory_info(url, driver):
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    warning = " "
+    div_id = soup.find("div", {"id": "container tooltipalert"})
+    a_tags = div_id.find_all('a')
+    for a in a_tags:
+        listToStr = ' '.join(map(str, a.get('class'))) 
+        if(listToStr == 'showThreat'): #if tooltip is marked as showThreat then this country is marked as having this threat
+            if(a.get('title')!='Tool Tip: Other'):
+             warning += a.get('data-tooltip').rstrip("\n") +'</br>'
+    return warning
+
 
 
 
@@ -93,14 +112,16 @@ def save_to_united_states():
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('US')
-    sqlite.delete_table()
-    sqlite.create_table()
+    db = Database("countries.sqlite")
+    db.drop_table("US")
+    db.add_table("US", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
     for country in data:
         iso = data[country].get('country-iso')
         name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        sqlite.new_row(iso,name,text,visa_info)
-    sqlite.commit()
-    sqlite.close()
+        advisory = data[country].get('advisory-text')
+        visa = data[country].get('visa-info')
+        db.insert("US",iso,name,advisory,visa)
+    db.close_connection()
+
+save_to_united_states()
