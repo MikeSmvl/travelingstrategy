@@ -22,7 +22,7 @@ def save_into_db(tableName, data):
         ,name="name",advisory_text="advisory_text",visa_info="visa_info")
     for iso in data:
         name = data[iso].get('name')
-        text = 'Not availible'
+        text = None
         visa_info = data[iso].get('visa-info')
         try:
             DB.insert(tableName,iso, name,text,visa_info)
