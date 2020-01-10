@@ -9,8 +9,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from lib.database import Database
 
 def get_url_of_countries_nz(driver):
     info = {}
@@ -88,30 +88,55 @@ def save_to_new_zealand():
     save_into_db(data)
 
 
-
+#Gets passed url and retrives relevant additional advisory info
 def parse_a_country_advisory(url, driver):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
     warning = " "
+    #Retrieves main advisory 
     for tag in soup.findAll('i'):
       if tag.parent.name == 'h1':
           warning = tag.parent.text.strip()
-
+    #Finds and selects only these sections of additional advisory info
+    for tag in soup.findAll('strong'):
+        if(tag.text.strip().lower() == "border crossings"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "civil unrest"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "crime"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "violent crime"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "kidnapping"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "landmines"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "local travel"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "road travel"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "seismic activity"):
+            warning += '</br>' + tag.parent.text.strip()
+        elif(tag.text.strip().lower() == "terrorism"):
+            warning += '</br>' + tag.parent.text.strip()
     return warning
 
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('NZ')
-    sqlite.delete_table()
-    sqlite.create_table()
+
+    db = Database("countries.sqlite")
+    db.drop_table("NZ")
+    db.add_table("NZ", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
     for country in data:
         iso = data[country].get('country-iso')
         name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        sqlite.new_row(iso,name,text,visa_info)
-    sqlite.commit()
-    sqlite.close()
+        advisory = data[country].get('advisory-text')
+        visa = data[country].get('visa-info')
+        db.insert("NZ",iso,name,advisory,visa)
+    db.close_connection()
+
+save_to_new_zealand()
 

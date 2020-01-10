@@ -7,7 +7,6 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.flags import Flags
@@ -154,5 +153,6 @@ def save_to_central_america():
     save_into_db("DM", visa_DM)
     save_into_db("DO", visa_DO)
     save_into_db("PA", visa_PA)
+
 if __name__ == "__main__":
     save_to_central_america()

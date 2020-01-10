@@ -1,14 +1,13 @@
 from bs4 import BeautifulSoup
 import string
 from helper_class.chrome_driver import create_driver, quit_driver
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+import json
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.database import Database
-import json
 from lib.config import wiki_visa_url_SG
+from lib.database import Database
 
 """The Singaporian page orders the countries
     alphabetcally and has a page for each letter.
@@ -103,44 +102,44 @@ def parse_all_countries_advisories():
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
         except IndexError as e:
-            LOGGER.error("This country doesn't have advisory info: ", country)
-            LOGGER.info("Link :", link)
+            LOGGER.error(f'This country doesn’t have advisory info {country}')
+            LOGGER.info(f'Link : {link}')
     return data
 
-def save_info(sqlite,visas,advisories, array_info):
+def save_info(db,visas,advisories, array_info):
     for country in visas:
         try:
             LOGGER.info(f'Saving information for {country}')
             iso = find_iso_of_country(country)
-            visa_info = visas[country].get('visa')
+            visa = visas[country].get('visa')
             advisory = advisories[country].get('advisory') #if the country doesn't have advisory info it throws an index error
             info = {
                     "country_iso" : iso,
                     "name": country,
                     "advisory": advisory,
-                    "visa_info": visa_info
+                    "visa_info": visa
                     }
             array_info.append(info)
-            sqlite.new_row(iso,country,advisory,visa_info)
+            db.insert("SG",iso,country,advisory,visa)
             LOGGER.success(f'{country} was sucesfully saved to the database')
         except KeyError: #if the country doesn't have advisory info
-            LOGGER.error("This country doesn't have advisory info:", country)
+            LOGGER.error(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
-            visa_info = visas[country].get('visa')
-            advisory = None
+            visa = visas[country].get('visa')
+            advisory = "Not available yet"
             info = {
                     "country_iso" : iso,
                     "name": country,
                     "advisory": advisory,
-                    "visa_info": visa_info
+                    "visa_info": visa
                     }
             array_info.append(info)
-            sqlite.new_row(iso,country,advisory,visa_info)
+            db.insert("SG",iso,country,advisory,visa)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
-            LOGGER.error("This country doesn't have visa information: ", country)
+            LOGGER.error(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
-            visa_info = None
+            visa_info = "Not available yet"
             advisory = advisories[country].get('advisory')
             info = {
                     "country_iso" : iso,
@@ -149,8 +148,7 @@ def save_info(sqlite,visas,advisories, array_info):
                     "visa_info": visa_info
                     }
             array_info.append(info)
-            sqlite.new_row(iso,country,advisory,visa_info)
-
+            db.insert("SG",iso,country,advisory,visa)
     return array_info
 
 def save_to_SG():
@@ -164,14 +162,13 @@ def save_to_SG():
     array_info = []
 
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('SG') #The UK iso is GB
-    sqlite.delete_table()
-    sqlite.create_table()
+    db = Database("countries.sqlite")
+    db.drop_table("SG")
+    db.add_table("SG", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
-    array_info = save_info(sqlite,visas,advisories,array_info)
+    array_info = save_info(db,visas,advisories,array_info)
 
-    sqlite.commit()
-    sqlite.close()
+    db.close_connection()
     LOGGER.success(f'Singapore was sucesfully saved to the database')
     quit_driver(driver)
 
