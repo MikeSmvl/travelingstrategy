@@ -30,7 +30,7 @@ def save_to_MU():
             name = country
             LOGGER.info(f'Saving {name}')
             visa = visas[country].get('visa') #dictionary for visa info is country{visa:text}
-            advisory = "None"
+            advisory = "Not available yet"
             info = {
                 "country_iso" : iso,
                 "name": name,
