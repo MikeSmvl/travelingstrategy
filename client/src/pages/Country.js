@@ -31,6 +31,7 @@ function Country({
 		'Regional Languages': 'TBD',
 		'Widely Spoken Languages': 'TBD'
 	});
+	const [unsafeAreas, setUnsafeAreas] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
@@ -87,6 +88,9 @@ function Country({
 							national_languages,
 							widely_spoken_languages
 						}
+						country_unsafe_areas(country_iso: "${destinationCountry}"){
+							unsafe_areas
+						}
 						destinationCurrencies: currencies(country: "${destinationCountry}"){
 							name
 							symbol
@@ -125,6 +129,7 @@ function Country({
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisoryLink(res.data.countryToCountry[0].advisory_link);
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setVisa(res.data.countryToCountry[0].visa_info);
 					(res.data.country_languages && res.data.country_languages.length !== 0) && setLanguages(res.data.country_languages[0]);
+					(res.data.country_unsafe_areas && res.data.country_unsafe_areas.length !== 0) && setUnsafeAreas(res.data.country_unsafe_areas[0]);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setVoltage(res.data.country_socket[0].electric_potential);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setFrequency(res.data.country_socket[0].frequency);
@@ -339,6 +344,13 @@ function Country({
 														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
 															</p>
 														)}
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											<Card header = "Unsafe Areas">
+												<CardBody>
+
 												</CardBody>
 											</Card>
 										</Col>
