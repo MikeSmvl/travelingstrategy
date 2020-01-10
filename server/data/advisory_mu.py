@@ -30,7 +30,7 @@ def save_to_MU():
             name = country
             LOGGER.info(f'Saving {name}')
             visa = visas[country].get('visa') #dictionary for visa info is country{visa:text}
-            advisory = "None"
+            advisory = "Not available yet"
             info = {
                 "country_iso" : iso,
                 "name": name,
@@ -50,5 +50,5 @@ def save_to_MU():
         json.dump(array_info, outfile)
 
 
-# if __name__ == '__main__':
-#    save_to_MU()
+if __name__ == '__main__':
+   save_to_MU()
