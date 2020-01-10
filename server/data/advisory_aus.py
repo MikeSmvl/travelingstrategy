@@ -146,7 +146,7 @@ def save_to_australia():
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
         additional_advisory = get_additional_advisory(link,driver)
-        advisory_text = advisory_text + "<br>" +additional_advisory
+        advisory_text = '<b>'+advisory_text +'</b>'+"<br>" +additional_advisory
         visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
             try:
