@@ -165,33 +165,8 @@ def combine_dictionaries(dict1, dict2, dict3):
                           "cocaine-cultivation": cocaine_cultivation,  
                           "canabis-recreational": canabis_recreational, 
                           "canabais-medical": canabis_medical}
-    
-
-    for iso in dict1:
-        print ("dict1", dict1[iso])
-
-    for iso in dict2:
-        print ("dict2", dict2[iso])
-    
-    for iso in dict3 :
-        print ("dict3", dict3[iso])
-    
-    for iso in all_drugs:
-         print ("all", all_drugs[iso])
-
-            
 
 
-  
-
-           
-
-        
-
-
-    #get_countries_canabaislaw()
-    #get_countries_cocainelaw()
-    #get_countries_methaphetaminelaw()
 marijuana = get_countries_canabaislaw()
 cocaine = get_countries_cocainelaw()
 methaphetamine = get_countries_methaphetaminelaw()
