@@ -41,6 +41,7 @@ function Country({
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
+	const [drugLegality, setDrugLegality] = useState('Not available yet');
 
 	useEffect(() => {
 		async function fetchData() {
@@ -92,6 +93,9 @@ function Country({
 						trafficSide(iso:"${destinationCountry}"){
 							traffic_side
 						}
+						drugLegality(iso:"${destinationCountry}"){
+							drug_Legality
+						}
 					}`
 				})
 			})
@@ -110,6 +114,7 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
+					(res.data.drugLegality && res.data.drugLegality.length !== 0) && setDrugLegality(res.data.drugLegality[0].drugLegality);
 					setIsLoading(false);
 				});
 		}
@@ -315,6 +320,47 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+										<Col xs="10" sm="4">
+											<Card header="Drug Laws">
+												<CardBody>
+													<pre>
+														<strong>canabais-recreational</strong> {}
+													</pre>
+													<pre>
+														<strong>canabais-medical</strong> {}
+													</pre>
+													<pre>
+														<strong>cocaine-possession</strong> {}
+													</pre>
+													<pre>
+														<strong>cocaine-sale</strong> {}
+													</pre>
+													<pre>
+														<strong>cocaine-trasnport</strong> {}
+													</pre>
+													<pre>
+														<strong>cocaine-cultivation</strong> {}
+													</pre>
+													<pre>
+														<strong>methaphetamine-possession</strong> {}
+													</pre>
+													<pre>
+														<strong>methaphetamine-sale</strong> {}
+													</pre>
+													<pre>
+														<strong>methaphetamine-trasnport</strong> {}
+													</pre>
+													<pre>
+														<strong>methaphetamine-cultivation</strong> {}
+													</pre>
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
 								</div>
 							</ReactFullpage.Wrapper>
 						);
