@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from helper_class.country_names import find_iso_of_country
+import copy
 
 def get_countries_canabaislaw():
     try:
@@ -22,7 +23,7 @@ def get_countries_canabaislaw():
         table_rows = tbody.find_all('tr')
 
         canabais_info= {}
-        arrayCanabaisInfo = []
+        arrayCanabaisInfo = {}
         for tablerow in table_rows:
             table_columns = tablerow.find_all('td')
             if(len(table_columns)>0):
@@ -36,8 +37,8 @@ def get_countries_canabaislaw():
                     "canabais-recreational": recreational,
                     "canabais-medical": medical
             }
-            arrayCanabaisInfo.append(canabais_info)
-            return arrayCanabaisInfo
+                arrayCanabaisInfo[country_iso] = canabais_info
+        return  arrayCanabaisInfo
     finally:
         driver.close()
         driver.quit()
@@ -56,7 +57,7 @@ def get_countries_cocainelaw():
         table_rows = tbody.find_all('tr')
 
         cocaine_info= {}
-        arrayCocaineInfo = []
+        arrayCocaineInfo = {}
         for tablerow in table_rows:
             table_columns = tablerow.find_all('td')            
             if(len(table_columns)>0):
@@ -74,8 +75,8 @@ def get_countries_cocainelaw():
                     "cocaine-transport": cocaine_transport,
                     "cocaine-cultivation": cocaine_cultivation
             }
-            arrayCocaineInfo .append(cocaine_info)
-            return arrayCocaineInfo
+                arrayCocaineInfo[country_iso] = cocaine_info
+        return arrayCocaineInfo
     finally:
         driver.close()
         driver.quit()
@@ -94,7 +95,7 @@ def get_countries_methaphetaminelaw():
         table_rows = tbody.find_all('tr')
 
         methaphetamine_info= {}
-        arraymethaphetamineInfo = []
+        arraymethaphetamineInfo = {}
         for tablerow in table_rows:
             table_columns = tablerow.find_all('td')            
             if(len(table_columns)>0):
@@ -112,16 +113,90 @@ def get_countries_methaphetaminelaw():
                     "methaphetamine-transport": methaphetamine_transport,
                     "methaphetamine-cultivation": methaphetamine_cultivation
             }
-            arraymethaphetamineInfo .append(methaphetamine_info)
-            return arraymethaphetamineInfo
+                arraymethaphetamineInfo[country_iso] = methaphetamine_info
+        return arraymethaphetamineInfo
     finally:
         driver.close()
         driver.quit()
 
+def combine_dictionaries(dict1, dict2, dict3):
+
+
+    all_drugs = {}
+    temp =  copy.deepcopy(dict1)
+    temp.update(dict2)
+    temp.update(dict3)
+
+    for iso in temp:
+         iso = iso
+         country_name = temp[iso].get('name')
+         canabis_recreational = ""
+         canabis_medical = ""
+         cocaine_possession = "no information"
+         cocaine_sale = "no information"
+         cocaine_transport = "no information"
+         cocaine_cultivation ="no information"
+         methaphetamine_possession = "no information"
+         methaphetamine_sale = "no information"
+         methaphetamine_transport = "no information"
+         methaphetamine_cultivation = "no information"
+         if(iso in dict1):
+            canabis_recreational = dict1[iso].get('canabais-recreational')
+            canabis_medical  = dict1[iso].get('canabais-medical')
+         if(iso in dict2):
+            cocaine_possession = dict2[iso].get('cocaine-possession')
+            cocaine_sale = dict2[iso].get('cocaine-sale')
+            cocaine_transport = dict2[iso].get('cocaine-transport')
+            cocaine_cultivation = dict2[iso].get('cocaine-cultivation')
+         if(iso in dict3):
+            methaphetamine_possession = dict3[iso].get('methaphetamine-possession')
+            methaphetamine_sale = dict3[iso].get('methaphetamine-sale')
+            methaphetamine_transport = dict3[iso].get('methaphetamine-transport')
+            methaphetamine_cultivation = dict3[iso].get('methaphetamine-cultivation')
+         all_drugs[iso] = {"name":country_name,
+                          "iso": iso,  
+                          "methaphetamine-possession": methaphetamine_possession,
+                          "methaphetamine-sale": methaphetamine_sale,
+                          "methaphetamine-transport": methaphetamine_transport,
+                          "methaphetamine-cultivation": methaphetamine_cultivation,
+                          "cocaine-possession": cocaine_possession,
+                          "cocaine-sale": cocaine_sale, 
+                          "cocaine-transport": cocaine_transport,
+                          "cocaine-cultivation": cocaine_cultivation,  
+                          "canabis-recreational": canabis_recreational, 
+                          "canabais-medical": canabis_medical}
     
 
-if __name__ == "__main__":
-    get_countries_canabaislaw()
-    get_countries_cocainelaw()
-    get_countries_methaphetaminelaw()
+    for iso in dict1:
+        print ("dict1", dict1[iso])
+
+    for iso in dict2:
+        print ("dict2", dict2[iso])
+    
+    for iso in dict3 :
+        print ("dict3", dict3[iso])
+    
+    for iso in all_drugs:
+         print ("all", all_drugs[iso])
+
+            
+
+
+  
+
+           
+
+        
+
+
+    #get_countries_canabaislaw()
+    #get_countries_cocainelaw()
+    #get_countries_methaphetaminelaw()
+marijuana = get_countries_canabaislaw()
+cocaine = get_countries_cocainelaw()
+methaphetamine = get_countries_methaphetaminelaw()
+combine_dictionaries(marijuana,cocaine, methaphetamine)
+
+
+
     
