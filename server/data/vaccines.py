@@ -13,6 +13,7 @@ FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
+#grabbing the URL for all countries
 def get_url_of_countries():
     info = {}
     try:
@@ -43,16 +44,16 @@ def get_url_of_countries():
 
     return info
 
-def parse_one_country_advisory(url, href):
+#parsing vaccine text for a single country
+def parse_one_country_vaccine(url, href):
     driver = create_driver()
     driver.get(url)
     vaccine_text=""
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-
-
-    for tr in soup.find_all('tr'):
-        for td in tr.find_all('td'):
+    # table_row = soup.find_all
+    for tr in soup.findAll('tr'):
+        for td in tr.findAll('td'):
             vaccine_text = td.text
             print(vaccine_text)
 
@@ -60,4 +61,20 @@ def parse_one_country_advisory(url, href):
 
     return vaccine_text
 
-parse_one_country_advisory()
+#parsing
+def parse_all_countries_vaccine():
+    data = {}
+    urls = get_url_of_countries()
+
+    for country in urls:
+        href = urls[country].get("href")
+        link = "https://wwwnc.cdc.gov{}".format(href,sep='')
+        print(link)
+        vaccine = parse_one_country_vaccine(link,href)
+        print(vaccine)
+        data[country]= {"Vaccine and Medicines": vaccine}
+        print(data)
+
+    return data
+
+parse_all_countries_vaccine()
