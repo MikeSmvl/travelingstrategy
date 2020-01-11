@@ -43,4 +43,21 @@ def get_url_of_countries():
 
     return info
 
-get_url_of_countries()
+def parse_one_country_advisory(url, href):
+    driver = create_driver()
+    driver.get(url)
+    vaccine_text=""
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+
+
+    for tr in soup.find_all('tr'):
+        for td in tr.find_all('td'):
+            vaccine_text = td.text
+            print(vaccine_text)
+
+    quit_driver(driver)
+
+    return vaccine_text
+
+parse_one_country_advisory()
