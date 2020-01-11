@@ -68,8 +68,11 @@ def get_countries_druglaw():
                     "cocaine-transport": cocaine_transport,
                     "cocaine-cultivation": cocaine_cultivation
             }
-            arrayCocaineInfo .append(canabais_info.update(cocaine_info))
-            print(canabais_info.update(cocaine_info))
+            # arrayCocaineInfo.append(canabais_info.update(cocaine_info))
+            # grades = {**canabais_info, **cocaine_info}
+            grades = canabais_info.copy()
+            grades.update(cocaine_info)
+            print(grades)
             
     finally:
         driver.close()
