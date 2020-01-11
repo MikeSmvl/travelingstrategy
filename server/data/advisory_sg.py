@@ -163,6 +163,7 @@ def save_to_SG():
 
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("SG")
     db.add_table("SG", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     array_info = save_info(db,visas,advisories,array_info)

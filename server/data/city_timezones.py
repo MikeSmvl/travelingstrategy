@@ -82,6 +82,7 @@ def save_cities_timezones():
     #SScon.commit()
 
     db = Database("countries.sqlite")
+    db.drop_table("timezones")
     db.add_table("timezones", city="VARCHAR", country_name="VARCHAR", country_iso="VARCHAR", timezone="VARCHAR", la="REAL", lng="REAL",utc_offset = "int")
 
 
