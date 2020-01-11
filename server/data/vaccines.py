@@ -3,37 +3,44 @@ import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+from lib.config import vaccine_url
 from lib.database import Database
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 def get_url_of_countries():
     info = {}
     try:
         #this is the link to the first page
-        url = 'https://wwwnc.cdc.gov/travel/destinations/list'
-
         driver = create_driver()
-        driver.get(url)
+        driver.get(vaccine_url)
 
         #Selenium hands the page source to Beautiful Soup
         soup=BeautifulSoup(driver.page_source, 'lxml')
 
         #patter of the link to the country page that the href should match
-        countries_div = soup.findAll("div", {"class": "card-body"})[2]
-        print(countries_div)
-        countries = countries_div.find_all('a')
+        countries_per_letter_array = soup.find_all("ul", {"class": "list-bullet"})
+        for countries_per_letter in countries_per_letter_array:
+            # print(countries_div)
+            countries_given_letter_array = countries_per_letter.find_all('a')
 
-        #retrieving links for all countries
-        for country in countries:
-            country_name = country.text
-            country_iso = find_iso_of_country(country_name)
-            if(country_iso != ""): #Countries that don't have iso are not official counntries
-                href = country['href']
-                info[country_iso] = {"href":href}
-                print(country_name)
+            #retrieving links for all countries
+            for country in countries_given_letter_array:
+                country_name = country.text
+                country_iso = find_iso_of_country(country_name)
+                if(country_iso != ""): #Countries that don't have iso are not official counntries
+                    href = country['href']
+                    info[country_iso] = {"href":href}
+                    LOGGER.info(f' Retrieving URL of {country_name}')
     finally:
         driver.close()
         driver.quit()
 
-    # return info
+    return info
 
 get_url_of_countries()
