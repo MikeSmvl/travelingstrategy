@@ -7,6 +7,11 @@ from helper_class.logger import Logger
 from lib.database import Database
 from lib.config import sqlite_db
 
+# Initialize flags and logger
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+
 def get_results(endpoint_url, query):
     sparql = SPARQLWrapper(endpoint_url)
     sparql.setQuery(query)
@@ -90,11 +95,41 @@ DB.add_table('embassies', country='text', city='text',
              operator='text', type='text', phone='text', email='text', website='text')
 
 for result in embassy_results["results"]["bindings"]:
-    print(result['country']['value'], result['operator']['value'], result['type']['value'])
+  try:
+    if 'city' not in result:
+      result['city'] = {'value': ''}
+    if 'operator' not in result:
+      result['operator'] = {'value': ''}
+    if 'phone' not in result:
+      result['phone'] = {'value': ''}
+    if 'email' not in result:
+      result['email'] = {'value': ''}
+    if 'website' not in result:
+      result['website'] = {'value': ''}
+    LOGGER.info(f'Getting embassy data for {result["country"]["value"]}')
     DB.insert_or_update(
                 'embassies', result['country']['value'], result['city']['value'], result['operator']['value'], result['type']['value'], result['phone']['value'], result['email']['value'], result['website']['value'])
+    LOGGER.success(f'Successfully entered embassy information for {result["country"]["value"]}')
+  except Exception as error_msg:
+    LOGGER.error(f'Could not get embassy data for {result["country"]["value"]} because of the following error: {error_msg}')
+    pass
 
 for result in consulates_results["results"]["bindings"]:
-    print(result['country']['value'], result['operator']['value'], result['type']['value'])
+  try:
+    if 'city' not in result:
+      result['city'] = {'value': ''}
+    if 'operator' not in result:
+      result['operator'] = {'value': ''}
+    if 'phone' not in result:
+      result['phone'] = {'value': ''}
+    if 'email' not in result:
+      result['email'] = {'value': ''}
+    if 'website' not in result:
+      result['website'] = {'value': ''}
+    LOGGER.info(f'Getting consulate data for {result["country"]["value"]}')
     DB.insert_or_update(
                 'embassies', result['country']['value'], result['city']['value'], result['operator']['value'], result['type']['value'], result['phone']['value'], result['email']['value'], result['website']['value'])
+    LOGGER.success(f'Successfully entered consulate information for {result["country"]["value"]}')
+  except Exception as error_msg:
+    LOGGER.error(f'Could not get consulate data for {result["country"]["value"]} because of the following error: {error_msg}')
+    pass
