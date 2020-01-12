@@ -8,7 +8,11 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from helper_class.country_names import find_iso_of_country
 import copy
+from lib.database import Database
+from lib.config import sqlite_db
 
+
+DB = Database(sqlite_db)
 def get_countries_canabaislaw():
     try:
         # this is the link to the first page
@@ -130,8 +134,8 @@ def combine_dictionaries(dict1, dict2, dict3):
     for iso in temp:
          iso = iso
          country_name = temp[iso].get('name')
-         canabis_recreational = ""
-         canabis_medical = ""
+         canabais_recreational = ""
+         canabais_medical = ""
          cocaine_possession = "no information"
          cocaine_sale = "no information"
          cocaine_transport = "no information"
@@ -141,8 +145,8 @@ def combine_dictionaries(dict1, dict2, dict3):
          methaphetamine_transport = "no information"
          methaphetamine_cultivation = "no information"
          if(iso in dict1):
-            canabis_recreational = dict1[iso].get('canabais-recreational')
-            canabis_medical  = dict1[iso].get('canabais-medical')
+            canabais_recreational = dict1[iso].get('canabais-recreational')
+            canabais_medical  = dict1[iso].get('canabais-medical')
          if(iso in dict2):
             cocaine_possession = dict2[iso].get('cocaine-possession')
             cocaine_sale = dict2[iso].get('cocaine-sale')
@@ -155,22 +159,46 @@ def combine_dictionaries(dict1, dict2, dict3):
             methaphetamine_cultivation = dict3[iso].get('methaphetamine-cultivation')
          all_drugs[iso] = {"name":country_name,
                           "iso": iso,  
-                          "methaphetamine-possession": methaphetamine_possession,
-                          "methaphetamine-sale": methaphetamine_sale,
-                          "methaphetamine-transport": methaphetamine_transport,
-                          "methaphetamine-cultivation": methaphetamine_cultivation,
-                          "cocaine-possession": cocaine_possession,
-                          "cocaine-sale": cocaine_sale, 
-                          "cocaine-transport": cocaine_transport,
-                          "cocaine-cultivation": cocaine_cultivation,  
-                          "canabis-recreational": canabis_recreational, 
-                          "canabais-medical": canabis_medical}
-
+                          "methaphetamine_possession": methaphetamine_possession,
+                          "methaphetamine_sale": methaphetamine_sale,
+                          "methaphetamine_transport": methaphetamine_transport,
+                          "methaphetamine_cultivation": methaphetamine_cultivation,
+                          "cocaine_possession": cocaine_possession,
+                          "cocaine_sale": cocaine_sale, 
+                          "cocaine_transport": cocaine_transport,
+                          "cocaine_cultivation": cocaine_cultivation,  
+                          "canabais_recreational": canabais_recreational, 
+                          "canabais_medical": canabais_medical
+                          }
 
 marijuana = get_countries_canabaislaw()
 cocaine = get_countries_cocainelaw()
 methaphetamine = get_countries_methaphetaminelaw()
 combine_dictionaries(marijuana,cocaine, methaphetamine)
+
+def save_drug_law():
+    DB.drop_table('drug')
+    DB.add_table('drug', iso='text', name="text", methaphetamine_possession='text', methaphetamine_sale='text', methaphetamine_transport='text', methaphetamine_cultivation='text', cocaine_possession='text', cocaine_sale='text', cocaine_transport='text', cocaine_cultivation='text', canabais_recreational='text', canabais_medical='text')
+    drug_info = combine_dictionaries(marijuana,cocaine, methaphetamine)
+
+    for country_drug in drug_info:
+        country_iso = country_drug.get("iso")
+        country_name = country_drug.get("name")
+        methaphetamine_possession = country_drug.get("methaphetamine_possession")
+        methaphetamine_sale = country_drug.get("methaphetamine_sale")
+        methaphetamine_transport = country_drug.get("methaphetamine_transport")
+        methaphetamine_cultivation = country_drug.get("methaphetamine_cultivation")
+        cocaine_possession = country_drug.get("cocaine_possession")
+        cocaine_sale = country_drug.get("cocaine_sale")
+        cocaine_transport = country_drug.get("cocaine_transport")
+        cocaine_cultivation = country_drug.get("cocaine_cultivation")
+        canabais_recreational = country_drug.get("canabais_recreational")
+        canabais_medical = country_drug.get("canabais_medical")
+
+        DB.insert_or_update('drug', iso, name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
+
+if __name__ == '__main__':
+    save_drug_law()
 
 
 
