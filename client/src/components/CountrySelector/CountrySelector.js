@@ -51,8 +51,8 @@ const CountrySelector = (props) => {
 									setOriginCountry(newIso);
 								}
 								setOriginCity(place.address_components[0].short_name);
-								setOriginLat(Math.round(place.geometry.location.lat() * 10000000)/10000000); //Round to 7 digits after decimal to match backend
-								setOriginLng(Math.round(place.geometry.location.lng() * 10000000)/10000000);
+								setOriginLat(Math.round(place.geometry.location.lat() * 10000000) / 10000000); // Round to 7 digits after decimal to match backend
+								setOriginLng(Math.round(place.geometry.location.lng() * 10000000) / 10000000);
 							}}
 						/>
 						{!validOrig
@@ -78,8 +78,8 @@ const CountrySelector = (props) => {
 									setDestinationCountry(newIso);
 								}
 								setDestinationCity(place.address_components[0].long_name);
-								setDestinationLat(Math.round(place.geometry.location.lat() * 10000000)/10000000); //Round to 7 digits after decimal to match backend
-								setDestinationLng(Math.round(place.geometry.location.lng() * 10000000)/10000000);
+								setDestinationLat(Math.round(place.geometry.location.lat() * 10000000) / 10000000); // Round to 7 digits after decimal to match backend
+								setDestinationLng(Math.round(place.geometry.location.lng() * 10000000) / 10000000);
 							}}
 						/>
 						{!validDest
@@ -95,12 +95,12 @@ const CountrySelector = (props) => {
 								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&originCity=${originCity}&destinationCity=${destinationCity}&originLat=${originLat}&originLng=${originLng}&destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
 							>
 								<Button variant="outline-primary" type="submit">
-                  Compare
+                  Travel
 								</Button>
 							</Link>
 						) : (
 							<Button variant="outline-primary" type="submit">
-                Compare
+                Travel
 							</Button>
 						)}
 					</Col>

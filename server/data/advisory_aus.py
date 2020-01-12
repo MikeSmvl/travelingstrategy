@@ -7,8 +7,8 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from lib.database import Database
 
 
 #Get the path of all the pages australia has advisory detail on
@@ -91,6 +91,19 @@ def parse_a_country(url,driver,data_type):
 
     return data_text
 
+def get_additional_advisory(url,driver):
+    extra_advisory = ""
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    safety_div = soup.find("div", {"class": "safety paragraph paragraph--type--overview paragraph--view-mode--default"})
+    safety_ul = safety_div.find("ul")
+    safety_paragraphs = safety_ul.find_all("li")
+    #each li tag is one paragraph, we will concatinate them
+    for paragraph in safety_paragraphs:
+        extra_advisory = extra_advisory + paragraph.text
+    return extra_advisory
+
 #the two functions below should be puth in chrome driver class
 def create_driver():
     chrome_options = Options()
@@ -104,17 +117,16 @@ def quit_driver(driver):
 
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('AU')
-    sqlite.delete_table()
-    sqlite.create_table()
+    db = Database("countries.sqlite")
+    db.drop_table("AU")
+    db.add_table("AU", country_iso="text", name="text", advisory_text="text", visa_info="text")
     for country in data:
         iso = data[country].get('country-iso')
         name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        sqlite.new_row(iso,name,text,visa_info)
-    sqlite.commit()
-    sqlite.close()
+        advisory = data[country].get('advisory-text')
+        visa = data[country].get('visa-info')
+        db.insert("AU",iso,name,advisory,visa)
+    db.close_connection()
 
 
 def save_to_australia():
@@ -132,6 +144,8 @@ def save_to_australia():
         href = url[country].get('href')
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
+        additional_advisory = get_additional_advisory(link,driver)
+        advisory_text = advisory_text +additional_advisory
         visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
             try:
@@ -147,4 +161,5 @@ def save_to_australia():
         json.dump(data, outfile)
 
     save_into_db(data)
+
 
