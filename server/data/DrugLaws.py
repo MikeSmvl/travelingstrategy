@@ -170,32 +170,32 @@ def combine_dictionaries(dict1, dict2, dict3):
                           "canabais_recreational": canabais_recreational, 
                           "canabais_medical": canabais_medical
                           }
-
-marijuana = get_countries_canabaislaw()
-cocaine = get_countries_cocainelaw()
-methaphetamine = get_countries_methaphetaminelaw()
-combine_dictionaries(marijuana,cocaine, methaphetamine)
+    return all_drugs
 
 def save_drug_law():
+    
+    marijuana = get_countries_canabaislaw()
+    cocaine = get_countries_cocainelaw()
+    methaphetamine = get_countries_methaphetaminelaw()
     DB.drop_table('drug')
     DB.add_table('drug', iso='text', name="text", methaphetamine_possession='text', methaphetamine_sale='text', methaphetamine_transport='text', methaphetamine_cultivation='text', cocaine_possession='text', cocaine_sale='text', cocaine_transport='text', cocaine_cultivation='text', canabais_recreational='text', canabais_medical='text')
     drug_info = combine_dictionaries(marijuana,cocaine, methaphetamine)
 
-    for country_drug in drug_info:
-        country_iso = country_drug.get("iso")
-        country_name = country_drug.get("name")
-        methaphetamine_possession = country_drug.get("methaphetamine_possession")
-        methaphetamine_sale = country_drug.get("methaphetamine_sale")
-        methaphetamine_transport = country_drug.get("methaphetamine_transport")
-        methaphetamine_cultivation = country_drug.get("methaphetamine_cultivation")
-        cocaine_possession = country_drug.get("cocaine_possession")
-        cocaine_sale = country_drug.get("cocaine_sale")
-        cocaine_transport = country_drug.get("cocaine_transport")
-        cocaine_cultivation = country_drug.get("cocaine_cultivation")
-        canabais_recreational = country_drug.get("canabais_recreational")
-        canabais_medical = country_drug.get("canabais_medical")
+    for iso in drug_info:
+        country_iso = drug_info[iso].get("iso")
+        country_name =  drug_info[iso].get("name")
+        methaphetamine_possession =  drug_info[iso].get("methaphetamine_possession")
+        methaphetamine_sale =  drug_info[iso].get("methaphetamine_sale")
+        methaphetamine_transport =  drug_info[iso].get("methaphetamine_transport")
+        methaphetamine_cultivation =  drug_info[iso].get("methaphetamine_cultivation")
+        cocaine_possession =  drug_info[iso].get("cocaine_possession")
+        cocaine_sale =  drug_info[iso].get("cocaine_sale")
+        cocaine_transport =  drug_info[iso].get("cocaine_transport")
+        cocaine_cultivation =  drug_info[iso].get("cocaine_cultivation")
+        canabais_recreational =  drug_info[iso].get("canabais_recreational")
+        canabais_medical =  drug_info[iso].get("canabais_medical")
 
-        DB.insert_or_update('drug', iso, name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
+        DB.insert('drug', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
 
 if __name__ == '__main__':
     save_drug_law()
