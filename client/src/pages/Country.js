@@ -359,16 +359,16 @@ function Country({
 								<div className="section">
 									<Subtitle text="Health & Safety" />
 									<Col xs="10" sm="4">
-									<Card header="Vaccines">
-										<CardBody>
-									<table>
-      									{vaccines.map((value, index) => {
-        								return <tr><td key={index}>{value.vaccine_name}</td>
-											</tr>
-      									})}
-   		 							</table>
-										</CardBody>
-									</Card>
+										<Card header="Vaccines">
+											<CardBody>
+												<table>
+      												{vaccines.map((value, index) => {
+        											return <tr><td key={index}>{value.vaccine_name}</td>
+													</tr>
+      											})}
+   		 										</table>
+											</CardBody>
+										</Card>
 									</Col>
 								</div>
 							</ReactFullpage.Wrapper>
