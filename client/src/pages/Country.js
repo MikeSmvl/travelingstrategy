@@ -12,6 +12,7 @@ import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
 import '../App.css';
+import { Table } from 'react-bootstrap';
 
 function Country({
 	originCountry,
@@ -358,15 +359,19 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
-									<Col xs="10" sm="4">
+									<Col>
 										<Card header="Vaccines">
 											<CardBody>
-												<table>
+												<Table striped bordered hover size="sm" >
       												{vaccines.map((value, index) => {
-        											return <tr><td key={index}>{value.vaccine_name}</td>
-													</tr>
-      											})}
-   		 										</table>
+        												return <tr><td key={index} width="150px" margin-top="30%">
+																	<b style={{color: "rgb(255, 154, 141)"}}><p class ="card-text">{value.vaccine_name}</p></b></td>
+																	<td key={index}> <p class ="card-text"
+																		dangerouslySetInnerHTML={{ __html: value.vaccine_info }}
+																	/></td>
+																</tr>
+      												})}
+   		 										</Table>
 											</CardBody>
 										</Card>
 									</Col>
