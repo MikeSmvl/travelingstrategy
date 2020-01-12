@@ -35,6 +35,7 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [vaccines, setVaccines] = useState([]);
 	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
 	const [timeDestination, setTimeDestination] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
@@ -116,6 +117,10 @@ function Country({
 						trafficSide(iso:"${destinationCountry}"){
 							traffic_side
 						}
+						country_vaccines(country_iso:"${destinationCountry}"){
+							vaccine_name
+							vaccine_info
+						}
 					}`
 				})
 			})
@@ -134,6 +139,7 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
+					(res.data.country_vaccines && res.data.country_vaccines.length !== 0) && setVaccines(res.data.country_vaccines);
 					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
@@ -147,6 +153,8 @@ function Country({
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
+	console.log(vaccines);
+
 	return (
 		<div>
 			{!isLoading && (
@@ -350,6 +358,18 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Col xs="10" sm="4">
+									<Card header="Vaccines">
+										<CardBody>
+									<table>
+      									{vaccines.map((value, index) => {
+        								return <tr><td key={index}>{value.vaccine_name}</td>
+											</tr>
+      									})}
+   		 							</table>
+										</CardBody>
+									</Card>
+									</Col>
 								</div>
 							</ReactFullpage.Wrapper>
 						);
