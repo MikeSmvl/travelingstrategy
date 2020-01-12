@@ -8,6 +8,7 @@ const currencies = require('./currencies')
 const financials = require('./financials')
 const {trafficSide,trafficTable} = require('./trafficSide')
 const logger = require('../logger/logger.js')
+const drugs = require('./drug')
 
 logger.info(__filename +"Querying with GraphQL")
 
@@ -26,7 +27,8 @@ var queryType = new graphql.GraphQLObjectType({
         time_difference_destination,
         timezones_table,
         trafficSide,
-        trafficTable
+        trafficTable,
+        drugs
     }
 });
 
