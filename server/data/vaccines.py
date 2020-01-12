@@ -12,6 +12,21 @@ from lib.database import Database
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database("countries.sqlite")
+
+
+#create table
+def create_vaccines_table():
+    DB.drop_table('vaccines')
+    DB.add_table('vaccines', country_iso = "text", vaccine_name = "text", vaccine_info = "text")
+
+#save one country vaccines
+#one row is created per vaccines
+def save_one_country(data,iso):
+    for vaccine in data:
+        DB.insert("vaccines",iso,vaccine,data[vaccine])
+
+
 
 #grabbing the URL for all countries
 def get_url_of_countries():
@@ -37,44 +52,46 @@ def get_url_of_countries():
                 if(country_iso != ""): #Countries that don't have iso are not official counntries
                     href = country['href']
                     info[country_iso] = {"href":href}
-                    LOGGER.info(f' Retrieving URL of {country_name}')
+                    LOGGER.info(f' Retrieving URL of {country_name}, {href}')
     finally:
         driver.close()
         driver.quit()
-
     return info
 
 #parsing vaccine text for a single country
-def parse_one_country_vaccine(url, href):
+def parse_one_country_vaccine(url,country):
     driver = create_driver()
     driver.get(url)
-    vaccine_text=""
+    vaccines={}
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
     # table_row = soup.find_all
-    for tr in soup.findAll('tr'):
-        for td in tr.findAll('td'):
-            vaccine_text = td.text
-            print(vaccine_text)
+    for tbody in soup.findAll('tbody'):
+        for row in tbody.findAll('tr'):
+            name = row.find('td',{"class": "traveler-disease"})
+            info = row.find('td',{"class": "traveler-findoutwhy"})
+            if name and info:
+                name = name.text.strip('/\n')
+                info = info.text.replace('\n','<br>')
+                vaccines[name] = info
+
 
     quit_driver(driver)
-
-    return vaccine_text
+    save_one_country(vaccines,country)
+    print(vaccines)
+    return vaccines
 
 #parsing
 def parse_all_countries_vaccine():
-    data = {}
     urls = get_url_of_countries()
-
+    create_vaccines_table()
     for country in urls:
         href = urls[country].get("href")
         link = "https://wwwnc.cdc.gov{}".format(href,sep='')
-        print(link)
-        vaccine = parse_one_country_vaccine(link,href)
-        print(vaccine)
-        data[country]= {"Vaccine and Medicines": vaccine}
-        print(data)
+        vaccine = parse_one_country_vaccine(link,country)
 
-    return data
 
 parse_all_countries_vaccine()
+# get_url_of_countries()
+# create_vaccines_table()
+# parse_one_country_vaccine("https://wwwnc.cdc.gov/travel/destinations/traveler/none/lebanon",'LB')
