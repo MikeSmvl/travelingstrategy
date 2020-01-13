@@ -44,5 +44,16 @@ wiki_visa_url_DM = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominica
 wiki_visa_url_DO = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominican_Republic_citizens'
 wiki_visa_url_MX = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mexican_citizens'
 wiki_visa_url_PA = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Panamanian_citizens'
+
+# Caribbean
+wiki_visa_url_AG = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Antigua_and_Barbuda_citizens'
+wiki_visa_url_BB = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Barbadian_citizens'
+wiki_visa_url_BS = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Bahamian_citizens'
+wiki_visa_url_GD = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Grenadian_citizens'
+wiki_visa_url_JM = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Jamaican_citizens'
+wiki_visa_url_TT = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Trinidad_and_Tobago_citizens'
+
+# Asia
 wiki_visa_url_SG = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
 wiki_visa_url_MU = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
+

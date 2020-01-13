@@ -91,6 +91,19 @@ def parse_a_country(url,driver,data_type):
 
     return data_text
 
+def get_additional_advisory(url,driver):
+    extra_advisory = ""
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    safety_div = soup.find("div", {"class": "safety paragraph paragraph--type--overview paragraph--view-mode--default"})
+    safety_ul = safety_div.find("ul")
+    safety_paragraphs = safety_ul.find_all("li")
+    #each li tag is one paragraph, we will concatinate them
+    for paragraph in safety_paragraphs:
+        extra_advisory = extra_advisory + paragraph.text
+    return extra_advisory
+
 #the two functions below should be puth in chrome driver class
 def create_driver():
     chrome_options = Options()
@@ -105,6 +118,7 @@ def quit_driver(driver):
 def save_into_db(data):
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("AU")
     db.add_table("AU", country_iso="text", name="text", advisory_text="text", visa_info="text")
     for country in data:
         iso = data[country].get('country-iso')
@@ -158,6 +172,8 @@ def save_to_australia():
         href = url[country].get('href')
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
+        additional_advisory = get_additional_advisory(link,driver)
+        advisory_text = advisory_text +additional_advisory
         visa_info = parse_a_country(link,driver,'Visas')
         if (visa_info == ''):
             try:

@@ -207,19 +207,54 @@ class parseTest(unittest.TestCase):
         quit_driver(driver)
         self.assertFalse("", urls);
 
-    def test_mu_parse_visa_wiki(self):
-        # tests parsing visa from wiki for ie
+    # Test for Caribbean wiki parser
+
+    def test_AG_parse_visa_wiki(self):
+        # tests parsing visa from wiki for Antigua and Barbuda
         driver = create_driver()
-        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Antigua_and_Barbuda_citizens'
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
         self.assertFalse("", wiki_visa)
 
-    def test_sg_parse_visa_wiki(self):
-        # tests parsing visa from wiki for ie
+    def test_BB_parse_visa_wiki(self):
+        # tests parsing visa from wiki for Barbados
         driver = create_driver()
-        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Barbadian_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
+
+    def test_BS_parse_visa_wiki(self):
+        # tests parsing visa from wiki for Bahamas
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Bahamian_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
+
+    def test_GD_parse_visa_wiki(self):
+        # tests parsing visa from wiki for Grenada
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Grenadian_citizens'
+
+
+    def test_JM_parse_visa_wiki(self):
+        # tests parsing visa from wiki for Jamaica
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Jamaican_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
+
+    def test_TT_parse_visa_wiki(self):
+        # tests parsing visa from wiki for Trinidad and Tobago
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Trinidad_and_Tobago_citizens'
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
@@ -242,6 +277,25 @@ class parseTest(unittest.TestCase):
         data = get_regional_advisories(url,driver)
         quit_driver(driver)
         self.assertFalse("",data)
+    # Test for Asian countries
+
+    def test_sg_parse_visa_wiki(self):
+        # tests parsing visa from wiki for ie
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
+
+    def test_mu_parse_visa_wiki(self):
+        # tests parsing visa from wiki for ie
+        driver = create_driver()
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+        quit_driver(driver)
+        self.assertFalse("", wiki_visa)
 
 if __name__ == '__main__':
     unittest.main()

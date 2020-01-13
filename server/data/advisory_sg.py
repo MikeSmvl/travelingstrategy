@@ -3,11 +3,11 @@ import string
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+import json
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.database import Database
-import json
 from lib.config import wiki_visa_url_SG
+from lib.database import Database
 
 """The Singaporian page orders the countries
     alphabetcally and has a page for each letter.
@@ -126,7 +126,7 @@ def save_info(db,visas,advisories, array_info):
             LOGGER.error(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
             visa = visas[country].get('visa')
-            advisory = "None"
+            advisory = "Not available yet"
             info = {
                     "country_iso" : iso,
                     "name": country,
@@ -139,7 +139,7 @@ def save_info(db,visas,advisories, array_info):
         if not country in visas:
             LOGGER.error(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
-            visa_info = "None"
+            visa_info = "Not available yet"
             advisory = advisories[country].get('advisory')
             info = {
                     "country_iso" : iso,
@@ -163,6 +163,7 @@ def save_to_SG():
 
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("SG")
     db.add_table("SG", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     array_info = save_info(db,visas,advisories,array_info)

@@ -23,9 +23,9 @@ function Country({
 	destinationLat,
 	destinationLng
 }) {
-	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
+	const [advisoryInfo, setAdvisory] = useState('Not available yet');
 	const [advisoryLink, setAdvisoryLink] = useState('');
-	const [visaInfo, setVisa] = useState('Not available yet.');
+	const [visaInfo, setVisa] = useState('Not available yet');
 	const [languagesInfo, setLanguages] = useState({
 		'Official Languages': 'TBD',
 		'Regional Languages': 'TBD',
@@ -210,16 +210,20 @@ function Country({
 												</Card>)}
 										</Col>
 										<Col xs="10" sm="4">
-											{advisoryInfo !== null && (
-												<Card header="Advisory">
+											{!(advisoryInfo === null || advisoryInfo === "Not available yet") && (
+												<Card
+													className="scrolling-card"
+													header="Advisory"
+													style={{ maxHeight: '400px', overflow: 'scroll' }}
+												>
 													<CardBody>
 														<ErrorOutlineOutlinedIcon
 															style={{ color: '#dc3545' }}
-														/>{' '}
-														{JSON.stringify(advisoryInfo).replace(
-															/(^")|("$)/g,
-															''
-														)}
+														/>
+														<div
+															className="scrolling-card"
+															dangerouslySetInnerHTML={{ __html: advisoryInfo }}
+														/>
 														<div
 														dangerouslySetInnerHTML={{ __html: advisoryLink }}
 													/>

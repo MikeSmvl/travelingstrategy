@@ -94,6 +94,8 @@ def handle_iso_error(name, all_names,all_official_names):
         return "Federated States of Micronesia"
     elif (name == "Northern Marianas"):
         return "Northern Mariana Islands"
+    elif (re.search('U.S. Virgin Islands', name)):
+        return "United States Virgin Islands "
 
     for n in all_names:
         if (re.search(n,name)):

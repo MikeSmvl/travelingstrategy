@@ -23,6 +23,7 @@ def save_to_MU():
 
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("MU")
     db.add_table("MU", country_iso="text", name="text", advisory_text="text", visa_info="text")
     for country in visas:
         iso = find_iso_of_country(country)
@@ -30,7 +31,7 @@ def save_to_MU():
             name = country
             LOGGER.info(f'Saving {name}')
             visa = visas[country].get('visa') #dictionary for visa info is country{visa:text}
-            advisory = "None"
+            advisory = "Not available yet"
             info = {
                 "country_iso" : iso,
                 "name": name,

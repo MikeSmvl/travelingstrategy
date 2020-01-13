@@ -51,7 +51,7 @@ def save_into_db(tableName, data):
         ,name="name",advisory_text="advisory_text",visa_info="visa_info")
     for iso in data:
         name = data[iso].get('name')
-        text = 'Not available'
+        text = 'Not available yet'
         visa_info = data[iso].get('visa-info')
         try:
             DB.insert(tableName,iso, name,text,visa_info)
@@ -153,3 +153,6 @@ def save_to_central_america():
     save_into_db("DM", visa_DM)
     save_into_db("DO", visa_DO)
     save_into_db("PA", visa_PA)
+
+if __name__ == "__main__":
+    save_to_central_america()

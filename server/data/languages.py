@@ -155,6 +155,7 @@ def remove_brackets_from_text(tag_text):
 def save_to_languages():
 
     db = Database("countries.sqlite")
+    db.drop_table("languages")
     db.add_table("languages", country_iso="VARCHAR", country_name="VARCHAR", official_languages="VARCHAR", regional_languages="VARCHAR", minority_languages="REAL", national_languages="VARCHAR",widely_spoken_languages = "VARCHAR")
 
     countries_data = get_countries_languages()
