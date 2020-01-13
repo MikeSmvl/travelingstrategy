@@ -12,6 +12,7 @@ from advisory_nz import get_url_of_countries_nz, parse_a_country_advisory
 from advisory_us import get_name_and_advisory_of_countries
 from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
 from advisory_ie import find_all_url, get_one_info
+from unsafe_areas_ca import get_all_links, get_all_regional_advisories
 from advisory_sg import parse_one_country_advisory as parse_one_country_advisory_sg
 from advisory_central_america import mexico_all_links
 from helper_class.chrome_driver import create_driver, quit_driver
@@ -227,6 +228,20 @@ class parseTest(unittest.TestCase):
     def test_sg_parse_advisory(self):
         data = parse_one_country_advisory_sg("https://www.mfa.gov.sg/countries-regions/c/canada/travel-page")
         self.assertFalse("", data)
+
+    #Unsafe areas tests
+    #get all links
+    def parse_unsafe_areas_all_links(self):
+        data = unsafe_areas_ca.get_all_links()
+        self.assertFalse("",data)
+
+    #Parse an unsafe area data
+    def parse_one_unsafe_area(self):
+        driver = create_driver()
+        url = "https://travel.gc.ca/destinations/united-states"
+        data = get_regional_advisories(url,driver)
+        quit_driver(driver)
+        self.assertFalse("",data)
 
 if __name__ == '__main__':
     unittest.main()

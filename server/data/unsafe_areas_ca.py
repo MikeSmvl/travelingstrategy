@@ -64,16 +64,13 @@ def get_regional_advisories(url,driver):
             data = "There is no regional advisory, take security precautions based on the general advisory for this country."
             return data
         else:
-            # h3 = avoid_all.find('h3').text
-            # more_info = avoid_all.find('p').text
-            # data = data + "</br>" + h3 + "</br>" + more_info
             data = "There is no regional advisory, take security precautions based on the general advisory for this country."
             return data
 
     for adv in regional_adv:
         h3 = adv.find('h3').text
         more_info = adv.find('p').text
-        data = data + "</br>" + h3 + "</br>" + more_info
+        data = data + "<br/>" + h3 + "<br/>" + more_info
 
     return data
 

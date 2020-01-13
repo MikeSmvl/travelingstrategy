@@ -67,7 +67,7 @@ def get_all_countries():
         all_countries = all_countries.keys()
     return all_countries
 
-#gets the url for each country 
+#gets the url for each country
 #calls parse_additional_advisory_info and passes url
 def get_additional_advisory_info_url():
   try:
@@ -91,11 +91,11 @@ def get_additional_advisory_info_url():
        country = country.replace('-', ' ')
        iso = find_iso_of_country(country)
        print(iso)
-       additional_advisory[iso] = parse_additional_advisory_info(link, driver) 
+       additional_advisory[iso] = parse_additional_advisory_info(link, driver)
   finally:
       quit_driver(driver)
       return additional_advisory
-       
+
 #Acquires additional advisory information
 def parse_additional_advisory_info(url, driver):
        #time.sleep(1) #prevents error
@@ -108,8 +108,8 @@ def parse_additional_advisory_info(url, driver):
        advisories = security_list.find("div", {"class": "tgl-panel"})
        count = 0
        tag_type =""
-       for tag in advisories: 
-          
+       for tag in advisories:
+
           #Finds and selects only these sections of advisory info
           if(tag.name == 'h3'):
             if(tag.text.strip().lower() == "crime"):
@@ -186,8 +186,7 @@ def save_to_canada():
 
 
     #saving the data in json file
-    with open('advisory-ca.json', 'w') as fp:
-        json.dump(countries_data, fp)
+    # with open('advisory-ca.json', 'w') as fp:
+    #     json.dump(countries_data, fp)
 
-save_to_canada()
 
