@@ -13,11 +13,11 @@ from helper_class.country_names import find_all_iso
 import lib.config as config
 import lib.database as database
 
-
+#get all links to each country info page from the canadian gov
 def get_all_links():
     iso_list = config.iso_list
     data = {}
-
+    #home page link
     home = 'https://travel.gc.ca/travelling/advisories'
 
     driver = create_driver()
@@ -29,6 +29,7 @@ def get_all_links():
     tbody = table.find('tbody')
     rows = tbody.findAll('tr')
 
+    #parse the table get the link in the <a> tag
     for row in rows:
         col1 = row.find('a')
         name = col1.text
@@ -48,6 +49,7 @@ def get_all_links():
     data = find_all_iso(data)
     return data
 
+#for each country get the regional advisory if it existes
 def get_regional_advisories(url,driver):
 
     driver.get(url)
@@ -74,6 +76,7 @@ def get_regional_advisories(url,driver):
 
     return data
 
+#sacve the data in the db
 def save_regional_advisories(data):
     DB = database.Database(config.sqlite_db)
     tableName = "unsafe_areas"
@@ -108,3 +111,5 @@ def get_all_regional_advisories():
     data = find_all_iso(data)
     save_regional_advisories(data)
     quit_driver(driver)
+
+get_all_regional_advisories()
