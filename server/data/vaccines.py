@@ -14,7 +14,6 @@ LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
 
-
 #create table
 def create_vaccines_table():
     DB.drop_table('vaccines')
@@ -25,8 +24,6 @@ def create_vaccines_table():
 def save_one_country(data,iso):
     for vaccine in data:
         DB.insert("vaccines",iso,vaccine,data[vaccine])
-
-
 
 #grabbing the URL for all countries
 def get_url_of_countries():
@@ -75,7 +72,6 @@ def parse_one_country_vaccine(url,country):
                 info = info.text.replace('\n','<br>')
                 vaccines[name] = info
 
-
     quit_driver(driver)
     save_one_country(vaccines,country)
     print(vaccines)
@@ -89,7 +85,6 @@ def parse_all_countries_vaccine():
         href = urls[country].get("href")
         link = "https://wwwnc.cdc.gov{}".format(href,sep='')
         vaccine = parse_one_country_vaccine(link,country)
-
 
 parse_all_countries_vaccine()
 # get_url_of_countries()
