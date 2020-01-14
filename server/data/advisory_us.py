@@ -6,7 +6,8 @@ from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
+from lib.database import Database
 
 def get_name_and_advisory_of_countries():
     try:
@@ -18,10 +19,9 @@ def get_name_and_advisory_of_countries():
         driver.get(url)
 
         #Selenium hands the page source to Beautiful Soup
-        soup=BeautifulSoup(driver.page_source, 'lxml')
+        soup=BeautifulSoup(driver.page_source, 'lxml') 
 
-        #patter of the link to the country page that the href should match
-        reg = regex.compile(r'\w+-*')
+        #pattern of the link to the country page that the href should match
         table = soup.find('table')
         table_body = table.find('tbody')
         table_rows = table_body.find_all('tr')
@@ -31,13 +31,16 @@ def get_name_and_advisory_of_countries():
         for tr in table_rows:
           if(counter != 0):
              cols = tr.find_all('td')
-             cols = [ele.text.strip() for ele in cols]
+             href = cols[0].find('a').get('href')# gets url for each country that is needed for additional advisory info
+             link = "https://travel.state.gov/{}".format(href,sep='')
 
+             cols = [ele.text.strip() for ele in cols]
              nameLength = len(cols[0])-16
              name = cols[0][0:nameLength]
              if(name != 'W'):
                advisory = cols[1]
-               info[name] = advisory
+               advisory += '</br>'+parse_a_country_additional_advisory_info(link,driver) 
+             info[name] = advisory
           counter += 1
     finally:
         driver.close()
@@ -45,54 +48,49 @@ def get_name_and_advisory_of_countries():
 
     return info
 
-
-
-def parse_a_country_visa():
-    info ={}
-    driver = create_driver()
-    driver.get("https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens")
+#Retrieves all the tooltips which contain additional advisory info
+def parse_a_country_additional_advisory_info(url, driver):
+    driver.get(url)
     #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-         x = x+1
-         cols = tr.find_all('td')
-         cols = [ele.text.strip() for ele in cols]
-         name = cols[0]
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    warning = " "
+    div_id = soup.find("div", {"id": "container tooltipalert"})
+    a_tags = div_id.find_all('a')
+    for a in a_tags:
+        listToStr = ' '.join(map(str, a.get('class'))) 
+        if(listToStr == 'showThreat'): #if tooltip is marked as showThreat then this country is marked as having this threat
+            if(a.get('title')!='Tool Tip: Other'):
+             warning += a.get('data-tooltip').rstrip("\n") +'</br>'
+    return warning
 
-         visaPosition = cols[1].find('[')
-         visa = cols[1][0 : visaPosition]
 
-         info[name] = {"visa":visa}
-    return info
 
 
 def save_to_united_states():
-    name_advisory = get_name_and_advisory_of_countries()
-    info ={}
-
-    visas = parse_a_country_visa()
-
-    for name in sorted (name_advisory.keys()):
-       info[name] = name_advisory[name]
-
-    data = {}
     driver = create_driver()
-    counter_country = 0
+    
+    data = {} #Used to store of all the parsed data of each country
+    name_to_advisories ={} #Stores the names and associated advisories
+    name_advisory = get_name_and_advisory_of_countries()
+    wiki_visa_url = "https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens"
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    visas = wiki_visa_ob.visa_parser_table()
 
-    for country in info:
+    for name in sorted (name_advisory.keys()): #Sorts the dictionary containing  names and advisories
+       name_to_advisories[name] = name_advisory[name]
+
+
+    counter_country = 0
+    for country in name_to_advisories: #iterates through name_to_advisories to retrieve advisories
         driver.implicitly_wait(5)
         name = country
-        advisory = info[country]
+        advisory = name_to_advisories[country]
 
         visa_text= ""
-        for countryVisa in visas:
+        for countryVisa in visas: # iterates through list of visas to retrieve visas
             if(countryVisa ==  country):
                visa_text = visas[countryVisa].get('visa')
+               del visas[countryVisa]
                break;
 
         country_iso = "na"
@@ -102,24 +100,28 @@ def save_to_united_states():
           quit_driver(driver)
           driver = create_driver()
         counter_country += 1
-    data = find_all_iso(data)
+
+    data = find_all_iso(data)#Sets iso for each country
 
     with open('./advisory-us.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
 
+
+
 def save_into_db(data):
     # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('US')
-    sqlite.delete_table()
-    sqlite.create_table()
+    db = Database("countries.sqlite")
+    db.drop_table("US")
+    db.add_table("US", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
     for country in data:
         iso = data[country].get('country-iso')
         name = data[country].get('name')
-        text = data[country].get('advisory-text')
-        visa_info = data[country].get('visa-info')
-        sqlite.new_row(iso,name,text,visa_info)
-    sqlite.commit()
-    sqlite.close()
+        advisory = data[country].get('advisory-text')
+        visa = data[country].get('visa-info')
+        db.insert("US",iso,name,advisory,visa)
+    db.close_connection()
 
+save_to_united_states()

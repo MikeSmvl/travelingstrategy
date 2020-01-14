@@ -1,9 +1,11 @@
 from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver, quit_driver
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
+from helper_class.wiki_visa_parser import wiki_visa_parser
+from selenium.webdriver.common.by import By
+from lib.database import Database
+import time
 
 import json
 
@@ -21,7 +23,7 @@ def get_url_of_countries():
         soup=BeautifulSoup(driver.page_source, 'lxml')
 
         #patter of the link to the country page that the href should match
-        countries_div = soup.findAll("div", {"class": "govuk-grid-column-two-thirds"})[0]
+        countries_div = soup.findAll("div", {"class": "govuk-grid-column-two-thirds"})[1]
         countries = countries_div.findAll('a')
 
         #retrieving links for all countries
@@ -38,7 +40,7 @@ def get_url_of_countries():
     return info
 
 
-def parse_one_country_advisory(url,href):
+def parse_one_country_advisory(url, href):
     driver = create_driver()
     driver.get(url)
     advisory=""
@@ -56,68 +58,78 @@ def parse_one_country_advisory(url,href):
 def parse_all_countries_advisory():
     data = {}
     urls = get_url_of_countries()
+    driver = create_driver()
+
+    
     for country in urls:
+       
         href = urls[country].get("href")
         link = "https://www.gov.uk{}".format(href,sep='')
         advisory = parse_one_country_advisory(link,href)
-        data[country]= {"advisory": advisory}
+        link =  "https://www.gov.uk{}/safety-and-security".format(href,sep='')
+        additional_advisory_info = parse_additional_advisory_info(link, driver)
+        data[country]= {"advisory": advisory + additional_advisory_info}
     return data
 
-def parse_all_country_visa(url):
-    info ={}
-    driver = create_driver()
-    driver.get(url)
-    #Selenium hands the page source to Beautiful Soup
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    visa = " "
-    table = soup.find('table')
-    table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-    x = 0
-    for tr in table_rows:
-         x = x+1
-         cols = tr.find_all('td')
-         cols = [ele.text.strip() for ele in cols]
-         name = cols[0]
-         if(x < 5):
-           visaLength = len(cols[1])-3
-           visa = cols[1][0:visaLength]
-         elif( x < 80):
-           visaLength = len(cols[1])-4
-           visa = cols[1][0:visaLength]
-         else:
-           visaLength = len(cols[1])-5
-           visa = cols[1][0:visaLength]
-         if(visa[len(visa)-1: len(visa)] == ']'):
-              if(x < 5):
-                visaLength = len(visa)-3
-                visa = visa[0:visaLength]
-              elif( x < 80):
-                visaLength = len(visa)-4
-                visa = visa[0:visaLength]
-              else:
-                visaLength = len(visa)-5
-                visa = visa[0:visaLength]
-         if(name == "Angola"):
-           visaLength = len(visa)-2
-           visa = visa[0:visaLength]
+       
+#Acquires additional advisory information
+def parse_additional_advisory_info(link, driver):
+      # time.sleep(1) #prevents error
+       #Selenium hands the page source to Beautiful Soup
+       driver.get(link)
+       soup=BeautifulSoup(driver.page_source, 'lxml')
+       warning = " "
 
-         info[name] = {"visa":visa}
-    quit_driver(driver)
+       advisories = soup.find('div', {'class': 'gem-c-govspeak govuk-govspeak direction-ltr'})
+    
+       count = 0
+       tag_type =" "
 
-    return info
+       try:       
+          for tag in advisories: 
+             #Finds and selects only these sections of advisory info
+             if(tag.name == 'h3'):
+               if(tag.text.strip().lower() == "crime"):
+                 count  = 2
+                 tag_type = 'Crime'
+               elif(tag.text.strip().lower() == "road travel"):
+                 count  = 2
+                 tag_type = 'Road travel'
+               elif(tag.text.strip().lower() == "local travel"):
+                 count  = 2
+                 tag_type = 'Local travel'
+               elif(tag.text.strip().lower() == "landmines"):
+                 count  = 2
+                 tag_type = 'Landmines'
+             elif(count == 2):
+               count = 1
+             elif(count == 1):
+               warning += '</br>'+ tag_type +" "+ tag.text.strip()
+               count = 0
+
+       except : 
+           print('No additional information') 
+       return warning
 
 
 def save_to_UK():
+
+    driver = create_driver()
+    wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens"
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+    visas = wiki_visa_ob.visa_parser_table()
     data = parse_all_countries_advisory()
-    visas = parse_all_country_visa("https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens")
     info = {}
     array_info = []
-    # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('GB') #The UK iso is GB
-    sqlite.delete_table()
-    sqlite.create_table()
+    # create an an sqlite_advisory object]
+    db = Database("countries.sqlite")
+    db.drop_table("GB")
+    db.add_table("GB", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
+
+
     for country in visas:
+        
         iso = find_iso_of_country(country)
         if(iso != ""):
             try:
@@ -131,13 +143,14 @@ def save_to_UK():
                     "visa_info": visa_info
                 }
                 array_info.append(info)
-                sqlite.new_row(iso,name,advisory,visa_info)
+                db.insert("GB",iso,name,advisory,visa_info)
             except KeyError:
                 print("This country doesn't have advisory info: ",country)
                 print("Its ISO is: ",iso)
 
-    sqlite.commit()
-    sqlite.close()
+    db.close_connection()
 
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
+
+save_to_UK()

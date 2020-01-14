@@ -58,6 +58,40 @@ def find_all_iso(data):
 
 
 def handle_iso_error(name, all_names,all_official_names):
+    if (re.search('Laos',name)):
+        return "Lao People's Democratic Republic"
+    elif (re.search('Macau',name)):
+        return "Macao"
+    elif (re.search('Republic of Korea',name) or re.search('South Korea',name) or re.search('Korea, South',name)):
+        return "Korea, Republic of"
+    elif (re.search('North Korea',name) or re.search('Korea, North',name)):
+        return "Korea, Democratic People's Republic of"
+    elif (re.search('Cape Verde',name)):
+        return "Cabo Verde"
+    elif (re.search('Democratic Republic of the Congo',name) or re.search('Congo, Democratic Republic of the',name)):
+        return "Congo, The Democratic Republic of the"
+    elif (name == 'Congo, Republic of the'):
+        return "Republic of the Congo"
+    elif (re.search('Ivory Coast',name) or re.search('Côte d’Ivoire',name)):
+        return "Côte d'Ivoire"
+    elif (re.search('Sovereign Military Order of Malta',name)):
+        return "Malta"
+    elif (re.search('East Timor',name)):
+        return "Timor-Leste"
+    elif (re.search('Burma',name)):
+        return "Myanmar"
+    elif (re.search('Sahrawi Arab Democratic Republic',name)):
+        return "Western Sahara"
+    elif (re.search('Sovereign Military Order of Malta',name)):
+        return "Malta"
+    elif (re.search('Swaziland',name)):
+        return "Eswatini"
+    elif (name == 'Lichenstein'):
+        return "Liechtenstein"
+    elif (re.search('Trinidad & Tobago',name)):
+        return "Trinidad and Tobago"
+    elif (re.search('U.S. Virgin Islands', name)):
+        return "United States Virgin Islands "
 
     for n in all_names:
         if (re.search(n,name)):
@@ -66,33 +100,6 @@ def handle_iso_error(name, all_names,all_official_names):
     for n in all_official_names:
         if (re.search(n,name)):
             return n
-
-    if (name == 'Laos'):
-        return "Lao People's Democratic Republic"
-    elif (name == 'Macau'):
-        return "Macao"
-    elif (re.search('Republic of Korea',name) or re.search('South Korea',name)):
-        return "Korea, Republic of"
-    elif (re.search('North Korea',name)):
-        return "Korea, Democratic People's Republic of"
-    if (name == 'Cape Verde'):
-        return "Cabo Verde"
-    elif (name == 'Democratic Republic of the Congo'):
-        return "Congo, The Democratic Republic of the"
-    elif (re.search('Ivory Coast',name)):
-        return "Côte d'Ivoire"
-    elif (re.search('Sovereign Military Order of Malta',name)):
-        return "Malta"
-    elif (re.search('East Timor',name)):
-        return "Timor-Leste"
-    elif (re.search('Sahrawi Arab Democratic Republic',name)):
-        return "Western Sahara"
-    elif (re.search('Sovereign Military Order of Malta',name)):
-        return "Malta"
-    elif (name == 'Lichenstein'):
-        return "Liechtenstein"
-    elif (name == 'Trinidad & Tobago'):
-        return "Trinidad and Tobago"
 
     return ""
 
