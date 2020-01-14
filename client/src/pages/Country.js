@@ -10,7 +10,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { languages, flagSrc, getRate, getOtherTrafficSide } from '../utils/parsingTools';
+import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
 import '../App.css';
 
 function Country({
@@ -23,9 +23,9 @@ function Country({
 	destinationLat,
 	destinationLng
 }) {
-	const [advisoryInfo, setAdvisory] = useState('Not available yet.');
+	const [advisoryInfo, setAdvisory] = useState('Not available yet');
 	const [advisoryLink, setAdvisoryLink] = useState('');
-	const [visaInfo, setVisa] = useState('Not available yet.');
+	const [visaInfo, setVisa] = useState('Not available yet');
 	const [languagesInfo, setLanguages] = useState({
 		'Official Languages': 'TBD',
 		'Regional Languages': 'TBD',
@@ -41,8 +41,32 @@ function Country({
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
+	const [rate, setRate] = useState('');
 
 	useEffect(() => {
+		async function fetchRate(originCode, destinationCode) {
+			fetch(`https://api.exchangeratesapi.io/latest?base=${originCode}&symbols=${destinationCode}`)
+				.then(
+					(response) => {
+						if (response.status !== 200) {
+							console.log('Exchange Rate API did not return HTTP 200');
+							setIsLoading(false);
+							return;
+						}
+
+						// Set the currency rate from origin to destination
+						response.json().then((data) => {
+							setRate(data.rates[destinationCode].toFixed(2));
+							setIsLoading(false);
+						});
+					}
+				)
+				.catch((err) => {
+					console.log('Fetch Error :-S', err);
+					setIsLoading(false);
+				});
+		}
+
 		async function fetchData() {
 			setIsLoading(true);
 			await fetch('http://localhost:4000/', {
@@ -111,11 +135,13 @@ function Country({
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
 					setIsLoading(false);
+					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
 		}
+
 		fetchData();
-	}, [originCountry, destinationCountry,originLat, originLng,
-	 destinationLat, destinationLng]);
+	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
+
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 
 	if (!originCountry || !destinationCountry) {
@@ -142,7 +168,7 @@ function Country({
 									<Header
 										title={getCountryName(destinationCountry)}
 										title2={destinationCity}
-										title3={getTimeDifference(timeOrigin,timeDestination, originCity)}
+										title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
 									/>
 									<Subtitle text="Important Basics" />
 									<Row
@@ -161,37 +187,43 @@ function Country({
 											</CountryCard>
 										</Col>
 										<Col xs="10" sm="4">
-											<Card
-												className="scrolling-card"
-												header="Visa Info"
-												style={{ maxHeight: '400px', overflow: 'scroll' }}
-											>
-												<CardBody
+											{visaInfo !== null && (
+												<Card
 													className="scrolling-card"
-													style={{ paddingTop: '0' }}
+													header="Visa Info"
+													style={{ maxHeight: '400px', overflow: 'scroll' }}
 												>
-													<div
+													<CardBody
 														className="scrolling-card"
-														dangerouslySetInnerHTML={{ __html: visaInfo }}
-													/>
-												</CardBody>
-											</Card>
+														style={{ paddingTop: '0' }}
+													>
+														<div
+															className="scrolling-card"
+															dangerouslySetInnerHTML={{ __html: visaInfo }}
+														/>
+													</CardBody>
+												</Card>)}
 										</Col>
 										<Col xs="10" sm="4">
-											<Card header="Advisory">
-												<CardBody>
-													<ErrorOutlineOutlinedIcon
-														style={{ color: '#dc3545' }}
-													/>{' '}
-													{JSON.stringify(advisoryInfo).replace(
-														/(^")|("$)/g,
-														''
-													)}
-													<div
+											{!(advisoryInfo === null || advisoryInfo === "Not available yet") && (
+												<Card
+													className="scrolling-card"
+													header="Advisory"
+													style={{ maxHeight: '400px', overflow: 'scroll' }}
+												>
+													<CardBody>
+														<ErrorOutlineOutlinedIcon
+															style={{ color: '#dc3545' }}
+														/>
+														<div
+															className="scrolling-card"
+															dangerouslySetInnerHTML={{ __html: advisoryInfo }}
+														/>
+														<div
 														dangerouslySetInnerHTML={{ __html: advisoryLink }}
 													/>
-												</CardBody>
-											</Card>
+													</CardBody>
+												</Card>)}
 										</Col>
 									</Row>
 								</div>
@@ -222,10 +254,7 @@ function Country({
 														}}
 													>
 														<RateCalculator
-															destinationRate={getRate(
-																originCurrencyInfo.code,
-																currencyInfo.code
-															)}
+															destinationRate={rate}
 															originCurrency={originCurrencyInfo.code}
 															destCurrency={currencyInfo.code}
 														/>
@@ -284,30 +313,36 @@ function Country({
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
-									<Col xs="10" sm="4" >
-										<Card header="Traffic Flow">
-											<CardBody>
-											{trafficSide !== 'Not available yet'
-														&&<p>
+										<Col xs="10" sm="4">
+											<Card header="Traffic Flow">
+												<CardBody>
+													{trafficSide !== 'Not available yet'
+														&& (
+															<p>
 													In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
-													<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
-												</p>}
-												<Divider />
-												{trafficSide !== 'Not available yet'
-														&& <img
+																<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
+															</p>
+														)}
+													<Divider />
+													{trafficSide !== 'Not available yet'
+														&& (
+															<img
 																key={trafficSide}
 																src={require(`../trafficImages/${trafficSide}.png`)}
-																style={{width: '200px'}}
-																alt=''
-															/>}
-												{trafficSide !== 'Not available yet'
-														&&<p style={{textAlign: 'center'}}>
-														<br></br>
-														<b style={{color: '#FF1C00'}}
-														>
-														Warning</b><br></br>
+																style={{ width: '200px' }}
+																alt=""
+															/>
+														)}
+													{trafficSide !== 'Not available yet'
+														&& (
+															<p style={{ textAlign: 'center' }}>
+																<br />
+																<b style={{ color: '#FF1C00' }}>
+														Warning
+																</b><br />
 														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
-													</p>}
+															</p>
+														)}
 												</CardBody>
 											</Card>
 										</Col>

@@ -7,12 +7,11 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.config import currency_api_link, iso_list, sqlite_db, wiki_visa_url_MX, wiki_visa_url_BZ, wiki_visa_url_DM, wiki_visa_url_PA, wiki_visa_url_DO
+from lib.config import iso_list, sqlite_db, wiki_visa_url_MX, wiki_visa_url_BZ, wiki_visa_url_DM, wiki_visa_url_PA, wiki_visa_url_DO
 from lib.database import Database
 from helper_class.en_vs_es_country_names import get_iso_es
 
@@ -52,7 +51,7 @@ def save_into_db(tableName, data):
         ,name="name",advisory_text="advisory_text",visa_info="visa_info")
     for iso in data:
         name = data[iso].get('name')
-        text = 'Not availible'
+        text = 'Not available yet'
         visa_info = data[iso].get('visa-info')
         try:
             DB.insert(tableName,iso, name,text,visa_info)
@@ -155,4 +154,5 @@ def save_to_central_america():
     save_into_db("DO", visa_DO)
     save_into_db("PA", visa_PA)
 
-#save_to_central_america()
+if __name__ == "__main__":
+    save_to_central_america()

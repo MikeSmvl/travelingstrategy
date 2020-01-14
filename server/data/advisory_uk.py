@@ -1,10 +1,12 @@
 from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver, quit_driver
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.country_names import find_iso_of_country, find_all_iso
-from helper_class.sqlite_advisories import sqlite_advisories
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from selenium.webdriver.common.by import By
+from lib.database import Database
+import time
+
 import json
 
 
@@ -21,7 +23,7 @@ def get_url_of_countries():
         soup=BeautifulSoup(driver.page_source, 'lxml')
 
         #patter of the link to the country page that the href should match
-        countries_div = soup.findAll("div", {"class": "govuk-grid-column-two-thirds"})[0]
+        countries_div = soup.findAll("div", {"class": "govuk-grid-column-two-thirds"})[1]
         countries = countries_div.findAll('a')
 
         #retrieving links for all countries
@@ -56,12 +58,58 @@ def parse_one_country_advisory(url, href):
 def parse_all_countries_advisory():
     data = {}
     urls = get_url_of_countries()
+    driver = create_driver()
+
+    
     for country in urls:
+       
         href = urls[country].get("href")
         link = "https://www.gov.uk{}".format(href,sep='')
         advisory = parse_one_country_advisory(link,href)
-        data[country]= {"advisory": advisory}
+        link =  "https://www.gov.uk{}/safety-and-security".format(href,sep='')
+        additional_advisory_info = parse_additional_advisory_info(link, driver)
+        data[country]= {"advisory": advisory + additional_advisory_info}
     return data
+
+       
+#Acquires additional advisory information
+def parse_additional_advisory_info(link, driver):
+      # time.sleep(1) #prevents error
+       #Selenium hands the page source to Beautiful Soup
+       driver.get(link)
+       soup=BeautifulSoup(driver.page_source, 'lxml')
+       warning = " "
+
+       advisories = soup.find('div', {'class': 'gem-c-govspeak govuk-govspeak direction-ltr'})
+    
+       count = 0
+       tag_type =" "
+
+       try:       
+          for tag in advisories: 
+             #Finds and selects only these sections of advisory info
+             if(tag.name == 'h3'):
+               if(tag.text.strip().lower() == "crime"):
+                 count  = 2
+                 tag_type = 'Crime'
+               elif(tag.text.strip().lower() == "road travel"):
+                 count  = 2
+                 tag_type = 'Road travel'
+               elif(tag.text.strip().lower() == "local travel"):
+                 count  = 2
+                 tag_type = 'Local travel'
+               elif(tag.text.strip().lower() == "landmines"):
+                 count  = 2
+                 tag_type = 'Landmines'
+             elif(count == 2):
+               count = 1
+             elif(count == 1):
+               warning += '</br>'+ tag_type +" "+ tag.text.strip()
+               count = 0
+
+       except : 
+           print('No additional information') 
+       return warning
 
 
 def save_to_UK():
@@ -73,11 +121,15 @@ def save_to_UK():
     data = parse_all_countries_advisory()
     info = {}
     array_info = []
-    # create an an sqlite_advisory object
-    sqlite = sqlite_advisories('GB') #The UK iso is GB
-    sqlite.delete_table()
-    sqlite.create_table()
+    # create an an sqlite_advisory object]
+    db = Database("countries.sqlite")
+    db.drop_table("GB")
+    db.add_table("GB", country_iso="text", name="text", advisory_text="text", visa_info="text")
+
+
+
     for country in visas:
+        
         iso = find_iso_of_country(country)
         if(iso != ""):
             try:
@@ -91,15 +143,14 @@ def save_to_UK():
                     "visa_info": visa_info
                 }
                 array_info.append(info)
-                sqlite.new_row(iso,name,advisory,visa_info)
+                db.insert("GB",iso,name,advisory,visa_info)
             except KeyError:
                 print("This country doesn't have advisory info: ",country)
                 print("Its ISO is: ",iso)
 
-    sqlite.commit()
-    sqlite.close()
+    db.close_connection()
 
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-#save_to_UK()
+save_to_UK()
