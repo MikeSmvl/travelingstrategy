@@ -41,7 +41,7 @@ function Country({
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
-	const [drug, setDrugLegality] = useState({});
+	const [meth_possession, setMeth_possession] = useState({});
 	const [rate, setRate] = useState('');
 
 	useEffect(() => {
@@ -117,17 +117,18 @@ function Country({
 						trafficSide(iso:"${destinationCountry}"){
 							traffic_side
 						}
-						drug(iso:"${destinationCountry}"){
-							name
-							methaphetamine_possession
-                        	methaphetamine_sale
-                        	methaphetamine_transport
-							methaphetamine_cultivation
-							cocaine_possession
-							cocaine_sale 
-							cocaine_transport
-							cocaine_cultivation
-							canabais_recreational
+						drugs(country_iso:"${destinationCountry}") {
+							country_iso,
+							name,
+							methaphetamine_possession,
+							methaphetamine_sale,
+							methaphetamine_transport,
+							methaphetamine_cultivation,
+							cocaine_possession,
+							cocaine_sale,
+							cocaine_transport,
+							cocaine_cultivation,
+							canabais_recreational,
 							canabais_medical
 						}
 					}`
@@ -148,7 +149,7 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
-					(res.data.drug && res.data.drug.length !== 0) && setDrugLegality(res.data.drug[0].drug);
+					(res.data.drugs && res.data.drugs.length !== 0) && setMeth_possession(res.data.drugs[0].methaphetamine_possession);
 					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
@@ -369,42 +370,41 @@ function Country({
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
-										
 										<Col xs="10" sm="4">
 											<Card header="Drug Laws">
 												<CardBody>
 													<pre>
-														<strong>Name: </strong> {drug.name}
+														<strong>Name: </strong> {JSON.stringify(meth_possession).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>canabais_recreational:</strong> {drug.canabais_recreational}
+														<strong>canabais_recreational:</strong>
 													</pre>
 													<pre>
-														<strong>canabais_medical:</strong> {drug.canabais_medical}
+														<strong>canabais_medical:</strong>
 													</pre>
 													<pre>
-														<strong>cocaine_possession:</strong> {drug.cocaine_possession}
+														<strong>cocaine_possession:</strong>
 													</pre>
 													<pre>
-														<strong>cocaine_sale:</strong> {drug.cocaine_sale}
+														<strong>cocaine_sale:</strong>
 													</pre>
 													<pre>
-														<strong>cocaine_trasnport:</strong> {drug.cocaine_trasnport}
+														<strong>cocaine_trasnport:</strong>
 													</pre>
 													<pre>
-														<strong>cocaine_cultivation:</strong> {drug.cocaine_cultivation}
+														<strong>cocaine_cultivation:</strong>
 													</pre>
 													<pre>
-														<strong>methaphetamine_possession:</strong> {drug.methaphetamine_possession}
+														<strong>methaphetamine_possession:</strong>
 													</pre>
 													<pre>
-														<strong>methaphetamine_sale:</strong> {drug.methaphetamine_sale}
+														<strong>methaphetamine_sale:</strong>
 													</pre>
 													<pre>
-														<strong>methaphetamine_trasnport:</strong> {drug.ethaphetamine_trasnport}
+														<strong>methaphetamine_trasnport:</strong>
 													</pre>
 													<pre>
-														<strong>methaphetamine_cultivation:</strong> {drug.methaphetamine_cultivation}
+														<strong>methaphetamine_cultivation:</strong>
 													</pre>
 												</CardBody>
 											</Card>
