@@ -4,7 +4,7 @@ const Drug = new graphql.GraphQLObjectType({
   name: "Drug",
   fields: {
       country_iso: { type: graphql.GraphQLString },
-      country_name: { type: graphql.GraphQLString },
+      name: { type: graphql.GraphQLString },
       methaphetamine_possession: { type: graphql.GraphQLString },
       methaphetamine_sale: { type: graphql.GraphQLString },
       methaphetamine_transport: { type: graphql.GraphQLString },

@@ -12,7 +12,7 @@ from lib.database import Database
 from lib.config import sqlite_db
 
 
-DB = Database(sqlite_db)
+
 def get_countries_canabaislaw():
     try:
         # this is the link to the first page
@@ -63,7 +63,7 @@ def get_countries_cocainelaw():
         cocaine_info= {}
         arrayCocaineInfo = {}
         for tablerow in table_rows:
-            table_columns = tablerow.find_all('td')            
+            table_columns = tablerow.find_all('td')
             if(len(table_columns)>0):
                 country_name= table_columns[0].text
                 cocaine_possession= table_columns[1].text
@@ -101,7 +101,7 @@ def get_countries_methaphetaminelaw():
         methaphetamine_info= {}
         arraymethaphetamineInfo = {}
         for tablerow in table_rows:
-            table_columns = tablerow.find_all('td')            
+            table_columns = tablerow.find_all('td')
             if(len(table_columns)>0):
                 country_name= table_columns[0].text
                 methaphetamine_possession= table_columns[1].text
@@ -158,27 +158,28 @@ def combine_dictionaries(dict1, dict2, dict3):
             methaphetamine_transport = dict3[iso].get('methaphetamine-transport')
             methaphetamine_cultivation = dict3[iso].get('methaphetamine-cultivation')
          all_drugs[iso] = {"name":country_name,
-                          "iso": iso,  
+                          "iso": iso,
                           "methaphetamine_possession": methaphetamine_possession,
                           "methaphetamine_sale": methaphetamine_sale,
                           "methaphetamine_transport": methaphetamine_transport,
                           "methaphetamine_cultivation": methaphetamine_cultivation,
                           "cocaine_possession": cocaine_possession,
-                          "cocaine_sale": cocaine_sale, 
+                          "cocaine_sale": cocaine_sale,
                           "cocaine_transport": cocaine_transport,
-                          "cocaine_cultivation": cocaine_cultivation,  
-                          "canabais_recreational": canabais_recreational, 
+                          "cocaine_cultivation": cocaine_cultivation,
+                          "canabais_recreational": canabais_recreational,
                           "canabais_medical": canabais_medical
                           }
     return all_drugs
 
 def save_drug_law():
-    
+
     marijuana = get_countries_canabaislaw()
     cocaine = get_countries_cocainelaw()
     methaphetamine = get_countries_methaphetaminelaw()
-    DB.drop_table('drug')
-    DB.add_table('drug', iso='text', name="text", methaphetamine_possession='text', methaphetamine_sale='text', methaphetamine_transport='text', methaphetamine_cultivation='text', cocaine_possession='text', cocaine_sale='text', cocaine_transport='text', cocaine_cultivation='text', canabais_recreational='text', canabais_medical='text')
+    DB = Database(sqlite_db)
+    DB.drop_table('drugs')
+    DB.add_table('drugs', country_iso='text', name="text", methaphetamine_possession='text', methaphetamine_sale='text', methaphetamine_transport='text', methaphetamine_cultivation='text', cocaine_possession='text', cocaine_sale='text', cocaine_transport='text', cocaine_cultivation='text', canabais_recreational='text', canabais_medical='text')
     drug_info = combine_dictionaries(marijuana,cocaine, methaphetamine)
 
     for iso in drug_info:
@@ -195,11 +196,4 @@ def save_drug_law():
         canabais_recreational =  drug_info[iso].get("canabais_recreational")
         canabais_medical =  drug_info[iso].get("canabais_medical")
 
-        DB.insert('drug', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
-
-if __name__ == '__main__':
-    save_drug_law()
-
-
-
-    
+        DB.insert('drugs', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)

@@ -8,13 +8,13 @@ const db = new database().db;
 var drugs = {
     type: graphql.GraphQLList(Drug),
     args: {
-        country: {
+        country_iso: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         }
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            query = `SELECT * FROM currencies WHERE country ='${args.country}';`
+            query = `SELECT * FROM drugs WHERE country_iso ='${args.country_iso}';`
             logger.info("Trying to query "+query)
             db.all(query, function(err, rows) {
                 if(err){

@@ -8,7 +8,7 @@ const currencies = require('./currencies')
 const financials = require('./financials')
 const {trafficSide,trafficTable} = require('./trafficSide')
 const logger = require('../logger/logger.js')
-const drugs = require('./drug')
+const drugs = require('./drugs')
 
 logger.info(__filename +"Querying with GraphQL")
 
