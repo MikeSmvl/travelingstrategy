@@ -92,7 +92,7 @@ def parse_a_country(url,driver,data_type):
     return data_text
 
 def get_additional_advisory(url,driver):
-    extra_advisory = ""
+    extra_advisory = "<ul>"
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
@@ -101,8 +101,8 @@ def get_additional_advisory(url,driver):
     safety_paragraphs = safety_ul.find_all("li")
     #each li tag is one paragraph, we will concatinate them
     for paragraph in safety_paragraphs:
-        extra_advisory = extra_advisory + paragraph.text
-    return extra_advisory
+        extra_advisory = extra_advisory + '<li>' + paragraph.text
+    return extra_advisory+'</ul>'
 
 #the two functions below should be puth in chrome driver class
 def create_driver():
@@ -161,5 +161,7 @@ def save_to_australia():
         json.dump(data, outfile)
 
     save_into_db(data)
+
+save_to_australia()
 
 

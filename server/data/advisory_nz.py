@@ -93,34 +93,45 @@ def parse_a_country_advisory(url, driver):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    warning = " "
+    warning = ""
     #Retrieves main advisory 
     for tag in soup.findAll('i'):
       if tag.parent.name == 'h1':
-          warning = tag.parent.text.strip()
+          warning = tag.parent.text.strip()+'<ul>'
     #Finds and selects only these sections of additional advisory info
     for tag in soup.findAll('strong'):
         if(tag.text.strip().lower() == "border crossings"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("border crossings","<b>Border Crossings:</b> " )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "civil unrest"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("civil unrest","<b>Civil Unrest:</b> ", )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "crime"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("crime","<b>Crime:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "violent crime"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("violent crime","<b>Violent Crime:</b> ", 1 )      
+            warning = warning+'<li>' + temp
         elif(tag.text.strip().lower() == "kidnapping"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("kidnapping","<b>Kidnapping:</b> ", 1 )      
+            warning = warning+'<li>' + temp
         elif(tag.text.strip().lower() == "landmines"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("landmines","<b>Landmines:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "local travel"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("local travel","<b>Local Travel:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "road travel"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("road travel","<b>Road Travel:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "seismic activity"):
-            warning += '</br>' + tag.parent.text.strip()
+            temp = tag.parent.text.strip().lower().replace("seismic activity","<b>Seismic Activity:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
         elif(tag.text.strip().lower() == "terrorism"):
-            warning += '</br>' + tag.parent.text.strip()
-    return warning
+            temp = tag.parent.text.strip().lower().replace("terrorism","<b>Terrorism:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+
+    return warning+'</ul>'
 
 
 def save_into_db(data):
