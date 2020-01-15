@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Row, Col } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, Divider } from '../components/Card/Card';
+import { Card, CardBody, VaccineCardBody,Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
@@ -12,7 +12,7 @@ import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
 import '../App.css';
-import { Table } from 'react-bootstrap';
+
 
 function Country({
 	originCountry,
@@ -154,7 +154,6 @@ function Country({
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
-	console.log(vaccines);
 
 	return (
 		<div>
@@ -359,20 +358,16 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
-									<Col>
+									<Col xs="10" sm="4">
 										<Card header="Vaccines">
-											<CardBody>
-												<Table striped bordered hover size="sm" >
       												{vaccines.map((value, index) => {
-        												return <tr><td key={index} width="150px" margin-top="30%">
-																	<b style={{color: "rgb(255, 154, 141)"}}><p class ="card-text">{value.vaccine_name}</p></b></td>
-																	<td key={index}> <p class ="card-text"
-																		dangerouslySetInnerHTML={{ __html: value.vaccine_info }}
-																	/></td>
-																</tr>
+														return <VaccineCardBody xs="10" sm="4"
+														title = {value.vaccine_name}
+														info = {value.vaccine_info} >
+
+
+															</VaccineCardBody>
       												})}
-   		 										</Table>
-											</CardBody>
 										</Card>
 									</Col>
 								</div>
