@@ -13,6 +13,7 @@ from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.config import iso_list, sqlite_db, wiki_visa_url_MX, wiki_visa_url_BZ, wiki_visa_url_DM, wiki_visa_url_PA, wiki_visa_url_DO
 from lib.database import Database
+from helper_class.logger import Logger
 from helper_class.en_vs_es_country_names import get_iso_es
 
 # This file will encompass the parsing of 5 countries:
@@ -40,8 +41,10 @@ def save_into_db_MX(tableName, data):
         # print(iso,name,text,visa_info)
         try:
             DB.insert(tableName,iso, name,text,link,visa_info)
+            LOGGER.info(f"{tableName} succesfully saved into the database")
         except:
             print("None type",iso)
+            LOGGER.error(f"{iso} not found")
 
 
 def save_into_db(tableName, data):
@@ -80,6 +83,7 @@ def mexico_all_links(driver):
             href = '<a href =\''+href+'\'>Mexican Government Webesite</a>'
             links[iso] = {'advisory_text':href,'country_iso':iso,'name':name}
         except:
+            LOGGER.error(f"This country's iso was not found: {name}")
             print("This country's iso was not found:",att.text)
 
     #get the visa for mexico like for other countries from wikipedia
@@ -112,39 +116,50 @@ def replace_key_by_iso(data):
 #in central america
 def save_to_central_america():
 
+    LOGGER.info("Begin parsing and saving for Central America...")
     #create driver
     driver = create_driver()
 
     #Mexico
     data_MX = mexico_all_links(driver)
+    LOGGER.info("Saving Mexico to Central America")
     save_into_db_MX('MX', data_MX)
+    LOGGER.info("MX sucesfully saved into the databse")
 
     #create obj driver and set belize as first url
     driver = create_driver()
+    LOGGER.info(f'Beginning parsing for Belize')
     wiki_visa = wiki_visa_parser(wiki_visa_url_BZ, driver)
     visa_BZ = wiki_visa.visa_parser_table()
     visa_BZ = replace_key_by_iso(visa_BZ)
+    LOGGER.success(f'Following data was retrieved: {visa_BZ}')
 
     #Dominica
     driver.close()
     driver = create_driver()
+    LOGGER.info(f'Beginning parsing for Dominica')
     wiki_visa = wiki_visa_parser(wiki_visa_url_DM, driver)
     visa_DM = wiki_visa.visa_parser_table()
     visa_DM = replace_key_by_iso(visa_DM)
+    LOGGER.success(f'Following data was retrieved: {visa_DM}')
 
     #Dominican Republic
     driver.close()
     driver = create_driver()
+    LOGGER.info(f'Beginning parsing for Dominican Republic')
     wiki_visa = wiki_visa_parser(wiki_visa_url_DO, driver)
     visa_DO = wiki_visa.visa_parser_table()
     visa_DO = replace_key_by_iso(visa_DO)
+    LOGGER.success(f'Following data was retrieved: {visa_DO}')
 
     #Panama
     driver.close()
     driver = create_driver()
+    LOGGER.info(f'Beginning parsing for Panama')
     wiki_visa = wiki_visa_parser(wiki_visa_url_PA, driver)
     visa_PA = wiki_visa.visa_parser_table()
     visa_PA = replace_key_by_iso(visa_PA)
+    LOGGER.success(f'Following data was retrieved: {visa_PA}')
 
     driver.quit()
 

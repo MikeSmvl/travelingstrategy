@@ -10,10 +10,18 @@ from selenium.webdriver.chrome.options import Options
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from lib.database import Database
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 def get_url_of_countries_nz(driver):
     info = {}
+    LOGGER.info('Retrieving URL of all countries for New Zealand')
     try:
         #this is the link to the first page
         url = 'https://safetravel.govt.nz/travel-advisories-destination'
@@ -47,6 +55,7 @@ def get_url_of_countries_nz(driver):
 
 
 def save_to_new_zealand():
+    LOGGER.info("Begin parsing and saving for New Zealand table...")
     driver = create_driver()
     
     data = {} #Used to store of all the parsed data of each country
@@ -135,7 +144,10 @@ def save_into_db(data):
         name = data[country].get('name')
         advisory = data[country].get('advisory-text')
         visa = data[country].get('visa-info')
+        LOGGER.info(f"Parsing {name} to insert into NZ table with the following information: {visa_info}. {advisory_text}")
         db.insert("NZ",iso,name,advisory,visa)
+        LOGGER.success{f'{name} sucesfully saved to the database.'}
+
     db.close_connection()
 
 save_to_new_zealand()

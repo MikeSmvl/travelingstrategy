@@ -48,6 +48,7 @@ def save_to_caribbea():
   wiki_visa = wiki_visa_parser(wiki_visa_url_AG, driver)
   visa_AG = wiki_visa.visa_parser_table()
   visa_AG = replace_key_by_iso(visa_AG)
+  LOGGER.success(f'Following data was retrieved: {visa_AG}')
   driver.close()
 
   # Barbados

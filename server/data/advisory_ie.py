@@ -11,7 +11,15 @@ from selenium.webdriver.common.keys import Keys
 import helper_class.chrome_driver as driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from lib.database import Database
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database(sqlite_db)
 
 #Find all the urls to each country from the
 #irish gov website
@@ -154,6 +162,7 @@ def save_into_db(data):
         advisory = data[country].get('advisory-text').replace('"', '')
         visa = data[country].get('visa-info')
         db.insert("IE",iso,name,advisory,visa)
+        LOGGER.success(f"{name} was sucefuly save into the IE table with the following information: {visa}. {advisory_text}")
     db.close_connection()
 
 
@@ -162,6 +171,7 @@ def save_into_db(data):
 #for the visa info half comes from wiki
 def find_all_ireland():
 
+    LOGGER.info("Begin parsing and saving for Ireland...")
     my_driver = driver.create_driver()
 
     all_url = find_all_url(my_driver)

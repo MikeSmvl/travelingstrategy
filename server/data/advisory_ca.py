@@ -9,7 +9,15 @@ from retry import retry
 from lib.database import Database
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.chrome_driver import create_driver, quit_driver
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from bs4 import BeautifulSoup
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database(sqlite_db)
 
 #in the file provided h3 is a sign that a new data type starts
 #if the header list is empty then the data is still part of the
@@ -60,6 +68,7 @@ def MyBeautifulSoup(entry_exit_html, data_type):
 #get the name and abreviation of all countries
 #the canadian gotv has data on
 def get_all_countries():
+  LOGGER.info("Retrieving URL of all countries for Canada")
     all_countries = {}
     with urllib.request.urlopen("https://data.international.gc.ca/travel-voyage/index-alpha-eng.json") as url:
         all_countries = json.loads(url.read().decode())
@@ -165,6 +174,7 @@ def advisory_canada(all_countries):
 #and in the sqlite db
 def save_to_canada():
 
+    LOGGER.info("Begin parsing and saving for Canada table...")
     db = Database("countries.sqlite")
     db.drop_table("CA")
     db.add_table("CA", country_iso="text", name="text", advisory_text="text", visa_info="text")
@@ -179,9 +189,9 @@ def save_to_canada():
         name = countries_data[country].get('name')
         advisory = countries_data[country].get('advisory-text')
         visa = countries_data[country].get('visa-info')
-
+        LOGGER.info(f"Parsing {name} to insert into CA table with the following information: {visa}. {advisory}")
         db.insert("CA",iso,name,advisory,visa)
-
+        LOGGER.info(f"Succesfully saved {name} into CA table")
     db.close_connection()
 
     #saving the data in json file

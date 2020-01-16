@@ -8,8 +8,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from lib.database import Database
 
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database(sqlite_db)
 
 #Get the path of all the pages australia has advisory detail on
 def get_url_of_countries():
@@ -17,7 +24,7 @@ def get_url_of_countries():
     try:
         #this is the link to the first page
         url = 'https://smartraveller.gov.au/countries/pages/list.aspx'
-
+        LOGGER.info("Retrieving URL of all countries for Australia")
         #set up the headless chrome driver
         chrome_options = Options()
         chrome_options.add_argument("--headless")
@@ -126,11 +133,13 @@ def save_into_db(data):
         advisory = data[country].get('advisory-text')
         visa = data[country].get('visa-info')
         db.insert("AU",iso,name,advisory,visa)
+        LOGGER.info(f"{name} was succesfully saved in the AU table")
     db.close_connection()
 
 
 def save_to_australia():
 
+    LOGGER.info("Begin parsing and saving for Australia table...")
     url = get_url_of_countries() #this function create its own driver -- to change
     data = {}
     driver = create_driver()
@@ -147,10 +156,12 @@ def save_to_australia():
         additional_advisory = get_additional_advisory(link,driver)
         advisory_text = advisory_text +additional_advisory
         visa_info = parse_a_country(link,driver,'Visas')
+        LOGGER.info(f"Parsing {name} to insert into AU table with the following information: {visa_info}. {advisory_text}")
         if (visa_info == ''):
             try:
                 visa_info = wiki_visa[name].get('visa')+ "<br>" + visa_info
             except:
+                LOGGER.error(f"No visa info for {name}")
                 print(name)
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}

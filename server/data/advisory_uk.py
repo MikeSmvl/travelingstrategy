@@ -5,13 +5,20 @@ from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from selenium.webdriver.common.by import By
 from lib.database import Database
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 import time
 
 import json
 
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 def get_url_of_countries():
     info = {}
+    LOGGER.info('Retrieving URL of all countries for United Kingdom')
     try:
         #this is the link to the first page
         url = 'https://www.gov.uk/foreign-travel-advice'
@@ -114,6 +121,7 @@ def parse_additional_advisory_info(link, driver):
 
 def save_to_UK():
 
+    LOGGER.info("Begin parsing and saving for United Kingdom table...")
     driver = create_driver()
     wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens"
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
@@ -143,9 +151,13 @@ def save_to_UK():
                     "visa_info": visa_info
                 }
                 array_info.append(info)
+                LOGGER.success(f"{name} was sucefuly save into the UK table with the following information: {visa}. {advisory_text}")
                 db.insert("GB",iso,name,advisory,visa_info)
+                LOGGER.success{f'{name} sucesfully saved to the database.'}
             except KeyError:
+                LOGGER.error(f'This country doesn\'t have advisory info: {country}')
                 print("This country doesn't have advisory info: ",country)
+                LOGGER.info(f'Its ISO is {iso}')
                 print("Its ISO is: ",iso)
 
     db.close_connection()
