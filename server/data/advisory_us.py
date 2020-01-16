@@ -130,7 +130,7 @@ def save_into_db(data):
         name = data[country].get('name')
         advisory = data[country].get('advisory-text')
         visa = data[country].get('visa-info')
-        LOGGER.success(f"{name} was sucefuly save into the US table with the following information: {visa}. {advisory_text}")
+        LOGGER.success(f"Saving {name} into the US table with the following information: {visa}. {advisory_text}")
         db.insert("US",iso,name,advisory,visa)
         LOGGER.success{f'{name} sucesfully saved to the database.'}
     db.close_connection()

@@ -151,7 +151,7 @@ def save_to_UK():
                     "visa_info": visa_info
                 }
                 array_info.append(info)
-                LOGGER.success(f"{name} was sucefuly save into the UK table with the following information: {visa}. {advisory_text}")
+                LOGGER.success(f"Saving {name} into the UK table with the following information: {visa}. {advisory_text}")
                 db.insert("GB",iso,name,advisory,visa_info)
                 LOGGER.success{f'{name} sucesfully saved to the database.'}
             except KeyError:

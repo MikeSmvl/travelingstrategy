@@ -5,6 +5,13 @@ import pandas as pd
 import sqlite3
 from helper_class.country_names import find_iso_of_country
 import pycountry
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 def remove_duplicate_countries():
     #accessing excel sheet as dataframes
@@ -47,6 +54,7 @@ def get_countries_sockets():
     return arrayOfInfo
 
 def save_electrical_sockets():
+    LOGGER.info("Begin parsing and saving for electrical sockets table...")
     con  = sqlite3.connect('../countries.sqlite')
     cur = con.cursor()
     # should not create the table every time
@@ -63,8 +71,9 @@ def save_electrical_sockets():
         plug_type = country.get('plug_type')
         electric_potential = country.get('electric_potential')
         frequency = country.get('frequency')
-        print(country)
+        LOGGER.success(f"Saving {country_name} into the electrical sockets table with the following information: {plug_type}, {electric_potential}, and {frequency}")
         cur.execute('INSERT INTO sockets (country_iso,country_name,plug_type,electric_potential,frequency) values( ?, ?, ?, ?, ?)',(country_iso,country_name,plug_type,electric_potential,frequency))
+        LOGGER.success(f'{country_name} successfully saved to the database.')
     con.commit()
     con.close()
 
