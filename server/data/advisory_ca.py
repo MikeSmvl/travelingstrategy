@@ -17,7 +17,6 @@ from bs4 import BeautifulSoup
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
-DB = Database(sqlite_db)
 
 #in the file provided h3 is a sign that a new data type starts
 #if the header list is empty then the data is still part of the

@@ -19,7 +19,6 @@ from lib.database import Database
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
-DB = Database(sqlite_db)
 
 #Find all the urls to each country from the
 #irish gov website
@@ -163,7 +162,7 @@ def save_into_db(data):
         visa = data[country].get('visa-info')
         LOGGER.success(f"Saving {name} into the IE table with the following information: {visa}. {advisory_text}")
         db.insert("IE",iso,name,advisory,visa)
-        LOGGER.success(f'{save} was sucesfully saved into the database')
+        LOGGER.success(f'{save} was successfully saved into the database')
     db.close_connection()
 
 

@@ -13,7 +13,6 @@ from lib.database import Database
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
-DB = Database(sqlite_db)
 
 def save_into_db(tableName, data):
     # create an an sqlite_advisory object

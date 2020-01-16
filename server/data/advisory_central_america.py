@@ -23,7 +23,6 @@ from helper_class.en_vs_es_country_names import get_iso_es
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
-DB = Database(sqlite_db)
 
 def save_into_db_MX(tableName, data):
     # create an an sqlite_advisory object

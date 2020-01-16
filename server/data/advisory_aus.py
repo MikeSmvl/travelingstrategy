@@ -16,7 +16,6 @@ from lib.database import Database
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
-DB = Database(sqlite_db)
 
 #Get the path of all the pages australia has advisory detail on
 def get_url_of_countries():
@@ -173,4 +172,4 @@ def save_to_australia():
 
     save_into_db(data)
 
-
+save_to_australia()
