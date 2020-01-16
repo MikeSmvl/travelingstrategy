@@ -105,7 +105,7 @@ def save_cities_timezones():
         utc_offset = city_info["utc_offset"]
         LOGGER.success(f"{country_name} was sucefuly save into the timezone table with the following information: {country_iso} and {timezone}")
         db.insert("timezones",city, country_name, country_iso, timezone, lat, lng, utc_offset)
-        LOGGER.success{f'{name} successfully saved to the database.'}
+        LOGGER.success{f'{country_name} successfully saved to the database.'}
     db.close_connection()
 
 

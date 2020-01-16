@@ -144,9 +144,9 @@ def save_into_db(data):
         name = data[country].get('name')
         advisory = data[country].get('advisory-text')
         visa = data[country].get('visa-info')
-        LOGGER.info(f"Saving {name} to insert into NZ table with the following information: {visa_info}. {advisory_text}")
+        LOGGER.info(f"Saving {name} to insert into NZ table with the following information: {visa}. {advisory}")
         db.insert("NZ",iso,name,advisory,visa)
-        LOGGER.success{f'{name} sucesfully saved to the database.'}
+        LOGGER.success(f'{name} sucesfully saved to the database.')
 
     db.close_connection()
 

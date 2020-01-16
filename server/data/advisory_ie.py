@@ -160,9 +160,9 @@ def save_into_db(data):
         name = data[country].get('name')
         advisory = data[country].get('advisory-text').replace('"', '')
         visa = data[country].get('visa-info')
-        LOGGER.success(f"Saving {name} into the IE table with the following information: {visa}. {advisory_text}")
+        LOGGER.success(f"Saving {name} into the IE table with the following information: {visa}. {advisory}")
         db.insert("IE",iso,name,advisory,visa)
-        LOGGER.success(f'{save} was successfully saved into the database')
+        LOGGER.success(f'{name} was successfully saved into the database')
     db.close_connection()
 
 

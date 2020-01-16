@@ -44,7 +44,7 @@ def save_to_MU():
 
     db.close_connection()
 
-    LOGGER.success(f'Mauritius was sucessfully saved to the database with the following information: {visa_info}. {advisory}.')
+    LOGGER.success(f'Mauritius was sucessfully saved to the database with the following information: {visa}. {advisory}.')
     quit_driver(driver)
 
     with open('./advisory-mu.json', 'w') as outfile:
