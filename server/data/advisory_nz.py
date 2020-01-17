@@ -46,47 +46,6 @@ def get_url_of_countries_nz(driver):
     return info
 
 
-def save_to_new_zealand():
-    driver = create_driver()
-    
-    data = {} #Used to store of all the parsed data of each country
-    url = get_url_of_countries_nz(driver) #this function create its own driver -- to change
-    wiki_visa_url = "https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens"
-    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver) 
-    visas = wiki_visa_ob.visa_parser_table()# Used to acquire visa info of each country
-    
-    counter_country = 0
-    for country in url: #iterates through urls to retrieve advisory information
-        driver.implicitly_wait(5)
-        name = country
-        href = url[country].get("href")
-
-        link = "https://safetravel.govt.nz/{}".format(href,sep='')
-        advisory = parse_a_country_advisory(link,driver) 
-
-        visa_text= ""
-        for countryVisa in visas: # iterates through list of visas to retrieve visas
-            if(countryVisa ==  country):
-               visa_text = visas[countryVisa].get('visa')
-               del visas[countryVisa]
-               break;
-
-        country_iso = "na"
-        data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory,'visa-info':visa_text}
-        
-
-        if ((counter_country%50) == 0):
-            quit_driver(driver)
-            driver = create_driver()
-        counter_country += 1
-      
-    data = find_all_iso(data)#Sets iso for each country
-
-    with open('./advisory-nz.json', 'w') as outfile:
-        json.dump(data, outfile)
-
-    save_into_db(data)
-
 
 #Gets passed url and retrives relevant additional advisory info
 def parse_a_country_advisory(url, driver):
@@ -132,6 +91,50 @@ def parse_a_country_advisory(url, driver):
             warning = warning+ '<li>' + temp
 
     return warning+'</ul>'
+
+
+
+def save_to_new_zealand():
+    driver = create_driver()
+    
+    data = {} #Used to store of all the parsed data of each country
+    url = get_url_of_countries_nz(driver) #this function create its own driver -- to change
+    wiki_visa_url = "https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens"
+    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver) 
+    visas = wiki_visa_ob.visa_parser_table()# Used to acquire visa info of each country
+    
+    counter_country = 0
+    for country in url: #iterates through urls to retrieve advisory information
+        driver.implicitly_wait(5)
+        name = country
+        href = url[country].get("href")
+
+        link = "https://safetravel.govt.nz/{}".format(href,sep='')
+        advisory = parse_a_country_advisory(link,driver) 
+
+        visa_text= ""
+        for countryVisa in visas: # iterates through list of visas to retrieve visas
+            if(countryVisa ==  country):
+               visa_text = visas[countryVisa].get('visa')
+               del visas[countryVisa]
+               break;
+
+        country_iso = "na"
+        data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory,'visa-info':visa_text}
+        
+
+        if ((counter_country%50) == 0):
+            quit_driver(driver)
+            driver = create_driver()
+        counter_country += 1
+      
+    data = find_all_iso(data)#Sets iso for each country
+
+    with open('./advisory-nz.json', 'w') as outfile:
+        json.dump(data, outfile)
+
+    save_into_db(data)
+
 
 
 def save_into_db(data):
