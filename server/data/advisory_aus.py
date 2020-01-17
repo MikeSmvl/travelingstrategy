@@ -134,26 +134,13 @@ def regional_advice_level(driver,url):
     #Selenium hands the page source to Beautiful Soup
     data_type = "Advice levels"
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    findheaders = soup.find_all(regex.compile(r'(h2|p|div)'))
-    data_found = False
-    data_text = ""
-    previous_text = ""
-    count = 0
-    for ele in findheaders:
-        txt = ele.text.strip()
-        if (txt == data_type):
-            #if we are in the appropriate header
-            #else we continue until we find it
-            data_found = True
-
-        elif((ele.name == 'h2') & data_found):
-            data_found = False
-
-        elif ((ele.name == 'p') & data_found):
-            data_text += "<br>"+txt
-            previous_text = txt
-
-    return data_text
+    div = soup.find_all('div', attrs={'class':'clearfix text-formatted field field--name-field-location field--type-text-long field--label-hidden field__item'})
+    data = []
+    for ele in div:
+        txt = ele.text
+        data.append(txt)
+        print(txt)
+    return data
 
 
 
@@ -206,5 +193,7 @@ def all_unsafe_areas():
     with open('unsafe-areas-au.json', 'w') as fp:
         json.dump(data, fp)
 
-save_to_australia()
-
+# save_to_australia()
+driver = create_driver()
+data = regional_advice_level(driver,"https://www.smartraveller.gov.au/destinations/africa/mali")
+quit_driver(driver)

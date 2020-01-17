@@ -67,12 +67,15 @@ def get_regional_advisories(url,driver):
             return data
         else:
             data = "There is no regional advisory, take security precautions based on the general advisory for this country."
+            # h3 = avoid_all.find('h3').text
+            # more_info = avoid_all.find('p').text
+            # data = data + "<br/>" + h3 + "<br/>" + more_info
             return data
 
     for adv in regional_adv:
-        h3 = adv.find('h3').text
-        more_info = adv.find('p').text
-        data = data + "<br/>" + h3 + "<br/>" + more_info
+        data = data + "<br/>"+adv.find('h3').text
+        # more_info = adv.find('p').text
+        # data = data + "<br/><b >" + h3 + "</b><br/>" + more_info
 
     return data
 
@@ -113,3 +116,7 @@ def get_all_regional_advisories():
     quit_driver(driver)
 
 get_all_regional_advisories()
+# driver = create_driver()
+# data = get_regional_advisories("https://travel.gc.ca/destinations/mali",driver)
+# print(data)
+# quit_driver(driver)
