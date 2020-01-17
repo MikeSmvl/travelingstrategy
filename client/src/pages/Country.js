@@ -348,7 +348,11 @@ function Country({
 										style={{ padding: '5px 25px' }}
 									>
 										<Col xs="10" sm="4">
-											<Card header="Drug Laws">
+											<Card 
+											header="Drug Laws"
+											className="scrolling-card"
+											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											>
 												<CardBody>
 													<pre>
 														<strong>canabais_recreational:</strong> {JSON.stringify(canabais_recreational).replace(/(^")|("$)/g,'')}
