@@ -330,47 +330,6 @@ function Country({
 										style={{ padding: '5px 25px' }}
 									>
 										<Col xs="10" sm="4">
-											<Card header="Traffic Flow">
-												<CardBody>
-													{trafficSide !== 'Not available yet'
-														&& (
-															<p>
-													In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
-																<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
-															</p>
-														)}
-													<Divider />
-													{trafficSide !== 'Not available yet'
-														&& (
-															<img
-																key={trafficSide}
-																src={require(`../trafficImages/${trafficSide}.png`)}
-																style={{ width: '200px' }}
-																alt=""
-															/>
-														)}
-													{trafficSide !== 'Not available yet'
-														&& (
-															<p style={{ textAlign: 'center' }}>
-																<br />
-																<b style={{ color: '#FF1C00' }}>
-														Warning
-																</b><br />
-														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
-															</p>
-														)}
-												</CardBody>
-											</Card>
-										</Col>
-									</Row>
-								</div>
-								<div className="section">
-									<Subtitle text="Health & Safety" />
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
 											<Card header="Drug Laws">
 												<CardBody>
 													<pre>
@@ -409,7 +368,43 @@ function Country({
 												</CardBody>
 											</Card>
 										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Traffic Flow">
+												<CardBody>
+													{trafficSide !== 'Not available yet'
+														&& (
+															<p>
+													In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
+																<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
+															</p>
+														)}
+													<Divider />
+													{trafficSide !== 'Not available yet'
+														&& (
+															<img
+																key={trafficSide}
+																src={require(`../trafficImages/${trafficSide}.png`)}
+																style={{ width: '200px' }}
+																alt=""
+															/>
+														)}
+													{trafficSide !== 'Not available yet'
+														&& (
+															<p style={{ textAlign: 'center' }}>
+																<br />
+																<b style={{ color: '#FF1C00' }}>
+														Warning
+																</b><br />
+														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
+															</p>
+														)}
+												</CardBody>
+											</Card>
+										</Col>
 									</Row>
+								</div>
+								<div className="section">
+									<Subtitle text="Health & Safety" />
 								</div>
 							</ReactFullpage.Wrapper>
 						);
