@@ -41,7 +41,16 @@ function Country({
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
-	const [meth_possession, setMeth_possession] = useState({});
+	const [canabais_medical, setCanabais_medical] = useState({});
+	const [canabais_recreational, setCanabais_recreational] = useState({});
+	const [cocaine_possession, setCocaine_possession] = useState({});
+	const [cocaine_sale, setCocaine_sale] = useState({});
+	const [cocaine_transport, setCocaine_transport] = useState({});
+	const [cocaine_cultivation, setCocaine_cultivation] = useState({});
+	const [methaphetamine_possession, setMethaphetamine_possession] = useState({});
+	const [methaphetamine_sale, setMethaphetamine_sale] = useState({});
+	const [methaphetamine_transport, setMethaphetamine_transport] = useState({});
+	const [methaphetamine_cultivation, setMethaphetamine_cultivation] = useState({});
 	const [rate, setRate] = useState('');
 
 	useEffect(() => {
@@ -149,7 +158,16 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
-					(res.data.drugs && res.data.drugs.length !== 0) && setMeth_possession(res.data.drugs[0].methaphetamine_possession);
+					(res.data.drugs && res.data.drugs.length !== 0) && setCanabais_medical(res.data.drugs[0].canabais_medical);
+					(res.data.drugs && res.data.drugs.length !== 0) && setCanabais_recreational(res.data.drugs[0].canabais_recreational);
+					(res.data.drugs && res.data.drugs.length !== 0) && setCocaine_sale(res.data.drugs[0].cocaine_sale);
+					(res.data.drugs && res.data.drugs.length !== 0) && setCocaine_transport(res.data.drugs[0].cocaine_transport);
+					(res.data.drugs && res.data.drugs.length !== 0) && setCocaine_possession(res.data.drugs[0].cocaine_possession);
+					(res.data.drugs && res.data.drugs.length !== 0) && setCocaine_cultivation(res.data.drugs[0].cocaine_cultivation);
+					(res.data.drugs && res.data.drugs.length !== 0) && setMethaphetamine_sale(res.data.drugs[0].methaphetamine_sale);
+					(res.data.drugs && res.data.drugs.length !== 0) && setMethaphetamine_transport(res.data.drugs[0].methaphetamine_transport);
+					(res.data.drugs && res.data.drugs.length !== 0) && setMethaphetamine_possession(res.data.drugs[0].methaphetamine_possession);
+					(res.data.drugs && res.data.drugs.length !== 0) && setMethaphetamine_cultivation(res.data.drugs[0].methaphetamine_cultivation);
 					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
@@ -333,37 +351,34 @@ function Country({
 											<Card header="Drug Laws">
 												<CardBody>
 													<pre>
-														<strong>Name: </strong> {JSON.stringify(meth_possession).replace(/(^")|("$)/g,'')}
+														<strong>canabais_recreational:</strong> {JSON.stringify(canabais_recreational).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>canabais_recreational:</strong>
+														<strong>canabais_medical:</strong> {JSON.stringify(canabais_medical).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>canabais_medical:</strong>
+														<strong>cocaine_possession:</strong> {JSON.stringify(cocaine_possession).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>cocaine_possession:</strong>
+														<strong>cocaine_sale:</strong> {JSON.stringify(cocaine_sale).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>cocaine_sale:</strong>
+														<strong>cocaine_trasnport:</strong> {JSON.stringify(cocaine_transport).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>cocaine_trasnport:</strong>
+														<strong>cocaine_cultivation:</strong> {JSON.stringify(cocaine_cultivation).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>cocaine_cultivation:</strong>
+														<strong>methaphetamine_possession:</strong> {JSON.stringify(methaphetamine_possession).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>methaphetamine_possession:</strong>
+														<strong>methaphetamine_sale:</strong> {JSON.stringify(methaphetamine_sale).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>methaphetamine_sale:</strong>
+														<strong>methaphetamine_trasnport:</strong> {JSON.stringify(methaphetamine_transport).replace(/(^")|("$)/g,'')}
 													</pre>
 													<pre>
-														<strong>methaphetamine_trasnport:</strong>
-													</pre>
-													<pre>
-														<strong>methaphetamine_cultivation:</strong>
+														<strong>methaphetamine_cultivation:</strong> {JSON.stringify(methaphetamine_cultivation).replace(/(^")|("$)/g,'')}
 													</pre>
 												</CardBody>
 											</Card>
