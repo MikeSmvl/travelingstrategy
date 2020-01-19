@@ -31,33 +31,6 @@ const CardBody = (props) => {
 	);
 };
 
-const VaccineCardBody = (props) => {
-	const { children, title = '', subtitle = '', info,...rest} = props;
-	const [showVaccineInfo, setShowVaccineInfo] = useState(false);
-	const [titleColor, setTitleColor] = useState("#FF9A8D");
-	return (
-		<RBCard.Body {...rest} className="TScardBody" >
-			{title && <b >
-			<p class ="card-text" style={{color: titleColor}}
-				onClick = {() => {setShowVaccineInfo(!showVaccineInfo);}}
-			  onMouseEnter = {() => {
-				//setShowVaccineInfo(!showVaccineInfo);
-				setTitleColor("#FF1C00")}}
-				onMouseLeave = {() => {
-					setShowVaccineInfo(false);
-					setTitleColor("#FF9A8D")}}>{title}</p></b>}
-			{subtitle && (
-				<RBCard.Subtitle className="mb-2 text-muted">
-					{subtitle}
-				</RBCard.Subtitle>
-			)}
-			<RBCard.Text>{children}
-				{showVaccineInfo && <p dangerouslySetInnerHTML={{ __html: info }}/>}
-			</RBCard.Text>
-		</RBCard.Body>
-	);
-};
-
 const Divider = () => {
 	return <hr className="cardDivider" />;
 };
@@ -69,4 +42,4 @@ Card.propTypes = {
 	subtitle: PropTypes.string
 };
 
-export { Card, CardBody,VaccineCardBody, Divider };
+export { Card, CardBody,Divider };

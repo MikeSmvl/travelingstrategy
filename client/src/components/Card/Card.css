@@ -17,3 +17,43 @@
 .cardDivider {
 	color: rgb(134, 134, 146);
 }
+
+.tablinks {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+	font-size: 17px;
+	color: #FF9A8D;
+}
+
+.tablinks:hover {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+	font-size: 17px;
+	color: #FF1C00;
+}
+
+.tablinks:focus {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 14px 16px;
+	transition: 0.3s;
+	font-size: 17px;
+	color: #FF1C00;
+}
+

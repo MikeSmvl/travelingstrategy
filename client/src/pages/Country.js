@@ -11,6 +11,7 @@ import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
+import { Card as RBCard } from 'react-bootstrap';
 import '../App.css';
 
 
@@ -44,6 +45,7 @@ function Country({
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
 	const [rate, setRate] = useState('');
+	const [vaccineCard, setVaccinCard] = useState('');
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -358,19 +360,34 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
 									<Col xs="10" sm="4">
 										<Card header="Vaccines">
-      												{vaccines.map((value, index) => {
-														return <VaccineCardBody xs="10" sm="4"
-														title = {value.vaccine_name}
-														info = {value.vaccine_info} >
 
+											<CardBody>
+												<Row className="justify-content-center"
+														style={{ padding: '0px 0px' }}>
 
-															</VaccineCardBody>
-      												})}
+													  {vaccines.map((value, index) => {
+														  return <button class='tablinks'
+														  			onClick={()=>setVaccinCard(value.vaccine_info)}>
+														  {value.vaccine_name}</button>
+													  })}</Row>
+
+													  <Divider/> <br/>
+													  <Row className="justify-content-center"
+													  		style={{ padding: '0px 25px'}}>
+													  <p dangerouslySetInnerHTML={{ __html: vaccineCard }}/>
+													  </Row>
+												</CardBody>
 										</Card>
 									</Col>
+									</Row>
 								</div>
+
 							</ReactFullpage.Wrapper>
 						);
 					}}

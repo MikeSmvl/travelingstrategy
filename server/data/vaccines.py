@@ -63,14 +63,19 @@ def parse_one_country_vaccine(url,country):
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
     # table_row = soup.find_all
+    count = 0
     for tbody in soup.findAll('tbody'):
         for row in tbody.findAll('tr'):
             name = row.find('td',{"class": "traveler-disease"})
             info = row.find('td',{"class": "traveler-findoutwhy"})
             if name and info:
                 name = name.text.strip('/\n')
-                info = info.text.replace('\n','<br>')
+                if count == 0:
+                    info = info.text.replace('\n','')
+                else:
+                    info = info.text.replace('\n',' ')
                 vaccines[name] = info
+                count = count+1
 
     quit_driver(driver)
     save_one_country(vaccines,country)
