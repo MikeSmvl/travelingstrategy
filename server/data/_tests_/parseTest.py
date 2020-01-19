@@ -275,13 +275,13 @@ class parseTest(unittest.TestCase):
         self.assertFalse("", wiki_visa)
     
     def test_mu_parse_visa_wiki(self):
-        # tests parsing visa from wiki for ie
+        # tests parsing visa from wiki for mu
         driver = create_driver()
         wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
         self.assertFalse("", wiki_visa)
-
+   
 if __name__ == '__main__':
     unittest.main()
