@@ -26,28 +26,57 @@ for country in iso_list:
 
         # Scrape United Nations data endpoint with Pandas
         data_tables = pd.read_html(information_link, index_col=0)
+
         # Pick specific dataframe that will always be the third index
-        data_table = data_tables[3]
-        LOGGER.info(f'Parsing returned following dataframe: {data_table}')
+        data_table_social = data_tables[3]
+        LOGGER.info(f'Parsing returned following dataframe: {data_table_social}')
 
-        # Get data of latest year (last column)
-        latest_year = data_table.columns[-1]
+        # Get latest year
+        latest_year_social = data_table_social.columns[-1]
+        LOGGER.info(f'Parsing returned following year: {latest_year_social}')
 
-        # Data of latest year
-        data = data_table.iloc[:,-1]
+        # Get data of latest year
+        social_data = data_table_social.iloc[:,-1]
+        LOGGER.info(f'Parsing returned following year data: {social_data}')
 
-        lifeExpectancy_object = data[data.index.str.startswith('Population growth rate')]
-        lifeExpectancy = next(iter(data), 'no match')
+        lifeExpectancy_object = social_data[social_data.index.str.startswith('Life expectancy')]
+        lifeExpectancy = next(iter(lifeExpectancy_object), 'no match')
+        LOGGER.success(f'Following currency data was retrieved: {lifeExpectancy}')
 
-        print(lifeExpectancy)
-        # LOGGER.success(f'Following currency data was retrieved: {}')
+        infantMortality_object = social_data[social_data.index.str.startswith('Infant mortality')]
+        infantMortality = next(iter(infantMortality_object), 'no match')
+        LOGGER.success(f'Following currency data was retrieved: {infantMortality}')
 
-        # for k, v in data.items():
-        #     if v is None:
-        #         data[k] = "None"
+        nbOfPhysicians_object = social_data[social_data.index.str.startswith('Health: Physicians')]
+        nbOfPhysicians = next(iter(nbOfPhysicians_object), 'no match')
+        LOGGER.success(f'Following currency data was retrieved: {nbOfPhysicians}')
 
-        # LOGGER.info('Inserting data into database.')
-        # DB.insert_or_update('currencies', country, data['name'], data['code'], data['symbol'])
+        homicideRate_object = social_data[social_data.index.str.startswith('Intentional homicide rate')]
+        homicideRate = next(iter(homicideRate_object), 'no match')
+        LOGGER.success(f'Following currency data was retrieved: {homicideRate}')
+
+        # Pick specific dataframe that will always be the fourth index
+        data_table_env = data_tables[4]
+        LOGGER.info(f'Parsing returned following dataframe: {data_table_env}')
+
+        # Get latest year
+        latest_year_env = data_table_env.columns[-1]
+        LOGGER.info(f'Parsing returned following year: {latest_year_env}')
+
+        # Get data of latest year
+        env_data = data_table_env.iloc[:,-1]
+        LOGGER.info(f'Parsing returned following year data: {env_data}')
+
+        sanitation_object = env_data[env_data.index.str.startswith('Pop. using improved sanitation')]
+        sanitation = next(iter(sanitation_object), 'no match')
+        LOGGER.success(f'Following currency data was retrieved: {sanitation}')
+
+        water_object = env_data[env_data.index.str.startswith('Pop. using improved drinking water')]
+        water = next(iter(water_object), 'no match')
+        LOGGER.success(f'Following currency data was retrieved: {water}')
+
+        LOGGER.info('Inserting data into database.')
+        DB.insert_or_update('un', country, lifeExpectancy, infantMortality, nbOfPhysicians, homicideRate, sanitation, water)
 
     except Exception as error_msg:
         LOGGER.error(f'Could not get currency data for {country} because of the following error: {error_msg}')
