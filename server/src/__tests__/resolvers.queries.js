@@ -323,3 +323,36 @@ it("Querying traffic table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+// test for drugs
+it("Querying Drug table for Canada", () =>{
+  const query = `
+  {
+    drugs(country_iso:"CA") {
+      country_iso,
+      name,
+      methaphetamine_possession,
+      methaphetamine_sale,
+      methaphetamine_transport,
+      methaphetamine_cultivation,
+      cocaine_possession,
+      cocaine_sale,
+      cocaine_transport,
+      cocaine_cultivation,
+      canabais_recreational,
+      canabais_medical
+    }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
