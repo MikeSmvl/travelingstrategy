@@ -68,6 +68,3 @@ typings/
 
 # python unittest
 __pycache__
-
-# file that contains google map api
-client/public/index.html
