@@ -26,6 +26,7 @@ latest_year = data_table.columns[1]
 
 for country in iso_list_2:
   try:
+    LOGGER.info(f'Getting emergency contacts data for {country}')
     if str(data_table.iloc[iso_list_2.index(country)][1]) == 'nan':
       police = ''
     else:
@@ -38,8 +39,10 @@ for country in iso_list_2:
       fire = ''
     else:
       fire = data_table.iloc[iso_list_2.index(country)][3]
-    #print(f"{country} {police} {ambulance} {fire}")
+    LOGGER.success(f'Following emergency contacts data was retrieved: {country}: {police} {ambulance} {fire}')
+    LOGGER.info('Inserting data into database.')
     DB.insert_or_update('emergency', country, police, ambulance, fire)
+    LOGGER.success('Data successfully inserted in db')
   except Exception as error_msg:
-    print(error_msg)
+    LOGGER.error(f'Could not get currency data for {country} because of the following error: {error_msg}')
     pass
