@@ -372,9 +372,19 @@ function Country({
 														style={{ padding: '0px 0px' }}>
 
 													  {vaccines.map((value, index) => {
-														  return <button class='tablinks'
-														  			onClick={()=>setVaccinCard(value.vaccine_info)}>
-														  {value.vaccine_name}</button>
+														  if (vaccineCard == '' && index == 0){
+																setVaccinCard(value.vaccine_info)
+														  }
+														  if ((vaccineCard == value.vaccine_info  && index == 0)){
+															return <button class='tablinks' style = {{color: '#FF1C00'}}
+															onClick={()=>setVaccinCard(value.vaccine_info)
+														}>{value.vaccine_name}</button>}
+
+														  else{
+															return <button class='tablinks'
+																		onClick={()=>setVaccinCard(value.vaccine_info)
+																	}>
+														  {value.vaccine_name}</button>}
 													  })}</Row>
 
 													  <Divider/> <br/>
