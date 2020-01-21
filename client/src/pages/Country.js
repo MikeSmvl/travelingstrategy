@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col } from 'react-bootstrap/';
+import { Row, Col, Table } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
@@ -11,6 +11,7 @@ import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
+import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison'
 import '../App.css';
 
 function Country({
@@ -42,6 +43,8 @@ function Country({
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
 	const [rate, setRate] = useState('');
+	const [destinationHealth, setDestinationHealth] = useState({});
+	const [originHealth, setOriginHealth] = useState({});
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -116,6 +119,22 @@ function Country({
 						trafficSide(iso:"${destinationCountry}"){
 							traffic_side
 						}
+						destinationHealth:unitedNations(country:"${destinationCountry}"){
+							homicideRate
+							infantMortality
+							lifeExpectancy
+							nbOfPhysicians
+							sanitation
+							water
+						}
+						originHealth:unitedNations(country:"${originCountry}"){
+							homicideRate
+							infantMortality
+							lifeExpectancy
+							nbOfPhysicians
+							sanitation
+							water
+						}
 					}`
 				})
 			})
@@ -134,6 +153,8 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
+					(res.data.destinationHealth && res.data.destinationHealth.length !== 0) && setDestinationHealth(res.data.destinationHealth[0]);
+					(res.data.originHealth && res.data.originHealth.length !== 0) && setOriginHealth(res.data.originHealth[0]);
 					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
@@ -350,6 +371,40 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Col xs="10" sm="4">
+									<Card header="Currency">
+										<CardBody>
+											<Table striped bordered hover>
+												<tbody>
+													<tr>
+														<td><strong>Homicide Rate</strong></td>
+														<td>{destinationHealth.homicideRate} <span style={{color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Infant Mortality (Per 1000)</strong></td>
+														<td>{destinationHealth.infantMortality} <span style={{color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Life Expectancy (f/m, years)</strong></td>
+														<td>{destinationHealth.lifeExpectancy} <span style={{color: 'blue'}}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Number of physicians (Per 1000)</strong></td>
+														<td>{destinationHealth.nbOfPhysicians} <span style={{color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
+													</tr>
+													<tr>
+															<td><strong>Sanitation (urban/rural, %)</strong></td>
+															<td>{destinationHealth.sanitation} <span style={{color: 'blue'}}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
+													</tr>
+													<tr>
+															<td><strong>Water (urban/rural, %)</strong></td>
+															<td>{destinationHealth.water}  <span style={{color: 'blue'}}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
+													</tr>
+												</tbody>
+											</Table>
+										</CardBody>
+									</Card>
+								</Col>
 								</div>
 							</ReactFullpage.Wrapper>
 						);
