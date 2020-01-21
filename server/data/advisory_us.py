@@ -80,10 +80,14 @@ def save_to_united_states():
     
     data = {} #Used to store of all the parsed data of each country
     name_to_advisories ={} #Stores the names and associated advisories
+    LOGGER.info(f'Retrieving visa requirements for all countries for the United States advisory')
+
     name_advisory = get_name_and_advisory_of_countries()
     wiki_visa_url = "https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens"
     wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
     visas = wiki_visa_ob.visa_parser_table()
+    LOGGER.success('Successfully retrieved visa requirements for all countries for the United States advisory')
+
 
     for name in sorted (name_advisory.keys()): #Sorts the dictionary containing  names and advisories
        name_to_advisories[name] = name_advisory[name]
@@ -124,15 +128,19 @@ def save_into_db(data):
     db = Database("countries.sqlite")
     db.drop_table("US")
     db.add_table("US", country_iso="text", name="text", advisory_text="text", visa_info="text")
-
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        advisory = data[country].get('advisory-text')
-        visa = data[country].get('visa-info')
-        LOGGER.success(f"Saving {name} into the US table with the following information: {visa}. {advisory}")
-        db.insert("US",iso,name,advisory,visa)
-        LOGGER.success(f'{name} sucesfully saved to the database.')
+    LOGGER.info('Saving United State table into the database')
+    try:
+        for country in data:
+            iso = data[country].get('country-iso')
+            name = data[country].get('name')
+            advisory = data[country].get('advisory-text')
+            visa = data[country].get('visa-info')
+            LOGGER.info(f"Saving {name} into the US table")
+            db.insert("US",iso,name,advisory,visa)
+            LOGGER.info(f"{name} was succesfully saved into the US table with the following information: {visa}. {advisory}")
+        LOGGER.success('US table has been successfully saved into the databse')
+    except:
+        LOGGER.error('Error has occured while saving the countries into the US table')
     db.close_connection()
 
 save_to_united_states()

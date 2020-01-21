@@ -23,7 +23,7 @@ def get_url_of_countries():
     try:
         #this is the link to the first page
         url = 'https://smartraveller.gov.au/countries/pages/list.aspx'
-        LOGGER.info("Retrieving URL of all countries for Australia")
+        LOGGER.info('Retrieving the URLs for all countries for the Australian advisory')
         #set up the headless chrome driver
         chrome_options = Options()
         chrome_options.add_argument("--headless")
@@ -55,7 +55,12 @@ def get_url_of_countries():
             if (a != None):
                 href = a['href']
                 info[name] = {"href":href,"advisory-text":advisory_text}
+                LOGGER.success(f'Retrieved URL for {name}')
+        LOGGER.success('Successfully retrieved the URLs for all countries of the Australian advisory')
+    except:
+        LOGGER.error('An error has occured while retrieving the URLs for all countries for the Australian advisory')
     finally:
+
         driver.close()
         driver.quit()
 
@@ -74,27 +79,29 @@ def parse_a_country(url,driver,data_type):
     previous_text = ""
     more_info = regex.compile(r'More information:')
     count = 0
-    for ele in findheaders:
-        txt = ele.text.strip()
-        if (txt == data_type):
-            #if we are in the appropriate header
-            #else we continue until we find it
-            data_found = True
+    try:
+        for ele in findheaders:
+            txt = ele.text.strip()
+            if (txt == data_type):
+                #if we are in the appropriate header
+                #else we continue until we find it
+                data_found = True
 
-        elif((ele.name == 'div') & data_found):
-            count += 1
-            #if we reach a new h3 header we set the bool to false
-            #we got all the data that was under the previous h3
-            if count == 2:
-                data_found = False
-                count = 0
+            elif((ele.name == 'div') & data_found):
+                count += 1
+                #if we reach a new h3 header we set the bool to false
+                #we got all the data that was under the previous h3
+                if count == 2:
+                    data_found = False
+                    count = 0
 
-        elif (data_found):
-            if not more_info.match(txt):
-                if not (txt == previous_text):
-                    data_text += "<br>"+txt
-                    previous_text = txt
-
+            elif (data_found):
+                if not more_info.match(txt):
+                    if not (txt == previous_text):
+                        data_text += "<br>"+txt
+                        previous_text = txt
+    except:
+        LOGGER.error(f'An error has occured while parsing')
     return data_text
 
 def get_additional_advisory(url,driver):
@@ -126,13 +133,19 @@ def save_into_db(data):
     db = Database("countries.sqlite")
     db.drop_table("AU")
     db.add_table("AU", country_iso="text", name="text", advisory_text="text", visa_info="text")
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        advisory = data[country].get('advisory-text')
-        visa = data[country].get('visa-info')
-        db.insert("AU",iso,name,advisory,visa)
-        LOGGER.info(f"{name} was succesfully saved in the AU table")
+    LOGGER.info('Saving AU table into the database')
+    try:
+        for country in data:
+            iso = data[country].get('country-iso')
+            name = data[country].get('name')
+            advisory = data[country].get('advisory-text')
+            visa = data[country].get('visa-info')
+            LOGGER.info(f'Saving {name} into the AU table')
+            db.insert("AU",iso,name,advisory,visa)
+            LOGGER.success(f"{name} was succesfully saved in the AU table with the following information: {advisory}. {visa}")
+        LOGGER.success('AU was successfully saved into the databse')
+    except:
+        LOGGER.error(f'An error has occured while saving {name} into the AU table ')
     db.close_connection()
 
 
@@ -142,9 +155,13 @@ def save_to_australia():
     url = get_url_of_countries() #this function create its own driver -- to change
     data = {}
     driver = create_driver()
-    wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
-    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
-    wiki_visa = wiki_visa_ob.visa_parser_table()
+    try:
+        LOGGER.info('Parsing visa requirements for all countries for the Australian advisory')
+        wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+        wiki_visa = wiki_visa_ob.visa_parser_table()
+    except:
+        LOGGER.error('An error has occured while retrieving the visa requirements for all countries for the Australian advisory')
 
     for country in url:
         driver.implicitly_wait(5)
@@ -154,13 +171,14 @@ def save_to_australia():
         link = "https://smartraveller.gov.au{}".format(href,sep='')
         additional_advisory = get_additional_advisory(link,driver)
         advisory_text = advisory_text +additional_advisory
+        LOGGER.info(f"Begin parsing {name} to insert into AU table")
         visa_info = parse_a_country(link,driver,'Visas')
-        LOGGER.info(f"Parsing {name} to insert into AU table with the following information: {visa_info}. {advisory_text}")
+        LOGGER.success(f"The following information was retrieved for {name}: {visa_info}. {advisory_text}")
         if (visa_info == ''):
             try:
                 visa_info = wiki_visa[name].get('visa')+ "<br>" + visa_info
             except:
-                LOGGER.error(f"No visa info for {name}")
+                LOGGER.warning(f"No visa info for {name}")
                 print(name)
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}

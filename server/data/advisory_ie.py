@@ -27,15 +27,18 @@ def find_all_url(my_driver):
     url_main = 'https://www.dfa.ie/travel/travel-advice/'
     my_driver.get(url_main)
     soup = BeautifulSoup(my_driver.page_source, 'lxml')
-
+    LOGGER.info(f'Retrieving the URLs for all countries for Ireland advisory')
     #pattern of the href in the tag
-    reg = regex.compile(r'\/travel\/travel-advice\/a-z-list-of-countries\/\w+\/')
-    a = soup.findAll('a', attrs={'href':reg})
-    for name in a:
-        href = "https://www.dfa.ie"+name['href']
-        url_to_all[name.text] = {"href":href}
-
-    return url_to_all
+    try:
+        reg = regex.compile(r'\/travel\/travel-advice\/a-z-list-of-countries\/\w+\/')
+        a = soup.findAll('a', attrs={'href':reg})
+        for name in a:
+            href = "https://www.dfa.ie"+name['href']
+            url_to_all[name.text] = {"href":href}
+        LOGGER.success('Successfully retrieved all URLs for Ireland advisory')
+        return url_to_all
+    except:
+        LOGGER.error('An error has occured while retrieving URLS for Ireland advisory')
 
 #get the advisory of all countries going from ireland
 def get_one_advisory(url, my_driver, soup):
@@ -155,14 +158,18 @@ def save_into_db(data):
     db = Database("countries.sqlite")
     db.drop_table("IE")
     db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        advisory = data[country].get('advisory-text').replace('"', '')
-        visa = data[country].get('visa-info')
-        LOGGER.success(f"Saving {name} into the IE table with the following information: {visa}. {advisory}")
-        db.insert("IE",iso,name,advisory,visa)
-        LOGGER.success(f'{name} was successfully saved into the database')
+    try:
+        for country in data:
+            iso = data[country].get('country-iso')
+            name = data[country].get('name')
+            advisory = data[country].get('advisory-text').replace('"', '')
+            LOGGER.info(f'Saving {name} into the IE table')
+            visa = data[country].get('visa-info')
+            db.insert("IE",iso,name,advisory,visa)
+            LOGGER.success(f"{name} was saved into the IE table with the following information: {visa}. {advisory}")
+        LOGGER.info('IE table successfully saved to the database')
+    except:
+        LOGGER.error(f'An error has occured while saving {name} into the IE table')
     db.close_connection()
 
 
@@ -176,8 +183,12 @@ def find_all_ireland():
 
     all_url = find_all_url(my_driver)
     data = find_all_iso(all_url)
-    wiki_visa_ob = wiki_visa_parser("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
-    visas = wiki_visa_ob.visa_parser_table()
+    LOGGER.info('Parsing visa requirements for all countries for the Ireland advisory')
+    try:
+        wiki_visa_ob = wiki_visa_parser("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
+        visas = wiki_visa_ob.visa_parser_table()
+    except:
+        LOGGER.error('An error has occured while getting the visa requirements for Ireland advisory')
 
     for country in data:
         c = data[country]
@@ -207,6 +218,7 @@ def find_all_ireland():
                 c['visa-info'] = visas[country].get('visa')+ "<br>" + c['visa-info']
             except Exception as error_msg:
                 print(c, error_msg)
+                LOGGER.warning(f'Error message: {error_msg}')
     #dump the data into js to be deleted later
     driver.quit_driver(my_driver)
     with open('./advisory-ie.json', 'w') as outfile:
