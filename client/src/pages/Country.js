@@ -376,12 +376,12 @@ function Country({
 																setVaccinCard(value.vaccine_info)
 														  }
 														  if ((vaccineCard == value.vaccine_info  && index == 0)){
-															return <button class='tablinks' style = {{color: '#FF1C00'}}
+															return <button className='tablinks' style = {{color: '#FF1C00'}}
 															onClick={()=>setVaccinCard(value.vaccine_info)
 														}>{value.vaccine_name}</button>}
 
 														  else{
-															return <button class='tablinks'
+															return <button className='tablinks'
 																		onClick={()=>setVaccinCard(value.vaccine_info)
 																	}>
 														  {value.vaccine_name}</button>}
