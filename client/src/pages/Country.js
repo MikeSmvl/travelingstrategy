@@ -390,7 +390,8 @@ function Country({
 													  <Divider/> <br/>
 													  <Row className="justify-content-center"
 													  		style={{ padding: '0px 25px'}}>
-													  <p dangerouslySetInnerHTML={{ __html: vaccineCard }}/>
+													  <p dangerouslySetInnerHTML={{ __html: vaccineCard }}
+															 style = {{fontSize: 13 +'px'}}/>
 													  </Row>
 												</CardBody>
 										</Card>
