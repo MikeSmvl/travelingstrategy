@@ -10,10 +10,17 @@ from helper_class.country_names import find_iso_of_country
 import copy
 from lib.database import Database
 from lib.config import sqlite_db
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 
-
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+DB = Database(sqlite_db)
 
 def get_countries_canabaislaw():
+    LOGGER.info("Retrieving information for canabais")
     try:
         # this is the link to the first page
         url = 'https://en.wikipedia.org/wiki/Legality_of_cannabis'
@@ -50,6 +57,7 @@ def get_countries_canabaislaw():
         driver.quit()
 
 def get_countries_cocainelaw():
+    LOGGER.info("Retrieving information for cocaine")
     try:
         # this is the link to the first page
         url = 'https://en.wikipedia.org/wiki/Legal_status_of_cocaine'
@@ -92,6 +100,7 @@ def get_countries_cocainelaw():
         driver.quit()
 
 def get_countries_methaphetaminelaw():
+    LOGGER.info("Retrieving information for methaphetamine")
     try:
         # this is the link to the first page
         url = 'https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine'
@@ -206,4 +215,5 @@ def save_drug_law():
         canabais_recreational =  drug_info[iso].get("canabais_recreational")
         canabais_medical =  drug_info[iso].get("canabais_medical")
 
+        LOGGER.info(f"Parsing {country_name} to insert into drug table with the following information: {canabais_recreational}. {canabais_medical}.{cocaine_possession}.{methaphetamine_possession}")
         DB.insert('drugs', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
