@@ -1,7 +1,7 @@
 import json
 import time
 
-import regex
+import re
 import requests
 from bs4 import BeautifulSoup
 from selenium import webdriver
@@ -73,10 +73,23 @@ def get_regional_advisories(url,driver):
             return data
 
     for adv in regional_adv:
-        data = data + "<br/>"+adv.find('h3').text
-        # more_info = adv.find('p').text
-        # data = data + "<br/><b >" + h3 + "</b><br/>" + more_info
-
+        txt = adv.find('h3').text
+        if re.match('Regional', txt):
+            more_info = adv.findAll(re.compile(r'p|li'))
+            for p in more_info:
+                if not p.text == 'Safety and security situation':
+                    if data == '':
+                        data = p.text.replace('/n',' ')
+                    else:
+                        if p.name =='li':
+                            data = data + "<li>"+ p.text.replace('/n',' ')+"</li>"
+                        else:
+                            data = data + "<br/>"+ p.text.replace('/n',' ')
+        elif data == '':
+            data = adv.find('h3').text
+        else:
+            data = data + "<br/>"+adv.find('h3').text
+    data = data.replace('<br/><br/>', '<br/>')
     return data
 
 #sacve the data in the db
@@ -117,6 +130,6 @@ def get_all_regional_advisories():
 
 get_all_regional_advisories()
 # driver = create_driver()
-# data = get_regional_advisories("https://travel.gc.ca/destinations/mali",driver)
+# data = get_regional_advisories("https://travel.gc.ca/destinations/nigeria",driver)
 # print(data)
 # quit_driver(driver)

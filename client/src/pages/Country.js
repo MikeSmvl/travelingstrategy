@@ -352,10 +352,12 @@ function Country({
 											</Card>
 										</Col>
 										<Col xs="10" sm="4">
-											<Card header = "Unsafe Areas">
+											<Card header = "Unsafe Areas"
+												>
 												<CardBody>
 													<div
 														className="scrolling-card"
+														style={{ maxHeight: '285px', overflow: 'scroll' }}
 														dangerouslySetInnerHTML={{ __html: unsafeAreas }}
 													/>
 												</CardBody>

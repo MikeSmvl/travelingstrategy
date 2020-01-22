@@ -323,3 +323,51 @@ it("Querying traffic table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+//test for unsafe areas Columbia
+it("Querying unsafe_areas Columbia", () =>{
+  const query = `
+  {
+    country_unsafe_areas( country_iso: "MU"){
+      country_iso
+      name
+      unsafe_areas
+    }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+//test for unsafe areas table
+it("Querying unsafe_areas table", () =>{
+  const query = `
+  {
+    unsafe_areas_table {
+      country_iso
+      name
+      unsafe_areas
+    }
+}
+`;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
