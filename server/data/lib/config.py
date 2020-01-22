@@ -57,3 +57,5 @@ wiki_visa_url_TT = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Trinidad
 wiki_visa_url_SG = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Singaporean_citizens'
 wiki_visa_url_MU = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
 
+# vaccines
+vaccine_url = 'https://wwwnc.cdc.gov/travel/destinations/list'
