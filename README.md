@@ -128,7 +128,7 @@ Contributions are what made this project a **reality**.
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [`LICENSE`](https://github.com/MikeSmvl/travelingstrategy/blob/master/LICENSE) for more information.
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
