@@ -350,40 +350,25 @@ function Country({
 										<Col xs="10" sm="4">
 											<Card 
 											header="Drug Laws"
-											className="scrolling-card"
-											style={{ maxHeight: '400px', overflow: 'scroll' }}
 											>
 												<CardBody>
-													<pre>
-														<strong>canabais_recreational:</strong> {JSON.stringify(canabais_recreational).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>canabais_medical:</strong> {JSON.stringify(canabais_medical).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>cocaine_possession:</strong> {JSON.stringify(cocaine_possession).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>cocaine_sale:</strong> {JSON.stringify(cocaine_sale).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>cocaine_trasnport:</strong> {JSON.stringify(cocaine_transport).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>cocaine_cultivation:</strong> {JSON.stringify(cocaine_cultivation).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>methaphetamine_possession:</strong> {JSON.stringify(methaphetamine_possession).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>methaphetamine_sale:</strong> {JSON.stringify(methaphetamine_sale).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>methaphetamine_trasnport:</strong> {JSON.stringify(methaphetamine_transport).replace(/(^")|("$)/g,'')}
-													</pre>
-													<pre>
-														<strong>methaphetamine_cultivation:</strong> {JSON.stringify(methaphetamine_cultivation).replace(/(^")|("$)/g,'')}
-													</pre>
+													<div
+													className="scrolling-card"
+													style={{ maxHeight: '400px', overflow: 'scroll' }}
+													>
+													<p>
+														<strong>Canabais recreational:</strong> {JSON.stringify(canabais_recreational).replace(/(^")|("$)/g,'')}
+													</p>
+													<p>
+														<strong>Canabais medical:</strong> {JSON.stringify(canabais_medical).replace(/(^")|("$)/g,'')}
+													</p>
+													<p>
+														<strong>Cocaine possession:</strong> {JSON.stringify(cocaine_possession).replace(/(^")|("$)/g,'')}
+													</p>
+													<p>
+														<strong>Methaphetamine possession:</strong> {JSON.stringify(methaphetamine_possession).replace(/(^")|("$)/g,'')}
+													</p>
+													</div>
 												</CardBody>
 											</Card>
 										</Col>

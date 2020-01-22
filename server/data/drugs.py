@@ -33,7 +33,9 @@ def get_countries_canabaislaw():
             if(len(table_columns)>0):
                 country_name= table_columns[0].text
                 recreational= table_columns[1].text
+                recreational= re.sub(r'\[\d*\]',' ',recreational.rstrip())
                 medical= table_columns[2].text
+                medical= re.sub(r'\[\d*\]',' ',medical.rstrip())
                 country_iso = find_iso_of_country(country_name)
                 canabais_info = {
                     "name":country_name,
@@ -67,9 +69,13 @@ def get_countries_cocainelaw():
             if(len(table_columns)>0):
                 country_name= table_columns[0].text
                 cocaine_possession= table_columns[1].text
+                cocaine_possession= re.sub(r'\[\d*\]',' ',cocaine_possession.rstrip())
                 cocaine_sale= table_columns[2].text
+                cocaine_sale= re.sub(r'\[\d*\]',' ',cocaine_sale.rstrip())
                 cocaine_transport= table_columns[3].text
+                cocaine_transport= re.sub(r'\[\d*\]',' ',cocaine_transport.rstrip())
                 cocaine_cultivation= table_columns[4].text
+                cocaine_cultivation= re.sub(r'\[\d*\]',' ',cocaine_cultivation.rstrip())
                 country_iso = find_iso_of_country(country_name)
                 cocaine_info = {
                     "name":country_name,
@@ -105,9 +111,13 @@ def get_countries_methaphetaminelaw():
             if(len(table_columns)>0):
                 country_name= table_columns[0].text
                 methaphetamine_possession= table_columns[1].text
+                methaphetamine_possession= re.sub(r'\[\d*\]',' ',methaphetamine_possession.rstrip())
                 methaphetamine_sale= table_columns[2].text
+                methaphetamine_sale= re.sub(r'\[\d*\]',' ',methaphetamine_sale.rstrip())
                 methaphetamine_transport= table_columns[3].text
+                methaphetamine_transport= re.sub(r'\[\d*\]',' ',methaphetamine_transport.rstrip())
                 methaphetamine_cultivation= table_columns[4].text
+                methaphetamine_cultivation= re.sub(r'\[\d*\]',' ',methaphetamine_cultivation.rstrip())
                 country_iso = find_iso_of_country(country_name)
                 methaphetamine_info = {
                     "name":country_name,
