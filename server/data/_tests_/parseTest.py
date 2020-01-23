@@ -14,6 +14,7 @@ from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_o
 from advisory_ie import find_all_url, get_one_info
 from advisory_sg import parse_one_country_advisory as parse_one_country_advisory_sg
 from advisory_central_america import mexico_all_links
+from vaccines import get_url_of_countries, parse_one_country_vaccine
 from helper_class.chrome_driver import create_driver, quit_driver
 
 sys.path.append('../helper_class/')
@@ -283,5 +284,21 @@ class parseTest(unittest.TestCase):
         quit_driver(driver)
         self.assertFalse("", wiki_visa)
    
+    
+    # Test for vacines
+    def tests_get_url_of_countries_vaccines(self):
+        # tests get url
+        driver = create_driver()
+        urls = get_url_of_countries(driver)
+        quit_driver(driver)
+        self.assertFalse("", urls)
+
+    def test_parse_advisory(self):
+        # tests getting advisory
+        driver = create_driver()
+        urls = parse_one_country_vaccine("https://wwwnc.cdc.gov/travel/destinations/traveler/none/lebanon", driver)
+        quit_driver(driver)
+        self.assertFalse("", urls)
+
 if __name__ == '__main__':
     unittest.main()
