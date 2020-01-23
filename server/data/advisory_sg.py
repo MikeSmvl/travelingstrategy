@@ -143,7 +143,11 @@ def save_info(db,visas,advisories, array_info):
             db.insert("SG",iso,country,advisory,visa)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
+<<<<<<< HEAD
             LOGGER.warning(f'This country doesn’t have advisory info {country}')
+=======
+            LOGGER.error(f'This country doesn’t have visa info {country}')
+>>>>>>> master
             iso = find_iso_of_country(country)
             visa_info = "Not available yet"
             advisory = advisories[country].get('advisory')
