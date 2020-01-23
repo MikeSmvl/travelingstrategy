@@ -10,7 +10,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
+import { languages, flagSrc, getOtherTrafficSide, formatingVisa } from '../utils/parsingTools';
 import { Card as RBCard } from 'react-bootstrap';
 import '../App.css';
 
@@ -152,7 +152,7 @@ function Country({
 	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
-
+	const formated_visaInfo = formatingVisa(visaInfo)
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
@@ -185,7 +185,7 @@ function Country({
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
-										<Col xs="10" sm="4">
+										<Col xs="10" sm="4" >
 											<CountryCard
 												flagSrc={flagSrc(destinationCountry)}
 												title="Country Flag"
@@ -196,8 +196,8 @@ function Country({
 												</CardBody>
 											</CountryCard>
 										</Col>
-										<Col xs="10" sm="4">
-											{visaInfo !== null && (
+										{!(visaInfo === null || visaInfo === "Not available yet") && (
+											<Col xs="10" sm="4">
 												<Card
 													className="scrolling-card"
 													header="Visa Info"
@@ -209,13 +209,14 @@ function Country({
 													>
 														<div
 															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: visaInfo }}
+															dangerouslySetInnerHTML={{ __html: formated_visaInfo }}
 														/>
 													</CardBody>
-												</Card>)}
-										</Col>
+												</Card>
+											</Col>)}
+
+										{!(advisoryInfo === null || advisoryInfo === "Not available yet") && (
 										<Col xs="10" sm="4">
-											{!(advisoryInfo === null || advisoryInfo === "Not available yet") && (
 												<Card
 													className="scrolling-card"
 													header="Advisory"
@@ -233,8 +234,8 @@ function Country({
 														dangerouslySetInnerHTML={{ __html: advisoryLink }}
 													/>
 													</CardBody>
-												</Card>)}
-										</Col>
+												</Card>
+										</Col>)}
 									</Row>
 								</div>
 
