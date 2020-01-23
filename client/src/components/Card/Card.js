@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState} from 'react';
 import PropTypes from 'prop-types';
 import { Card as RBCard } from 'react-bootstrap';
 import './Card.css';
@@ -15,9 +16,10 @@ const Card = (props) => {
 };
 
 const CardBody = (props) => {
-	const { children, title = '', subtitle = '', ...rest } = props;
+	const { children, title = '', subtitle = '',...rest} = props;
 	return (
-		<RBCard.Body {...rest} className="TScardBody">
+		<RBCard.Body {...rest} className="TScardBody"
+		>
 			{title && <RBCard.Title>{title}</RBCard.Title>}
 			{subtitle && (
 				<RBCard.Subtitle className="mb-2 text-muted">
@@ -40,4 +42,4 @@ Card.propTypes = {
 	subtitle: PropTypes.string
 };
 
-export { Card, CardBody, Divider };
+export { Card, CardBody,Divider };
