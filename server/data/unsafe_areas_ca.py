@@ -127,9 +127,8 @@ def save_regional_advisories(data):
         except:
             LOGGER.error(f'Could not save unsafe areas for {country} in the database.')
 
-
 # All unsafe areas
-def get_all_regional_advisories():
+def save_to_unsafe_areas():
     driver = create_driver()
     all_countries = get_all_links()
     data = {}
@@ -140,10 +139,11 @@ def get_all_regional_advisories():
         regional_advisory = get_regional_advisories(url, driver)
         data[country] = {'unsafe_areas':regional_advisory}
 
+    #canada special case
+    data['Canada'] = {'unsafe_areas':'There is no regional advisory, take security precautions based on the general advisory for this country.'}
+
     data = find_all_iso(data)
     save_regional_advisories(data)
     quit_driver(driver)
 
-def save_to_unsafe_areas():
-    get_all_regional_advisories()
-get_all_regional_advisories()
+save_to_unsafe_areas()
