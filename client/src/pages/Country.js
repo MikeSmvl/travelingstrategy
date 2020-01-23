@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Row, Col } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, Divider } from '../components/Card/Card';
+import { Card, CardBody, VaccineCardBody,Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
@@ -11,7 +11,9 @@ import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
+import { Card as RBCard } from 'react-bootstrap';
 import '../App.css';
+
 
 function Country({
 	originCountry,
@@ -36,6 +38,7 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [vaccines, setVaccines] = useState([]);
 	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
 	const [timeDestination, setTimeDestination] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
@@ -43,6 +46,7 @@ function Country({
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
 	const [rate, setRate] = useState('');
+	const [vaccineCard, setVaccinCard] = useState('');
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -120,6 +124,10 @@ function Country({
 						trafficSide(iso:"${destinationCountry}"){
 							traffic_side
 						}
+						country_vaccines(country_iso:"${destinationCountry}"){
+							vaccine_name
+							vaccine_info
+						}
 					}`
 				})
 			})
@@ -139,6 +147,7 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
+					(res.data.country_vaccines && res.data.country_vaccines.length !== 0) && setVaccines(res.data.country_vaccines);
 					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
@@ -152,6 +161,7 @@ function Country({
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
+
 	return (
 		<div>
 			{!isLoading && (
@@ -367,7 +377,45 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+									<Col xs="10" sm="4">
+										<Card header="Vaccines">
+
+											<CardBody>
+												<Row className="justify-content-center"
+														style={{ padding: '0px 0px' }}>
+
+													  {vaccines.map((value, index) => {
+														  if (vaccineCard == '' && index == 0){
+																setVaccinCard(value.vaccine_info)
+														  }
+														  if ((vaccineCard == value.vaccine_info  && index == 0)){
+															return <button className='tablinks' style = {{color: '#FF1C00'}}
+															onClick={()=>setVaccinCard(value.vaccine_info)
+														}>{value.vaccine_name}</button>}
+
+														  else{
+															return <button className='tablinks'
+																		onClick={()=>setVaccinCard(value.vaccine_info)
+																	}>
+														  {value.vaccine_name}</button>}
+													  })}</Row>
+
+													  <Divider/> <br/>
+													  <Row className="justify-content-center"
+													  		style={{ padding: '0px 25px'}}>
+													  <p dangerouslySetInnerHTML={{ __html: vaccineCard }}
+															 style = {{fontSize: 13 +'px'}}/>
+													  </Row>
+												</CardBody>
+										</Card>
+									</Col>
+									</Row>
 								</div>
+
 							</ReactFullpage.Wrapper>
 						);
 					}}

@@ -19,6 +19,7 @@ from advisory_mu import save_to_MU
 from advisory_central_america_advisory import save_to_central_america
 from advisory_caribbean import save_to_caribbea
 from unsafe_areas_ca import save_to_unsafe_areas
+from vaccines import parse_all_countries_vaccine
 
 #logging to a file
 #logging level ERROR.This means its a serious problem as the software was not able to perform some functions
@@ -49,6 +50,7 @@ def start_scheduler():
     scheduler.every().day.do(save_to_central_america
     scheduler.every().day.do(save_to_caribbea)
     scheduler.every().day.do(save_to_unsafe_areas)
+    scheduler.every().day.do(parse_all_countries_vaccine)
 
     while True:
       scheduler.run_pending()
