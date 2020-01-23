@@ -143,20 +143,6 @@ def replace_key_by_iso(data):
     return data_new
 
 
-def save_into_db(data):
-    # create an an sqlite_advisory object
-    db = Database("countries.sqlite")
-    db.drop_table("IE")
-    db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        advisory = data[country].get('advisory-text').replace('"', '')
-        visa = data[country].get('visa-info')
-        db.insert("IE",iso,name,advisory,visa)
-    db.close_connection()
-
-
 #here we go through all countries and save all the data
 #it comes from the irish gov website
 #for the visa info half comes from wiki
@@ -204,4 +190,6 @@ def find_all_ireland():
 
     save_into_db(data)
 
-find_all_ireland()
+
+
+#find_all_ireland()

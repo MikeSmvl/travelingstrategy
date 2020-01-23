@@ -162,6 +162,6 @@ def save_to_australia():
 
     save_into_db(data)
 
-save_to_australia()
+#save_to_australia()
 
 

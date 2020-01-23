@@ -153,4 +153,4 @@ def save_to_UK():
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-save_to_UK()
+#save_to_UK()

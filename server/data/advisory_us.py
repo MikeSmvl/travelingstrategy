@@ -127,4 +127,4 @@ def save_into_db(data):
         db.insert("US",iso,name,advisory,visa)
     db.close_connection()
 
-save_to_united_states()
+#save_to_united_states()

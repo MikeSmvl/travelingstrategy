@@ -152,5 +152,5 @@ def save_into_db(data):
         db.insert("NZ",iso,name,advisory,visa)
     db.close_connection()
 
-save_to_new_zealand()
+#save_to_new_zealand()
 
