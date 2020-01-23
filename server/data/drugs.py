@@ -217,3 +217,6 @@ def save_drug_law():
 
         LOGGER.info(f"Parsing {country_name} to insert into drug table with the following information: {canabais_recreational}. {canabais_medical}.{cocaine_possession}.{methaphetamine_possession}")
         DB.insert('drugs', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
+
+if __name__ == "__main__":
+    save_drug_law()

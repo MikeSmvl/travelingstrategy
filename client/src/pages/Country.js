@@ -143,6 +143,7 @@ function Country({
 							cocaine_cultivation,
 							canabais_recreational,
 							canabais_medical
+						}
 						country_vaccines(country_iso:"${destinationCountry}"){
 							vaccine_name
 							vaccine_info
