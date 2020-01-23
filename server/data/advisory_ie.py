@@ -191,5 +191,20 @@ def find_all_ireland():
     save_into_db(data)
 
 
+def save_into_db(data):
+    # create an an sqlite_advisory object
+    db = Database("countries.sqlite")
+    db.drop_table("IE")
+    db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
+    for country in data:
+        iso = data[country].get('country-iso')
+        name = data[country].get('name')
+        advisory = data[country].get('advisory-text').replace('"', '')
+        visa = data[country].get('visa-info')
+        db.insert("IE",iso,name,advisory,visa)
+    db.close_connection()
 
-#find_all_ireland()
+
+
+
+find_all_ireland()
