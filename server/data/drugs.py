@@ -19,6 +19,7 @@ LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database(sqlite_db)
 
+#parsing data for canabais laws
 def get_countries_canabaislaw():
     LOGGER.info("Retrieving information for canabais")
     try:
@@ -56,6 +57,7 @@ def get_countries_canabaislaw():
         driver.close()
         driver.quit()
 
+#parsing data for cocaine laws
 def get_countries_cocainelaw():
     LOGGER.info("Retrieving information for cocaine")
     try:
@@ -99,6 +101,7 @@ def get_countries_cocainelaw():
         driver.close()
         driver.quit()
 
+#parsing data for mathaphetmine laws
 def get_countries_methaphetaminelaw():
     LOGGER.info("Retrieving information for methaphetamine")
     try:
@@ -142,6 +145,7 @@ def get_countries_methaphetaminelaw():
         driver.close()
         driver.quit()
 
+#combining all the tabls for different type of drugs
 def combine_dictionaries(dict1, dict2, dict3):
 
 
@@ -191,6 +195,7 @@ def combine_dictionaries(dict1, dict2, dict3):
                           }
     return all_drugs
 
+#saving all the infos to the final dictionary
 def save_drug_law():
 
     marijuana = get_countries_canabaislaw()
@@ -217,6 +222,3 @@ def save_drug_law():
 
         LOGGER.info(f"Parsing {country_name} to insert into drug table with the following information: {canabais_recreational}. {canabais_medical}.{cocaine_possession}.{methaphetamine_possession}")
         DB.insert('drugs', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
-
-if __name__ == "__main__":
-    save_drug_law()
