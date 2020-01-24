@@ -139,8 +139,8 @@ def save_into_db(data):
             db.insert("US",iso,name,advisory,visa)
             LOGGER.info(f"{name} was succesfully saved into the US table with the following information: {visa}. {advisory}")
         LOGGER.success('US table has been successfully saved into the databse')
-    except:
-        LOGGER.error('Error has occured while saving the countries into the US table')
+    except Exception as error_msg:
+        LOGGER.error(f'Error has occured while saving the countries into the US table because of the following error: {error_msg}')
     db.close_connection()
 
 save_to_united_states()

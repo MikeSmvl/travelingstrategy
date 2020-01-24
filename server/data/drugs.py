@@ -53,6 +53,10 @@ def get_countries_canabaislaw():
             }
                 arrayCanabaisInfo[country_iso] = canabais_info
         return  arrayCanabaisInfo
+   
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving information for cannabis because of the followin error: {error_msg}')
+
     finally:
         driver.close()
         driver.quit()
@@ -97,6 +101,10 @@ def get_countries_cocainelaw():
             }
                 arrayCocaineInfo[country_iso] = cocaine_info
         return arrayCocaineInfo
+    
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving information for cocaine because of the following error: {error_msg}')
+    
     finally:
         driver.close()
         driver.quit()
@@ -141,6 +149,9 @@ def get_countries_methaphetaminelaw():
             }
                 arraymethaphetamineInfo[country_iso] = methaphetamine_info
         return arraymethaphetamineInfo
+
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving informtion for methaphetamine because of the following error: {error_msg}')
     finally:
         driver.close()
         driver.quit()
@@ -222,3 +233,5 @@ def save_drug_law():
 
         LOGGER.info(f"Parsing {country_name} to insert into drug table with the following information: {canabais_recreational}. {canabais_medical}.{cocaine_possession}.{methaphetamine_possession}")
         DB.insert('drugs', country_iso, country_name, methaphetamine_possession, methaphetamine_sale, methaphetamine_transport, methaphetamine_cultivation, cocaine_possession, cocaine_sale, cocaine_transport, cocaine_cultivation, canabais_recreational, canabais_medical)
+
+save_drug_law()

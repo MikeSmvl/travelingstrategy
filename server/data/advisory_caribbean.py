@@ -31,8 +31,8 @@ def save_into_db(tableName, data):
             except:
                 LOGGER.info(f'The following is not an official country: {iso}')
         LOGGER.success(f'{tableName} was successfully saved to the database')
-    except:
-        LOGGER.error(f'{tableName} was not successfully saved to the database')
+    except Exception as error_msg:
+        LOGGER.error(f'{tableName} was not successfully saved to the database because of the following error: {error_msg}')
 
 #function to replace name by iso
 def replace_key_by_iso(data):
@@ -54,8 +54,8 @@ def save_to_caribbea():
     visa_AG = wiki_visa.visa_parser_table()
     visa_AG = replace_key_by_iso(visa_AG)
     LOGGER.success(f'Following data was retrieved: {visa_AG}')
-  except:
-    LOGGER.error('An error has occured while parsing for Antigua and Barbuda')
+  except Exception as error_msg:
+    LOGGER.error(f'An error has occured while parsing for Antigua and Barbuda because of the following error: {error_msg}')
   driver.close()
 
   # Barbados
@@ -66,8 +66,8 @@ def save_to_caribbea():
     visa_BB = wiki_visa.visa_parser_table()
     visa_BB = replace_key_by_iso(visa_BB)
     LOGGER.success(f'Following data was retrieved: {visa_BB}')
-  except:
-    LOGGER.error('An error has occured while parsing for Barbados')
+  except Exception as error_msg:
+    LOGGER.error(f'An error has occured while parsing for Barbados because of the following error: {error_msg}')
   driver.close()
 
   #Bahamas
@@ -78,8 +78,8 @@ def save_to_caribbea():
     visa_BS = wiki_visa.visa_parser_table()
     visa_BS = replace_key_by_iso(visa_BS)
     LOGGER.success(f'Following data was retrieved: {visa_BS}')
-  except:
-    LOGGER.error('An error has occured while parsing for Bahamas')
+  except Exception as error_msg:
+    LOGGER.error(f'An error has occured while parsing for Bahamas because of the following error: {error_msg}')
   driver.close()
 
   #Grenada
@@ -90,8 +90,8 @@ def save_to_caribbea():
     visa_GD = wiki_visa.visa_parser_table()
     visa_GD = replace_key_by_iso(visa_GD)
     LOGGER.success(f'Following data was retrieved: {visa_GD}')
-  except:
-    LOGGER.error('An error has occured while parsing for Grenada')
+  except Exception as error_msg:
+    LOGGER.error(f'An error has occured while parsing for Grenada because of the following error: {error_msg}')
   driver.close()
 
   #Jamaica
@@ -102,8 +102,8 @@ def save_to_caribbea():
     visa_JM = wiki_visa.visa_parser_table()
     visa_JM = replace_key_by_iso(visa_JM)
     LOGGER.success(f'Following data was retrieved: {visa_JM}')
-  except:
-    LOGGER.error('An error has occured while parsing for Jamaica')
+  except Exception as error_msg:
+    LOGGER.error(f'An error has occured while parsing for Jamaica because of the following error: {error_msg}')
   driver.close()
 
   #Trinidad and Tobago
@@ -114,8 +114,8 @@ def save_to_caribbea():
     visa_TT = wiki_visa.visa_parser_table()
     visa_TT = replace_key_by_iso(visa_TT)
     LOGGER.success(f'Following data was retrieved: {visa_TT}')
-  except:
-    LOGGER.error('An error has occured while parsing for Trinidad and Tobago')
+  except Exception as error_msg:
+    LOGGER.error(f'An error has occured while parsing for Trinidad and Tobago because of the following error: {error_msg}')
 
   driver.quit()
 

@@ -21,8 +21,8 @@ def save_to_MU():
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
         visas = wiki_visa_ob.visa_parser_table()
         LOGGER.success('Parsing for Mauritius advisory has been successfully completed')
-    except:
-        LOGGER.error('Error has occured while parsing for Mauritius advisory')
+    except Exception as error_msg:
+        LOGGER.error(f'Error has occured while parsing for Mauritius advisory because of the following error: {error_msg}')
     info = {}
     array_info = []
 
@@ -50,8 +50,8 @@ def save_to_MU():
                 db.insert("MU",iso,name,advisory,visa)
                 LOGGER.success(f'{name} was sucessfully saved to the database with the following information: {visa}. {advisory}.')
             LOGGER.success('Mauritius table successfully saved to the database')
-    except:
-        LOGGER.error('An error has occured while saving Mauritius table to the database')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while saving Mauritius table to the database because of the following error: {error_msg}')
     db.close_connection()
 
     quit_driver(driver)

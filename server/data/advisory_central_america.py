@@ -42,7 +42,6 @@ def save_into_db_MX(tableName, data):
         try:
             DB.insert(tableName,iso, name,text,link,visa_info)
         except:
-            print("None type",iso)
             LOGGER.warning(f"{iso} not found")
 
 
@@ -58,10 +57,9 @@ def save_into_db(tableName, data):
         try:
             DB.insert(tableName,iso, name,text,visa_info)
             LOGGER.success(f"{tableName} successfully saved into the database")
-        except:
-            print("None type",iso)
+        except Exception as error_msg:
             LOGGER.warning(f"{iso} not found")
-            LOGGER.error(f'{tableName} was not successfully saved into the database')
+            LOGGER.error(f'{tableName} was not successfully saved into the database because of the following error: {error_msg}')
 
 
 def mexico_all_links(driver):
@@ -86,9 +84,8 @@ def mexico_all_links(driver):
             links[iso] = {'advisory_text':href,'country_iso':iso,'name':name}
             Logger.success(f'The URL for {name} was successfully retrieved')
             LOGGER.success('Successfully retrieved the URLs for all countries of the Mexican advisory')
-        except:
-            LOGGER.warning(f"This country's iso was not found: {name}")
-            print("This country's iso was not found:",att.text)
+        except Exception as error_msg:
+            LOGGER.warning(f"This country's iso was not found for {name} because of the following error: {error_msg}")
 
     #get the visa for mexico like for other countries from wikipedia
     LOGGER.info('Parsing visa requirements for all countries for the Mexican advisory')
@@ -97,8 +94,8 @@ def mexico_all_links(driver):
         visas = wiki_visa_ob_MX.visa_parser_table()
         visas = replace_key_by_iso(visas)
         LOGGER.success('Successfully parsed all countries for the Mexican advisory')
-    except:
-        LOGGER.error('Was not successful in parsing visa requirements for Mexican advisory')
+    except Exception as error_msg:
+        LOGGER.error(f'Was not successful in parsing visa requirements for Mexican advisory because of the following error: {error_msg}')
 
     data = {}
     for key in visas:
@@ -106,9 +103,8 @@ def mexico_all_links(driver):
             data[key] = links[key]
             info = data[key]
             info['visa-info'] = visas[key].get('visa-info')
-        except:
-            print("the following iso was not foud:",key)
-            LOGGER.warning(f'The following iso was not found: {key}')
+        except Exception as error_msg:
+            LOGGER.warning(f'The following iso was not found: {key} because of the following error: {error_msg}')
 
     return links
 
@@ -136,8 +132,8 @@ def save_to_central_america():
     try:
         save_into_db_MX('MX', data_MX)
         LOGGER.success("MX successfully saved into the databse")
-    except:
-        LOGGER.error('MX was not successfully saved into the database')
+    except Exception as error_msg:
+        LOGGER.error(f'MX was not successfully saved into the database because of the following error: {error_msg}')
 
     #create obj driver and set belize as first url
     driver = create_driver()
@@ -147,8 +143,8 @@ def save_to_central_america():
         visa_BZ = wiki_visa.visa_parser_table()
         visa_BZ = replace_key_by_iso(visa_BZ)
         LOGGER.success(f'Following data was retrieved: {visa_BZ}')
-    except:
-        LOGGER.error('An error has occured while parsing for Belize')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while parsing for Belize because of the following error: {error_msg}')
 
     #Dominica
     driver.close()
@@ -159,8 +155,8 @@ def save_to_central_america():
         visa_DM = wiki_visa.visa_parser_table()
         visa_DM = replace_key_by_iso(visa_DM)
         LOGGER.success(f'Following data was retrieved: {visa_DM}')
-    except:
-        LOGGER.error('An error has occured while parsing for Dominica')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while parsing for Dominica because of the following error: {error_msg}')
 
     #Dominican Republic
     driver.close()
@@ -171,8 +167,8 @@ def save_to_central_america():
         visa_DO = wiki_visa.visa_parser_table()
         visa_DO = replace_key_by_iso(visa_DO)
         LOGGER.success(f'Following data was retrieved: {visa_DO}')
-    except:
-        LOGGER.error('An error has occured while parsing for Dominican Republic')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while parsing for Dominican Republic because of the following error" {error_msg}')
 
     #Panama
     driver.close()
@@ -183,8 +179,8 @@ def save_to_central_america():
         visa_PA = wiki_visa.visa_parser_table()
         visa_PA = replace_key_by_iso(visa_PA)
         LOGGER.success(f'Following data was retrieved: {visa_PA}')
-    except:
-        LOGGER.error('An error has occured while parsing for Panama')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while parsing for Panama because of the following error: {error_msg}')
 
     driver.quit()
 

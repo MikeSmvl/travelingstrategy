@@ -57,8 +57,8 @@ def get_all_links():
             data[name] = {'href':href}
             LOGGER.success(f'Retrieved the URL for {name}')
         LOGGER.success('Retrieved all the URLs for unsafe areas')
-    except:
-        LOGGER.error('An error has occured while retrieving the URLs for all countries from the canadian travel website.')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving the URLs for all countries from the canadian travel website because of the following error: {error_msg}')
     finally:
         quit_driver(driver)
 
@@ -103,8 +103,8 @@ def get_regional_advisories(url,driver):
             else:
                 data = data + "<br/>"+adv.find('h3').text
         data = data.replace('<br/><br/>', '<br/>')
-    except:
-        LOGGER.error(f'Could not parse the following page: {url}')
+    except Exception as error_msg:
+        LOGGER.error(f'Could not parse the following page: {url} because of the following error: {error_msg}')
     return data
 
 #sacve the data in the db
@@ -124,8 +124,8 @@ def save_regional_advisories(data):
         try:
             DB.insert(tableName,country_iso, country,unsafe_areas)
             LOGGER.info(f'Could not save unsafe areas for {country} in the database.')
-        except:
-            LOGGER.error(f'Could not save unsafe areas for {country} in the database.')
+        except Exception as error_msg:
+            LOGGER.error(f'Could not save unsafe areas for {country} in the database because of the followin error: {error_msg}')
 
 # All unsafe areas
 def save_to_unsafe_areas():

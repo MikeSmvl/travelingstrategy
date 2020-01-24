@@ -41,8 +41,8 @@ def get_url_of_countries():
                 href = country['href']
                 info[country_iso] = {"href":href}
                 LOGGER.success(f'URL of {country_name} was successfully retrieved')
-    except:
-      LOGGER.error('An error has occured while retrieving URL of countries for United Kingdom advisory')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occured while retrieving URL of countries for United Kingdom advisory because of the following error: {error_msg}')
     finally:
         driver.close()
         driver.quit()
@@ -133,8 +133,8 @@ def save_to_UK():
       visas = wiki_visa_ob.visa_parser_table()
       data = parse_all_countries_advisory()
       LOGGER.success('Successfully parsed the visa requirements of all countries for United Kingdom advisory')
-    except:
-      LOGGER.error('An error has occured while retrieving the visa reuirements of all countries for United Kingdom advisory')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occured while retrieving the visa reuirements of all countries for United Kingdom advisory because of the following error: {error_msg}')
     
     info = {}
     array_info = []
@@ -168,8 +168,9 @@ def save_to_UK():
                   LOGGER.info(f'Its ISO is {iso}')
                   print("Its ISO is: ",iso)
       LOGGER.success('All countries have been succesfully saved into the UK table')
-    except:
-      LOGGER.error('An error has occured while saving countries into the UK table')
+   
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occured while saving countries into the UK table because of the following: {error_msg}')
     db.close_connection()
 
     with open('./advisory-uk.json', 'w') as outfile:

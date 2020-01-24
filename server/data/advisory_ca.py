@@ -191,8 +191,8 @@ def save_to_canada():
           db.insert("CA",iso,name,advisory,visa)
           LOGGER.success(f'{name} was successfully saved into the CA table with the following table: {advisory}. {visa}')
       LOGGER.success('CA table was successfully saved into the database')
-    except:
-      LOGGER.error('An error has occurred while saving the countries into the CA table')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occurred while saving the countries into the CA table because of the following error: {error_msg}')
     db.close_connection()
 
 

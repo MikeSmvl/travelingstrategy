@@ -43,12 +43,12 @@ def adding_lat_and_lng(cities):
                 cities_data.append(city_object)
                 LOGGER.info(f'Timezone for {country_name}')
         except:
-            print("Unexpected error:", traceback.format_exc())
-            print("This city doesn't work",city_name)
+            LOGGER.error("Unexpected error:", traceback.format_exc())
+            LOGGER.warning("This city doesn't work",city_name)
             city_url = "https://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyAxFRTW8Wb6bcJw90yaT2MjeHaOEe9k5iM".format(city_name,sep='')
-            print("city url", city_url)
+            LOGGER.info("city url", city_url)
             not_found.append(city_name)
-    print("These are not found",not_found)
+    LOGGER.warning("These are not found",not_found)
     return cities_data
 
 def get_cities_info():

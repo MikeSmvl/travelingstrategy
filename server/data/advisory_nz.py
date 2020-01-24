@@ -48,8 +48,8 @@ def get_url_of_countries_nz(driver):
             info[name] = {"href":a['href']}
             LOGGER.success(f'URL for {name} was successfully retrieved')
         LOGGER.success('Successfully retrieved URL of all countries for the New Zealand advisory')
-    except:
-        LOGGER.error(f'An error has occured while retrieving the URLs of {name} for New Zealand advisory')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving the URLs of {name} for New Zealand advisory because of the following error: {error_msg}')
     finally:
         driver.close()
         driver.quit()
@@ -69,8 +69,8 @@ def save_to_new_zealand():
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver) 
         visas = wiki_visa_ob.visa_parser_table()# Used to acquire visa info of each country
         LOGGER.success('Succesfully retrieved visa requirements of all countries for New Zealand advisory')
-    except:
-        LOGGER.error('An error has occured while retrieving visa requirement for New Zealand adviosry')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving visa requirement for New Zealand adviosry because of the following error: {error_msg}')
     
     counter_country = 0
     for country in url: #iterates through urls to retrieve advisory information
@@ -157,8 +157,8 @@ def save_into_db(data):
             db.insert("NZ",iso,name,advisory,visa)
             LOGGER.info(f"{name} was successfully saved into NZ table with the following information: {visa}. {advisory}")
         LOGGER.success(f'{name} sucesfully saved to the database.')
-    except:
-        LOGGER.error(f'Error has occured while saving {name} into the NZ table')
+    except Exception as error_msg:
+        LOGGER.error(f'Error has occured while saving {name} into the NZ table because of the following error: {error_msg}')
 
 
     db.close_connection()

@@ -144,8 +144,8 @@ def save_into_db(data):
             db.insert("AU",iso,name,advisory,visa)
             LOGGER.success(f"{name} was succesfully saved in the AU table with the following information: {advisory}. {visa}")
         LOGGER.success('AU was successfully saved into the databse')
-    except:
-        LOGGER.error(f'An error has occured while saving {name} into the AU table ')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while saving {name} into the AU table because of the following error: {error_msg} ')
     db.close_connection()
 
 #unsafe areas
@@ -175,8 +175,8 @@ def save_to_australia():
         wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Australian_citizens'
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
         wiki_visa = wiki_visa_ob.visa_parser_table()
-    except:
-        LOGGER.error('An error has occured while retrieving the visa requirements for all countries for the Australian advisory')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving the visa requirements for all countries for the Australian advisory because of following error: {error_msg}')
 
     for country in url:
         driver.implicitly_wait(5)
@@ -194,7 +194,6 @@ def save_to_australia():
                 visa_info = wiki_visa[name].get('visa')+ "<br>" + visa_info
             except:
                 LOGGER.warning(f"No visa info for {name}")
-                print(name)
         country_iso = "na"
         data[name] = {'country-iso':country_iso,'name':name,'advisory-text':advisory_text,'visa-info':visa_info}
     driver.quit()

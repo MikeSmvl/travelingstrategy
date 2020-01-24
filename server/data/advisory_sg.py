@@ -51,8 +51,8 @@ def get_url_of_all_countries():
         for letter in alphabet:
             get_url_of_for_letter(countries_url,letter)
         LOGGER.success('URLs of all countries have been successfully retrieved for the Singapore advsory')
-    except:
-        LOGGER.error('An error has occured while retrieving the URLs of all countries for the Singapore advisory')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving the URLs of all countries for the Singapore advisory because of the following error: {error_msg}')
     return countries_url
 
 
@@ -106,7 +106,7 @@ def parse_all_countries_advisories():
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
         except IndexError as e:
-            LOGGER.warning(f'This country doesn’t have advisory info {country}')
+            LOGGER.warning(f'This country doesn’t have advisory info {country} because of {e}')
             LOGGER.info(f'Link : {link}')
     return data
 
@@ -143,11 +143,7 @@ def save_info(db,visas,advisories, array_info):
             db.insert("SG",iso,country,advisory,visa)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
-<<<<<<< HEAD
             LOGGER.warning(f'This country doesn’t have advisory info {country}')
-=======
-            LOGGER.error(f'This country doesn’t have visa info {country}')
->>>>>>> master
             iso = find_iso_of_country(country)
             visa_info = "Not available yet"
             advisory = advisories[country].get('advisory')
@@ -170,8 +166,8 @@ def save_to_SG():
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
         visas = wiki_visa_ob.visa_parser_table()
         LOGGER.success('Visa requirements have been succesfully parsed for the Singapore table')
-    except:
-        LOGGER.error('An error has occured whilse parsing for visa requirements')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured whilse parsing for visa requirements because of the following error: {error_msg}')
     advisories = parse_all_countries_advisories()
     info = {}
     array_info = []
