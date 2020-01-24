@@ -128,6 +128,21 @@ def save_into_db(data):
         db.insert("AU",iso,name,advisory,visa)
     db.close_connection()
 
+#unsafe areas
+def regional_advice_level(driver,url):
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    data_type = "Advice levels"
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    div = soup.find_all('div', attrs={'class':'clearfix text-formatted field field--name-field-location field--type-text-long field--label-hidden field__item'})
+    data = []
+    for ele in div:
+        txt = ele.text
+        data.append(txt)
+        print(txt)
+    return data
+
+
 
 def save_to_australia():
 
@@ -157,9 +172,28 @@ def save_to_australia():
     driver.quit()
     data = find_all_iso(data)
 
-    with open('./advisory-aus.json', 'w') as outfile:
-        json.dump(data, outfile)
-
     save_into_db(data)
 
+def all_unsafe_areas():
+    url = get_url_of_countries() #this function create its own driver -- to change
+    data = {}
+    driver = create_driver()
 
+    for country in url:
+        href = url[country].get('href')
+        link = "https://smartraveller.gov.au{}".format(href,sep='')
+
+        unsafe_areas = regional_advice_level(driver,link)
+        data[country] = {'unsafe_areas':unsafe_areas}
+        print(data[country])
+
+    data = find_all_iso(data)
+    driver.quit()
+    #saving the data in json file
+    with open('unsafe-areas-au.json', 'w') as fp:
+        json.dump(data, fp)
+
+# save_to_australia()
+driver = create_driver()
+data = regional_advice_level(driver,"https://www.smartraveller.gov.au/destinations/africa/mali")
+quit_driver(driver)

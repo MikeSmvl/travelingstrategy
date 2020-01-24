@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Row, Col, Card as RBCard } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, VaccineCardBody, Divider } from '../components/Card/Card';
+import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
@@ -33,6 +33,7 @@ function Country({
 		'Regional Languages': 'TBD',
 		'Widely Spoken Languages': 'TBD'
 	});
+	const [unsafeAreas, setUnsafeAreas] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
@@ -101,6 +102,9 @@ function Country({
 							national_languages,
 							widely_spoken_languages
 						}
+						country_unsafe_areas(country_iso: "${destinationCountry}"){
+							unsafe_areas
+						}
 						destinationCurrencies: currencies(country: "${destinationCountry}"){
 							name
 							symbol
@@ -157,6 +161,7 @@ function Country({
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisoryLink(res.data.countryToCountry[0].advisory_link);
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setVisa(res.data.countryToCountry[0].visa_info);
 					(res.data.country_languages && res.data.country_languages.length !== 0) && setLanguages(res.data.country_languages[0]);
+					(res.data.country_unsafe_areas && res.data.country_unsafe_areas.length !== 0) && setUnsafeAreas(res.data.country_unsafe_areas[0].unsafe_areas);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setVoltage(res.data.country_socket[0].electric_potential);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setFrequency(res.data.country_socket[0].frequency);
@@ -186,7 +191,7 @@ function Country({
 	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
-	const formated_visaInfo = formatingVisa(visaInfo);
+	const formatedVisaInfo = formatingVisa(visaInfo);
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
@@ -243,7 +248,7 @@ function Country({
 													>
 														<div
 															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: formated_visaInfo }}
+															dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 														/>
 													</CardBody>
 												</Card>
@@ -418,6 +423,17 @@ function Country({
 												</CardBody>
 											</Card>
 										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Unsafe Areas">
+												<CardBody>
+													<div
+														className="scrolling-card"
+														style={{ maxHeight: '285px', overflow: 'scroll' }}
+														dangerouslySetInnerHTML={{ __html: unsafeAreas }}
+													/>
+												</CardBody>
+											</Card>
+										</Col>
 									</Row>
 								</div>
 								<div className="section">
@@ -442,6 +458,7 @@ function Country({
 														  if ((vaccineCard === value.vaccine_info && index === 0)) {
 																return (
 																	<button
+																		type="button"
 																		className="tablinks"
 																		style={{ color: '#FF1C00' }}
 																		onClick={() => setVaccinCard(value.vaccine_info)}
@@ -453,6 +470,7 @@ function Country({
 
 															return (
 																<button
+																	type="button"
 																	className="tablinks"
 																	onClick={() => setVaccinCard(value.vaccine_info)}
 																>

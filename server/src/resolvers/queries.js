@@ -3,6 +3,7 @@ const countryTable = require('./countryToAll')
 const countryToCountry = require('./countryToCountry')
 const {sockets_table, country_socket} = require('./sockets')
 const {country_languages,languages_table} = require('./languages')
+const {country_unsafe_areas, unsafe_areas_table} = require('./unsafeAreas')
 const {country_vaccines,vaccines_table} = require('./vaccines')
 const {time_difference_origin,time_difference_destination,timezones_table} = require('./timezones')
 const currencies = require('./currencies')
@@ -19,6 +20,8 @@ var queryType = new graphql.GraphQLObjectType({
         countryTable,
         countryToCountry,
         country_languages,
+        country_unsafe_areas,
+        unsafe_areas_table,
         languages_table,
         currencies,
         financials,
