@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col, Table, Card as RBCard } from 'react-bootstrap/';
+import { Row, Col, Table } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, VaccineCardBody, Divider } from '../components/Card/Card';
+import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
@@ -97,19 +97,19 @@ function Country({
 							advisory_link
 							advisory_text
 						}
-						country_languages(country_iso: "${destinationCountry}"){
+						country_languages(country_iso: "${destinationCountry}") {
 							official_languages,
 							regional_languages,
 							minority_languages,
 							national_languages,
 							widely_spoken_languages
 						}
-						destinationCurrencies: currencies(country: "${destinationCountry}"){
+						destinationCurrencies: currencies(country: "${destinationCountry}") {
 							name
 							symbol
 							code
 						}
-						originCurrencies: currencies(country: "${originCountry}"){
+						originCurrencies: currencies(country: "${originCountry}") {
 							name
 							symbol
 							code
@@ -130,10 +130,10 @@ function Country({
 						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng} country_destination:"${destinationCountry}") {
 							utc_offset
 						}
-						trafficSide(iso:"${destinationCountry}"){
+						trafficSide(iso:"${destinationCountry}") {
 							traffic_side
 						}
-						destinationHealth:unitedNations(country:"${destinationCountry}"){
+						destinationHealth:unitedNations(country:"${destinationCountry}") {
 							homicideRate
 							infantMortality
 							lifeExpectancy
@@ -141,13 +141,14 @@ function Country({
 							sanitation
 							water
 						}
-						originHealth:unitedNations(country:"${originCountry}"){
+						originHealth:unitedNations(country:"${originCountry}") {
 							homicideRate
 							infantMortality
 							lifeExpectancy
 							nbOfPhysicians
 							sanitation
 							water
+						}
 						drugs(country_iso:"${destinationCountry}") {
 							country_iso,
 							name,
@@ -162,7 +163,7 @@ function Country({
 							canabais_recreational,
 							canabais_medical
 						}
-						country_vaccines(country_iso:"${destinationCountry}"){
+						country_vaccines(country_iso:"${destinationCountry}") {
 							vaccine_name
 							vaccine_info
 						}
@@ -442,8 +443,9 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Row>
 									<Col xs="10" sm="4">
-									<Card header="Currency">
+									<Card header="General Health">
 										<CardBody>
 											<Table striped bordered hover>
 												<tbody>
@@ -476,62 +478,57 @@ function Country({
 										</CardBody>
 									</Card>
 								</Col>
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
-											<Card header="Vaccines">
+								<Col xs="10" sm="4">
+									<Card header="Vaccines">
 
-												<CardBody>
-													<Row
-														className="justify-content-center"
-														style={{ padding: '0px 0px' }}
-													>
+										<CardBody>
+											<Row
+												className="justify-content-center"
+												style={{ padding: '0px 0px' }}
+											>
 
-														{vaccines.map((value, index) => {
-														  if (vaccineCard === '' && index === 0) {
-																setVaccinCard(value.vaccine_info);
-														  }
-														  if ((vaccineCard === value.vaccine_info && index === 0)) {
-																return (
-																	<button
-																		className="tablinks"
-																		style={{ color: '#FF1C00' }}
-																		onClick={() => setVaccinCard(value.vaccine_info)}
-																	>{value.vaccine_name}
-																	</button>
-																);
-															}
+												{vaccines.map((value, index) => {
+													if (vaccineCard === '' && index === 0) {
+														setVaccinCard(value.vaccine_info);
+													}
+													if ((vaccineCard === value.vaccine_info && index === 0)) {
+														return (
+															<button
+																className="tablinks"
+																style={{ color: '#FF1C00' }}
+																onClick={() => setVaccinCard(value.vaccine_info)}
+															>{value.vaccine_name}
+															</button>
+														);
+													}
 
 
-															return (
-																<button
-																	className="tablinks"
-																	onClick={() => setVaccinCard(value.vaccine_info)}
-																>
-																	{value.vaccine_name}
-																</button>
-															);
-													  })}
-													</Row>
+													return (
+														<button
+															className="tablinks"
+															onClick={() => setVaccinCard(value.vaccine_info)}
+														>
+															{value.vaccine_name}
+														</button>
+													);
+												})}
+											</Row>
 
-													<Divider /> <br />
-													  <Row
-														className="justify-content-center"
-														style={{ padding: '0px 25px' }}
-													  >
-														<p
-															dangerouslySetInnerHTML={{ __html: vaccineCard }}
-															 style={{ fontSize: `${13}px` }}
-														/>
-													  </Row>
-												</CardBody>
-											</Card>
-										</Col>
-									</Row>
+											<Divider /> <br />
+												<Row
+												className="justify-content-center"
+												style={{ padding: '0px 25px' }}
+												>
+												<p
+													dangerouslySetInnerHTML={{ __html: vaccineCard }}
+														style={{ fontSize: `${13}px` }}
+												/>
+												</Row>
+										</CardBody>
+									</Card>
+								</Col>
+								</Row>
 								</div>
-
 							</ReactFullpage.Wrapper>
 						);
 					}}

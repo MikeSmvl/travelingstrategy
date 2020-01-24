@@ -2,20 +2,13 @@ function compareSingle(destination, origin) {
   var strippedDestination = destination.replace(/[^\d.-]/g,'')
   var strippedOrigin = origin.replace(/[^\d.-]/g,'')
 
-  console.log(strippedDestination)
-  console.log(strippedOrigin)
-
   if (Number(strippedDestination) > Number(strippedOrigin)) {
     var increase = strippedDestination - strippedOrigin
-    var difference = '(+' + (increase / strippedOrigin * 100).toFixed(2) + '%)'
-    console.log(difference)
-    return difference
+    return '(+' + (increase / strippedOrigin * 100).toFixed(2) + '%)'
   } else if (Number(strippedDestination) < Number(strippedOrigin)) {
     var decrease = strippedOrigin - strippedDestination
-    var difference = '(-' + (decrease / strippedOrigin * 100).toFixed(2) + '%)'
-    console.log(difference)
-    return difference
-  } else if (Number(strippedDestination) == Number(strippedOrigin)) {
+    return '(-' + (decrease / strippedOrigin * 100).toFixed(2) + '%)'
+  } else if (Number(strippedDestination) === Number(strippedOrigin)) {
     return '(0%)'
   } else {
     return '(0%)'
@@ -45,7 +38,7 @@ function percentDiffColor(destination, origin) {
     return 'green'
   } else if (Number(strippedDestination) < Number(strippedOrigin)) {
     return 'red'
-  } else if (Number(strippedDestination) == Number(strippedOrigin)) {
+  } else if (Number(strippedDestination) === Number(strippedOrigin)) {
     return 'white'
   } else {
     return 'white'
