@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col, Table } from 'react-bootstrap/';
+import { Row, Col, Table, Card as RBCard } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, Divider } from '../components/Card/Card';
+import { Card, CardBody, VaccineCardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
 import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison'
+import { languages, flagSrc, getOtherTrafficSide, formatingVisa } from '../utils/parsingTools';
+
 import '../App.css';
+
 
 function Country({
 	originCountry,
@@ -36,15 +38,27 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [vaccines, setVaccines] = useState([]);
 	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
 	const [timeDestination, setTimeDestination] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
+	const [canabaisMedical, setcanabaisMedical] = useState({});
+	const [canabaisRecreational, setcanabaisRecreational] = useState({});
+	const [cocainePossession, setcocainePossession] = useState({});
+	const [cocaineSale, setcocaineSale] = useState({});
+	const [cocaineTransport, setcocaineTransport] = useState({});
+	const [cocianeCultivation, setcocianeCultivation] = useState({});
+	const [methaphetaminePossession, setmethaphetaminePossession] = useState({});
+	const [methaphetamineSale, setmethaphetamineSale] = useState({});
+	const [methaphetamineTransport, setmethaphetamineTransport] = useState({});
+	const [methaphetamineCultivation, setmethaphetamineCultivation] = useState({});
 	const [rate, setRate] = useState('');
 	const [destinationHealth, setDestinationHealth] = useState({});
 	const [originHealth, setOriginHealth] = useState({});
+	const [vaccineCard, setVaccinCard] = useState('');
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -134,6 +148,23 @@ function Country({
 							nbOfPhysicians
 							sanitation
 							water
+						drugs(country_iso:"${destinationCountry}") {
+							country_iso,
+							name,
+							methaphetamine_possession,
+							methaphetamine_sale,
+							methaphetamine_transport,
+							methaphetamine_cultivation,
+							cocaine_possession,
+							cocaine_sale,
+							cocaine_transport,
+							cocaine_cultivation,
+							canabais_recreational,
+							canabais_medical
+						}
+						country_vaccines(country_iso:"${destinationCountry}"){
+							vaccine_name
+							vaccine_info
 						}
 					}`
 				})
@@ -155,6 +186,17 @@ function Country({
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
 					(res.data.destinationHealth && res.data.destinationHealth.length !== 0) && setDestinationHealth(res.data.destinationHealth[0]);
 					(res.data.originHealth && res.data.originHealth.length !== 0) && setOriginHealth(res.data.originHealth[0]);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcanabaisMedical(res.data.drugs[0].canabais_medical);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcanabaisRecreational(res.data.drugs[0].canabais_recreational);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcocaineSale(res.data.drugs[0].cocaine_sale);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcocaineTransport(res.data.drugs[0].cocaine_transport);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcocainePossession(res.data.drugs[0].cocaine_possession);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcocianeCultivation(res.data.drugs[0].cociane_cultivation);
+					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetamineSale(res.data.drugs[0].methaphetamine_sale);
+					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetamineTransport(res.data.drugs[0].methaphetamine_transport);
+					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetaminePossession(res.data.drugs[0].methaphetamine_possession);
+					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetamineCultivation(res.data.drugs[0].methaphetamine_cultivation);
+					(res.data.country_vaccines && res.data.country_vaccines.length !== 0) && setVaccines(res.data.country_vaccines);
 					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
@@ -164,10 +206,11 @@ function Country({
 	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
-
+	const formated_visaInfo = formatingVisa(visaInfo);
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
+
 	return (
 		<div>
 			{!isLoading && (
@@ -207,8 +250,8 @@ function Country({
 												</CardBody>
 											</CountryCard>
 										</Col>
-										<Col xs="10" sm="4">
-											{visaInfo !== null && (
+										{!(visaInfo === null || visaInfo === 'Not available yet') && (
+											<Col xs="10" sm="4">
 												<Card
 													className="scrolling-card"
 													header="Visa Info"
@@ -220,13 +263,15 @@ function Country({
 													>
 														<div
 															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: visaInfo }}
+															dangerouslySetInnerHTML={{ __html: formated_visaInfo }}
 														/>
 													</CardBody>
-												</Card>)}
-										</Col>
-										<Col xs="10" sm="4">
-											{!(advisoryInfo === null || advisoryInfo === "Not available yet") && (
+												</Card>
+											</Col>
+										)}
+
+										{!(advisoryInfo === null || advisoryInfo === 'Not available yet') && (
+											<Col xs="10" sm="4">
 												<Card
 													className="scrolling-card"
 													header="Advisory"
@@ -241,11 +286,12 @@ function Country({
 															dangerouslySetInnerHTML={{ __html: advisoryInfo }}
 														/>
 														<div
-														dangerouslySetInnerHTML={{ __html: advisoryLink }}
-													/>
+															dangerouslySetInnerHTML={{ __html: advisoryLink }}
+														/>
 													</CardBody>
-												</Card>)}
-										</Col>
+												</Card>
+											</Col>
+										)}
 									</Row>
 								</div>
 
@@ -335,6 +381,31 @@ function Country({
 										style={{ padding: '5px 25px' }}
 									>
 										<Col xs="10" sm="4">
+											<Card
+												header="Drug Laws"
+											>
+												<CardBody>
+													<div
+														className="scrolling-card"
+														style={{ maxHeight: '400px', overflow: 'scroll' }}
+													>
+														<p>
+															<strong>Canabais recreational:</strong> {JSON.stringify(canabaisRecreational).replace(/(^")|("$)/g, '')}
+														</p>
+														<p>
+															<strong>Canabais medical:</strong> {JSON.stringify(canabaisMedical).replace(/(^")|("$)/g, '')}
+														</p>
+														<p>
+															<strong>Cocaine possession:</strong> {JSON.stringify(cocainePossession).replace(/(^")|("$)/g, '')}
+														</p>
+														<p>
+															<strong>Methaphetamine possession:</strong> {JSON.stringify(methaphetaminePossession).replace(/(^")|("$)/g, '')}
+														</p>
+													</div>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
 											<Card header="Traffic Flow">
 												<CardBody>
 													{trafficSide !== 'Not available yet'
@@ -405,7 +476,62 @@ function Country({
 										</CardBody>
 									</Card>
 								</Col>
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+										<Col xs="10" sm="4">
+											<Card header="Vaccines">
+
+												<CardBody>
+													<Row
+														className="justify-content-center"
+														style={{ padding: '0px 0px' }}
+													>
+
+														{vaccines.map((value, index) => {
+														  if (vaccineCard === '' && index === 0) {
+																setVaccinCard(value.vaccine_info);
+														  }
+														  if ((vaccineCard === value.vaccine_info && index === 0)) {
+																return (
+																	<button
+																		className="tablinks"
+																		style={{ color: '#FF1C00' }}
+																		onClick={() => setVaccinCard(value.vaccine_info)}
+																	>{value.vaccine_name}
+																	</button>
+																);
+															}
+
+
+															return (
+																<button
+																	className="tablinks"
+																	onClick={() => setVaccinCard(value.vaccine_info)}
+																>
+																	{value.vaccine_name}
+																</button>
+															);
+													  })}
+													</Row>
+
+													<Divider /> <br />
+													  <Row
+														className="justify-content-center"
+														style={{ padding: '0px 25px' }}
+													  >
+														<p
+															dangerouslySetInnerHTML={{ __html: vaccineCard }}
+															 style={{ fontSize: `${13}px` }}
+														/>
+													  </Row>
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
 								</div>
+
 							</ReactFullpage.Wrapper>
 						);
 					}}
