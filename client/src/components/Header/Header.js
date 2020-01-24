@@ -33,7 +33,7 @@ Header.propTypes = {
 	title: PropTypes.string,
 	title2: PropTypes.string,
 	title3: PropTypes.string,
-	subtitle: PropTypes.string,
+	subtitle: PropTypes.string
 };
 
 export default Header;

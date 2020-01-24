@@ -18,6 +18,7 @@ from advisory_sg import save_to_SG
 from advisory_mu import save_to_MU
 from advisory_central_america_advisory import save_to_central_america
 from advisory_caribbean import save_to_caribbea
+from drugs import save_drug_law
 from vaccines import parse_all_countries_vaccine
 
 #logging to a file
@@ -48,6 +49,7 @@ def start_scheduler():
     scheduler.every().day.do(save_to_MU)
     scheduler.every().day.do(save_to_central_america
     scheduler.every().day.do(save_to_caribbea)
+    scheduler.every().day.do(save_drug_law)
     scheduler.every().day.do(parse_all_countries_vaccine)
 
     while True:
