@@ -6,7 +6,7 @@
 	width: 100%;
 	background-position: center center;
 	height: 400px !important;
-	z-index: -1;
+	z-index: 1;
 	position: relative;
 }
 .AppHeader .title {
