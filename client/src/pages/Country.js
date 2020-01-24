@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
 import { Row, Col, Card as RBCard } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
-import { Card, CardBody, VaccineCardBody, Divider } from '../components/Card/Card';
+import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
@@ -191,7 +191,7 @@ function Country({
 	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
-	const formated_visaInfo = formatingVisa(visaInfo);
+	const formatedVisaInfo = formatingVisa(visaInfo);
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
@@ -248,7 +248,7 @@ function Country({
 													>
 														<div
 															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: formated_visaInfo }}
+															dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 														/>
 													</CardBody>
 												</Card>
@@ -424,8 +424,7 @@ function Country({
 											</Card>
 										</Col>
 										<Col xs="10" sm="4">
-											<Card header = "Unsafe Areas"
-												>
+											<Card header="Unsafe Areas">
 												<CardBody>
 													<div
 														className="scrolling-card"
@@ -459,6 +458,7 @@ function Country({
 														  if ((vaccineCard === value.vaccine_info && index === 0)) {
 																return (
 																	<button
+																		type="button"
 																		className="tablinks"
 																		style={{ color: '#FF1C00' }}
 																		onClick={() => setVaccinCard(value.vaccine_info)}
@@ -470,6 +470,7 @@ function Country({
 
 															return (
 																<button
+																	type="button"
 																	className="tablinks"
 																	onClick={() => setVaccinCard(value.vaccine_info)}
 																>
