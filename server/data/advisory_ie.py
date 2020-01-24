@@ -66,7 +66,7 @@ def get_one_advisory(url, my_driver, soup):
 
     count = 0
     for tag in div_tab2_relevant:
-        
+
         if(tag.name == 'h3'):
             if(tag.find('strong')):
                if(tag.find('strong').text.strip().lower() == 'terrorism' or tag.find('strong').text.strip().lower() == 'social unrest' or tag.find('strong').text.strip().lower() == 'crime'):
@@ -97,8 +97,8 @@ def get_one_advisory(url, my_driver, soup):
         elif(count == 1):
               advisory_text += tag.text
               count = 0
-  
-   
+
+
 
     if(len(advisory_text) > 1948):
         advisory_text_temp = advisory_text[0:1948]
@@ -225,5 +225,3 @@ def find_all_ireland():
         json.dump(data, outfile)
 
     save_into_db(data)
-
-find_all_ireland()
