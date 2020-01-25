@@ -109,7 +109,7 @@ def parse_additional_advisory_info(url, driver):
        #Selenium hands the page source to Beautiful Soup
        driver.get(url)
        soup=BeautifulSoup(driver.page_source, 'lxml')
-       warning = " "
+       warning = "<ul>"
        advisory_list = soup.find("div", {"class": "tabpanels"})
        security_list = advisory_list.find("details", {"id": "security"})
        advisories = security_list.find("div", {"class": "tgl-panel"})
@@ -121,26 +121,26 @@ def parse_additional_advisory_info(url, driver):
           if(tag.name == 'h3'):
             if(tag.text.strip().lower() == "crime"):
               count  = 1
-              tag_type = 'Crime'
+              tag_type = '<li><b>Crime</b>'
             elif(tag.text.strip().lower() == "kidnapping"):
               count  = 1
-              tag_type = 'Kidnapping'
+              tag_type = '<li><b>Kidnapping</b>'
             elif(tag.text.strip().lower() == "landmines"):
               count  = 1
-              tag_type = 'Landmines'
+              tag_type = '<li><b>Landmines</b>'
             elif(tag.text.strip().lower() == "terrorism"):
               count  = 1
-              tag_type = 'Terrorism'
+              tag_type = '<li><b>Terrorism</b>'
           elif(count == 1):
-            warning += '</br>'+ tag_type +" "+ tag.text.strip()
+            warning += tag_type +" "+ tag.text.strip()
             count = 0
-       return warning
+       return warning +'</ul>'
 
 
 
 #opens the url to the files of all countries
 #get the requiered data and stores it in a dictionary
-@retry(tries=4, delay=3, backoff=2)
+@retry(Exception, tries=4)
 def advisory_canada(all_countries):
     countries_data = {}
     additional_advisory_info = get_additional_advisory_info_url()
@@ -148,7 +148,7 @@ def advisory_canada(all_countries):
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
 
         print(country_url)
-        time.sleep(5)
+        #time.sleep(5)
         with contextlib.closing(urllib.request.urlopen(country_url)) as url:
             country_data = json.loads(url.read().decode())
             country_data = country_data['data']
@@ -200,5 +200,5 @@ def save_to_canada():
     # with open('advisory-ca.json', 'w') as fp:
     #     json.dump(countries_data, fp)
 
-save_to_canada()
+#save_to_canada()
 

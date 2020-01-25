@@ -60,15 +60,18 @@ def parse_a_country_additional_advisory_info(url, driver):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
-    warning = " "
+    warning = "<ul> "
     div_id = soup.find("div", {"id": "container tooltipalert"})
     a_tags = div_id.find_all('a')
     for a in a_tags:
         listToStr = ' '.join(map(str, a.get('class'))) 
         if(listToStr == 'showThreat'): #if tooltip is marked as showThreat then this country is marked as having this threat
             if(a.get('title')!='Tool Tip: Other'):
-             warning += a.get('data-tooltip').rstrip("\n") +'</br>'
-    return warning
+             tooltip = a.get('data-tooltip').rstrip("\n")
+             index = tooltip.index(':')
+             tooltip = tooltip[0 : index]+ '</b>' + tooltip[index: ]
+             warning += '<li><b>'+ tooltip
+    return warning + '</ul>'
 
 
 
@@ -143,4 +146,4 @@ def save_into_db(data):
         LOGGER.error(f'Error has occured while saving the countries into the US table because of the following error: {error_msg}')
     db.close_connection()
 
-save_to_united_states()
+#save_to_united_states()
