@@ -14,7 +14,7 @@ class wiki_visa_parser():
         #Selenium hands the page source to Beautiful Soup
         soup = BeautifulSoup(self.driver.page_source, 'lxml')
         visa = " "
-        all_tables = soup.findAll('table', {"class": "wikitable"})
+        all_tables = soup.findAll('table', {"class": "wikitable"})[0:4]
         for table in all_tables:
             table_body = table.find('tbody')
             table_rows = table_body.find_all('tr')
