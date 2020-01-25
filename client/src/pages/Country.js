@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col, Card as RBCard } from 'react-bootstrap/';
+import { Row, Col, Table } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
@@ -10,6 +10,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
+import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison';
 import { languages, flagSrc, getOtherTrafficSide, formatingVisa } from '../utils/parsingTools';
 
 import '../App.css';
@@ -48,14 +49,10 @@ function Country({
 	const [canabaisMedical, setcanabaisMedical] = useState({});
 	const [canabaisRecreational, setcanabaisRecreational] = useState({});
 	const [cocainePossession, setcocainePossession] = useState({});
-	const [cocaineSale, setcocaineSale] = useState({});
-	const [cocaineTransport, setcocaineTransport] = useState({});
-	const [cocianeCultivation, setcocianeCultivation] = useState({});
 	const [methaphetaminePossession, setmethaphetaminePossession] = useState({});
-	const [methaphetamineSale, setmethaphetamineSale] = useState({});
-	const [methaphetamineTransport, setmethaphetamineTransport] = useState({});
-	const [methaphetamineCultivation, setmethaphetamineCultivation] = useState({});
 	const [rate, setRate] = useState('');
+	const [destinationHealth, setDestinationHealth] = useState({});
+	const [originHealth, setOriginHealth] = useState({});
 	const [vaccineCard, setVaccinCard] = useState('');
 
 	useEffect(() => {
@@ -95,22 +92,22 @@ function Country({
 							advisory_link
 							advisory_text
 						}
-						country_languages(country_iso: "${destinationCountry}"){
+						country_languages(country_iso: "${destinationCountry}") {
 							official_languages,
 							regional_languages,
 							minority_languages,
 							national_languages,
 							widely_spoken_languages
 						}
-						country_unsafe_areas(country_iso: "${destinationCountry}"){
+						country_unsafe_areas(country_iso: "${destinationCountry}") {
 							unsafe_areas
 						}
-						destinationCurrencies: currencies(country: "${destinationCountry}"){
+						destinationCurrencies: currencies(country: "${destinationCountry}") {
 							name
 							symbol
 							code
 						}
-						originCurrencies: currencies(country: "${originCountry}"){
+						originCurrencies: currencies(country: "${originCountry}") {
 							name
 							symbol
 							code
@@ -131,8 +128,24 @@ function Country({
 						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng} country_destination:"${destinationCountry}") {
 							utc_offset
 						}
-						trafficSide(iso:"${destinationCountry}"){
+						trafficSide(iso:"${destinationCountry}") {
 							traffic_side
+						}
+						destinationHealth:unitedNations(country:"${destinationCountry}") {
+							homicideRate
+							infantMortality
+							lifeExpectancy
+							nbOfPhysicians
+							sanitation
+							water
+						}
+						originHealth:unitedNations(country:"${originCountry}") {
+							homicideRate
+							infantMortality
+							lifeExpectancy
+							nbOfPhysicians
+							sanitation
+							water
 						}
 						drugs(country_iso:"${destinationCountry}") {
 							country_iso,
@@ -148,7 +161,7 @@ function Country({
 							canabais_recreational,
 							canabais_medical
 						}
-						country_vaccines(country_iso:"${destinationCountry}"){
+						country_vaccines(country_iso:"${destinationCountry}") {
 							vaccine_name
 							vaccine_info
 						}
@@ -171,18 +184,13 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
+					(res.data.destinationHealth && res.data.destinationHealth.length !== 0) && setDestinationHealth(res.data.destinationHealth[0]);
+					(res.data.originHealth && res.data.originHealth.length !== 0) && setOriginHealth(res.data.originHealth[0]);
 					(res.data.drugs && res.data.drugs.length !== 0) && setcanabaisMedical(res.data.drugs[0].canabais_medical);
 					(res.data.drugs && res.data.drugs.length !== 0) && setcanabaisRecreational(res.data.drugs[0].canabais_recreational);
-					(res.data.drugs && res.data.drugs.length !== 0) && setcocaineSale(res.data.drugs[0].cocaine_sale);
-					(res.data.drugs && res.data.drugs.length !== 0) && setcocaineTransport(res.data.drugs[0].cocaine_transport);
 					(res.data.drugs && res.data.drugs.length !== 0) && setcocainePossession(res.data.drugs[0].cocaine_possession);
-					(res.data.drugs && res.data.drugs.length !== 0) && setcocianeCultivation(res.data.drugs[0].cociane_cultivation);
-					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetamineSale(res.data.drugs[0].methaphetamine_sale);
-					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetamineTransport(res.data.drugs[0].methaphetamine_transport);
 					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetaminePossession(res.data.drugs[0].methaphetamine_possession);
-					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetamineCultivation(res.data.drugs[0].methaphetamine_cultivation);
 					(res.data.country_vaccines && res.data.country_vaccines.length !== 0) && setVaccines(res.data.country_vaccines);
-					setIsLoading(false);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
 		}
@@ -263,10 +271,9 @@ function Country({
 													style={{ maxHeight: '400px', overflow: 'scroll' }}
 												>
 													<CardBody>
-														<ErrorOutlineOutlinedIcon
-															style={{ color: '#dc3545' }}
-														/>
+														<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }}/>
 														<div
+															style={{ display: 'inline' }}
 															className="scrolling-card"
 															dangerouslySetInnerHTML={{ __html: advisoryInfo }}
 														/>
@@ -438,46 +445,71 @@ function Country({
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-									<Col xs="10" sm="4">
-										{!(vaccines === null || vaccines === "Not available yet") && (
-											<Card header="Vaccines">
-
+									<Row>
+										<Col xs="10" sm="4">
+											<Card header="General Health">
 												<CardBody>
-													<Row className="justify-content-center"
-															style={{ padding: '0px 0px' }}>
+													<Table striped bordered hover>
+														<tbody>
+															<tr>
+																<td><strong>Homicide Rate</strong></td>
+																<td>{destinationHealth.homicideRate} <span style={{ color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate)) }}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Infant Mortality (Per 1000)</strong></td>
+																<td>{destinationHealth.infantMortality} <span style={{ color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality)) }}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Life Expectancy (f/m, years)</strong></td>
+																<td>{destinationHealth.lifeExpectancy} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Number of physicians (Per 1000)</strong></td>
+																<td>{destinationHealth.nbOfPhysicians} <span style={{ color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians)) }}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Sanitation (urban/rural, %)</strong></td>
+																<td>{destinationHealth.sanitation} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Water (urban/rural, %)</strong></td>
+																<td>{destinationHealth.water}  <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
+															</tr>
+														</tbody>
+													</Table>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											{!(vaccines === null || vaccines === "Not available yet") && (
+											<Card header="Vaccines">
+												<CardBody>
+													<Row className="justify-content-center" style={{ padding: '0px 0px' }}>
+													{vaccines.map((value, index) => {
+														if (vaccineCard == '' && index == 0){
+															setVaccinCard(value.vaccine_info)
+														}
+														if ((vaccineCard == value.vaccine_info  && index == 0)) {
+														return <button className='tablinks' style = {{color: '#FF1C00'}}
+														onClick={()=>setVaccinCard(value.vaccine_info)
+														}>{value.vaccine_name}</button>}
 
-															{vaccines.map((value, index) => {
-																if (vaccineCard == '' && index == 0){
-																	setVaccinCard(value.vaccine_info)
-																}
-																if ((vaccineCard == value.vaccine_info  && index == 0)){
-																return <button className='tablinks' style = {{color: '#FF1C00'}}
-																onClick={()=>setVaccinCard(value.vaccine_info)
-															}>{value.vaccine_name}</button>}
+														else{
+														return <button className='tablinks'
+																	onClick={()=>setVaccinCard(value.vaccine_info)
+																}>
+														{value.vaccine_name}</button>}
+													})}</Row>
 
-																else{
-																return <button className='tablinks'
-																			onClick={()=>setVaccinCard(value.vaccine_info)
-																		}>
-																{value.vaccine_name}</button>}
-															})}</Row>
-
-															<Divider/> <br/>
-															<Row className="justify-content-center"
-																	style={{ padding: '0px 25px'}}>
-															<p dangerouslySetInnerHTML={{ __html: vaccineCard }}
-																style = {{fontSize: 13 +'px'}}/>
-															</Row>
-													</CardBody>
+													<Divider/><br/>
+													<Row className="justify-content-center" style={{ padding: '0px 25px'}}>
+														<p dangerouslySetInnerHTML={{ __html: vaccineCard }} style = {{fontSize: 13 +'px'}}/>
+													</Row>
+												</CardBody>
 											</Card>)}
-									</Col>
+										</Col>
 									</Row>
 								</div>
-
 							</ReactFullpage.Wrapper>
 						);
 					}}

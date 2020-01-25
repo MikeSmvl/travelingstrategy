@@ -43,7 +43,7 @@ const getRate = (originCurrency, destCurrency) => {
 }
 
 const getOtherTrafficSide = (trafficSide) => {
-	if(trafficSide == "left"){
+	if(trafficSide === "left"){
 		return "right"
 	}
 	else{
@@ -59,10 +59,10 @@ const formatingVisa = (visaInfo) => {
 	return formatted_visa_info
 }
 
-function replaceAll(find, replace,str) {
-	var re = new RegExp(find, 'g');
-	str = str.replace(re, replace);
-	return str;
-}
+// function replaceAll(find, replace,str) {
+// 	var re = new RegExp(find, 'g');
+// 	str = str.replace(re, replace);
+// 	return str;
+// }
 
 export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa };

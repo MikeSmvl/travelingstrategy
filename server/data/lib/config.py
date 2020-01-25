@@ -45,6 +45,9 @@ wiki_visa_url_DO = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominica
 wiki_visa_url_MX = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mexican_citizens'
 wiki_visa_url_PA = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Panamanian_citizens'
 
+# United Nations Data API
+united_nations_api_link = 'https://data.un.org/'
+
 # Caribbean
 wiki_visa_url_AG = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Antigua_and_Barbuda_citizens'
 wiki_visa_url_BB = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Barbadian_citizens'

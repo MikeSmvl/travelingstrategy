@@ -22,3 +22,16 @@ class UrlHelper:
                 return currency_api
         except Exception as error_msg:
             print(f'Getting currency api link failed with error: {error_msg}')
+
+    def get_united_nations_api(self, country_iso):
+        """
+        Gets the United Nations API link for a given country
+
+        :param country_iso:  Name of the country to return the link for.
+        """
+        try:
+            api_ending = f'en/iso/{country_iso}.html'
+            return f'{self.api}{api_ending}'
+        except Exception as error_msg:
+            print(f'Getting currency api link failed with error: {error_msg}')
+
