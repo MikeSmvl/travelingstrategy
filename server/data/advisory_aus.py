@@ -3,9 +3,7 @@ import time
 import json
 from bs4 import BeautifulSoup
 import regex
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
+from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.flags import Flags
@@ -24,12 +22,8 @@ def get_url_of_countries():
         #this is the link to the first page
         url = 'https://smartraveller.gov.au/countries/pages/list.aspx'
         LOGGER.info('Retrieving the URLs for all countries for the Australian advisory')
-        #set up the headless chrome driver
-        chrome_options = Options()
-        chrome_options.add_argument("--headless")
         # create a new chrome session
-        driver = webdriver.Chrome(options=chrome_options)
-        driver.implicitly_wait(19)
+        driver = create_driver()
         driver.get(url)
 
         #Selenium hands the page source to Beautiful Soup
@@ -60,9 +54,7 @@ def get_url_of_countries():
     except:
         LOGGER.error('An error has occured while retrieving the URLs for all countries for the Australian advisory')
     finally:
-
-        driver.close()
-        driver.quit()
+        quit_driver(driver)
 
     return info
 
@@ -117,16 +109,6 @@ def get_additional_advisory(url,driver):
         extra_advisory = extra_advisory + '<li>' + paragraph.text
     return extra_advisory+'</ul>'
 
-#the two functions below should be puth in chrome driver class
-def create_driver():
-    chrome_options = Options()
-    chrome_options.add_argument("--headless")
-    driver = webdriver.Chrome(options=chrome_options)
-    driver.implicitly_wait(19)
-    return driver
-
-def quit_driver(driver):
-    driver.quit()
 
 def save_into_db(data):
     # create an an sqlite_advisory object
@@ -152,14 +134,12 @@ def save_into_db(data):
 def regional_advice_level(driver,url):
     driver.get(url)
     #Selenium hands the page source to Beautiful Soup
-    data_type = "Advice levels"
     soup=BeautifulSoup(driver.page_source, 'lxml')
     div = soup.find_all('div', attrs={'class':'clearfix text-formatted field field--name-field-location field--type-text-long field--label-hidden field__item'})
     data = []
     for ele in div:
         txt = ele.text
         data.append(txt)
-        print(txt)
     return data
 
 

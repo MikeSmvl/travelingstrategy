@@ -4,11 +4,7 @@ import time
 import regex
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
-
-import helper_class.chrome_driver as driver
+from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.flags import Flags
@@ -179,7 +175,7 @@ def save_into_db(data):
 def find_all_ireland():
 
     LOGGER.info("Begin parsing and saving for Ireland...")
-    my_driver = driver.create_driver()
+    my_driver = create_driver()
 
     all_url = find_all_url(my_driver)
     data = find_all_iso(all_url)
@@ -220,25 +216,11 @@ def find_all_ireland():
                 print(c, error_msg)
                 LOGGER.warning(f'Error message: {error_msg}')
     #dump the data into js to be deleted later
-    driver.quit_driver(my_driver)
+    quit_driver(my_driver)
     with open('./advisory-ie.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
-
-
-def save_into_db(data):
-    # create an an sqlite_advisory object
-    db = Database("countries.sqlite")
-    db.drop_table("IE")
-    db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        advisory = data[country].get('advisory-text').replace('"', '')
-        visa = data[country].get('visa-info')
-        db.insert("IE",iso,name,advisory,visa)
-    db.close_connection()
 
 
 

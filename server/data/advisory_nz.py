@@ -4,9 +4,6 @@ import time
 import json
 from bs4 import BeautifulSoup
 import regex
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
@@ -51,8 +48,7 @@ def get_url_of_countries_nz(driver):
     except Exception as error_msg:
         LOGGER.error(f'An error has occured while retrieving the URLs of {name} for New Zealand advisory because of the following error: {error_msg}')
     finally:
-        driver.close()
-        driver.quit()
+        quit_driver(driver)
 
     return info
 
@@ -177,5 +173,5 @@ def save_into_db(data):
 
     db.close_connection()
 
-#save_to_new_zealand()
+save_to_new_zealand()
 
