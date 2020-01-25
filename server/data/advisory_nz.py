@@ -173,5 +173,5 @@ def save_into_db(data):
 
     db.close_connection()
 
-save_to_new_zealand()
+#save_to_new_zealand()
 

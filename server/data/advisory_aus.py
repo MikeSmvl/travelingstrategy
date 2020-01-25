@@ -205,4 +205,4 @@ driver = create_driver()
 data = regional_advice_level(driver,"https://www.smartraveller.gov.au/destinations/africa/mali")
 quit_driver(driver)
 
-save_to_australia()
+#save_to_australia()
