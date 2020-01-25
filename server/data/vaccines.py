@@ -23,11 +23,16 @@ def create_vaccines_table():
 #one row is created per vaccines
 def save_one_country(data,iso):
     for vaccine in data:
-        DB.insert("vaccines",iso,vaccine,data[vaccine])
+        try:
+            DB.insert("vaccines",iso,vaccine,data[vaccine])
+            LOGGER.success(f'Sucessfully saved {iso} into vaccines table')
+        except Exception as error_msg:
+            LOGGER.error(f'Could not save {iso} because of the following error: {error_msg}')
 
 #grabbing the URL for all countries
 def get_url_of_countries():
     info = {}
+    LOGGER.info('Retrieving URL of all countries for Vaccines table')
     try:
         #this is the link to the first page
         driver = create_driver()
@@ -50,6 +55,9 @@ def get_url_of_countries():
                     href = country['href']
                     info[country_iso] = {"href":href}
                     LOGGER.info(f' Retrieving URL of {country_name}, {href}')
+    
+    except Exception as error_msg:
+        LOGGER.error(f'Could not retrieve URLs of countries because of the following error: {error_msg}')
     finally:
         driver.close()
         driver.quit()
@@ -60,6 +68,7 @@ def parse_one_country_vaccine(url,country):
     driver = create_driver()
     driver.get(url)
     vaccines={}
+    LOGGER.info(f'Parsing the informations for vaccinations for the following country: {country}')
     #Selenium hands the page source to Beautiful Soup
     soup=BeautifulSoup(driver.page_source, 'lxml')
     # table_row = soup.find_all

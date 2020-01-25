@@ -8,7 +8,13 @@ from selenium.webdriver.chrome.options import Options
 from bs4 import BeautifulSoup
 from helper_class.country_names import find_iso_of_country
 from lib.database import Database
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 #Some countries have link, others are listed and others have links while being listed
 def get_countries_languages():
@@ -17,7 +23,7 @@ def get_countries_languages():
     try:
         # this is the link to the first page
         url = 'https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory'
-
+        LOGGER.info("Retrieving URL of all countries for languages")
         # set up the headless chrome driver
         chrome_options = Options()
         chrome_options.add_argument("--headless")
@@ -154,6 +160,7 @@ def remove_brackets_from_text(tag_text):
 
 def save_to_languages():
 
+    LOGGER.info("Begin parsing and saving for languages table...")
     db = Database("countries.sqlite")
     db.drop_table("languages")
     db.add_table("languages", country_iso="VARCHAR", country_name="VARCHAR", official_languages="VARCHAR", regional_languages="VARCHAR", minority_languages="REAL", national_languages="VARCHAR",widely_spoken_languages = "VARCHAR")
@@ -167,11 +174,12 @@ def save_to_languages():
         minority_languages = get_concatinated_values(country.get('minority_languages'))
         national_languages = get_concatinated_values(country.get('national_languages'))
         widely_spoken_languages = get_concatinated_values(country.get('widely_spoken_languages'))
-
+        LOGGER.info(f'Saving {country_name} into languages table with the following information: {official_languages}, {regional_languages}, {minority_languages}, {national_languages}, and {widely_spoken_languages}')
         #For Great britain it retrieves the country many times but it has languages only one time
         country_has_no_languages = not (official_languages=="" and regional_languages=="" and minority_languages=="" and national_languages=="" and widely_spoken_languages=="")
 
         if(country_has_no_languages):
             cur.execute('INSERT INTO languages (country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages ) values( ?, ?, ?, ?, ?, ?, ?)',(country_iso,country_name,official_languages,regional_languages, minority_languages, national_languages, widely_spoken_languages))
             db.insert("languages",country_iso, country_name, official_languages, regional_languages, minority_languages, national_languages, widely_spoken_languages)
+    LOGGER.success(f'{country_name} successfully saved into the database')
     db.close_connection()

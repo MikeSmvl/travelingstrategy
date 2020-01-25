@@ -44,7 +44,7 @@ def start_scheduler():
     scheduler.every().day.do(save_to_australia)
     scheduler.every().day.do(save_to_new_zealand)
     scheduler.every().day.do(save_to_UK)
-    scheduler.every().day.do(find_all_ierland)
+    scheduler.every().day.do(find_all_ireland)
     scheduler.every().day.do(save_to_united_states)
     scheduler.every().day.do(save_to_SG)
     scheduler.every().day.do(save_to_MU)

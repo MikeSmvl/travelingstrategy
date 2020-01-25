@@ -10,6 +10,13 @@ from lib.database import Database
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.chrome_driver import create_driver, quit_driver
 from bs4 import BeautifulSoup
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 #in the file provided h3 is a sign that a new data type starts
 #if the header list is empty then the data is still part of the
@@ -168,20 +175,24 @@ def save_to_canada():
     db = Database("countries.sqlite")
     db.drop_table("CA")
     db.add_table("CA", country_iso="text", name="text", advisory_text="text", visa_info="text")
-
+    LOGGER.info('Saving CA table into the databse')
     #getting the data from all countries
     all_countries = get_all_countries()
     countries_data = advisory_canada(all_countries)
 
     #saving the data in db
-    for country in countries_data:
-        iso = countries_data[country].get('country-iso')
-        name = countries_data[country].get('name')
-        advisory = countries_data[country].get('advisory-text')
-        visa = countries_data[country].get('visa-info')
-
-        db.insert("CA",iso,name,advisory,visa)
-
+    try:
+      for country in countries_data:
+          iso = countries_data[country].get('country-iso')
+          name = countries_data[country].get('name')
+          advisory = countries_data[country].get('advisory-text')
+          visa = countries_data[country].get('visa-info')
+          LOGGER.info(f'Saving {name} into the CA table')
+          db.insert("CA",iso,name,advisory,visa)
+          LOGGER.success(f'{name} was successfully saved into the CA table with the following table: {advisory}. {visa}')
+      LOGGER.success('CA table was successfully saved into the database')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occurred while saving the countries into the CA table because of the following error: {error_msg}')
     db.close_connection()
 
 
@@ -189,4 +200,5 @@ def save_to_canada():
     # with open('advisory-ca.json', 'w') as fp:
     #     json.dump(countries_data, fp)
 
+save_to_canada()
 
