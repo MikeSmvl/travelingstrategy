@@ -16,13 +16,13 @@ stories.addDecorator(withA11y);
 stories
 	.add('Base usage', () => (
 		<RateCalculator
-			destinationRate={1.32}
+			destinationRate={"1.32"}
 			originCurrency="CAD"
 			destCurrency="USD"
 		/>
 	))
 	.add('Set props', () => {
-		const destinationRate = text('Conversion Rate') || 1.32;
+		const destinationRate = text('Conversion Rate') || '1.32';
 		const originCurrency = text('Origin Currency') || 'CAD';
 		const destCurrency = text('Destination Currency') || 'USD';
 
