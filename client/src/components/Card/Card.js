@@ -27,7 +27,7 @@ const CardBody = (props) => {
 					{subtitle}
 				</RBCard.Subtitle>
 			)}
-			<RBCard.Text>{children}</RBCard.Text>
+			<span className="card-text">{children}</span>
 		</RBCard.Body>
 	);
 };

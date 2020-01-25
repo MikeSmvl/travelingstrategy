@@ -309,8 +309,8 @@ it("Querying traffic table", () =>{
       country_name,
       traffic_side
     }
-}
-`;
+}`
+;
   tester.test(true, query)
   tester.graphql(query, undefined, undefined, { isLocal: false })
       .then(result => {
@@ -323,6 +323,29 @@ it("Querying traffic table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+//test for unsafe areas Columbia
+it("Querying unsafe_areas Columbia", () =>{
+  const query =`
+  {
+    country_unsafe_areas( country_iso: "CO"){
+      country_iso
+      name
+      unsafe_areas
+    }
+  }`;
+    tester.test(true, query)
+    tester.graphql(query, undefined, undefined, { isLocal: false })
+        .then(result => {
+          if(result.error != undefined){
+            logger.error(__filename +result.errors[0].message)
+          }
+          else{
+            logger.info(__filename +"There is no error in the query parameters")
+          }
+        })
+        .catch(err => logger.error(__filename +" "+err))
+  });
 
 // test for drugs
 it("Querying Drug table for Canada", () =>{
@@ -357,9 +380,32 @@ it("Querying Drug table for Canada", () =>{
       .catch(err => logger.error(__filename +" "+err))
 });
 
+//test for unsafe areas table all data
+it("Querying unsafe_areas table", () =>{
+  const query =`
+  {
+    unsafe_areas_table {
+      country_iso
+      name
+      unsafe_areas
+    }
+  }`
+  ;
+    tester.test(true, query)
+    tester.graphql(query, undefined, undefined, { isLocal: false })
+        .then(result => {
+          if(result.error != undefined){
+            logger.error(__filename +result.errors[0].message)
+          }
+          else{
+            logger.info(__filename +"There is no error in the query parameters")
+          }
+        })
+        .catch(err => logger.error(__filename +" "+err))
+  });
 
+// all data in the vaccine table
 
-      
 // test for vaccines
 
 it("Querying vaccine table for Canada", () =>{
@@ -386,15 +432,15 @@ tester.graphql(query, undefined, undefined, { isLocal: false })
 });
 
 it("Querying vaccine table", () =>{
-  const query = `
+  const query =`
   {
     vaccines_table{
       country_iso,
     	vaccine_name,
     	vaccine_info
     }
-}
-`;
+}`;
+
   tester.test(true, query)
   tester.graphql(query, undefined, undefined, { isLocal: false })
       .then(result => {
