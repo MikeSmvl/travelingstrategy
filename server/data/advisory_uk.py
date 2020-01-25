@@ -5,13 +5,20 @@ from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 from selenium.webdriver.common.by import By
 from lib.database import Database
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 import time
 
 import json
 
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 def get_url_of_countries():
     info = {}
+    LOGGER.info('Retrieving URL of all countries for United Kingdom advisory')
     try:
         #this is the link to the first page
         url = 'https://www.gov.uk/foreign-travel-advice'
@@ -33,6 +40,9 @@ def get_url_of_countries():
             if(country_iso != ""): #Countries that don't have iso are not official counntries
                 href = country['href']
                 info[country_iso] = {"href":href}
+                LOGGER.success(f'URL of {country_name} was successfully retrieved')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occured while retrieving URL of countries for United Kingdom advisory because of the following error: {error_msg}')
     finally:
         driver.close()
         driver.quit()
@@ -114,40 +124,53 @@ def parse_additional_advisory_info(link, driver):
 
 def save_to_UK():
 
+    LOGGER.info("Begin parsing and saving for United Kingdom table...")
     driver = create_driver()
-    wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens"
-    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
-    visas = wiki_visa_ob.visa_parser_table()
-    data = parse_all_countries_advisory()
+    LOGGER.info('Parsing the visa requirements of all countries for United Kingdom advisory')
+    try:
+      wiki_visa_url ="https://en.wikipedia.org/wiki/Visa_requirements_for_British_citizens"
+      wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+      visas = wiki_visa_ob.visa_parser_table()
+      data = parse_all_countries_advisory()
+      LOGGER.success('Successfully parsed the visa requirements of all countries for United Kingdom advisory')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occured while retrieving the visa reuirements of all countries for United Kingdom advisory because of the following error: {error_msg}')
+    
     info = {}
     array_info = []
     # create an an sqlite_advisory object]
     db = Database("countries.sqlite")
     db.drop_table("GB")
     db.add_table("GB", country_iso="text", name="text", advisory_text="text", visa_info="text")
+    LOGGER.info('Saving countries informations into the UK table')
 
-
-
-    for country in visas:
-        
-        iso = find_iso_of_country(country)
-        if(iso != ""):
-            try:
-                name = country
-                advisory = data[iso].get('advisory') #dictionary for the travel advisory is iso{advisory:text}
-                visa_info = visas[country].get('visa') #dictionary for visa info is country{visa:text}
-                info = {
-                    "country_iso" : iso,
-                    "name": name,
-                    "advisory": advisory,
-                    "visa_info": visa_info
-                }
-                array_info.append(info)
-                db.insert("GB",iso,name,advisory,visa_info)
-            except KeyError:
-                print("This country doesn't have advisory info: ",country)
-                print("Its ISO is: ",iso)
-
+    try:
+      for country in visas:
+          iso = find_iso_of_country(country)
+          if(iso != ""):
+              try:
+                  name = country
+                  advisory = data[iso].get('advisory') #dictionary for the travel advisory is iso{advisory:text}
+                  visa_info = visas[country].get('visa') #dictionary for visa info is country{visa:text}
+                  info = {
+                      "country_iso" : iso,
+                      "name": name,
+                      "advisory": advisory,
+                      "visa_info": visa_info
+                  }
+                  array_info.append(info)
+                  LOGGER.success(f"Saving {name} into the UK table with the following information: {visa_info}. {advisory}")
+                  db.insert("GB",iso,name,advisory,visa_info)
+                  LOGGER.success(f'{name} sucesfully saved to the database.')
+              except KeyError:
+                  LOGGER.warning(f'This country doesn\'t have advisory info: {country}')
+                  print("This country doesn't have advisory info: ",country)
+                  LOGGER.info(f'Its ISO is {iso}')
+                  print("Its ISO is: ",iso)
+      LOGGER.success('All countries have been succesfully saved into the UK table')
+   
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occured while saving countries into the UK table because of the following: {error_msg}')
     db.close_connection()
 
     with open('./advisory-uk.json', 'w') as outfile:

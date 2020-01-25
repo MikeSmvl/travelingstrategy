@@ -12,6 +12,7 @@ from advisory_nz import get_url_of_countries_nz, parse_a_country_advisory
 from advisory_us import get_name_and_advisory_of_countries
 from advisory_uk import get_url_of_countries as get_url_of_countries_uk, parse_one_country_advisory
 from advisory_ie import find_all_url, get_one_info
+from unsafe_areas_ca import get_all_links, get_all_regional_advisories
 from advisory_sg import parse_one_country_advisory as parse_one_country_advisory_sg
 from advisory_central_america import mexico_all_links
 from vaccines import get_url_of_countries, parse_one_country_vaccine
@@ -264,8 +265,21 @@ class parseTest(unittest.TestCase):
         data = parse_one_country_advisory_sg("https://www.mfa.gov.sg/countries-regions/c/canada/travel-page")
         self.assertFalse("", data)
 
+    #Unsafe areas tests
+    #get all links
+    def parse_unsafe_areas_all_links(self):
+        data = unsafe_areas_ca.get_all_links()
+        self.assertFalse("",data)
+
+    #Parse an unsafe area data
+    def parse_one_unsafe_area(self):
+        driver = create_driver()
+        url = "https://travel.gc.ca/destinations/united-states"
+        data = get_regional_advisories(url,driver)
+        quit_driver(driver)
+        self.assertFalse("",data)
     # Test for Asian countries
-    
+
     def test_sg_parse_visa_wiki(self):
         # tests parsing visa from wiki for ie
         driver = create_driver()
@@ -274,15 +288,16 @@ class parseTest(unittest.TestCase):
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
         self.assertFalse("", wiki_visa)
-    
+
     def test_mu_parse_visa_wiki(self):
-        # tests parsing visa from wiki for ie
+        # tests parsing visa from wiki for mu
         driver = create_driver()
         wiki_visa_url = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritian_citizens'
         wiki_visa_ob = wiki_visa_parser(wiki_visa_url, driver)
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
         self.assertFalse("", wiki_visa)
+   
     
     # Test for vacines
     def tests_get_url_of_countries_vaccines(self):
