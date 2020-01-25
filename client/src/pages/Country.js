@@ -442,7 +442,6 @@ function Country({
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
-<<<<<<< HEAD
 									<Col xs="10" sm="4">
 										{!(vaccines === null || vaccines === "Not available yet") && (
 											<Card header="Vaccines">
@@ -476,59 +475,6 @@ function Country({
 													</CardBody>
 											</Card>)}
 									</Col>
-=======
-										<Col xs="10" sm="4">
-											<Card header="Vaccines">
-
-												<CardBody>
-													<Row
-														className="justify-content-center"
-														style={{ padding: '0px 0px' }}
-													>
-
-														{vaccines.map((value, index) => {
-														  if (vaccineCard === '' && index === 0) {
-																setVaccinCard(value.vaccine_info);
-														  }
-														  if ((vaccineCard === value.vaccine_info && index === 0)) {
-																return (
-																	<button
-																		type="button"
-																		className="tablinks"
-																		style={{ color: '#FF1C00' }}
-																		onClick={() => setVaccinCard(value.vaccine_info)}
-																	>{value.vaccine_name}
-																	</button>
-																);
-															}
-
-
-															return (
-																<button
-																	type="button"
-																	className="tablinks"
-																	onClick={() => setVaccinCard(value.vaccine_info)}
-																>
-																	{value.vaccine_name}
-																</button>
-															);
-													  })}
-													</Row>
-
-													<Divider /> <br />
-													  <Row
-														className="justify-content-center"
-														style={{ padding: '0px 25px' }}
-													  >
-														<p
-															dangerouslySetInnerHTML={{ __html: vaccineCard }}
-															 style={{ fontSize: `${13}px` }}
-														/>
-													  </Row>
-												</CardBody>
-											</Card>
-										</Col>
->>>>>>> master
 									</Row>
 								</div>
 
