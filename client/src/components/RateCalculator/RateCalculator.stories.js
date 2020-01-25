@@ -16,7 +16,7 @@ stories.addDecorator(withA11y);
 stories
 	.add('Base usage', () => (
 		<RateCalculator
-			destinationRate={"1.32"}
+			destinationRate="1.32"
 			originCurrency="CAD"
 			destCurrency="USD"
 		/>

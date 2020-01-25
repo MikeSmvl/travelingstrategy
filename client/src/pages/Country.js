@@ -10,7 +10,7 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison'
+import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison';
 import { languages, flagSrc, getOtherTrafficSide, formatingVisa } from '../utils/parsingTools';
 
 import '../App.css';
@@ -447,92 +447,94 @@ function Country({
 								<div className="section">
 									<Subtitle text="Health & Safety" />
 									<Row>
-									<Col xs="10" sm="4">
-									<Card header="General Health">
-										<CardBody>
-											<Table striped bordered hover>
-												<tbody>
-													<tr>
-														<td><strong>Homicide Rate</strong></td>
-														<td>{destinationHealth.homicideRate} <span style={{color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
-													</tr>
-													<tr>
-														<td><strong>Infant Mortality (Per 1000)</strong></td>
-														<td>{destinationHealth.infantMortality} <span style={{color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
-													</tr>
-													<tr>
-														<td><strong>Life Expectancy (f/m, years)</strong></td>
-														<td>{destinationHealth.lifeExpectancy} <span style={{color: 'blue'}}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
-													</tr>
-													<tr>
-														<td><strong>Number of physicians (Per 1000)</strong></td>
-														<td>{destinationHealth.nbOfPhysicians} <span style={{color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
-													</tr>
-													<tr>
-															<td><strong>Sanitation (urban/rural, %)</strong></td>
-															<td>{destinationHealth.sanitation} <span style={{color: 'blue'}}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
-													</tr>
-													<tr>
-															<td><strong>Water (urban/rural, %)</strong></td>
-															<td>{destinationHealth.water}  <span style={{color: 'blue'}}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
-													</tr>
-												</tbody>
-											</Table>
-										</CardBody>
-									</Card>
-								</Col>
-								<Col xs="10" sm="4">
-									<Card header="Vaccines">
+										<Col xs="10" sm="4">
+											<Card header="General Health">
+												<CardBody>
+													<Table striped bordered hover>
+														<tbody>
+															<tr>
+																<td><strong>Homicide Rate</strong></td>
+																<td>{destinationHealth.homicideRate} <span style={{ color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate)) }}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Infant Mortality (Per 1000)</strong></td>
+																<td>{destinationHealth.infantMortality} <span style={{ color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality)) }}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Life Expectancy (f/m, years)</strong></td>
+																<td>{destinationHealth.lifeExpectancy} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Number of physicians (Per 1000)</strong></td>
+																<td>{destinationHealth.nbOfPhysicians} <span style={{ color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians)) }}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Sanitation (urban/rural, %)</strong></td>
+																<td>{destinationHealth.sanitation} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Water (urban/rural, %)</strong></td>
+																<td>{destinationHealth.water}  <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
+															</tr>
+														</tbody>
+													</Table>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Vaccines">
 
-										<CardBody>
-											<Row
-												className="justify-content-center"
-												style={{ padding: '0px 0px' }}
-											>
+												<CardBody>
+													<Row
+														className="justify-content-center"
+														style={{ padding: '0px 0px' }}
+													>
 
-												{vaccines.map((value, index) => {
-													if (vaccineCard === '' && index === 0) {
-														setVaccinCard(value.vaccine_info);
-													}
-													if ((vaccineCard === value.vaccine_info && index === 0)) {
-														return (
-															<button
-																key={index}
-																className="tablinks"
-																style={{ color: '#FF1C00' }}
-																onClick={() => setVaccinCard(value.vaccine_info)}
-															>{value.vaccine_name}
-															</button>
-														);
-													}
+														{vaccines.map((value, index) => {
+															if (vaccineCard === '' && index === 0) {
+																setVaccinCard(value.vaccine_info);
+															}
+															if ((vaccineCard === value.vaccine_info && index === 0)) {
+																return (
+																	<button
+																		key={value}
+																		type="button"
+																		className="tablinks"
+																		style={{ color: '#FF1C00' }}
+																		onClick={() => setVaccinCard(value.vaccine_info)}
+																	>{value.vaccine_name}
+																	</button>
+																);
+															}
 
 
-													return (
-														<button
-															key={index}
-															className="tablinks"
-															onClick={() => setVaccinCard(value.vaccine_info)}
-														>
-															{value.vaccine_name}
-														</button>
-													);
-												})}
-											</Row>
+															return (
+																<button
+																	key={value}
+																	type="button"
+																	className="tablinks"
+																	onClick={() => setVaccinCard(value.vaccine_info)}
+																>
+																	{value.vaccine_name}
+																</button>
+															);
+														})}
+													</Row>
 
-											<Divider /> <br />
-												<Row
-												className="justify-content-center"
-												style={{ padding: '0px 25px' }}
-												>
-												<p
-													dangerouslySetInnerHTML={{ __html: vaccineCard }}
-													style={{ fontSize: `${13}px` }}
-												/>
-												</Row>
-										</CardBody>
-									</Card>
-								</Col>
-								</Row>
+													<Divider /> <br />
+													<Row
+														className="justify-content-center"
+														style={{ padding: '0px 25px' }}
+													>
+														<p
+															dangerouslySetInnerHTML={{ __html: vaccineCard }}
+															style={{ fontSize: `${13}px` }}
+														/>
+													</Row>
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
 								</div>
 							</ReactFullpage.Wrapper>
 						);
