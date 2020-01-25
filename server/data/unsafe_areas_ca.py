@@ -123,7 +123,7 @@ def save_regional_advisories(data):
 
         try:
             DB.insert(tableName,country_iso, country,unsafe_areas)
-            LOGGER.info(f'Could not save unsafe areas for {country} in the database.')
+            LOGGER.success(f' Saved {country} in the database.')
         except Exception as error_msg:
             LOGGER.error(f'Could not save unsafe areas for {country} in the database because of the followin error: {error_msg}')
 

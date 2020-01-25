@@ -38,7 +38,7 @@ function Country({
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
-	const [vaccines, setVaccines] = useState([]);
+	const [vaccines, setVaccines] = useState('Not available yet');
 	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
 	const [timeDestination, setTimeDestination] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
@@ -442,57 +442,39 @@ function Country({
 										className="justify-content-center"
 										style={{ padding: '5px 25px' }}
 									>
-										<Col xs="10" sm="4">
+									<Col xs="10" sm="4">
+										{!(vaccines === null || vaccines === "Not available yet") && (
 											<Card header="Vaccines">
 
 												<CardBody>
-													<Row
-														className="justify-content-center"
-														style={{ padding: '0px 0px' }}
-													>
+													<Row className="justify-content-center"
+															style={{ padding: '0px 0px' }}>
 
-														{vaccines.map((value, index) => {
-														  if (vaccineCard === '' && index === 0) {
-																setVaccinCard(value.vaccine_info);
-														  }
-														  if ((vaccineCard === value.vaccine_info && index === 0)) {
-																return (
-																	<button
-																		type="button"
-																		className="tablinks"
-																		style={{ color: '#FF1C00' }}
-																		onClick={() => setVaccinCard(value.vaccine_info)}
-																	>{value.vaccine_name}
-																	</button>
-																);
-															}
+															{vaccines.map((value, index) => {
+																if (vaccineCard == '' && index == 0){
+																	setVaccinCard(value.vaccine_info)
+																}
+																if ((vaccineCard == value.vaccine_info  && index == 0)){
+																return <button className='tablinks' style = {{color: '#FF1C00'}}
+																onClick={()=>setVaccinCard(value.vaccine_info)
+															}>{value.vaccine_name}</button>}
 
+																else{
+																return <button className='tablinks'
+																			onClick={()=>setVaccinCard(value.vaccine_info)
+																		}>
+																{value.vaccine_name}</button>}
+															})}</Row>
 
-															return (
-																<button
-																	type="button"
-																	className="tablinks"
-																	onClick={() => setVaccinCard(value.vaccine_info)}
-																>
-																	{value.vaccine_name}
-																</button>
-															);
-													  })}
-													</Row>
-
-													<Divider /> <br />
-													  <Row
-														className="justify-content-center"
-														style={{ padding: '0px 25px' }}
-													  >
-														<p
-															dangerouslySetInnerHTML={{ __html: vaccineCard }}
-															 style={{ fontSize: `${13}px` }}
-														/>
-													  </Row>
-												</CardBody>
-											</Card>
-										</Col>
+															<Divider/> <br/>
+															<Row className="justify-content-center"
+																	style={{ padding: '0px 25px'}}>
+															<p dangerouslySetInnerHTML={{ __html: vaccineCard }}
+																style = {{fontSize: 13 +'px'}}/>
+															</Row>
+													</CardBody>
+											</Card>)}
+									</Col>
 									</Row>
 								</div>
 
