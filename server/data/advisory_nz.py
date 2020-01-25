@@ -4,9 +4,6 @@ import time
 import json
 from bs4 import BeautifulSoup
 import regex
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.options import Options
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
@@ -51,10 +48,57 @@ def get_url_of_countries_nz(driver):
     except Exception as error_msg:
         LOGGER.error(f'An error has occured while retrieving the URLs of {name} for New Zealand advisory because of the following error: {error_msg}')
     finally:
-        driver.close()
-        driver.quit()
+        quit_driver(driver)
 
     return info
+
+
+
+#Gets passed url and retrives relevant additional advisory info
+def parse_a_country_advisory(url, driver):
+    driver.get(url)
+    #Selenium hands the page source to Beautiful Soup
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    warning = ""
+    #Retrieves main advisory 
+    for tag in soup.findAll('i'):
+      if tag.parent.name == 'h1':
+          warning = tag.parent.text.strip()+'<ul>'
+    #Finds and selects only these sections of additional advisory info
+    for tag in soup.findAll('strong'):
+        if(tag.text.strip().lower() == "border crossings"):
+            temp = tag.parent.text.strip().lower().replace("border crossings","<b>Border Crossings:</b> " )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "civil unrest"):
+            temp = tag.parent.text.strip().lower().replace("civil unrest","<b>Civil Unrest:</b> ", )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "crime"):
+            temp = tag.parent.text.strip().lower().replace("crime","<b>Crime:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "violent crime"):
+            temp = tag.parent.text.strip().lower().replace("violent crime","<b>Violent Crime:</b> ", 1 )      
+            warning = warning+'<li>' + temp
+        elif(tag.text.strip().lower() == "kidnapping"):
+            temp = tag.parent.text.strip().lower().replace("kidnapping","<b>Kidnapping:</b> ", 1 )      
+            warning = warning+'<li>' + temp
+        elif(tag.text.strip().lower() == "landmines"):
+            temp = tag.parent.text.strip().lower().replace("landmines","<b>Landmines:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "local travel"):
+            temp = tag.parent.text.strip().lower().replace("local travel","<b>Local Travel:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "road travel"):
+            temp = tag.parent.text.strip().lower().replace("road travel","<b>Road Travel:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "seismic activity"):
+            temp = tag.parent.text.strip().lower().replace("seismic activity","<b>Seismic Activity:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+        elif(tag.text.strip().lower() == "terrorism"):
+            temp = tag.parent.text.strip().lower().replace("terrorism","<b>Terrorism:</b> ", 1 )      
+            warning = warning+ '<li>' + temp
+
+    return warning+'</ul>'
+
 
 
 def save_to_new_zealand():
@@ -105,40 +149,6 @@ def save_to_new_zealand():
     save_into_db(data)
 
 
-#Gets passed url and retrives relevant additional advisory info
-def parse_a_country_advisory(url, driver):
-    driver.get(url)
-    #Selenium hands the page source to Beautiful Soup
-    soup=BeautifulSoup(driver.page_source, 'lxml')
-    warning = " "
-    #Retrieves main advisory 
-    for tag in soup.findAll('i'):
-      if tag.parent.name == 'h1':
-          warning = tag.parent.text.strip()
-    #Finds and selects only these sections of additional advisory info
-    for tag in soup.findAll('strong'):
-        if(tag.text.strip().lower() == "border crossings"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "civil unrest"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "crime"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "violent crime"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "kidnapping"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "landmines"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "local travel"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "road travel"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "seismic activity"):
-            warning += '</br>' + tag.parent.text.strip()
-        elif(tag.text.strip().lower() == "terrorism"):
-            warning += '</br>' + tag.parent.text.strip()
-    return warning
-
 
 def save_into_db(data):
     # create an an sqlite_advisory object
@@ -163,5 +173,5 @@ def save_into_db(data):
 
     db.close_connection()
 
-save_to_new_zealand()
+#save_to_new_zealand()
 

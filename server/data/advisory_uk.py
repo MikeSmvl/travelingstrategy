@@ -93,7 +93,7 @@ def parse_additional_advisory_info(link, driver):
        advisories = soup.find('div', {'class': 'gem-c-govspeak govuk-govspeak direction-ltr'})
     
        count = 0
-       tag_type =" "
+       tag_type ="<ul>"
 
        try:       
           for tag in advisories: 
@@ -101,25 +101,25 @@ def parse_additional_advisory_info(link, driver):
              if(tag.name == 'h3'):
                if(tag.text.strip().lower() == "crime"):
                  count  = 2
-                 tag_type = 'Crime'
+                 tag_type = '<li><b>Crime:</b> '
                elif(tag.text.strip().lower() == "road travel"):
                  count  = 2
-                 tag_type = 'Road travel'
+                 tag_type = '<li><b>Road Travel:</b>'
                elif(tag.text.strip().lower() == "local travel"):
                  count  = 2
-                 tag_type = 'Local travel'
+                 tag_type = '<li><b>Local Travel:</b>'
                elif(tag.text.strip().lower() == "landmines"):
                  count  = 2
-                 tag_type = 'Landmines'
+                 tag_type = '<li><b>Landmines</b>'
              elif(count == 2):
                count = 1
              elif(count == 1):
-               warning += '</br>'+ tag_type +" "+ tag.text.strip()
+               warning +=  tag_type +" "+ tag.text.strip()
                count = 0
 
        except : 
            print('No additional information') 
-       return warning
+       return warning +'</ul>'
 
 
 def save_to_UK():
@@ -176,4 +176,4 @@ def save_to_UK():
     with open('./advisory-uk.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-save_to_UK()
+#save_to_UK()
