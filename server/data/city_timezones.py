@@ -8,6 +8,13 @@ import urllib.request, json,urllib.parse
 import contextlib
 import traceback
 from lib.database import Database
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 def adding_lat_and_lng(cities):
     not_found = []
@@ -17,7 +24,7 @@ def adding_lat_and_lng(cities):
         try:
             city_name = urllib.parse.quote_plus(city_name)
             city_url = "https://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyAxFRTW8Wb6bcJw90yaT2MjeHaOEe9k5iM".format(city_name,sep='')
-
+            LOGGER.info(f"Retrieving URL for {city_name}")
             with contextlib.closing(urllib.request.urlopen(city_url)) as url:
                 city_data = json.loads(url.read().decode())
                 city_data = city_data['results']
@@ -34,13 +41,14 @@ def adding_lat_and_lng(cities):
                     "utc_offset": city["utc_offset"]
                 }
                 cities_data.append(city_object)
+                LOGGER.info(f'Timezone for {country_name}')
         except:
-            print("Unexpected error:", traceback.format_exc())
-            print("This city doesn't work",city_name)
+            LOGGER.error("Unexpected error:", traceback.format_exc())
+            LOGGER.warning("This city doesn't work",city_name)
             city_url = "https://maps.googleapis.com/maps/api/geocode/json?address={}&key=AIzaSyAxFRTW8Wb6bcJw90yaT2MjeHaOEe9k5iM".format(city_name,sep='')
-            print("city url", city_url)
+            LOGGER.info("city url", city_url)
             not_found.append(city_name)
-    print("These are not found",not_found)
+    LOGGER.warning("These are not found",not_found)
     return cities_data
 
 def get_cities_info():
@@ -70,6 +78,7 @@ def get_cities_info():
     return cities
 
 def save_cities_timezones():
+    LOGGER.info("Retreiving timezones information for all countries...")
     data = adding_lat_and_lng(get_cities_info())
     # geolocator = Nominatim(user_agent="travelingstrategy")
     #con  = sqlite3.connect('../countries.sqlite')
@@ -82,6 +91,7 @@ def save_cities_timezones():
     #SScon.commit()
 
     db = Database("countries.sqlite")
+    db.drop_table("timezones")
     db.add_table("timezones", city="VARCHAR", country_name="VARCHAR", country_iso="VARCHAR", timezone="VARCHAR", la="REAL", lng="REAL",utc_offset = "int")
 
 
@@ -93,8 +103,9 @@ def save_cities_timezones():
         lat = city_info["lat"]
         lng = city_info["lng"]
         utc_offset = city_info["utc_offset"]
-
+        LOGGER.success(f"{country_name} was sucefuly save into the timezone table with the following information: {country_iso} and {timezone}")
         db.insert("timezones",city, country_name, country_iso, timezone, lat, lng, utc_offset)
+        LOGGER.success{f'{country_name} successfully saved to the database.'}
     db.close_connection()
 
 

@@ -24,6 +24,7 @@ const Header = (props) => {
 			<div className="subtitle">
 				{subtitle}
 			</div>
+
 		</div>
 	);
 };

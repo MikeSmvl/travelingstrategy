@@ -18,6 +18,9 @@ from advisory_sg import save_to_SG
 from advisory_mu import save_to_MU
 from advisory_central_america_advisory import save_to_central_america
 from advisory_caribbean import save_to_caribbea
+from unsafe_areas_ca import save_to_unsafe_areas
+from drugs import save_drug_law
+from vaccines import parse_all_countries_vaccine
 
 #logging to a file
 #logging level ERROR.This means its a serious problem as the software was not able to perform some functions
@@ -41,12 +44,15 @@ def start_scheduler():
     scheduler.every().day.do(save_to_australia)
     scheduler.every().day.do(save_to_new_zealand)
     scheduler.every().day.do(save_to_UK)
-    scheduler.every().day.do(find_all_ierland)
+    scheduler.every().day.do(find_all_ireland)
     scheduler.every().day.do(save_to_united_states)
     scheduler.every().day.do(save_to_SG)
     scheduler.every().day.do(save_to_MU)
     scheduler.every().day.do(save_to_central_america
     scheduler.every().day.do(save_to_caribbea)
+    scheduler.every().day.do(save_to_unsafe_areas)
+    scheduler.every().day.do(save_drug_law)
+    scheduler.every().day.do(parse_all_countries_vaccine)
 
     while True:
       scheduler.run_pending()

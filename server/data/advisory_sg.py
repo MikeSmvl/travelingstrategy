@@ -4,7 +4,10 @@ from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
 import json
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from lib.config import wiki_visa_url_SG
+from lib.database import Database
 
 """The Singaporian page orders the countries
     alphabetcally and has a page for each letter.
@@ -41,11 +44,15 @@ def get_url_of_for_letter(dictionnary, letter):
     return dictionnary
 
 def get_url_of_all_countries():
+    LOGGER.info('Retrieving the URLs for all countries for the Singapore advisory')
     countries_url = {}
     alphabet = list(string.ascii_lowercase) #The urls are separeted by alphabet letters
-    for letter in alphabet:
-        get_url_of_for_letter(countries_url,letter)
-
+    try:
+        for letter in alphabet:
+            get_url_of_for_letter(countries_url,letter)
+        LOGGER.success('URLs of all countries have been successfully retrieved for the Singapore advsory')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving the URLs of all countries for the Singapore advisory because of the following error: {error_msg}')
     return countries_url
 
 
@@ -88,7 +95,7 @@ def parse_one_country_advisory(url):
     return advisory_paragraph1
 
 def parse_all_countries_advisories():
-    LOGGER.info(f'Beginning parsing for all countries advisories')
+    LOGGER.info(f'Beginning parsing for all countries for Singapore advisory')
     data = {}
     countries_url = get_url_of_all_countries()
     for country in countries_url:
@@ -99,11 +106,12 @@ def parse_all_countries_advisories():
             advisory = parse_one_country_advisory(link)
             data[country]= {"advisory": advisory}
         except IndexError as e:
-            LOGGER.error(f'This country doesn’t have advisory info {country}')
+            LOGGER.warning(f'This country doesn’t have advisory info {country} because of {e}')
             LOGGER.info(f'Link : {link}')
     return data
 
 def save_info(db,visas,advisories, array_info):
+    LOGGER.info('Saving all countries information into SG table')
     for country in visas:
         try:
             LOGGER.info(f'Saving information for {country}')
@@ -117,13 +125,14 @@ def save_info(db,visas,advisories, array_info):
                     "visa_info": visa
                     }
             array_info.append(info)
+            LOGGER.info(f'Saving {country} into the SG table')
             db.insert("SG",iso,country,advisory,visa)
-            LOGGER.success(f'{country} was sucesfully saved to the database')
+            LOGGER.success(f'{country} was sucesfully saved to the database with the following information: {advisory}. {info}')
         except KeyError: #if the country doesn't have advisory info
-            LOGGER.error(f'This country doesn’t have advisory info {country}')
+            LOGGER.warning(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
             visa = visas[country].get('visa')
-            advisory = "None"
+            advisory = "Not available yet"
             info = {
                     "country_iso" : iso,
                     "name": country,
@@ -134,9 +143,9 @@ def save_info(db,visas,advisories, array_info):
             db.insert("SG",iso,country,advisory,visa)
     for country in advisories: #countries that don't have visa info but have advisory info
         if not country in visas:
-            LOGGER.error(f'This country doesn’t have advisory info {country}')
+            LOGGER.warning(f'This country doesn’t have advisory info {country}')
             iso = find_iso_of_country(country)
-            visa_info = "None"
+            visa_info = "Not available yet"
             advisory = advisories[country].get('advisory')
             info = {
                     "country_iso" : iso,
@@ -151,15 +160,21 @@ def save_info(db,visas,advisories, array_info):
 def save_to_SG():
     LOGGER.info(f'Saving Singapore into the databse')
     driver = create_driver()
-    wiki_visa_url = wiki_visa_url_SG
-    wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
-    visas = wiki_visa_ob.visa_parser_table()
+    LOGGER.info('Parsing visa requirments for all countries into the Singapore table')
+    try:
+        wiki_visa_url = wiki_visa_url_SG
+        wiki_visa_ob = wiki_visa_parser(wiki_visa_url,driver)
+        visas = wiki_visa_ob.visa_parser_table()
+        LOGGER.success('Visa requirements have been succesfully parsed for the Singapore table')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured whilse parsing for visa requirements because of the following error: {error_msg}')
     advisories = parse_all_countries_advisories()
     info = {}
     array_info = []
 
     # create an an sqlite_advisory object
     db = Database("countries.sqlite")
+    db.drop_table("SG")
     db.add_table("SG", country_iso="text", name="text", advisory_text="text", visa_info="text")
 
     array_info = save_info(db,visas,advisories,array_info)
@@ -171,5 +186,5 @@ def save_to_SG():
     with open('./advisory-sg.json', 'w') as outfile:
         json.dump(array_info, outfile)
 
-# if __name__ == '__main__':
-#    save_to_SG()
+if __name__ == '__main__':
+   save_to_SG()

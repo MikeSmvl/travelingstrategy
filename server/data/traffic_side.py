@@ -59,6 +59,7 @@ def get_country_traffic_side():
         driver.quit()
 
 def save_traffic_side():
+    LOGGER.info('Being parsing and saving for traffic sides')
     DB.drop_table('traffic')
     DB.add_table('traffic', country_iso='text', country_name="text", traffic_side='text')
     traffic_info = get_country_traffic_side()
@@ -67,8 +68,9 @@ def save_traffic_side():
         country_iso = country_traffic.get("country_iso")
         country_name = country_traffic.get("country_name")
         traffic_side = country_traffic.get("traffic_side")
+        LOGGER.info(f'Saving {country_name} into traffic side table with the following information: {traffic_side}')
         DB.insert_or_update('traffic', country_iso,country_name, traffic_side)
-
+        LOGGER.success(f'{country_name} successfully saved into the database')
 
 if __name__ == '__main__':
     save_traffic_side()

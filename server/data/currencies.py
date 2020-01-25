@@ -11,6 +11,8 @@ LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database(sqlite_db)
 
+# Removing table if it was already there
+DB.drop_table("currencies")
 # Create table if it does not exist
 DB.add_table('currencies', country='text', name='text', code='text', symbol='text')
 
