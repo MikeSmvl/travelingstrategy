@@ -14,7 +14,7 @@ var embassy = {
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            query = `SELECT * FROM embassies WHERE country ='${args.country}';`
+            query = `SELECT * FROM embassies WHERE (country ='${args.country}' and operator='${args.operator}');`
             logger.info("Trying to query "+query)
             db.all(query, function(err, rows) {
                 if(err){
