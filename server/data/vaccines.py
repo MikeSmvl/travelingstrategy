@@ -2,7 +2,6 @@ from bs4 import BeautifulSoup
 import regex
 from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_iso_of_country, find_all_iso
-from helper_class.wiki_visa_parser import wiki_visa_parser
 from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.config import vaccine_url

@@ -169,7 +169,6 @@ def save_to_SG():
     except Exception as error_msg:
         LOGGER.error(f'An error has occured whilse parsing for visa requirements because of the following error: {error_msg}')
     advisories = parse_all_countries_advisories()
-    info = {}
     array_info = []
 
     # create an an sqlite_advisory object
