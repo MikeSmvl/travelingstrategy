@@ -10,7 +10,10 @@ var embassy = {
     args: {
         country: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLString)
-        }
+        },
+        operator: {
+          type: new graphql.GraphQLNonNull(graphql.GraphQLString)
+      }
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
