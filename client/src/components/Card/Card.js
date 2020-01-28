@@ -17,14 +17,17 @@ const Card = (props) => {
 const CardBody = (props) => {
 	const { children, title = '', subtitle = '', ...rest } = props;
 	return (
-		<RBCard.Body {...rest} className="TScardBody">
+		<RBCard.Body
+			{...rest}
+			className="TScardBody"
+		>
 			{title && <RBCard.Title>{title}</RBCard.Title>}
 			{subtitle && (
 				<RBCard.Subtitle className="mb-2 text-muted">
 					{subtitle}
 				</RBCard.Subtitle>
 			)}
-			<RBCard.Text>{children}</RBCard.Text>
+			<span className="card-text">{children}</span>
 		</RBCard.Body>
 	);
 };

@@ -1,5 +1,6 @@
 import requests
 from helper_class.timeout import timeout
+from lxml import html
 
 class ApiHelper:
     """
@@ -35,3 +36,9 @@ class ApiHelper:
         Returns data from API link in json format
         """
         return self.response.json()
+
+    def get_html(self):
+        """
+        Returns html tree from API link
+        """
+        return html.fromstring(self.response.content)

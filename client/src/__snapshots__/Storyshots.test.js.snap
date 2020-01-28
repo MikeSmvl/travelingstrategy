@@ -28,11 +28,11 @@ Array [
       >
         
         
-        <p
+        <span
           className="card-text"
         >
           This is the body
-        </p>
+        </span>
       </div>
       <div
         className="text-muted card-footer"
@@ -88,11 +88,11 @@ Array [
       >
         
         
-        <p
+        <span
           className="card-text"
         >
           
-        </p>
+        </span>
       </div>
       
     </div>

@@ -4,14 +4,17 @@ import time
 import regex
 import requests
 from bs4 import BeautifulSoup
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
-
-import helper_class.chrome_driver as driver
+from helper_class.chrome_driver import create_driver, quit_driver
 from helper_class.country_names import find_all_iso
 from helper_class.wiki_visa_parser import wiki_visa_parser
+from helper_class.flags import Flags
+from helper_class.logger import Logger
 from lib.database import Database
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 #Find all the urls to each country from the
 #irish gov website
@@ -20,15 +23,18 @@ def find_all_url(my_driver):
     url_main = 'https://www.dfa.ie/travel/travel-advice/'
     my_driver.get(url_main)
     soup = BeautifulSoup(my_driver.page_source, 'lxml')
-
+    LOGGER.info(f'Retrieving the URLs for all countries for Ireland advisory')
     #pattern of the href in the tag
-    reg = regex.compile(r'\/travel\/travel-advice\/a-z-list-of-countries\/\w+\/')
-    a = soup.findAll('a', attrs={'href':reg})
-    for name in a:
-        href = "https://www.dfa.ie"+name['href']
-        url_to_all[name.text] = {"href":href}
-
-    return url_to_all
+    try:
+        reg = regex.compile(r'\/travel\/travel-advice\/a-z-list-of-countries\/\w+\/')
+        a = soup.findAll('a', attrs={'href':reg})
+        for name in a:
+            href = "https://www.dfa.ie"+name['href']
+            url_to_all[name.text] = {"href":href}
+        LOGGER.success('Successfully retrieved all URLs for Ireland advisory')
+        return url_to_all
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while retrieving URLS for Ireland advisory because of the following error: {error_msg}')
 
 #get the advisory of all countries going from ireland
 def get_one_advisory(url, my_driver, soup):
@@ -40,15 +46,15 @@ def get_one_advisory(url, my_driver, soup):
 
     #find the highlighted box and asssign its text to the advisory
     if advisory == 'normal':
-        advisory_text = "Normal precautions"
+        advisory_text = "Normal precautions<ul>"
     elif advisory == 'high-caution':
-        advisory_text = "High degree of caution"
+        advisory_text = "High degree of caution<ul>"
     elif advisory == 'avoid':
-        advisory_text = "Avoid non-essential travel"
+        advisory_text = "Avoid non-essential travel<ul>"
     elif advisory == 'do-not':
-        advisory_text = "Do not travel"
+        advisory_text = "Do not travel<ul>"
     else:
-        advisory_text = "No advisory"
+        advisory_text = "No advisory<ul>"
 
     div_tab2 = soup.find("div", { "id" : "tab2" })
     div_tab2_relevant = div_tab2.find("div", { "class" : "gen-content-landing__block" })
@@ -56,26 +62,26 @@ def get_one_advisory(url, my_driver, soup):
 
     count = 0
     for tag in div_tab2_relevant:
-        
+
         if(tag.name == 'h3'):
             if(tag.find('strong')):
                if(tag.find('strong').text.strip().lower() == 'terrorism' or tag.find('strong').text.strip().lower() == 'social unrest' or tag.find('strong').text.strip().lower() == 'crime'):
-                 advisory_text += '</br>' +  tag.find('strong').text.strip() + ": "
+                 advisory_text += '<li><b>' +  tag.find('strong').text.strip() + ":</b> "
                  count = count +2
             elif(tag.text.lower() == 'terrorism' or tag.text.lower() == 'social unrest' or tag.text.lower() == 'crime'):
-                advisory_text += '</br>' + tag.text +": "
+                advisory_text += '<li><b>' + tag.text +":</b> "
                 count = count +2
         elif(tag.name == 'h2'):
             if(tag.find('strong')):
               if(tag.find('strong').text.strip().lower() == 'terrorism' or tag.find('strong').text.strip().lower() == 'social unrest' or tag.find('strong').text.strip().lower() == 'crime'):
-                advisory_text += '</br>' + tag.find('strong').text.strip() + ": "
+                advisory_text += '<li><b>' + tag.find('strong').text.strip() + ":</b> "
                 count =  count + 2
             elif(tag.text.lower() == 'terrorism' or tag.text.lower() == 'social unrest' or tag.text.lower() == 'crime'):
-               advisory_text += '</br>' + tag.text + ": "
+               advisory_text += '<li><b>' + tag.text + ":</b> "
                count =  count + 2
         elif(tag.name == 'p' and tag.find('strong')):
             if(tag.find('strong').text.lower() == 'terrorism' or tag.find('strong').text.lower() == 'social unrest' or tag.find('strong').text.lower() == 'crime'):
-               advisory_text += '</br>' +  tag.find('strong').text.strip() + ": "
+               advisory_text += '<li><b>' +  tag.find('strong').text.strip() + ":</b> "
                count = count + 4
         elif(count == 4):
              count = 3
@@ -87,8 +93,8 @@ def get_one_advisory(url, my_driver, soup):
         elif(count == 1):
               advisory_text += tag.text
               count = 0
-  
-   
+
+
 
     if(len(advisory_text) > 1948):
         advisory_text_temp = advisory_text[0:1948]
@@ -148,12 +154,18 @@ def save_into_db(data):
     db = Database("countries.sqlite")
     db.drop_table("IE")
     db.add_table("IE", country_iso="text", name="text", advisory_text="text", visa_info="text")
-    for country in data:
-        iso = data[country].get('country-iso')
-        name = data[country].get('name')
-        advisory = data[country].get('advisory-text').replace('"', '')
-        visa = data[country].get('visa-info')
-        db.insert("IE",iso,name,advisory,visa)
+    try:
+        for country in data:
+            iso = data[country].get('country-iso')
+            name = data[country].get('name')
+            advisory = data[country].get('advisory-text').replace('"', '')
+            LOGGER.info(f'Saving {name} into the IE table')
+            visa = data[country].get('visa-info')
+            db.insert("IE",iso,name,advisory,visa)
+            LOGGER.success(f"{name} was saved into the IE table with the following information: {visa}. {advisory}")
+        LOGGER.info('IE table successfully saved to the database')
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while saving {name} into the IE table because of the following error: {error_msg}')
     db.close_connection()
 
 
@@ -162,12 +174,17 @@ def save_into_db(data):
 #for the visa info half comes from wiki
 def find_all_ireland():
 
-    my_driver = driver.create_driver()
+    LOGGER.info("Begin parsing and saving for Ireland...")
+    my_driver = create_driver()
 
     all_url = find_all_url(my_driver)
     data = find_all_iso(all_url)
-    wiki_visa_ob = wiki_visa_parser("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
-    visas = wiki_visa_ob.visa_parser_table()
+    LOGGER.info('Parsing visa requirements for all countries for the Ireland advisory')
+    try:
+        wiki_visa_ob = wiki_visa_parser("https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens", my_driver)
+        visas = wiki_visa_ob.visa_parser_table()
+    except Exception as error_msg:
+        LOGGER.error(f'An error has occured while getting the visa requirements for Ireland advisory because of the following error: {error_msg}')
 
     for country in data:
         c = data[country]
@@ -197,11 +214,15 @@ def find_all_ireland():
                 c['visa-info'] = visas[country].get('visa')+ "<br>" + c['visa-info']
             except Exception as error_msg:
                 print(c, error_msg)
+                LOGGER.warning(f'Error message: {error_msg}')
     #dump the data into js to be deleted later
-    driver.quit_driver(my_driver)
+    quit_driver(my_driver)
     with open('./advisory-ie.json', 'w') as outfile:
         json.dump(data, outfile)
 
     save_into_db(data)
 
-find_all_ireland()
+
+
+
+#find_all_ireland()

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col } from 'react-bootstrap/';
+import { Row, Col, Table } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
@@ -10,8 +10,11 @@ import { CountryCard } from '../components/CountryCard/CountryCard';
 import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import { languages, flagSrc, getOtherTrafficSide } from '../utils/parsingTools';
+import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison';
+import { languages, flagSrc, getOtherTrafficSide, formatingVisa } from '../utils/parsingTools';
+
 import '../App.css';
+
 
 function Country({
 	originCountry,
@@ -31,17 +34,26 @@ function Country({
 		'Regional Languages': 'TBD',
 		'Widely Spoken Languages': 'TBD'
 	});
+	const [unsafeAreas, setUnsafeAreas] = useState('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [socketType, setSocketType] = useState('Not available yet');
 	const [voltage, setVoltage] = useState('Not available yet');
 	const [frequency, setFrequency] = useState('Not available yet');
+	const [vaccines, setVaccines] = useState('Not available yet');
 	const [timeOrigin, setTimeOrigin] = useState('Not available yet');
 	const [timeDestination, setTimeDestination] = useState('Not available yet');
 	const [currencyInfo, setCurrency] = useState({});
 	const [originCurrencyInfo, setOriginCurrency] = useState({});
 	const [financialInfo, setFinancial] = useState({});
 	const [trafficSide, setTrafficSide] = useState('Not available yet');
+	const [canabaisMedical, setcanabaisMedical] = useState({});
+	const [canabaisRecreational, setcanabaisRecreational] = useState({});
+	const [cocainePossession, setcocainePossession] = useState({});
+	const [methaphetaminePossession, setmethaphetaminePossession] = useState({});
 	const [rate, setRate] = useState('');
+	const [destinationHealth, setDestinationHealth] = useState({});
+	const [originHealth, setOriginHealth] = useState({});
+	const [vaccineCard, setVaccinCard] = useState('');
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -80,19 +92,22 @@ function Country({
 							advisory_link
 							advisory_text
 						}
-						country_languages(country_iso: "${destinationCountry}"){
+						country_languages(country_iso: "${destinationCountry}") {
 							official_languages,
 							regional_languages,
 							minority_languages,
 							national_languages,
 							widely_spoken_languages
 						}
-						destinationCurrencies: currencies(country: "${destinationCountry}"){
+						country_unsafe_areas(country_iso: "${destinationCountry}") {
+							unsafe_areas
+						}
+						destinationCurrencies: currencies(country: "${destinationCountry}") {
 							name
 							symbol
 							code
 						}
-						originCurrencies: currencies(country: "${originCountry}"){
+						originCurrencies: currencies(country: "${originCountry}") {
 							name
 							symbol
 							code
@@ -113,8 +128,42 @@ function Country({
 						time_difference_destination(lat_destination:${destinationLat} lng_destination:${destinationLng} country_destination:"${destinationCountry}") {
 							utc_offset
 						}
-						trafficSide(iso:"${destinationCountry}"){
+						trafficSide(iso:"${destinationCountry}") {
 							traffic_side
+						}
+						destinationHealth:unitedNations(country:"${destinationCountry}") {
+							homicideRate
+							infantMortality
+							lifeExpectancy
+							nbOfPhysicians
+							sanitation
+							water
+						}
+						originHealth:unitedNations(country:"${originCountry}") {
+							homicideRate
+							infantMortality
+							lifeExpectancy
+							nbOfPhysicians
+							sanitation
+							water
+						}
+						drugs(country_iso:"${destinationCountry}") {
+							country_iso,
+							name,
+							methaphetamine_possession,
+							methaphetamine_sale,
+							methaphetamine_transport,
+							methaphetamine_cultivation,
+							cocaine_possession,
+							cocaine_sale,
+							cocaine_transport,
+							cocaine_cultivation,
+							canabais_recreational,
+							canabais_medical
+						}
+						country_vaccines(country_iso:"${destinationCountry}") {
+							vaccine_name
+							vaccine_info
 						}
 					}`
 				})
@@ -125,6 +174,7 @@ function Country({
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setAdvisoryLink(res.data.countryToCountry[0].advisory_link);
 					(res.data.countryToCountry && res.data.countryToCountry.length !== 0) && setVisa(res.data.countryToCountry[0].visa_info);
 					(res.data.country_languages && res.data.country_languages.length !== 0) && setLanguages(res.data.country_languages[0]);
+					(res.data.country_unsafe_areas && res.data.country_unsafe_areas.length !== 0) && setUnsafeAreas(res.data.country_unsafe_areas[0].unsafe_areas);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setSocketType(res.data.country_socket[0].plug_type);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setVoltage(res.data.country_socket[0].electric_potential);
 					(res.data.country_socket && res.data.country_socket.length !== 0) && setFrequency(res.data.country_socket[0].frequency);
@@ -134,7 +184,13 @@ function Country({
 					(res.data.time_difference_origin && res.data.time_difference_origin.length !== 0) && setTimeOrigin(res.data.time_difference_origin[0].utc_offset);
 					(res.data.time_difference_destination && res.data.time_difference_destination.length !== 0) && setTimeDestination(res.data.time_difference_destination[0].utc_offset);
 					(res.data.trafficSide && res.data.trafficSide.length !== 0) && setTrafficSide(res.data.trafficSide[0].traffic_side);
-					setIsLoading(false);
+					(res.data.destinationHealth && res.data.destinationHealth.length !== 0) && setDestinationHealth(res.data.destinationHealth[0]);
+					(res.data.originHealth && res.data.originHealth.length !== 0) && setOriginHealth(res.data.originHealth[0]);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcanabaisMedical(res.data.drugs[0].canabais_medical);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcanabaisRecreational(res.data.drugs[0].canabais_recreational);
+					(res.data.drugs && res.data.drugs.length !== 0) && setcocainePossession(res.data.drugs[0].cocaine_possession);
+					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetaminePossession(res.data.drugs[0].methaphetamine_possession);
+					(res.data.country_vaccines && res.data.country_vaccines.length !== 0) && setVaccines(res.data.country_vaccines);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
 		}
@@ -143,10 +199,11 @@ function Country({
 	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
-
+	const formatedVisaInfo = formatingVisa(visaInfo);
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
+
 	return (
 		<div>
 			{!isLoading && (
@@ -186,8 +243,8 @@ function Country({
 												</CardBody>
 											</CountryCard>
 										</Col>
-										<Col xs="10" sm="4">
-											{visaInfo !== null && (
+										{!(visaInfo === null || visaInfo === 'Not available yet') && (
+											<Col xs="10" sm="4">
 												<Card
 													className="scrolling-card"
 													header="Visa Info"
@@ -199,32 +256,34 @@ function Country({
 													>
 														<div
 															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: visaInfo }}
+															dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 														/>
 													</CardBody>
-												</Card>)}
-										</Col>
-										<Col xs="10" sm="4">
-											{!(advisoryInfo === null || advisoryInfo === "Not available yet") && (
+												</Card>
+											</Col>
+										)}
+
+										{!(advisoryInfo === null || advisoryInfo === 'Not available yet') && (
+											<Col xs="10" sm="4">
 												<Card
 													className="scrolling-card"
 													header="Advisory"
 													style={{ maxHeight: '400px', overflow: 'scroll' }}
 												>
 													<CardBody>
-														<ErrorOutlineOutlinedIcon
-															style={{ color: '#dc3545' }}
-														/>
+														<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }}/>
 														<div
+															style={{ display: 'inline' }}
 															className="scrolling-card"
 															dangerouslySetInnerHTML={{ __html: advisoryInfo }}
 														/>
 														<div
-														dangerouslySetInnerHTML={{ __html: advisoryLink }}
-													/>
+															dangerouslySetInnerHTML={{ __html: advisoryLink }}
+														/>
 													</CardBody>
-												</Card>)}
-										</Col>
+												</Card>
+											</Col>
+										)}
 									</Row>
 								</div>
 
@@ -314,6 +373,31 @@ function Country({
 										style={{ padding: '5px 25px' }}
 									>
 										<Col xs="10" sm="4">
+											<Card
+												header="Drug Laws"
+											>
+												<CardBody>
+													<div
+														className="scrolling-card"
+														style={{ maxHeight: '400px', overflow: 'scroll' }}
+													>
+														<p>
+															<strong>Canabais recreational:</strong> {JSON.stringify(canabaisRecreational).replace(/(^")|("$)/g, '')}
+														</p>
+														<p>
+															<strong>Canabais medical:</strong> {JSON.stringify(canabaisMedical).replace(/(^")|("$)/g, '')}
+														</p>
+														<p>
+															<strong>Cocaine possession:</strong> {JSON.stringify(cocainePossession).replace(/(^")|("$)/g, '')}
+														</p>
+														<p>
+															<strong>Methaphetamine possession:</strong> {JSON.stringify(methaphetaminePossession).replace(/(^")|("$)/g, '')}
+														</p>
+													</div>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
 											<Card header="Traffic Flow">
 												<CardBody>
 													{trafficSide !== 'Not available yet'
@@ -346,10 +430,85 @@ function Country({
 												</CardBody>
 											</Card>
 										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Unsafe Areas">
+												<CardBody>
+													<div
+														className="scrolling-card"
+														style={{ maxHeight: '285px', overflow: 'scroll' }}
+														dangerouslySetInnerHTML={{ __html: unsafeAreas }}
+													/>
+												</CardBody>
+											</Card>
+										</Col>
 									</Row>
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
+									<Row>
+										<Col xs="10" sm="4">
+											<Card header="General Health">
+												<CardBody>
+													<Table striped bordered hover>
+														<tbody>
+															<tr>
+																<td><strong>Homicide Rate</strong></td>
+																<td>{destinationHealth.homicideRate} <span style={{ color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate)) }}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Infant Mortality (Per 1000)</strong></td>
+																<td>{destinationHealth.infantMortality} <span style={{ color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality)) }}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Life Expectancy (f/m, years)</strong></td>
+																<td>{destinationHealth.lifeExpectancy} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Number of physicians (Per 1000)</strong></td>
+																<td>{destinationHealth.nbOfPhysicians} <span style={{ color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians)) }}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Sanitation (urban/rural, %)</strong></td>
+																<td>{destinationHealth.sanitation} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
+															</tr>
+															<tr>
+																<td><strong>Water (urban/rural, %)</strong></td>
+																<td>{destinationHealth.water}  <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
+															</tr>
+														</tbody>
+													</Table>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="4">
+											{!(vaccines === null || vaccines === "Not available yet") && (
+											<Card header="Vaccines">
+												<CardBody>
+													<Row className="justify-content-center" style={{ padding: '0px 0px' }}>
+													{vaccines.map((value, index) => {
+														if (vaccineCard == '' && index == 0){
+															setVaccinCard(value.vaccine_info)
+														}
+														if ((vaccineCard == value.vaccine_info  && index == 0)) {
+														return <button className='tablinks' style = {{color: '#FF1C00'}}
+														onClick={()=>setVaccinCard(value.vaccine_info)
+														}>{value.vaccine_name}</button>}
+
+														else{
+														return <button className='tablinks'
+																	onClick={()=>setVaccinCard(value.vaccine_info)
+																}>
+														{value.vaccine_name}</button>}
+													})}</Row>
+
+													<Divider/><br/>
+													<Row className="justify-content-center" style={{ padding: '0px 25px'}}>
+														<p dangerouslySetInnerHTML={{ __html: vaccineCard }} style = {{fontSize: 13 +'px'}}/>
+													</Row>
+												</CardBody>
+											</Card>)}
+										</Col>
+									</Row>
 								</div>
 							</ReactFullpage.Wrapper>
 						);

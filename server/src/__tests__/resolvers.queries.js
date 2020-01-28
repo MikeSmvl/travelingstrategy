@@ -309,8 +309,138 @@ it("Querying traffic table", () =>{
       country_name,
       traffic_side
     }
+}`
+;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+//test for unsafe areas Columbia
+it("Querying unsafe_areas Columbia", () =>{
+  const query =`
+  {
+    country_unsafe_areas( country_iso: "CO"){
+      country_iso
+      name
+      unsafe_areas
+    }
+  }`;
+    tester.test(true, query)
+    tester.graphql(query, undefined, undefined, { isLocal: false })
+        .then(result => {
+          if(result.error != undefined){
+            logger.error(__filename +result.errors[0].message)
+          }
+          else{
+            logger.info(__filename +"There is no error in the query parameters")
+          }
+        })
+        .catch(err => logger.error(__filename +" "+err))
+  });
+
+// test for drugs
+it("Querying Drug table for Canada", () =>{
+  const query = `
+  {
+    drugs(country_iso:"CA") {
+      country_iso,
+      name,
+      methaphetamine_possession,
+      methaphetamine_sale,
+      methaphetamine_transport,
+      methaphetamine_cultivation,
+      cocaine_possession,
+      cocaine_sale,
+      cocaine_transport,
+      cocaine_cultivation,
+      canabais_recreational,
+      canabais_medical
+    }
+  }
+  `;
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+//test for unsafe areas table all data
+it("Querying unsafe_areas table", () =>{
+  const query =`
+  {
+    unsafe_areas_table {
+      country_iso
+      name
+      unsafe_areas
+    }
+  }`
+  ;
+    tester.test(true, query)
+    tester.graphql(query, undefined, undefined, { isLocal: false })
+        .then(result => {
+          if(result.error != undefined){
+            logger.error(__filename +result.errors[0].message)
+          }
+          else{
+            logger.info(__filename +"There is no error in the query parameters")
+          }
+        })
+        .catch(err => logger.error(__filename +" "+err))
+  });
+
+// all data in the vaccine table
+
+// test for vaccines
+
+it("Querying vaccine table for Canada", () =>{
+  const query = `
+  {
+    country_vaccines(country_iso:"CA"){
+      country_iso,
+    	vaccine_name,
+    	vaccine_info
+    }
 }
 `;
+tester.test(true, query)
+tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.error != undefined){
+        logger.error(__filename +result.errors[0].message)
+      }
+      else{
+        logger.info(__filename +"There is no error in the query parameters")
+      }
+    })
+    .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying vaccine table", () =>{
+  const query =`
+  {
+    vaccines_table{
+      country_iso,
+    	vaccine_name,
+    	vaccine_info
+    }
+}`;
+
   tester.test(true, query)
   tester.graphql(query, undefined, undefined, { isLocal: false })
       .then(result => {

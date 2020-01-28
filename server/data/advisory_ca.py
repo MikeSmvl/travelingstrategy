@@ -10,6 +10,13 @@ from lib.database import Database
 from helper_class.country_names import find_iso_of_country, find_all_iso
 from helper_class.chrome_driver import create_driver, quit_driver
 from bs4 import BeautifulSoup
+from helper_class.flags import Flags
+from helper_class.logger import Logger
+
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 #in the file provided h3 is a sign that a new data type starts
 #if the header list is empty then the data is still part of the
@@ -67,7 +74,7 @@ def get_all_countries():
         all_countries = all_countries.keys()
     return all_countries
 
-#gets the url for each country 
+#gets the url for each country
 #calls parse_additional_advisory_info and passes url
 def get_additional_advisory_info_url():
   try:
@@ -91,49 +98,49 @@ def get_additional_advisory_info_url():
        country = country.replace('-', ' ')
        iso = find_iso_of_country(country)
        print(iso)
-       additional_advisory[iso] = parse_additional_advisory_info(link, driver) 
+       additional_advisory[iso] = parse_additional_advisory_info(link, driver)
   finally:
       quit_driver(driver)
       return additional_advisory
-       
+
 #Acquires additional advisory information
 def parse_additional_advisory_info(url, driver):
        #time.sleep(1) #prevents error
        #Selenium hands the page source to Beautiful Soup
        driver.get(url)
        soup=BeautifulSoup(driver.page_source, 'lxml')
-       warning = " "
+       warning = "<ul>"
        advisory_list = soup.find("div", {"class": "tabpanels"})
        security_list = advisory_list.find("details", {"id": "security"})
        advisories = security_list.find("div", {"class": "tgl-panel"})
        count = 0
        tag_type =""
-       for tag in advisories: 
-          
+       for tag in advisories:
+
           #Finds and selects only these sections of advisory info
           if(tag.name == 'h3'):
             if(tag.text.strip().lower() == "crime"):
               count  = 1
-              tag_type = 'Crime'
+              tag_type = '<li><b>Crime</b>'
             elif(tag.text.strip().lower() == "kidnapping"):
               count  = 1
-              tag_type = 'Kidnapping'
+              tag_type = '<li><b>Kidnapping</b>'
             elif(tag.text.strip().lower() == "landmines"):
               count  = 1
-              tag_type = 'Landmines'
+              tag_type = '<li><b>Landmines</b>'
             elif(tag.text.strip().lower() == "terrorism"):
               count  = 1
-              tag_type = 'Terrorism'
+              tag_type = '<li><b>Terrorism</b>'
           elif(count == 1):
-            warning += '</br>'+ tag_type +" "+ tag.text.strip()
+            warning += tag_type +" "+ tag.text.strip()
             count = 0
-       return warning
+       return warning +'</ul>'
 
 
 
 #opens the url to the files of all countries
 #get the requiered data and stores it in a dictionary
-@retry(tries=4, delay=3, backoff=2)
+@retry(Exception, tries=4)
 def advisory_canada(all_countries):
     countries_data = {}
     additional_advisory_info = get_additional_advisory_info_url()
@@ -141,7 +148,7 @@ def advisory_canada(all_countries):
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
 
         print(country_url)
-        time.sleep(5)
+        #time.sleep(5)
         with contextlib.closing(urllib.request.urlopen(country_url)) as url:
             country_data = json.loads(url.read().decode())
             country_data = country_data['data']
@@ -168,25 +175,30 @@ def save_to_canada():
     db = Database("countries.sqlite")
     db.drop_table("CA")
     db.add_table("CA", country_iso="text", name="text", advisory_text="text", visa_info="text")
-
+    LOGGER.info('Saving CA table into the databse')
     #getting the data from all countries
     all_countries = get_all_countries()
     countries_data = advisory_canada(all_countries)
 
     #saving the data in db
-    for country in countries_data:
-        iso = countries_data[country].get('country-iso')
-        name = countries_data[country].get('name')
-        advisory = countries_data[country].get('advisory-text')
-        visa = countries_data[country].get('visa-info')
-
-        db.insert("CA",iso,name,advisory,visa)
-
+    try:
+      for country in countries_data:
+          iso = countries_data[country].get('country-iso')
+          name = countries_data[country].get('name')
+          advisory = countries_data[country].get('advisory-text')
+          visa = countries_data[country].get('visa-info')
+          LOGGER.info(f'Saving {name} into the CA table')
+          db.insert("CA",iso,name,advisory,visa)
+          LOGGER.success(f'{name} was successfully saved into the CA table with the following table: {advisory}. {visa}')
+      LOGGER.success('CA table was successfully saved into the database')
+    except Exception as error_msg:
+      LOGGER.error(f'An error has occurred while saving the countries into the CA table because of the following error: {error_msg}')
     db.close_connection()
 
-    #saving the data in json file
-    with open('advisory-ca.json', 'w') as fp:
-        json.dump(countries_data, fp)
 
-save_to_canada()
+    #saving the data in json file
+    # with open('advisory-ca.json', 'w') as fp:
+    #     json.dump(countries_data, fp)
+
+#save_to_canada()
 
