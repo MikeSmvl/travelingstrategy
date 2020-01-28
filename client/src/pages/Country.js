@@ -168,7 +168,7 @@ function Country({
 							vaccine_name
 							vaccine_info
 						}
-						embassy(country: "${originCountryName}", operator: "${destCountryName}") {
+						embassy(country: "${destCountryName}", operator: "${originCountryName}") {
 							city
 							type
 							phone
@@ -466,7 +466,7 @@ function Country({
 										<Col xs="10" sm="4">
 											<Card header="Embassies and Consulates">
 												<CardBody>
-													{!embassyInfo ? <div>Note: We don&apos;t have any info on embassies or consulates in {originCountryName}. Try Googling instead.</div>
+													{!embassyInfo ? <div>Note: We don&apos;t have any info on embassies or consulates in {destCountryName}. Try Googling instead.</div>
 														:													(
 															<span>
 																{embassyInfo.type === 'embassy'
