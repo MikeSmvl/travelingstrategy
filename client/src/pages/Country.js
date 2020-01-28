@@ -12,9 +12,8 @@ import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison';
 import { languages, flagSrc, getOtherTrafficSide, formatingVisa } from '../utils/parsingTools';
-
+import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
-
 
 function Country({
 	originCountry,
@@ -54,6 +53,10 @@ function Country({
 	const [destinationHealth, setDestinationHealth] = useState({});
 	const [originHealth, setOriginHealth] = useState({});
 	const [vaccineCard, setVaccinCard] = useState('');
+	const [embassyInfo, setEmbassy] = useState('');
+	const [emergencyInfo, setEmergency] = useState('');
+	const destCountryName = getCountryName2(destinationCountry);
+	const originCountryName = getCountryName2(originCountry);
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -165,6 +168,18 @@ function Country({
 							vaccine_name
 							vaccine_info
 						}
+						embassy(country: "${originCountryName}", operator: "${destCountryName}") {
+							city
+							type
+							phone
+							email
+							website
+						}
+						emergency(country: "${destinationCountry}") {
+							police
+							ambulance
+							fire
+						}
 					}`
 				})
 			})
@@ -191,6 +206,8 @@ function Country({
 					(res.data.drugs && res.data.drugs.length !== 0) && setcocainePossession(res.data.drugs[0].cocaine_possession);
 					(res.data.drugs && res.data.drugs.length !== 0) && setmethaphetaminePossession(res.data.drugs[0].methaphetamine_possession);
 					(res.data.country_vaccines && res.data.country_vaccines.length !== 0) && setVaccines(res.data.country_vaccines);
+					(res.data.embassy && res.data.embassy.length !== 0) && setEmbassy(res.data.embassy[0]);
+					(res.data.emergency && res.data.emergency.length !== 0) && setEmergency(res.data.emergency[0]);
 					fetchRate(res.data.originCurrencies[0].code, res.data.destinationCurrencies[0].code);
 				});
 		}
@@ -271,7 +288,7 @@ function Country({
 													style={{ maxHeight: '400px', overflow: 'scroll' }}
 												>
 													<CardBody>
-														<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }}/>
+														<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }} />
 														<div
 															style={{ display: 'inline' }}
 															className="scrolling-card"
@@ -442,10 +459,62 @@ function Country({
 											</Card>
 										</Col>
 									</Row>
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
+										<Col xs="10" sm="4">
+											<Card header="Embassies and Consulates">
+												<CardBody>
+													{!embassyInfo ? <div>Note: We don&apos;t have any info on embassies or consulates in {originCountryName}. Try Googling instead.</div>
+														:													(
+															<span>
+																{embassyInfo.type === 'embassy'
+														&& (
+															<strong>Embassy of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+														)}
+																{embassyInfo.type === 'consulate'
+														&& (
+															<strong>Consulate of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+														)}
+																{embassyInfo.type === 'consulate general'
+														&& (
+															<strong>Consulate General of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+														)}
+																{embassyInfo.type === 'honorary consulate'
+														&& (
+															<strong>Honorary Consulate of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+														)}
+																<div style={{ paddingBottom: '20px' }} />
+																{(embassyInfo.city !== '')
+														&& (
+															<div style={{ paddingBottom: '5px' }}>City: {embassyInfo.city}</div>
+														)}
+																{(embassyInfo.phone !== '')
+														&& (
+															<div style={{ paddingBottom: '5px' }}>Phone: {embassyInfo.phone}</div>
+														)}
+																{(embassyInfo.email !== '')
+														&& (
+															<div style={{ paddingBottom: '5px' }}>Email: {embassyInfo.email}</div>
+														)}
+																{(embassyInfo.website !== '')
+														&& (
+															<div style={{ paddingBottom: '5px' }}>Website: {embassyInfo.website}</div>
+														)}
+															</span>
+														)}
+												</CardBody>
+											</Card>
+										</Col>
+									</Row>
 								</div>
 								<div className="section">
 									<Subtitle text="Health & Safety" />
-									<Row>
+									<Row
+										className="justify-content-center"
+										style={{ padding: '5px 25px' }}
+									>
 										<Col xs="10" sm="4">
 											<Card header="General Health">
 												<CardBody>
@@ -481,32 +550,55 @@ function Country({
 											</Card>
 										</Col>
 										<Col xs="10" sm="4">
-											{!(vaccines === null || vaccines === "Not available yet") && (
-											<Card header="Vaccines">
+											{!(vaccines === null || vaccines === 'Not available yet') && (
+												<Card header="Vaccines">
+													<CardBody>
+														<Row className="justify-content-center" style={{ padding: '0px 0px' }}>
+															{vaccines.map((value, index) => {
+																if (vaccineCard === '' && index === 0) {
+																	setVaccinCard(value.vaccine_info);
+																}
+																if ((vaccineCard === value.vaccine_info && index === 0)) {
+																	return (
+																		<button
+																			type="button"
+																			className="tablinks"
+																			style={{ color: '#FF1C00' }}
+																			onClick={() => setVaccinCard(value.vaccine_info)}
+																		>{value.vaccine_name}
+																		</button>
+																	);
+																}
+
+
+																return (
+																	<button
+																		type="button"
+																		className="tablinks"
+																		onClick={() => setVaccinCard(value.vaccine_info)}
+																	>
+																		{value.vaccine_name}
+																	</button>
+																);
+															})}
+														</Row>
+
+														<Divider /><br />
+														<Row className="justify-content-center" style={{ padding: '0px 25px' }}>
+															<p dangerouslySetInnerHTML={{ __html: vaccineCard }} style={{ fontSize: `${13}px` }} />
+														</Row>
+													</CardBody>
+												</Card>
+											)}
+										</Col>
+										<Col xs="10" sm="4">
+											<Card header="Emergency Contacts">
 												<CardBody>
-													<Row className="justify-content-center" style={{ padding: '0px 0px' }}>
-													{vaccines.map((value, index) => {
-														if (vaccineCard == '' && index == 0){
-															setVaccinCard(value.vaccine_info)
-														}
-														if ((vaccineCard == value.vaccine_info  && index == 0)) {
-														return <button className='tablinks' style = {{color: '#FF1C00'}}
-														onClick={()=>setVaccinCard(value.vaccine_info)
-														}>{value.vaccine_name}</button>}
-
-														else{
-														return <button className='tablinks'
-																	onClick={()=>setVaccinCard(value.vaccine_info)
-																}>
-														{value.vaccine_name}</button>}
-													})}</Row>
-
-													<Divider/><br/>
-													<Row className="justify-content-center" style={{ padding: '0px 25px'}}>
-														<p dangerouslySetInnerHTML={{ __html: vaccineCard }} style = {{fontSize: 13 +'px'}}/>
-													</Row>
+													<pre><strong>Police: </strong>{emergencyInfo.police}</pre>
+													<pre><strong>Ambulance: </strong>{emergencyInfo.ambulance}</pre>
+													<pre><strong>Fire: </strong>{emergencyInfo.fire}</pre>
 												</CardBody>
-											</Card>)}
+											</Card>
 										</Col>
 									</Row>
 								</div>
