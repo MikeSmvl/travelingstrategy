@@ -9,6 +9,8 @@ const {time_difference_origin,time_difference_destination,timezones_table} = req
 const currencies = require('./currencies')
 const financials = require('./financials')
 const {trafficSide,trafficTable} = require('./trafficSide')
+const emergency = require('./emergency')
+const embassy = require('./embassy')
 const unitedNations = require('./unitedNations')
 const logger = require('../logger/logger.js')
 const drugs = require('./drugs')
@@ -33,6 +35,8 @@ var queryType = new graphql.GraphQLObjectType({
         timezones_table,
         trafficSide,
         trafficTable,
+        emergency,
+        embassy,
         unitedNations,
         drugs,
         country_vaccines,

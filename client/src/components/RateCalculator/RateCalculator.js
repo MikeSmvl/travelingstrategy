@@ -5,7 +5,7 @@ import './RateCalculator.css';
 
 const RateCalculator = (props) => {
 	const {
-		destinationRate,
+		destinationRate = '',
 		originCurrency = '',
 		destCurrency = '',
 		...rest
@@ -15,6 +15,10 @@ const RateCalculator = (props) => {
 	const calculate = (amount, rate) => {
 		setResult((amount * rate).toFixed(2));
 	};
+
+	React.useEffect(() => {
+		setResult(destinationRate);
+	}, [destinationRate]);
 
 	return (
 		<RBCard className="RateCalculator" {...rest}>

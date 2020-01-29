@@ -453,3 +453,52 @@ it("Querying vaccine table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+it("Querying embassies table", () =>{
+  const query =`
+  {
+    embassy(country_iso:"Indonesia", operator: "Canada){
+      city,
+    	operator,
+      type,
+      phone,
+      email,
+      website
+    }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying emergency table", () =>{
+  const query =`
+  {
+    emergency(country: "CA") {
+      police
+      ambulance
+      fire
+    }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
