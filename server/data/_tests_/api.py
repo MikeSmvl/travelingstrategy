@@ -9,7 +9,7 @@ data_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(data_dir)
 from helper_class.api_helper import ApiHelper
 from helper_class.url_helper import UrlHelper
-from lib.config import currency_api_link, united_nations_api_link
+from lib.config import currency_api_link, united_nations_api_link, emergency_url
 
 class TestApiHelper(unittest.TestCase):
 
@@ -48,6 +48,19 @@ class TestApiHelper(unittest.TestCase):
         """
         try:
             api = ApiHelper(united_nations_api_link)
+            code = api.get_code()
+
+            self.assertEqual(str(code), '<Response [200]>')
+        except Exception:
+            self.fail("Api link raised an exception!")
+
+    def test_emergency_page(self):
+        """
+        Test that uses one of our API links (http://chartsbin.com/view/1983) to make sure it returns a valid HTML code.
+        The expected response code is 200 as the endpoint should be up.
+        """
+        try:
+            api = ApiHelper(emergency_url)
             code = api.get_code()
 
             self.assertEqual(str(code), '<Response [200]>')

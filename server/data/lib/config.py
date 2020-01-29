@@ -86,3 +86,6 @@ wiki_visa_url_MU = 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mauritia
 
 # vaccines
 vaccine_url = 'https://wwwnc.cdc.gov/travel/destinations/list'
+
+# emergency
+emergency_url = 'http://chartsbin.com/view/1983'
