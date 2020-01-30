@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
+.AppHeaderWrapper {
+	padding-bottom: 50px;
+	padding-top: 150px;
+}
+
 .AppHeader {
 	background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url('pictures/output-na.gif');
 	background-size: cover;
@@ -20,18 +25,18 @@
 }
 .AppHeader .title2 {
 	text-align: center;
-	padding-top: 1%;
+	padding-top: 2%;
 	color: white;
-	font-size: 35px;
+	font-size: 30px;
 	font-weight: 750;
 	font-family: 'Source Sans Pro', sans-serif;
 	position: relative;
 }
 .AppHeader .title3 {
 	text-align: center;
-	padding-top: 1%;
+	padding-top: 2%;
 	color: white;
-	font-size: 35px;
+	font-size: 20px;
 	font-weight: 750;
 	font-family: 'Source Sans Pro', sans-serif;
 	position: relative;

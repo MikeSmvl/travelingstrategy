@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import ReactFullpage from '@fullpage/react-fullpage';
-import { Row, Col, Table } from 'react-bootstrap/';
+import { Row, Col, Table, Nav } from 'react-bootstrap/';
 import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
-import Subtitle from '../components/Subtitle/Subtitle';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
 import { compareSingle, compareDouble, percentDiffColor } from '../utils/healthComparison';
@@ -213,7 +211,7 @@ function Country({
 		}
 
 		fetchData();
-	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng]);
+	}, [originCountry, destinationCountry, originLat, originLng, destinationLat, destinationLng, destCountryName, originCountryName]);
 
 	const socketArray = socketType.replace(/\s/g, '').split(',');
 	const formatedVisaInfo = formatingVisa(visaInfo);
@@ -224,104 +222,120 @@ function Country({
 	return (
 		<div>
 			{!isLoading && (
-				<ReactFullpage
-					licenseKey="CF1896AE-3B194629-99B627C1-841383E5"
-					scrollingSpeed={1000} /* Options here */
-					sectionsColor={['rgb(232, 233, 241)', 'rgb(255, 222, 206)', 'rgb(228, 221, 241)']}
-					navigation
-					navigationPosition="left"
-					navigationTooltips={['Basics', 'Health & Safety', 'Money']}
-					anchors={['basics', 'health', 'money']}
-					scrollOverflow
-					normalScrollElements=".scrolling-card"
-					responsiveWidth={800}
-					render={({ state, fullpageApi }) => {
-						return (
-							<ReactFullpage.Wrapper>
-								<div className="section App">
-									<Header
-										title={getCountryName(destinationCountry)}
-										title2={destinationCity}
-										title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
-									/>
-									<Subtitle text="Important Basics" />
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
+				<div className="parallax">
+					<Header
+						title={getCountryName(destinationCountry)}
+						title2={destinationCity}
+						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
+					/>
+					<Row className="justify-content-center">
+						<Col style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '10px' }} lg={8}>
+							<Row style={{ backgroundColor: 'rgb(247,	247,	247)', padding: '1em', borderRadius: '10px' }} className="justify-content-center sticky">
+								<Nav variant="pills" className="flex-row">
+									<Nav.Item>
+										<Nav.Link href="#Important Basics">Important Basics</Nav.Link>
+									</Nav.Item>
+									<Nav.Item>
+										<Nav.Link href="#Electricity & Financials">Electricity & Financials</Nav.Link>
+									</Nav.Item>
+									<Nav.Item>
+										<Nav.Link href="#Miscellaneous">Miscellaneous</Nav.Link>
+									</Nav.Item>
+									<Nav.Item>
+										<Nav.Link href="#Health & Safety">Health & Safety</Nav.Link>
+									</Nav.Item>
+								</Nav>
+							</Row>
+							<Row id="Important Basics" className="justify-content-center">
+								<Col sm={4} style={{ padding: '25px' }}>
+									<CountryCard
+										flagSrc={flagSrc(destinationCountry)}
+										title="Country Flag"
 									>
-										<Col xs="10" sm="4">
-											<CountryCard
-												flagSrc={flagSrc(destinationCountry)}
-												title="Country Flag"
+										<CardBody>
+											{languagesInfo !== 'Not available yet.'
+											&& languages(languagesInfo)}
+										</CardBody>
+									</CountryCard>
+								</Col>
+								<Col sm={6} style={{ padding: '25px' }}>
+									{!(visaInfo === null || visaInfo === 'Not available yet') && (
+										<Card
+											className="scrolling-card"
+											header="Visa Info"
+											style={{ maxHeight: '400px', overflow: 'scroll' }}
+										>
+											<CardBody
+												className="scrolling-card"
+												style={{ paddingTop: '0' }}
 											>
-												<CardBody>
-													{languagesInfo !== 'Not available yet.'
-														&& languages(languagesInfo)}
-												</CardBody>
-											</CountryCard>
-										</Col>
-										{!(visaInfo === null || visaInfo === 'Not available yet') && (
-											<Col xs="10" sm="4">
-												<Card
+												<div
 													className="scrolling-card"
-													header="Visa Info"
-													style={{ maxHeight: '400px', overflow: 'scroll' }}
-												>
-													<CardBody
-														className="scrolling-card"
-														style={{ paddingTop: '0' }}
-													>
-														<div
-															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
-														/>
-													</CardBody>
-												</Card>
-											</Col>
-										)}
-
+													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
+												/>
+											</CardBody>
+										</Card>
+									)}
+								</Col>
+								<Col sm={6} style={{ padding: '25px' }}>
+									{!(advisoryInfo === null || advisoryInfo === 'Not available yet') && (
+										<Card
+											className="scrolling-card"
+											header="Advisory"
+											style={{ maxHeight: '400px', overflow: 'scroll' }}
+										>
+											<CardBody>
+												<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }} />
+												<div
+													style={{ display: 'inline' }}
+													className="scrolling-card"
+													dangerouslySetInnerHTML={{ __html: advisoryInfo }}
+												/>
+												<div
+													dangerouslySetInnerHTML={{ __html: advisoryLink }}
+												/>
+											</CardBody>
+										</Card>
+									)}
+								</Col>
+							</Row>
+							<hr />
+							<div id="Electricity & Financials">
+								<Row className="justify-content-center">
+									<Col xs="10" sm="6" style={{ padding: '25px' }}>
+										<Card header="Prices (in USD)">
+											<CardBody>
+												<pre style={{ textAlign: 'center' }}>
+													<strong>Gasoline:</strong> {financialInfo.gasoline}$
+										/ Gallon
+												</pre>
+												<pre style={{ textAlign: 'center' }}>
+													<strong>Groceries:</strong>{' '}
+													{financialInfo.groceries}$ / Week
+												</pre>
+												<pre style={{ textAlign: 'center' }}>
+													<strong>Rent:</strong> {financialInfo.rent}$ / Day
+												</pre>
+											</CardBody>
+										</Card>
+									</Col>
+								</Row>
+								<Row className="justify-content-center">
+									<Col sm={6} style={{ padding: '25px' }}>
 										{!(advisoryInfo === null || advisoryInfo === 'Not available yet') && (
-											<Col xs="10" sm="4">
-												<Card
-													className="scrolling-card"
-													header="Advisory"
-													style={{ maxHeight: '400px', overflow: 'scroll' }}
-												>
-													<CardBody>
-														<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }} />
-														<div
-															style={{ display: 'inline' }}
-															className="scrolling-card"
-															dangerouslySetInnerHTML={{ __html: advisoryInfo }}
-														/>
-														<div
-															dangerouslySetInnerHTML={{ __html: advisoryLink }}
-														/>
-													</CardBody>
-												</Card>
-											</Col>
-										)}
-									</Row>
-								</div>
-
-								<div className="section">
-									<Subtitle text="Electricity & Financials" />
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
 											<Card header="Currency">
 												<CardBody>
-													<pre>
-														<strong>Name:</strong> {currencyInfo.name}
-													</pre>
-													<pre>
-														<strong>Code:</strong> {currencyInfo.code}
-													</pre>
-													<pre>
-														<strong>Symbol:</strong> {currencyInfo.symbol}
-													</pre>
+													<Row className="justify-content-center">
+														<pre>
+															<strong>Name:</strong> {currencyInfo.name}
+														</pre>
+														<pre>
+															<strong>	Code:</strong> {currencyInfo.code}
+														</pre>
+														<pre>
+															<strong>	Symbol:</strong> {currencyInfo.symbol}
+														</pre>
+													</Row>
 													<div
 														style={{
 															display: 'flex',
@@ -337,275 +351,248 @@ function Country({
 													</div>
 												</CardBody>
 											</Card>
-										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Prices (in USD)">
-												<CardBody>
-													<pre>
-														<strong>Gasoline:</strong> {financialInfo.gasoline}$
-														/ Gallon
-													</pre>
-													<pre>
-														<strong>Groceries:</strong>{' '}
-														{financialInfo.groceries}$ / Week
-													</pre>
-													<pre>
-														<strong>Rent:</strong> {financialInfo.rent}$ / Day
-													</pre>
-												</CardBody>
-											</Card>
-										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Sockets & Plugs">
-												<CardBody>
-													<p>
-														{getCountryName(destinationCountry)} uses{' '}
-														<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
-														<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
-														electrical sockets. Plugs are of{' '}
-														<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
-													</p>
-													<Divider />
+										)}
+									</Col>
+								</Row>
+								<Row className="justify-content-center">
+									<Col xs="10" sm="8" style={{ padding: '25px' }}>
+										<Card header="Sockets & Plugs">
+											<CardBody>
+												<p>
+													{getCountryName(destinationCountry)} uses{' '}
+													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+											electrical sockets. Plugs are of{' '}
+													<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+												</p>
+												<Divider />
+												<Row className="justify-content-center">
 													{socketType !== 'Not available yet'
-														&& socketArray.map((item) => (
-															/* eslint-disable */
-															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
-															<img
-																key={item}
-																src={require(`../socketImages/${item}.png`)}
-																style={{width: '200px'}}
-																alt=''
-															/>
-															/* eslint-enable */
-														))}
-												</CardBody>
-											</Card>
-										</Col>
-									</Row>
-								</div>
-								<div className="section">
-									<Subtitle text="Miscellaneous" />
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
-											<Card
-												header="Drug Laws"
-											>
-												<CardBody>
-													<div
-														className="scrolling-card"
-														style={{ maxHeight: '400px', overflow: 'scroll' }}
-													>
-														<p>
-															<strong>Canabais recreational:</strong> {JSON.stringify(canabaisRecreational).replace(/(^")|("$)/g, '')}
-														</p>
-														<p>
-															<strong>Canabais medical:</strong> {JSON.stringify(canabaisMedical).replace(/(^")|("$)/g, '')}
-														</p>
-														<p>
-															<strong>Cocaine possession:</strong> {JSON.stringify(cocainePossession).replace(/(^")|("$)/g, '')}
-														</p>
-														<p>
-															<strong>Methaphetamine possession:</strong> {JSON.stringify(methaphetaminePossession).replace(/(^")|("$)/g, '')}
-														</p>
-													</div>
-												</CardBody>
-											</Card>
-										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Traffic Flow">
-												<CardBody>
-													{trafficSide !== 'Not available yet'
-														&& (
-															<p>
-													In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
-																<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
-															</p>
-														)}
-													<Divider />
-													{trafficSide !== 'Not available yet'
-														&& (
-															<img
-																key={trafficSide}
-																src={require(`../trafficImages/${trafficSide}.png`)}
-																style={{ width: '200px' }}
-																alt=""
-															/>
-														)}
-													{trafficSide !== 'Not available yet'
-														&& (
-															<p style={{ textAlign: 'center' }}>
-																<br />
-																<b style={{ color: '#FF1C00' }}>
-														Warning
-																</b><br />
-														Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
-															</p>
-														)}
-												</CardBody>
-											</Card>
-										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Unsafe Areas">
-												<CardBody>
-													<div
-														className="scrolling-card"
-														style={{ maxHeight: '285px', overflow: 'scroll' }}
-														dangerouslySetInnerHTML={{ __html: unsafeAreas }}
+											&& socketArray.map((item) => (
+												/* eslint-disable */
+												// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
+												<Col>
+													<img
+														key={item}
+														src={require(`../socketImages/${item}.png`)}
+														style={{width: '200px'}}
+														alt=''
 													/>
-												</CardBody>
-											</Card>
-										</Col>
-									</Row>
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
+												</Col>
+												/* eslint-enable */
+											))}
+												</Row>
+											</CardBody>
+										</Card>
+									</Col>
+								</Row>
+							</div>
+							<hr />
+							<Row id="Miscellaneous" className="justify-content-center">
+								<Col xs="10" sm="6" style={{ padding: '25px' }}>
+									<Card
+										header="Drug Laws"
 									>
-										<Col xs="10" sm="4">
-											<Card header="Embassies and Consulates">
-												<CardBody>
-													{!embassyInfo ? <div>Note: We don&apos;t have any info on embassies or consulates in {destCountryName}. Try Googling instead.</div>
-														:													(
-															<span>
-																{embassyInfo.type === 'embassy'
-														&& (
-															<strong>Embassy of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
-														)}
-																{embassyInfo.type === 'consulate'
-														&& (
-															<strong>Consulate of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
-														)}
-																{embassyInfo.type === 'consulate general'
-														&& (
-															<strong>Consulate General of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
-														)}
-																{embassyInfo.type === 'honorary consulate'
-														&& (
-															<strong>Honorary Consulate of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
-														)}
-																<div style={{ paddingBottom: '20px' }} />
-																{(embassyInfo.city !== '')
-														&& (
-															<div style={{ paddingBottom: '5px' }}>City: {embassyInfo.city}</div>
-														)}
-																{(embassyInfo.phone !== '')
-														&& (
-															<div style={{ paddingBottom: '5px' }}>Phone: {embassyInfo.phone}</div>
-														)}
-																{(embassyInfo.email !== '')
-														&& (
-															<div style={{ paddingBottom: '5px' }}>Email: {embassyInfo.email}</div>
-														)}
-																{(embassyInfo.website !== '')
-														&& (
-															<div style={{ paddingBottom: '5px' }}>Website: {embassyInfo.website}</div>
-														)}
-															</span>
-														)}
-												</CardBody>
-											</Card>
-										</Col>
-									</Row>
-								</div>
-								<div className="section">
-									<Subtitle text="Health & Safety" />
-									<Row
-										className="justify-content-center"
-										style={{ padding: '5px 25px' }}
-									>
-										<Col xs="10" sm="4">
-											<Card header="General Health">
-												<CardBody>
-													<Table striped bordered hover>
-														<tbody>
-															<tr>
-																<td><strong>Homicide Rate</strong></td>
-																<td>{destinationHealth.homicideRate} <span style={{ color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate)) }}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
-															</tr>
-															<tr>
-																<td><strong>Infant Mortality (Per 1000)</strong></td>
-																<td>{destinationHealth.infantMortality} <span style={{ color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality)) }}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
-															</tr>
-															<tr>
-																<td><strong>Life Expectancy (f/m, years)</strong></td>
-																<td>{destinationHealth.lifeExpectancy} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
-															</tr>
-															<tr>
-																<td><strong>Number of physicians (Per 1000)</strong></td>
-																<td>{destinationHealth.nbOfPhysicians} <span style={{ color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians)) }}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
-															</tr>
-															<tr>
-																<td><strong>Sanitation (urban/rural, %)</strong></td>
-																<td>{destinationHealth.sanitation} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
-															</tr>
-															<tr>
-																<td><strong>Water (urban/rural, %)</strong></td>
-																<td>{destinationHealth.water}  <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
-															</tr>
-														</tbody>
-													</Table>
-												</CardBody>
-											</Card>
-										</Col>
-										<Col xs="10" sm="4">
-											{!(vaccines === null || vaccines === 'Not available yet') && (
-												<Card header="Vaccines">
-													<CardBody>
-														<Row className="justify-content-center" style={{ padding: '0px 0px' }}>
-															{vaccines.map((value, index) => {
-																if (vaccineCard === '' && index === 0) {
-																	setVaccinCard(value.vaccine_info);
-																}
-																if ((vaccineCard === value.vaccine_info && index === 0)) {
-																	return (
-																		<button
-																			type="button"
-																			className="tablinks"
-																			style={{ color: '#FF1C00' }}
-																			onClick={() => setVaccinCard(value.vaccine_info)}
-																		>{value.vaccine_name}
-																		</button>
-																	);
-																}
+										<CardBody>
+											<div
+												className="scrolling-card"
+												style={{ maxHeight: '400px', overflow: 'scroll' }}
+											>
+												<p>
+													<strong>Canabais recreational:</strong> {JSON.stringify(canabaisRecreational).replace(/(^")|("$)/g, '')}
+												</p>
+												<p>
+													<strong>Canabais medical:</strong> {JSON.stringify(canabaisMedical).replace(/(^")|("$)/g, '')}
+												</p>
+												<p>
+													<strong>Cocaine possession:</strong> {JSON.stringify(cocainePossession).replace(/(^")|("$)/g, '')}
+												</p>
+												<p>
+													<strong>Methaphetamine possession:</strong> {JSON.stringify(methaphetaminePossession).replace(/(^")|("$)/g, '')}
+												</p>
+											</div>
+										</CardBody>
+									</Card>
+									<br />
+									<Card header="Embassies and Consulates">
+										<CardBody>
+											{!embassyInfo ? <div>Note: We don&apos;t have any info on embassies or consulates in {destCountryName}. Try Googling instead.</div>
+												:													(
+													<span>
+														{embassyInfo.type === 'embassy'
+										&& (
+											<strong>Embassy of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+										)}
+														{embassyInfo.type === 'consulate'
+										&& (
+											<strong>Consulate of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+										)}
+														{embassyInfo.type === 'consulate general'
+										&& (
+											<strong>Consulate General of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+										)}
+														{embassyInfo.type === 'honorary consulate'
+										&& (
+											<strong>Honorary Consulate of <span style={{ color: '#FF1C00' }}>{originCountryName}</span></strong>
+										)}
+														<div style={{ paddingBottom: '20px' }} />
+														{(embassyInfo.city !== '')
+										&& (
+											<div style={{ paddingBottom: '5px' }}>City: {embassyInfo.city}</div>
+										)}
+														{(embassyInfo.phone !== '')
+										&& (
+											<div style={{ paddingBottom: '5px' }}>Phone: {embassyInfo.phone}</div>
+										)}
+														{(embassyInfo.email !== '')
+										&& (
+											<div style={{ paddingBottom: '5px' }}>Email: {embassyInfo.email}</div>
+										)}
+														{(embassyInfo.website !== '')
+										&& (
+											<div style={{ paddingBottom: '5px' }}>Website: {embassyInfo.website}</div>
+										)}
+													</span>
+												)}
+										</CardBody>
+									</Card>
+								</Col>
+								<Col xs="10" sm="6" style={{ padding: '25px' }}>
+									<Card header="Unsafe Areas">
+										<CardBody>
+											<div
+												className="scrolling-card"
+												style={{ maxHeight: '285px', overflow: 'scroll' }}
+												dangerouslySetInnerHTML={{ __html: unsafeAreas }}
+											/>
+										</CardBody>
+									</Card>
+									<br />
+									<Card header="Traffic Flow">
+										<CardBody>
+											{trafficSide !== 'Not available yet'
+										&& (
+											<p>
+									In {getCountryName(destinationCountry)} the traffic flow is on the{' '}
+												<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b> side
+											</p>
+										)}
+											<Divider />
+											{trafficSide !== 'Not available yet'
+										&& (
+											<img
+												key={trafficSide}
+												src={require(`../trafficImages/${trafficSide}.png`)}
+												style={{ width: '200px', marginLeft: 'auto', marginRight: 'auto', display: 'block' }}
+												alt=""
+											/>
+										)}
+											{trafficSide !== 'Not available yet'
+										&& (
+											<p style={{ textAlign: 'center' }}>
+												<br />
+												<b style={{ color: '#FF1C00' }}>
+										Warning
+												</b><br />
+										Be sure to look {getOtherTrafficSide(trafficSide)} when crossing streets
+											</p>
+										)}
+										</CardBody>
+									</Card>
+								</Col>
+							</Row>
+							<hr />
+							<Row id="Health & Safety" className="justify-content-center">
+								<Col xs="10" sm="6" style={{ padding: '25px' }}>
+									<Card header="Emergency Contacts">
+										<CardBody>
+											<pre style={{ textAlign: 'center' }}><strong>Police: </strong>{emergencyInfo.police}</pre>
+											<pre style={{ textAlign: 'center' }}><strong>Ambulance: </strong>{emergencyInfo.ambulance}</pre>
+											<pre style={{ textAlign: 'center' }}><strong>Fire: </strong>{emergencyInfo.fire}</pre>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col xs="10" sm="8" style={{ padding: '25px' }}>
+									<Card header="General Health">
+										<CardBody>
+											<Table striped bordered hover>
+												<tbody>
+													<tr>
+														<td><strong>Homicide Rate</strong></td>
+														<td>{destinationHealth.homicideRate} <span style={{ color: percentDiffColor(String(destinationHealth.homicideRate), String(originHealth.homicideRate)) }}>{compareSingle(String(destinationHealth.homicideRate), String(originHealth.homicideRate))}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Infant Mortality (Per 1000)</strong></td>
+														<td>{destinationHealth.infantMortality} <span style={{ color: percentDiffColor(String(destinationHealth.infantMortality), String(originHealth.infantMortality)) }}>{compareSingle(String(destinationHealth.infantMortality), String(originHealth.infantMortality))}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Life Expectancy (f/m, years)</strong></td>
+														<td>{destinationHealth.lifeExpectancy} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.lifeExpectancy, originHealth.lifeExpectancy)}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Number of physicians (Per 1000)</strong></td>
+														<td>{destinationHealth.nbOfPhysicians} <span style={{ color: percentDiffColor(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians)) }}>{compareSingle(String(destinationHealth.nbOfPhysicians), String(originHealth.nbOfPhysicians))}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Sanitation (urban/rural, %)</strong></td>
+														<td>{destinationHealth.sanitation} <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.sanitation, originHealth.sanitation)}</span></td>
+													</tr>
+													<tr>
+														<td><strong>Water (urban/rural, %)</strong></td>
+														<td>{destinationHealth.water}  <span style={{ color: 'blue' }}>{compareDouble(destinationHealth.water, originHealth.water)}</span></td>
+													</tr>
+												</tbody>
+											</Table>
+										</CardBody>
+									</Card>
+								</Col>
+								<Col xs="10" sm="8" style={{ padding: '25px' }}>
+									{!(vaccines === null || vaccines === 'Not available yet') && (
+										<Card header="Vaccines">
+											<CardBody>
+												<Row className="justify-content-center" style={{ padding: '0px 0px' }}>
+													{vaccines.map((value, index) => {
+														if (vaccineCard === '' && index === 0) {
+															setVaccinCard(value.vaccine_info);
+														}
+														if ((vaccineCard === value.vaccine_info && index === 0)) {
+															return (
+																<button
+																	type="button"
+																	className="tablinks"
+																	style={{ color: '#FF1C00' }}
+																	onClick={() => setVaccinCard(value.vaccine_info)}
+																>{value.vaccine_name}
+																</button>
+															);
+														}
 
 
-																return (
-																	<button
-																		type="button"
-																		className="tablinks"
-																		onClick={() => setVaccinCard(value.vaccine_info)}
-																	>
-																		{value.vaccine_name}
-																	</button>
-																);
-															})}
-														</Row>
+														return (
+															<button
+																type="button"
+																className="tablinks"
+																onClick={() => setVaccinCard(value.vaccine_info)}
+															>
+																{value.vaccine_name}
+															</button>
+														);
+													})}
+												</Row>
 
-														<Divider /><br />
-														<Row className="justify-content-center" style={{ padding: '0px 25px' }}>
-															<p dangerouslySetInnerHTML={{ __html: vaccineCard }} style={{ fontSize: `${13}px` }} />
-														</Row>
-													</CardBody>
-												</Card>
-											)}
-										</Col>
-										<Col xs="10" sm="4">
-											<Card header="Emergency Contacts">
-												<CardBody>
-													<pre><strong>Police: </strong>{emergencyInfo.police}</pre>
-													<pre><strong>Ambulance: </strong>{emergencyInfo.ambulance}</pre>
-													<pre><strong>Fire: </strong>{emergencyInfo.fire}</pre>
-												</CardBody>
-											</Card>
-										</Col>
-									</Row>
-								</div>
-							</ReactFullpage.Wrapper>
-						);
-					}}
-				/>
+												<Divider /><br />
+												<Row className="justify-content-center" style={{ padding: '0px 25px' }}>
+													<p dangerouslySetInnerHTML={{ __html: vaccineCard }} style={{ fontSize: `${1}rem` }} />
+												</Row>
+											</CardBody>
+										</Card>
+									)}
+								</Col>
+							</Row>
+						</Col>
+					</Row>
+					<footer id="footer" />
+				</div>
 			)}
 		</div>
 	);

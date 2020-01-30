@@ -8,9 +8,10 @@
 .countryCardTitle {
 	margin-left: 15px;
 	font-family: 'Source Sans Pro', sans-serif;
-	font-size: 20px;
+	font-size: large;
 	line-height: 3;
 }
+
 .countryCardBody {
 	text-align: left;
 	text-transform: capitalize;
