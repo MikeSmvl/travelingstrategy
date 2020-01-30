@@ -6,7 +6,7 @@ describe('Testing time difference ', () => {
 		const utcOffsetDestinnation = 2;
 		const origin = 'Montreal';
 		const timeDifference = getTimeDifference(utcOffsetOrigin, utcOffsetDestinnation, origin);
-		expect(timeDifference).toMatch('Time difference: +6H from Montreal');
+		expect(timeDifference).toMatch('Time Difference: +6H');
 	});
 
 	it('Negative time difference', () => {
@@ -14,6 +14,6 @@ describe('Testing time difference ', () => {
 		const utcOffsetDestinnation = -4;
 		const origin = 'Paris';
 		const timeDifference = getTimeDifference(utcOffsetOrigin, utcOffsetDestinnation, origin);
-		expect(timeDifference).toMatch('Time difference: -6H from Paris');
+		expect(timeDifference).toMatch('Time Difference: -6H');
 	});
 });
