@@ -14,7 +14,7 @@ const Header = (props) => {
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
-				<Col lg={8}>
+				<Col lg={8} style={{ border: '5px solid white', borderRadius: '10px' }}>
 					<div className="AppHeader" {...rest}>
 						<div className="title">
 							{title}

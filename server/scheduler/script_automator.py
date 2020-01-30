@@ -48,7 +48,7 @@ def start_scheduler():
     scheduler.every().day.do(save_to_united_states)
     scheduler.every().day.do(save_to_SG)
     scheduler.every().day.do(save_to_MU)
-    scheduler.every().day.do(save_to_central_america
+    scheduler.every().day.do(save_to_central_america)
     scheduler.every().day.do(save_to_caribbea)
     scheduler.every().day.do(save_to_unsafe_areas)
     scheduler.every().day.do(save_drug_law)
