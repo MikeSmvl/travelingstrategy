@@ -1,8 +1,13 @@
 .Navbar {
 	background-color: transparent;
+	z-index: 500;
 }
 .Navbar .title {
 	color: white !important;
+	font-weight: 500;
+}
+.Navbar .rightTitle {
+	font-weight: 600;
 }
 a {
 	text-decoration: none !important;

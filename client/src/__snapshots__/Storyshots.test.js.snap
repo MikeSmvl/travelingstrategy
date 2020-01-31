@@ -260,32 +260,50 @@ Array [
     }
   >
     <div
-      className="AppHeader"
-      style={
-        Object {
-          "height": "420px",
-        }
-      }
+      className="AppHeaderWrapper"
     >
       <div
-        className="title"
+        className="justify-content-center row"
       >
-        Paris
-      </div>
-      <div
-        className="title2"
-      >
-        TimeZone
-      </div>
-      <div
-        className="title3"
-      >
-        TimeDifference
-      </div>
-      <div
-        className="subtitle"
-      >
-        France
+        <div
+          className="col-lg-8"
+          style={
+            Object {
+              "border": "5px solid white",
+              "borderRadius": "20px 20px 0 0",
+            }
+          }
+        >
+          <div
+            className="AppHeader"
+            style={
+              Object {
+                "height": "420px",
+              }
+            }
+          >
+            <div
+              className="title"
+            >
+              Paris
+            </div>
+            <div
+              className="title2"
+            >
+              TimeZone
+            </div>
+            <div
+              className="title3"
+            >
+              TimeDifference
+            </div>
+            <div
+              className="subtitle"
+            >
+              France
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>,
@@ -326,32 +344,50 @@ Array [
     }
   >
     <div
-      className="AppHeader"
-      style={
-        Object {
-          "height": "420px",
-        }
-      }
+      className="AppHeaderWrapper"
     >
       <div
-        className="title"
+        className="justify-content-center row"
       >
-        Paris
-      </div>
-      <div
-        className="title2"
-      >
-        TimeZone
-      </div>
-      <div
-        className="title3"
-      >
-        TimeDifference
-      </div>
-      <div
-        className="subtitle"
-      >
-        France
+        <div
+          className="col-lg-8"
+          style={
+            Object {
+              "border": "5px solid white",
+              "borderRadius": "20px 20px 0 0",
+            }
+          }
+        >
+          <div
+            className="AppHeader"
+            style={
+              Object {
+                "height": "420px",
+              }
+            }
+          >
+            <div
+              className="title"
+            >
+              Paris
+            </div>
+            <div
+              className="title2"
+            >
+              TimeZone
+            </div>
+            <div
+              className="title3"
+            >
+              TimeDifference
+            </div>
+            <div
+              className="subtitle"
+            >
+              France
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>,
@@ -419,6 +455,7 @@ Array [
           className="navbar-text"
         >
           <a
+            className="rightTitle"
             href=""
           >
             Login
@@ -491,6 +528,7 @@ Array [
           className="navbar-text"
         >
           <a
+            className="rightTitle"
             href=""
           >
             Login

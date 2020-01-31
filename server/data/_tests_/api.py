@@ -38,8 +38,8 @@ class TestApiHelper(unittest.TestCase):
 
             success_code = api_with_country.get_code()
             self.assertEqual(str(success_code), '<Response [200]>')
-        except Exception:
-            self.fail("Api link raised an exception!")
+        except Exception as error_msg:
+            self.fail(f"Api link raised the following exception: {error_msg}")
 
     def test_un_api(self):
         """
@@ -51,8 +51,8 @@ class TestApiHelper(unittest.TestCase):
             code = api.get_code()
 
             self.assertEqual(str(code), '<Response [200]>')
-        except Exception:
-            self.fail("Api link raised an exception!")
+        except Exception as error_msg:
+            self.fail(f"Api link raised the following exception: {error_msg}")
 
     def test_emergency_page(self):
         """
@@ -64,8 +64,8 @@ class TestApiHelper(unittest.TestCase):
             code = api.get_code()
 
             self.assertEqual(str(code), '<Response [200]>')
-        except Exception:
-            self.fail("Api link raised an exception!")
+        except Exception as error_msg:
+            self.fail(f"Api link raised the following exception: {error_msg}")
 
 if __name__ == '__main__':
     unittest.main()

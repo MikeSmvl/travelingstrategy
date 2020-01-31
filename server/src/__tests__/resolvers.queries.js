@@ -457,7 +457,7 @@ it("Querying vaccine table", () =>{
 it("Querying embassies table", () =>{
   const query =`
   {
-    embassy(country_iso:"Indonesia", operator: "Canada){
+    embassy(country: "Indonesia", operator: "Canada"){
       city,
     	operator,
       type,
