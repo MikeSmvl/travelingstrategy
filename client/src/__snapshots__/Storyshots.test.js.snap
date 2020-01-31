@@ -270,7 +270,7 @@ Array [
           style={
             Object {
               "border": "5px solid white",
-              "borderRadius": "10px",
+              "borderRadius": "20px 20px 0 0",
             }
           }
         >
@@ -354,7 +354,7 @@ Array [
           style={
             Object {
               "border": "5px solid white",
-              "borderRadius": "10px",
+              "borderRadius": "20px 20px 0 0",
             }
           }
         >
@@ -455,6 +455,7 @@ Array [
           className="navbar-text"
         >
           <a
+            className="rightTitle"
             href=""
           >
             Login
@@ -527,6 +528,7 @@ Array [
           className="navbar-text"
         >
           <a
+            className="rightTitle"
             href=""
           >
             Login
