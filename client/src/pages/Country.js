@@ -230,7 +230,7 @@ function Country({
 					/>
 					<Row className="justify-content-center">
 						<Col style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '20px' }} lg={8}>
-							<Row style={{ backgroundColor: 'rgb(247,	247,	247)', padding: '1em', borderRadius: '0px' }} className="justify-content-center sticky">
+							<Row style={{ backgroundColor: 'rgb(247,	247,	247)', padding: '0.5em', borderRadius: '0px' }} className="justify-content-center sticky">
 								<Nav variant="pills" className="flex-row">
 									<Nav.Item>
 										<Nav.Link href="#Important Basics">Important Basics</Nav.Link>
@@ -267,7 +267,6 @@ function Country({
 										>
 											<CardBody
 												className="scrolling-card"
-												style={{ paddingTop: '0' }}
 											>
 												<div
 													className="scrolling-card"
@@ -285,7 +284,7 @@ function Country({
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
 										>
 											<CardBody>
-												<ErrorOutlineOutlinedIcon style={{ color: '#dc3545' }} />
+											<img src="https://image.flaticon.com/icons/svg/827/827751.svg" alt="Warning" class="replaced-svg" style={{width: '24px', marginTop: '-5px', marginRight: '10px'}} />
 												<div
 													style={{ display: 'inline' }}
 													className="scrolling-card"
@@ -302,40 +301,19 @@ function Country({
 							<hr />
 							<div id="Electricity & Financials">
 								<Row className="justify-content-center">
-									<Col xs="10" sm="6" style={{ padding: '25px' }}>
-										<Card header="Prices (in USD)">
-											<CardBody>
-												<pre style={{ textAlign: 'center' }}>
-													<strong>Gasoline:</strong> {financialInfo.gasoline}$
-										/ Gallon
-												</pre>
-												<pre style={{ textAlign: 'center' }}>
-													<strong>Groceries:</strong>{' '}
-													{financialInfo.groceries}$ / Week
-												</pre>
-												<pre style={{ textAlign: 'center' }}>
-													<strong>Rent:</strong> {financialInfo.rent}$ / Day
-												</pre>
-											</CardBody>
-										</Card>
-									</Col>
-								</Row>
-								<Row className="justify-content-center">
 									<Col sm={6} style={{ padding: '25px' }}>
 										{!(advisoryInfo === null || advisoryInfo === 'Not available yet') && (
 											<Card header="Currency">
 												<CardBody>
-													<Row className="justify-content-center">
-														<pre>
+														<pre style={{ paddingLeft: '44px' }}>
 															<strong>Name:</strong> {currencyInfo.name}
 														</pre>
-														<pre>
-															<strong>	Code:</strong> {currencyInfo.code}
+														<pre style={{ paddingLeft: '44px' }}>
+															<strong>Code:</strong> {currencyInfo.code}
 														</pre>
-														<pre>
-															<strong>	Symbol:</strong> {currencyInfo.symbol}
+														<pre style={{ paddingLeft: '44px'  }}>
+															<strong>Symbol:</strong> {currencyInfo.symbol}
 														</pre>
-													</Row>
 													<div
 														style={{
 															display: 'flex',
@@ -352,6 +330,28 @@ function Country({
 												</CardBody>
 											</Card>
 										)}
+									</Col>
+								</Row>
+								<Row className="justify-content-center">
+									<Col xs="10" sm="6" style={{ padding: '25px' }}>
+										<Card header="Prices (in USD)">
+											<CardBody>
+												<pre style={{ textAlign: 'center' }}>
+												<img src="https://image.flaticon.com/icons/svg/1505/1505581.svg" alt="Fuel" class="replaced-svg" style={{ width: '24px', marginRight: '10px' }} />
+												<strong>Gasoline:</strong> {financialInfo.gasoline}$
+										/ Gallon
+												</pre>
+												<pre style={{ textAlign: 'center' }}>
+													<img src="https://image.flaticon.com/icons/svg/2372/2372132.svg" alt="Shopping" class="replaced-svg" style={{ width: '24px', marginRight: '10px' }} />
+													<strong>Groceries:</strong>{' '}
+													{financialInfo.groceries}$ / Week
+												</pre>
+												<pre style={{ textAlign: 'center' }}>
+												<img src="https://image.flaticon.com/icons/svg/1352/1352859.svg" alt="House" class="replaced-svg" style={{ width: '24px', marginRight: '10px' }} />
+													<strong>Rent:</strong> {financialInfo.rent}$ / Day
+												</pre>
+											</CardBody>
+										</Card>
 									</Col>
 								</Row>
 								<Row className="justify-content-center">
@@ -506,9 +506,9 @@ function Country({
 								<Col xs="10" sm="6" style={{ padding: '25px' }}>
 									<Card header="Emergency Contacts">
 										<CardBody>
-											<pre style={{ textAlign: 'center' }}><strong>Police: </strong>{emergencyInfo.police}</pre>
-											<pre style={{ textAlign: 'center' }}><strong>Ambulance: </strong>{emergencyInfo.ambulance}</pre>
-											<pre style={{ textAlign: 'center' }}><strong>Fire: </strong>{emergencyInfo.fire}</pre>
+											<pre style={{ textAlign: 'center' }}><img src="https://image.flaticon.com/icons/svg/1022/1022382.svg" alt="Policeman" class="replaced-svg" style={{ width: '24px', marginRight: '10px' }} /><strong>Police: </strong>{emergencyInfo.police}</pre>
+											<pre style={{ textAlign: 'center' }}><img src="https://image.flaticon.com/icons/svg/684/684262.svg" alt="Heart" class="replaced-svg" style={{ width: '24px', marginRight: '10px' }} /><strong>Ambulance: </strong>{emergencyInfo.ambulance}</pre>
+											<pre style={{ textAlign: 'center' }}><img src="https://image.flaticon.com/icons/svg/827/827742.svg" alt="Fire Extinguisher" class="replaced-svg" style={{ width: '24px', marginRight: '10px' }} /><strong>Fire: </strong>{emergencyInfo.fire}</pre>
 										</CardBody>
 									</Card>
 								</Col>

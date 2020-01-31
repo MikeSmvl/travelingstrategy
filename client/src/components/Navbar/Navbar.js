@@ -34,7 +34,7 @@ const Navbar = (props) => {
 				</RBNavbar.Brand>
 				<RBNavbar.Collapse className="justify-content-end">
 					<RBNavbar.Text>
-						<a href={hrefRight}>{textRight}</a>
+						<a className="rightTitle" href={hrefRight}>{textRight}</a>
 					</RBNavbar.Text>
 				</RBNavbar.Collapse>
 			</RBNavbar>
