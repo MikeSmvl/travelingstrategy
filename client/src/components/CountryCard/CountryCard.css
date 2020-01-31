@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 
 .countryCardHeader {
-	background-color: rgb(232, 233, 241, 0.5);
+	background-color: rgb(247, 247, 247);
 	display: flex;
 }
 
 .countryCardTitle {
+	color: rgb(107 107 107 );
 	margin-left: 15px;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-size: large;

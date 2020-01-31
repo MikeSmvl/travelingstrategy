@@ -4,14 +4,15 @@
 	padding-top: 150px;
 }
 .AppHeader {
-	background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url('pictures/output-na.gif');
+	/* background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url('pictures/output-na.gif'); */
+	background: linear-gradient(rgb(253, 218, 197, 0.3), rgb(253, 218, 197, 0.2)), url('pictures/output-na.gif');
 	background-size: cover;
 	width: 100%;
 	background-position: center center;
 	height: 400px !important;
 	z-index: 1;
 	position: relative;
-	border-radius: 10px;
+	border-radius: 20px 20px 0 0;
 }
 .AppHeader .title {
 	text-align: center;

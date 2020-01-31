@@ -229,8 +229,8 @@ function Country({
 						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
 					/>
 					<Row className="justify-content-center">
-						<Col style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '10px' }} lg={8}>
-							<Row style={{ backgroundColor: 'rgb(247,	247,	247)', padding: '1em', borderRadius: '10px' }} className="justify-content-center sticky">
+						<Col style={{ backgroundColor: 'rgb(255, 255, 255)', borderRadius: '20px' }} lg={8}>
+							<Row style={{ backgroundColor: 'rgb(247,	247,	247)', padding: '1em', borderRadius: '0px' }} className="justify-content-center sticky">
 								<Nav variant="pills" className="flex-row">
 									<Nav.Item>
 										<Nav.Link href="#Important Basics">Important Basics</Nav.Link>
