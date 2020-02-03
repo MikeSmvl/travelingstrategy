@@ -14,6 +14,7 @@ const embassy = require('./embassy')
 const unitedNations = require('./unitedNations')
 const logger = require('../logger/logger.js')
 const drugs = require('./drugs')
+const testEmail = require('./testEmail')
 
 logger.info(__filename +"Querying with GraphQL")
 
@@ -40,7 +41,8 @@ var queryType = new graphql.GraphQLObjectType({
         unitedNations,
         drugs,
         country_vaccines,
-        vaccines_table
+        vaccines_table,
+        testEmail
     }
 });
 
