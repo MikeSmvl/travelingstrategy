@@ -1,18 +1,11 @@
-import smtplib
+from email_class import Email
 
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 sender = "390soen@gmail.com"
 recipient = "oumarba221296@hotmail.fr"
+subject = "Test Email"
+password = "390minicapstone"
 
-# Multipart/alternative to send other than plaintext.
-msg = MIMEMultipart('alternative')
-msg['Subject'] = "Testing Email"
-msg['From'] = sender
-msg['To'] = recipient
-
-# Create the body of the message (HTML version).
 html = """\
 <html>
   <head>
@@ -27,23 +20,5 @@ html = """\
 </html>
 """
 
-#MIME (https://en.wikipedia.org/wiki/MIME)for sending other than plain text
-
-htmlMail = MIMEText(html, 'html')
-
-# Attach parts into message container.
-msg.attach(htmlMail)
-
-# Send the message via local SMTP server.
-# 587 is the SMTP TLS port
-mail = smtplib.SMTP('smtp.gmail.com', 587)
-
-# Identifying to the server
-mail.ehlo()
-
-# Puts the connection in TLS
-mail.starttls()
-
-mail.login('390soen@gmail.com', '390minicapstone')
-mail.sendmail(sender, recipient, msg.as_string())
-mail.quit()
+email = Email(subject, sender, recipient, html)
+email.sendEmail(password)
