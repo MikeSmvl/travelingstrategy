@@ -14,15 +14,23 @@ from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.database import Database
 
-driver = create_driver()
-url = "https://www.instagram.com/explore/tags/mtl/"
-driver.get(url)
-soup=BeautifulSoup(driver.page_source, 'lxml')
-img = soup.find_all('img', {'class':'FFVAD'})
-count = 0
-for i in img:
-    count += 1
-    print(i.get('alt'))
-    print(count)
 
-quit_driver(driver)
+def find_images(tag):
+    driver = create_driver()
+    url = "https://www.instagram.com/explore/tags/"+tag+"/"
+    driver.get(url)
+    soup=BeautifulSoup(driver.page_source, 'lxml')
+    img = soup.find_all('img', {'class':'FFVAD'})
+    count = 0
+    for i in img:
+        count += 1
+        #what instagram recognition think is in the photo
+        print(count)
+        print(i.get('alt'))
+        #link to the photo
+        print(i.get('src'),"\n")
+
+
+    quit_driver(driver)
+
+find_images("montreal")
