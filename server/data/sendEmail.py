@@ -1,8 +1,8 @@
-from email_class import Email
+from helper_class.email_class import Email
+from lib.database import Database
 
 
 sender = "390soen@gmail.com"
-recipient = "oumarba221296@hotmail.fr"
 subject = "Test Email"
 password = "390minicapstone"
 
@@ -20,5 +20,9 @@ html = """\
 </html>
 """
 
-email = Email(subject, sender, recipient, html)
-email.sendEmail(password)
+db = Database("countries.sqlite")
+subscribers = db.get_items("subscribers")
+for user in subscribers:
+      recipient = user[0]
+      email = Email(subject, sender, recipient, html)
+      email.sendEmail(password)
