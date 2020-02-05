@@ -59,13 +59,21 @@ def find_geolocation(location):
     url = instagram_url + location + "/"
     driver.get(url)
     soup = BeautifulSoup(driver.page_source, 'lxml')
-    geoloc = soup.find_all('a', {'class':'O4GlU'})
+    geoloc = soup.find_all('a', {'href':regex.compile(r'/p/')})
     count = 0
     print("test")
     for g in geoloc:
         count += 1
         print(count)
         print(g.get('href'))
+        count += 1
+        u = "https://www.instagram.com"+g.get('href')
+        print(u)
+        driver.get(u)
+        soup = BeautifulSoup(driver.page_source, 'lxml')
+        geoloc = soup.find('a',{'class':'O4GlU'})
+        if not geoloc == None:
+            print(geoloc.text)
 
     quit_driver(driver)
 
