@@ -24,7 +24,6 @@ function Application() {
 				title="Traveling Strategy"
 				textRight="Login"
 				hrefBrand="/"
-				hrefRight="#login"
 			/>
 			<Switch>
 				<Route exact path="/">

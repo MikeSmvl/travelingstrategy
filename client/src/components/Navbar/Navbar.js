@@ -1,14 +1,18 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Navbar as RBNavbar } from 'react-bootstrap';
+import { Navbar as RBNavbar, Modal, Button } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
+import LoginForm from '../LoginForm/LoginForm';
 
 const Navbar = (props) => {
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
+
 	const {
 		hrefBrand = '',
 		title = '',
-		hrefRight = '',
 		textRight = '',
 		...rest
 	} = props;
@@ -34,7 +38,10 @@ const Navbar = (props) => {
 				</RBNavbar.Brand>
 				<RBNavbar.Collapse className="justify-content-end">
 					<RBNavbar.Text>
-						<a className="rightTitle" href={hrefRight}>{textRight}</a>
+						<Button className="rightTitle" onClick={handleShow}>{textRight}</Button>
+						<Modal show={show} onHide={handleClose}>
+							<LoginForm />
+						</Modal>
 					</RBNavbar.Text>
 				</RBNavbar.Collapse>
 			</RBNavbar>
