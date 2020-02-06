@@ -21,6 +21,11 @@ import {
 } from '../utils/parsingTools';
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
+import displaySubscription from '../utils/displaySubscription';
+
+function testclick(){
+	console.log("hey")
+}
 
 function Country({
 	originCountry,
@@ -298,6 +303,7 @@ function Country({
 						title={getCountryName(destinationCountry)}
 						title2={destinationCity}
 						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
+						subscriptionModal={displaySubscription}
 					/>
 					<Row className="justify-content-center">
 						<Col
