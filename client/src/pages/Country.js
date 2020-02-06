@@ -21,11 +21,7 @@ import {
 } from '../utils/parsingTools';
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
-import displaySubscription from '../utils/displaySubscription';
 
-function testclick(){
-	console.log("hey")
-}
 
 function Country({
 	originCountry,
@@ -69,6 +65,9 @@ function Country({
 	const [emergencyInfo, setEmergency] = useState('');
 	const destCountryName = getCountryName2(destinationCountry);
 	const originCountryName = getCountryName2(originCountry);
+	const [show, setShow] = useState(false);
+
+    
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -294,6 +293,8 @@ function Country({
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
+	const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 	return (
 		<div>
@@ -303,8 +304,16 @@ function Country({
 						title={getCountryName(destinationCountry)}
 						title2={destinationCity}
 						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
-						subscriptionModal={displaySubscription}
+						subscriptionModal={handleShow}
+						show={show}
+						handleShow={handleShow}
+						handleClose={handleClose}
 					/>
+					{/* <SubscriptionModal
+						show={show}
+						handleShow={handleShow}
+						handleClose={handleClose}
+					/> */}
 					<Row className="justify-content-center">
 						<Col
 							style={{

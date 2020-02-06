@@ -2,14 +2,17 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap/';
 import './Header.css';
-import Button from 'react-bootstrap/Button'
+import Button from 'react-bootstrap/Button';
+import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
 const Header = (props) => {
 	const {
 		title = '',
 		title2 = '',
 		title3 = '',
-		subscriptionModal = '',
+		show='',
+		handleShow='',
+		handleClose='',
 		...rest
 	} = props;
 	return (
@@ -26,7 +29,12 @@ const Header = (props) => {
 						<div className="title3">
 							{title3}
 						</div>
-						<Button variant="outline-primary" className="subscribe" onClick={subscriptionModal}>Subscribe</Button>
+						<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Subscribe</Button>
+						<SubscriptionModal
+							show={show}
+							handleShow={handleShow}
+							handleClose={handleClose}
+						/>
 					</div>
 				</Col>
 			</Row>
@@ -38,7 +46,10 @@ Header.propTypes = {
 	title: PropTypes.string,
 	title2: PropTypes.string,
 	title3: PropTypes.string,
-	subscriptionModal: PropTypes.func
+	show: PropTypes.bool,
+	handleShow: PropTypes.func,
+	handleClose: PropTypes.func
+
 };
 
 
