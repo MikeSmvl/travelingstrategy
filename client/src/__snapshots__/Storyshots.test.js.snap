@@ -281,6 +281,7 @@ Array [
                 "height": "420px",
               }
             }
+            subtitle="France"
           >
             <div
               className="title"
@@ -297,11 +298,14 @@ Array [
             >
               TimeDifference
             </div>
-            <div
-              className="subtitle"
+            <button
+              className="subscribe btn btn-outline-primary"
+              disabled={false}
+              onClick=""
+              type="button"
             >
-              France
-            </div>
+              Subscribe
+            </button>
           </div>
         </div>
       </div>
@@ -365,6 +369,7 @@ Array [
                 "height": "420px",
               }
             }
+            subtitle="France"
           >
             <div
               className="title"
@@ -381,11 +386,14 @@ Array [
             >
               TimeDifference
             </div>
-            <div
-              className="subtitle"
+            <button
+              className="subscribe btn btn-outline-primary"
+              disabled={false}
+              onClick=""
+              type="button"
             >
-              France
-            </div>
+              Subscribe
+            </button>
           </div>
         </div>
       </div>
