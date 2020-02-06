@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import { Button, Form, Row, Col } from 'react-bootstrap/';
 import { Link } from 'react-router-dom';
 import './CountrySelector.css';
+import Media from 'react-media';
+import tryMe from './try-me.png';
 
 const CountrySelector = (props) => {
 	const [originCountry, setOriginCountry] = useState('');
@@ -103,6 +105,27 @@ const CountrySelector = (props) => {
                 Travel
 							</Button>
 						)}
+					</Col>
+					<Col md="auto">
+						<Media queries={{
+							large: '(min-width: 1000px)'
+						}}
+						>
+							{(matches) => (
+								<>
+									{matches.large
+										&& (
+											<img
+												alt=""
+												src={tryMe}
+												width="80"
+												height="80"
+												className="d-inline-block align-top"
+											/>
+										)}
+								</>
+							)}
+						</Media>
 					</Col>
 				</Row>
 			</Form>
