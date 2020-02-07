@@ -9,6 +9,7 @@ const Header = (props) => {
 		title = '',
 		title2 = '',
 		title3 = '',
+		subtitle = '',
 		subscriptionModal = '',
 		...rest
 	} = props;
@@ -25,6 +26,9 @@ const Header = (props) => {
 						</div>
 						<div className="title3">
 							{title3}
+						</div>
+						<div className="subtitle">
+							{subtitle}
 						</div>
 						<Button variant="outline-primary" className="subscribe" onClick={subscriptionModal}>Subscribe</Button>
 					</div>
