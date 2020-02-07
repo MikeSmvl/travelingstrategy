@@ -309,11 +309,6 @@ function Country({
 						handleShow={handleShow}
 						handleClose={handleClose}
 					/>
-					{/* <SubscriptionModal
-						show={show}
-						handleShow={handleShow}
-						handleClose={handleClose}
-					/> */}
 					<Row className="justify-content-center">
 						<Col
 							style={{

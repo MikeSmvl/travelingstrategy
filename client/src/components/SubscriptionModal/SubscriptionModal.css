@@ -1,0 +1,10 @@
+.modal-content{
+    opacity:0.9;
+}
+.form-modal {
+    margin-top:0px !important;
+}
+
+.modal-footer{
+    justify-content: center!important;
+}

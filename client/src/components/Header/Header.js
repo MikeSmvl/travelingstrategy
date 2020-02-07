@@ -29,12 +29,14 @@ const Header = (props) => {
 						<div className="title3">
 							{title3}
 						</div>
-						<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Subscribe</Button>
-						<SubscriptionModal
-							show={show}
-							handleShow={handleShow}
-							handleClose={handleClose}
-						/>
+						<div className="text-center">
+							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+							<SubscriptionModal
+								show={show}
+								handleShow={handleShow}
+								handleClose={handleClose}
+							/>
+						</div>
 					</div>
 				</Col>
 			</Row>
