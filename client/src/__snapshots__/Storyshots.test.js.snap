@@ -302,6 +302,14 @@ Array [
             >
               France
             </div>
+            <button
+    +          className="subscribe btn btn-outline-primary"
+    +          disabled={false}
+    +          onClick=""
+    +          type="button"
+    +        >
+    +          Subscribe
+    +        </button>
           </div>
         </div>
       </div>
