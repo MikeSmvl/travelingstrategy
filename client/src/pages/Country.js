@@ -304,7 +304,6 @@ function Country({
 						title={getCountryName(destinationCountry)}
 						title2={destinationCity}
 						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
-						subscriptionModal={handleShow}
 						show={show}
 						handleShow={handleShow}
 						handleClose={handleClose}

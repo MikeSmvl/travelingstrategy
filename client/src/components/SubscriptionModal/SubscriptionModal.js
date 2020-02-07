@@ -7,41 +7,55 @@ import './SubscriptionModal.css';
 import DatePicker from 'react-date-picker';
 
 
+
 const SubscriptionModal = (props) => {
-    const [startDate, setStartDate] = useState(new Date());
-    const today = startDate;
+    const [date, setDate] = useState(new Date());
+    const [email, setEmail] = useState("");
+    const [validEmail, setValidEmail] = useState(false);
+    const today = date;
 	const {
 		show = '',
 		handleShow = '',
 		handleClose = '',
 		...rest
-	} = props;
+    } = props;
+
+    const emailChange = (event) =>{
+        setEmail(event.target.value);
+    }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        console.log(email);
+    };
+
 	return (
 		<>
         <Modal show={show} onHide={handleClose} centered>
             <Modal.Header closeButton>
             <Modal.Title>Subscribe for a reminder Email</Modal.Title>
             </Modal.Header>
+
+            <Form className="form-modal" onSubmit={handleSubmit}>
             <Modal.Body>
-                <Form className="form-modal">
-                    <Form.Group controlId="formGroupEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                    </Form.Group>
-                    <Form.Group controlId="formGroupPassword">
-                        <Form.Label>Departure date</Form.Label>
-                        <DatePicker minDate={today} value={startDate} onChange={startDate => setStartDate(startDate)} />
-                    </Form.Group>
-                </Form>
-            </Modal.Body>
-            <Modal.Footer>
-            <Button variant="light" onClick={handleClose}>
-                Maybe Later
-            </Button>
-            <Button variant="outline-primary" onClick={handleClose}>
-                Join Us
-            </Button>
-            </Modal.Footer>
+                <Form.Group controlId="formGroupEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" value={email} onChange={emailChange}/>
+                </Form.Group>
+                <Form.Group controlId="formGroupPassword">
+                    <Form.Label>Departure date</Form.Label>
+                    <DatePicker minDate={today} value={date} onChange={date => setDate(date)} />
+                </Form.Group>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="light" onClick={handleClose}>
+                    Maybe Later
+                </Button>
+                <Button variant="outline-primary" type="submit">
+                    Join Us
+                </Button>
+                </Modal.Footer>
+            </Form>
         </Modal>
         </>
 	);
