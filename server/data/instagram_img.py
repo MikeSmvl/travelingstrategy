@@ -27,6 +27,7 @@ LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
 
+#getting inforamtion for one image
 def get_image_info(driver, u):
 
     driver.get(u)
@@ -39,30 +40,34 @@ def get_image_info(driver, u):
     image_info = {}
 
     if not geoloc == None:
-        print(geoloc.text)
         image_info['geolocation'] = geoloc.text
     else:
         image_info['geolocation'] = ""
     if not caption == None:
-        print(caption.text)
         image_info['caption'] = caption.text
     else:
         image_info['caption'] = ""
     if not img == None:
-        print(img.get('alt'))
         image_info['image_link'] = img.get('src')
 
     return image_info
 
-
+#finding a post or multiple for one hashtag
 def find_a_post(location):
+
+    LOGGER.info(f'Starting the parser for the following location: {location}')
     create_table("images")
     driver = create_driver()
 
     url = instagram_url + location + "/"
-    driver.get(url)
-    soup = BeautifulSoup(driver.page_source, 'lxml')
-    garb_all = soup.find_all('a', {'href':regex.compile(r'/p/')})
+    try:
+        LOGGER.info(f'Retreiving the link to the image page for: {location}')
+        driver.get(url)
+        soup = BeautifulSoup(driver.page_source, 'lxml')
+        garb_all = soup.find_all('a', {'href':regex.compile(r'/p/')})
+    except:
+        LOGGER.error(f'Could not get the link to the image page for: {location}')
+        exit
 
     count = 0
 
@@ -70,24 +75,33 @@ def find_a_post(location):
         count += 1
         # if count > 10:
         #     break
-        print(count)
-        print(g.get('href'))
+
         u = "https://www.instagram.com"+g.get('href')
-        image_info = get_image_info(driver,u)
-        save_image("images", image_info)
+        try:
+            image_info = get_image_info(driver,u)
+            LOGGER.success(f'Image info for: {location}')
+        except:
+            LOGGER.error(f'Could not get the info of the image for: {location}')
+
+        try:
+            save_image("images", image_info,location)
+            LOGGER.success(f'Saved Image info for: {location}')
+        except:
+            LOGGER.error(f'Could not save the info of the image for: {location}')
 
     quit_driver(driver)
 
 # saving function
-def save_image(tableName,image_info):
+def save_image(tableName,image_info,tag):
     image_link = image_info['caption']
     geolocation = image_info['geolocation']
     caption = image_info['caption']
-    DB.insert(tableName,"null",image_link, geolocation, caption)
+    DB.insert(tableName,"null",image_link, geolocation, caption,tag)
 
+#creating the table
 def create_table(tableName):
     DB.drop(tableName)
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT", image_link="text",
-            geolocation="text", cation="text")
+            geolocation="text", cation="text" , tag="text")
 
 find_a_post("newyork")
