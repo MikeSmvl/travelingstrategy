@@ -12,8 +12,10 @@ const {trafficSide,trafficTable} = require('./trafficSide')
 const emergency = require('./emergency')
 const embassy = require('./embassy')
 const unitedNations = require('./unitedNations')
-const logger = require('../logger/logger.js')
 const drugs = require('./drugs')
+const subscriberTable = require('./subscribers')
+
+const logger = require('../logger/logger.js')
 
 logger.info(__filename +"Querying with GraphQL")
 
@@ -40,7 +42,8 @@ var queryType = new graphql.GraphQLObjectType({
         unitedNations,
         drugs,
         country_vaccines,
-        vaccines_table
+        vaccines_table,
+        subscriberTable
     }
 });
 

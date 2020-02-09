@@ -6,9 +6,11 @@ const graphql = require("graphql");
 const app = express();
 
 const queries = require('./resolvers/queries');
+const mutations = require('./resolvers/mutations')
 
 const schema = new graphql.GraphQLSchema({
-    query: queries
+    query: queries,
+    mutation:mutations
 });
 
 const cors = require("cors");
