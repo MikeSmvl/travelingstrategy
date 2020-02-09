@@ -39,12 +39,6 @@ html = """\
   opacity: 1;
 }
 
-.text {
-  background-color: #4CAF50;
-  color: white;
-  font-size: 16px;
-  padding: 16px 32px;
-}
 </style>
 
 <div style="font-size: 12px; font-family: Helvetica, serif, EmojiFont; font-weight: normal; font-style: normal; text-transform: none; text-indent: 0px; background-color: rgb(237, 240, 242); text-decoration: none; white-space: normal; word-spacing: 0px; letter-spacing: normal; font-variant-caps: normal;">
@@ -234,9 +228,7 @@ html = """\
                                           <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                             <tbody><tr>
                                               <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                                                <div class="middle">
-                                                  <div class="text">John Doe</div>
-                                                </div>
+                                                <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png"> Sri Lanka
                                               </a></td>
                                             </tr>
                                           </tbody></table>
@@ -250,9 +242,7 @@ html = """\
                                           <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                             <tbody><tr>
                                               <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/1920x1080-Intrepid-Travel-Egypt-Cairo-Pyramids-group-hug-028.jpeg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                                                  <div class="middle">
-                                                    <div class="text">John Doe</div>
-                                                  </div>
+                                                  <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png"> Egypt
                                               </a></td>
                                             </tr>
                                           </tbody></table>
@@ -266,9 +256,7 @@ html = """\
                                             <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                               <tbody><tr>
                                                 <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e374f9daf874e54c289153c/original.jpg?1580683165" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                                                  <div class="middle">
-                                                    <div class="text">John Doe</div>
-                                                  </div>
+                                                      <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png" atl="logo from icons8.com"> Netherlands
                                                 </a></td>
                                               </tr>
                                             </tbody></table>
@@ -284,9 +272,7 @@ html = """\
                                               <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                 <tbody><tr>
                                                   <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peru_Inca_trail_machu_picchu_trek_015.jpg" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                                                    <div class="middle">
-                                                      <div class="text">John Doe</div>
-                                                    </div>
+                                                      <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png"> Peru
                                                   </a></td>
                                                 </tr>
                                               </tbody></table>
@@ -300,9 +286,7 @@ html = """\
                                               <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                 <tbody><tr>
                                                   <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peregrine-Adventures-THAILAND_KO-SURIN-TAI_BEACH50.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                                                    <div class="middle">
-                                                      <div class="text">John Doe</div>
-                                                    </div>
+                                                      <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png"> Thailand
                                                   </a></td>
                                                 </tr>
                                               </tbody></table>
@@ -316,9 +300,7 @@ html = """\
                                                 <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                   <tbody><tr>
                                                     <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Portugal-Lisbon-043-4.jpg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:12px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                                                      <div class="middle">
-                                                        <div class="text">John Doe</div>
-                                                      </div>
+                                                        <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png"> Lisbon
                                                     </a></td>
                                                   </tr>
                                                 </tbody></table>
