@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { throttle } from 'lodash';
 import './LoginForm.css';
 import logo from '../Navbar/logo.png';
@@ -8,6 +8,7 @@ const LoginForm = (props) => {
 	const usernameEl = useRef(null);
 	const faceEl = useRef(null);
 	const showPasswordEl = useRef(null);
+	const [buttonEye, setButtonEye] = useState("fa fa-eye-slash")
 
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
@@ -21,8 +22,10 @@ const LoginForm = (props) => {
 	const showPassword = () => {
 		if (passwordEl.current.type === 'text') {
 			passwordEl.current.type = 'password';
+			setButtonEye("fa fa-eye-slash")
 		} else {
 			passwordEl.current.type = 'text';
+			setButtonEye("fa fa-eye")
 		}
 	};
 
@@ -107,7 +110,7 @@ const LoginForm = (props) => {
 					<label>
 						<div className="fa fa-lock" />
 						<input ref={passwordEl} className="password" type="password" autoComplete="off" placeholder="Password" />
-						<button type="button" ref={showPasswordEl} onClick={throttle((e) => { showPassword(); }, 100)} className="password-button"><span className="fa fa-eye" /></button>
+						<button type="button" ref={showPasswordEl} onClick={throttle((e) => { showPassword(); }, 100)} className="password-button"><span className={buttonEye} /></button>
 					</label>
 					<button type="button" className="login-button">Login</button>
 				</div>

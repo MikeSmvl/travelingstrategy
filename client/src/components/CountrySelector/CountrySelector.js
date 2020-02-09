@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import Autocomplete from 'react-google-autocomplete';
 import { Button, Form, Row, Col } from 'react-bootstrap/';
 import { Link } from 'react-router-dom';
@@ -118,8 +118,8 @@ const CountrySelector = (props) => {
 											<img
 												alt=""
 												src={tryMe}
-												width="80"
-												height="80"
+												width="100"
+												height="100"
 												className="d-inline-block align-top"
 											/>
 										)}
