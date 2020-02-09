@@ -9,6 +9,7 @@ password = "390minicapstone"
 html = """\
 <html>
 
+<div style="font-size: 12px; font-family: Helvetica, serif, EmojiFont; font-weight: normal; font-style: normal; text-transform: none; text-indent: 0px; background-color: rgb(237, 240, 242); text-decoration: none; white-space: normal; word-spacing: 0px; letter-spacing: normal; font-variant-caps: normal;">
 <div style="max-width:600px;margin:0 auto;">
   <table align="center" border="0" cellspacing="0" cellpadding="0" role="presentation" style="width:600px;border-collapse:collapse;">
     <tbody><tr>
@@ -153,8 +154,8 @@ html = """\
                     <td align="left" style="font-size:0;border-collapse:collapse;padding:12px 48px;word-break:break-word;">
                       <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-collapse:separate;line-height:0px;">
                         <tbody><tr>
-                          <td align="center" valign="middle" bgcolor="#00C4CC" role="presentation" style="border-collapse:collapse;border-style:none;border-bottom-right-radius:4px;border-bottom-left-radius:4px;border-top-left-radius:4px;border-top-right-radius:4px;">
-                            <a href="https://www.travelingstrategy.com" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="color:white;font-size:14px;font-family:Open Sans,Helvetica,Arial,sans serif;font-weight:600;text-transform:none;background-color:#00C4CC;display:inline-block;text-decoration:none;margin:0;padding:9px 16px;border-bottom-left-radius:4px;line-height:22.399999618530273px;border-bottom-right-radius:4px;border-top-left-radius:4px;border-top-right-radius:4px;">Visit
+                          <td align="center" valign="middle" bgcolor="#FF8080" role="presentation" style="border-collapse:collapse;border-style:none;border-bottom-right-radius:4px;border-bottom-left-radius:4px;border-top-left-radius:4px;border-top-right-radius:4px;">
+                            <a href="https://www.travelingstrategy.com" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="color:white;font-size:14px;font-family:Open Sans,Helvetica,Arial,sans serif;font-weight:600;text-transform:none;background-color:#FF8080;display:inline-block;text-decoration:none;margin:0;padding:9px 16px;border-bottom-left-radius:4px;line-height:22.399999618530273px;border-bottom-right-radius:4px;border-top-left-radius:4px;border-top-right-radius:4px;">Visit
                             website</a></td>
                         </tr>
                         </tbody></table>
@@ -169,6 +170,7 @@ html = """\
     </tr>
   </tbody></table>
 </div>
+
 
 <div style="background-color:white;max-width:600px;margin:0 auto;">
   <table align="center" bgcolor="white" border="0" cellspacing="0" cellpadding="0" role="presentation" style="width:600px;border-collapse:collapse;">
@@ -278,6 +280,102 @@ html = """\
       </td>
     </tr>
   </tbody></table>
+</div>
+
+
+
+<div style="max-width:600px;margin:0 auto;">
+  <table align="center" border="0" cellspacing="0" cellpadding="0" role="presentation" style="width:600px;border-collapse:collapse;">
+    <tbody><tr>
+      <td align="center" valign="top" style="font-size:0;direction:ltr;border-collapse:collapse;padding:0;">
+        <div align="left" style="font-size:13px;vertical-align:top;display:inline-block;direction:ltr;width:600px;max-width:100%;">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-collapse:collapse;">
+           <tbody><tr>
+            <td valign="top" style="border-collapse:collapse;padding:0;">
+              <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-collapse:collapse;">
+                <tbody><tr>
+                  <td align="left" style="font-size:0;border-collapse:collapse;padding:0;word-break:break-word;">
+                    <table border="0" cellspacing="0" cellpadding="0" style="font-size:13px;font-family:Helvetica,Arial,sans-serif;width:600px;border-collapse:collapse;table-layout:auto;line-height:22px;">
+                      <tbody><tr>
+                        <td colspan="3" style="border-collapse:collapse;">
+                          <table bgcolor="white" cellspacing="0" cellpadding="0" style="width:600px;border-collapse:collapse;border-bottom-right-radius:8px;border-bottom-left-radius:8px;border-top-left-radius:0px;border-top-right-radius:0px;">
+                            <tbody><tr>
+                              <td height="36" style="border-collapse:collapse;">&nbsp;</td>
+                            </tr>
+                          </tbody></table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="24" style="border-collapse:collapse;">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td width="24" style="border-collapse:collapse;">&nbsp;</td>
+                          <td style="border-collapse:collapse;">
+                            <div align="center" style="color: rgb(86, 90, 93); font-size: 14px; font-family: &quot;Open Sans&quot;, Helvetica, Arial, &quot;sans serif&quot;, serif, EmojiFont; line-height: 22.4px;">
+                              You are receiving this email because you signed up to Traveling Strategy.</div>
+                          </td>
+                        <td width="24" style="border-collapse:collapse;">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td height="24" colspan="3" style="border-collapse:collapse;border-bottom:1px solid #DDE1E3;">
+                        &nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td height="24" style="border-collapse:collapse;">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td width="24" style="border-collapse:collapse;">&nbsp;</td>
+                          <td style="border-collapse:collapse;">
+                            <div align="center" style="color: rgb(86, 90, 93); font-size: 14px; font-family: &quot;Open Sans&quot;, Helvetica, Arial, &quot;sans serif&quot;, serif, EmojiFont; line-height: 22.4px;">
+                              <span>Travel smarter and safer from Traveling Strategy</span><span>&nbsp;</span><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e0190dc6a8d637c8dd20cff/original.png?1577160924" alt="love" style="text-decoration:none;border-width:0;outline:none;line-height:14px;"><span>&nbsp;</span><br>
+
+                            <span>TravelingStrategy®</span>,<span>&nbsp;</span><span>Concordia university, Montreal, Canada</span></div>
+                          </td>
+                        <td width="24" style="border-collapse:collapse;">&nbsp;</td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" style="border-collapse:collapse;">
+                          <table align="center" cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                            <tbody><tr>
+                              <th><a href="https://www.travelingstrategy.com">Visit
+                              travelingstrategy.com</a></th>
+                                <th width="16"></th>
+                              <th><a href="">Unsubscribe</a></th>
+                            </tr>
+                          </tbody></table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td height="16" style="border-collapse:collapse;"></td>
+                      </tr>
+                      <tr>
+                        <td align="center" colspan="3" style="border-collapse:collapse;">
+                          <table border="0" cellspacing="0" cellpadding="0" style="font-size:13px;font-family:Helvetica,Arial,sans-serif;width:144px;border-collapse:collapse;table-layout:auto;line-height:22px;">
+                            <tbody><tr>
+                              <th width="24"><a href="" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="color:#0E1318;display:block;text-decoration:underline;line-height:0;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e01866c167e920348c59e1f/original.png?1577158252" alt="facebook" style="text-decoration:none;border-width:0;outline:none;line-height:13px;"></a></th>
+                              <th width="16"></th>
+                              <th width="24"><a href="" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="color:#0E1318;display:block;text-decoration:underline;line-height:0;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e01866ccda48838c1473107/original.png?1577158252" alt="twitter" style="text-decoration:none;border-width:0;outline:none;line-height:13px;"></a></th>
+                              <th width="16"></th>
+                              <th width="24"><a href="" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="color:#0E1318;display:block;text-decoration:underline;line-height:0;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e01866daf874e03968b2978/original.png?1577158253" alt="pinterest" style="text-decoration:none;border-width:0;outline:none;line-height:13px;"></a></th>
+                              <th width="16"></th>
+                              <th width="24"><a href="" target="_blank" rel="noopener noreferrer" data-auth="NotApplicable" style="color:#0E1318;display:block;text-decoration:underline;line-height:0;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e01866d5b99ac6f6aaa44d0/original.png?1577158253" alt="instagram" style="text-decoration:none;border-width:0;outline:none;line-height:13px;"></a></th>
+                              <th width="16"></th>
+                            </tr>
+                          </tbody></table>
+                        </td>
+                      </tr>
+                    </tbody></table>
+                  </td>
+                </tr>
+              </tbody></table>
+            </td>
+          </tr>
+        </tbody></table>
+      </div>
+    </td>
+  </tr>
+  </tbody></table>
+</div>
 </div>
 
 </html>
