@@ -502,3 +502,32 @@ it("Querying emergency table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+
+
+it("Querying subscribers table", () =>{
+  const query =`
+  {
+    subscriberTable{
+      email,
+      departure_date
+    }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+
+
+
+
