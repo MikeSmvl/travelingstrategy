@@ -1,16 +1,10 @@
 .center {
   position: -webkit-sticky;
-  /* top: 50%; */
-  /* left: 50%; */
-  /* display: inline-block; */
   margin: auto;
   width: 325px;
   border-radius: 20px;
   padding: 20px;
-  /* -webkit-transform: translate(-50%, -50%);
-          transform: translate(-50%, -50%); */
   overflow: hidden;
-  /* background-color: #6dd3e7 */
   background-image: -webkit-gradient(linear, left bottom, right top, from(#ff6e61), to(#e6938c));
   background-image: linear-gradient(to top right, #ff6e61, #e6938c);
 }
@@ -21,8 +15,6 @@
     transition: -webkit-transform 0.5s;
     transition: transform 0.5s;
     transition: transform 0.5s, -webkit-transform 0.5s;
-    /* -webkit-transform: translate(-50%, -50%) scale(0.8);
-            transform: translate(-50%, -50%) scale(0.8); */
   }
 }
 
@@ -437,7 +429,11 @@
 }
 
 .fixedrino {
-  position: fixed;
+  position: absolute;
+  overflow: hidden;
+  width: inherit;
+  border-radius: 20px;
+  margin: -20px;
 }
 
 /**
@@ -602,4 +598,8 @@
 
 .fade {
   transition: none !important;
+}
+
+.modal-dialog {
+    max-width: fit-content !important;
 }
