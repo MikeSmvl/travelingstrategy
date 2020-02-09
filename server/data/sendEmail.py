@@ -4,6 +4,48 @@ from lib.config import sender, subject,password
 
 html = """\
 <html>
+<style>
+.container {
+  position: relative;
+  width: 50%;
+}
+
+.image {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.container:hover .image {
+  filter: brightness(50%);
+  transition: .2s;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #4CAF50;
+  color: white;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+</style>
 
 <div style="font-size: 12px; font-family: Helvetica, serif, EmojiFont; font-weight: normal; font-style: normal; text-transform: none; text-indent: 0px; background-color: rgb(237, 240, 242); text-decoration: none; white-space: normal; word-spacing: 0px; letter-spacing: normal; font-variant-caps: normal;">
 <div style="max-width:600px;margin:0 auto;">
@@ -191,7 +233,11 @@ html = """\
                                         <th>
                                           <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                             <tbody><tr>
-                                              <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                              <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                                                <div class="middle">
+                                                  <div class="text">John Doe</div>
+                                                </div>
+                                              </a></td>
                                             </tr>
                                           </tbody></table>
                                         </th>
@@ -203,7 +249,11 @@ html = """\
                                         <th>
                                           <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                             <tbody><tr>
-                                              <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/1920x1080-Intrepid-Travel-Egypt-Cairo-Pyramids-group-hug-028.jpeg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                              <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/1920x1080-Intrepid-Travel-Egypt-Cairo-Pyramids-group-hug-028.jpeg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                                                  <div class="middle">
+                                                    <div class="text">John Doe</div>
+                                                  </div>
+                                              </a></td>
                                             </tr>
                                           </tbody></table>
                                         </th>
@@ -215,7 +265,11 @@ html = """\
                                           <th>
                                             <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                               <tbody><tr>
-                                                <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e374f9daf874e54c289153c/original.jpg?1580683165" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e374f9daf874e54c289153c/original.jpg?1580683165" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                                                  <div class="middle">
+                                                    <div class="text">John Doe</div>
+                                                  </div>
+                                                </a></td>
                                               </tr>
                                             </tbody></table>
                                           </th>
@@ -229,7 +283,11 @@ html = """\
                                             <th>
                                               <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                 <tbody><tr>
-                                                  <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peru_Inca_trail_machu_picchu_trek_015.jpg" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                  <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peru_Inca_trail_machu_picchu_trek_015.jpg" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                                                    <div class="middle">
+                                                      <div class="text">John Doe</div>
+                                                    </div>
+                                                  </a></td>
                                                 </tr>
                                               </tbody></table>
                                             </th>
@@ -241,7 +299,11 @@ html = """\
                                             <th>
                                               <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                 <tbody><tr>
-                                                  <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peregrine-Adventures-THAILAND_KO-SURIN-TAI_BEACH50.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                  <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peregrine-Adventures-THAILAND_KO-SURIN-TAI_BEACH50.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                                                    <div class="middle">
+                                                      <div class="text">John Doe</div>
+                                                    </div>
+                                                  </a></td>
                                                 </tr>
                                               </tbody></table>
                                             </th>
@@ -253,7 +315,11 @@ html = """\
                                               <th>
                                                 <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                   <tbody><tr>
-                                                    <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Portugal-Lisbon-043-4.jpg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:12px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                    <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Portugal-Lisbon-043-4.jpg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:12px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                                                      <div class="middle">
+                                                        <div class="text">John Doe</div>
+                                                      </div>
+                                                    </a></td>
                                                   </tr>
                                                 </tbody></table>
                                               </th>
