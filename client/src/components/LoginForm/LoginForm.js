@@ -9,11 +9,22 @@ const LoginForm = (props) => {
 	const faceEl = useRef(null);
 	const showPasswordEl = useRef(null);
 	const [buttonEye, setButtonEye] = useState("fa fa-eye-slash")
-
+	const [showRegister, setShowRegister] = useState(false)
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
 	};
+
+	let showRegisterClass;
+	let buttonText;
+	if (showRegister) {
+		showRegisterClass = 'showIt';
+		buttonText = 'Register';
+	}
+	else {
+		showRegisterClass = 'hideIt';
+		buttonText = 'Login';
+	}
 
 	const unrotateFace = () => {
 		faceEl.current.style.setProperty('--rotate-head', '0deg');
@@ -112,7 +123,12 @@ const LoginForm = (props) => {
 						<input ref={passwordEl} className="password" type="password" autoComplete="off" placeholder="Password" />
 						<button type="button" ref={showPasswordEl} onClick={throttle((e) => { showPassword(); }, 100)} className="password-button"><span className={buttonEye} /></button>
 					</label>
-					<button type="button" className="login-button">Login</button>
+					<label className={showRegisterClass}>
+						<div className="fa fa-lock" />
+						<input ref={passwordEl} className="password" type="password" autoComplete="off" placeholder="Confirm password" />
+						<button type="button" ref={showPasswordEl} onClick={throttle((e) => { showPassword(); }, 100)} className="password-button"><span className={buttonEye} /></button>
+					</label>
+					<button type="button" className="login-button">{buttonText}</button>
 				</div>
 				<div className="social-buttons">
 					<div className="social">
@@ -125,7 +141,11 @@ const LoginForm = (props) => {
 						<div className="fa fa-instagram" />
 					</div>
 				</div>
-				<div className="footer"><strong>Register</strong></div>
+				<div className="footer"><button onClick={() => {
+							setShowRegister(!showRegister);
+							if (showRegister) {showRegisterClass = 'showIt'} else {showRegisterClass = 'hideIt'}
+							console.log(showRegister)
+            }} className='registerButton'><strong>Register</strong></button></div>
 			</div>
 		</>
 	);

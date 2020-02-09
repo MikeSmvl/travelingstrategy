@@ -39,7 +39,7 @@ const Navbar = (props) => {
 				<RBNavbar.Collapse className="justify-content-end">
 					<RBNavbar.Text>
 						<Button className="rightTitle" onClick={handleShow}>{textRight}</Button>
-						<Modal show={show} onHide={handleClose}>
+						<Modal show={show} onHide={handleClose} centered>
 							<LoginForm />
 						</Modal>
 					</RBNavbar.Text>

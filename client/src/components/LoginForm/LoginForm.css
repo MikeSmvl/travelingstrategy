@@ -1,3 +1,23 @@
+
+*:focus {
+  outline: none !important;
+}
+.showIt {
+  display: block;
+}
+.hideIt {
+  display: none;
+}
+.registerButton {
+  background-color: transparent;
+  border: none;
+  color: #243946;
+  text-decoration: underline;
+}
+.rightTitle {
+  background-color: transparent !important;
+  outline: none !important;
+}
 .center {
   position: -webkit-sticky;
   margin: auto;
@@ -197,6 +217,9 @@
 .center .footer {
   text-align: center;
   margin-top: 15px;
+  color: #243946;
+  text-decoration: underline;
+  pointer-events: all;
 }
 
 .cloud {
@@ -593,7 +616,6 @@
 .modal-content {
   border: 0px !important;
   background-color: unset !important;
-  margin-top: 35%;
 }
 
 .fade {
