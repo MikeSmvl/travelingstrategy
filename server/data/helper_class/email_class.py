@@ -9,7 +9,7 @@ FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
-class Email:
+class Email():
 
     def __init__(self, subject, origin, destination, html):
         LOGGER.info(f'Creating an email instance:{subject}, {origin}, {destination}')
