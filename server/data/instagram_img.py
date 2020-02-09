@@ -27,7 +27,36 @@ LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
 
+def get_image_info(driver, u):
+
+    driver.get(u)
+    soup = BeautifulSoup(driver.page_source, 'lxml')
+
+    geoloc = soup.find('a',{'class':'O4GlU'})
+    caption = soup.find('div', {'class':'C4VMK'})
+    img = soup.find('img', {'class':'FFVAD'})
+
+    image_info = {}
+
+    if not geoloc == None:
+        print(geoloc.text)
+        image_info['geolocation'] = geoloc.text
+    else:
+        image_info['geolocation'] = ""
+    if not caption == None:
+        print(caption.text)
+        image_info['caption'] = caption.text
+    else:
+        image_info['caption'] = ""
+    if not img == None:
+        print(img.get('alt'))
+        image_info['image_link'] = img.get('src')
+
+    return image_info
+
+
 def find_a_post(location):
+    create_table("images")
     driver = create_driver()
 
     url = instagram_url + location + "/"
@@ -39,44 +68,26 @@ def find_a_post(location):
 
     for g in garb_all:
         count += 1
-        if count > 10:
-            break
+        # if count > 10:
+        #     break
         print(count)
         print(g.get('href'))
-        count += 1
         u = "https://www.instagram.com"+g.get('href')
-        print(u)
-        driver.get(u)
-
-        soup = BeautifulSoup(driver.page_source, 'lxml')
-        geoloc = soup.find('a',{'class':'O4GlU'})
-        caption = soup.find('div', {'class':'C4VMK'})
-        img = soup.find('img', {'class':'FFVAD'})
-
-        image_info = {}
-
-        if not geoloc == None:
-            print(geoloc.text)
-            image_info['geolocation'] = geoloc.text
-        if not caption == None:
-            print(caption.text)
-            image_info['caption'] = caption.text
-        if not img == None:
-            print(img.get('alt'))
-            image_info['image_link'] = img.get('src')
-
-        save_to_db("images", image_info)
+        image_info = get_image_info(driver,u)
+        save_image("images", image_info)
 
     quit_driver(driver)
 
 # saving function
-def save_to_db(tableName,image_info):
+def save_image(tableName,image_info):
     image_link = image_info['caption']
     geolocation = image_info['geolocation']
     caption = image_info['caption']
+    DB.insert(tableName,"null",image_link, geolocation, caption)
+
+def create_table(tableName):
     DB.drop(tableName)
-    DB.add_table(tableName,image_id="image_id INTEGER PRIMARY KEY", image_link="image_link",
-            geolocation="geolocation", cation="caption")
-    DB.insert(tableName, "null",image_link, geolocation, caption)
+    DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT", image_link="text",
+            geolocation="text", cation="text")
 
 find_a_post("newyork")
