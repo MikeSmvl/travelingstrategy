@@ -193,7 +193,7 @@ html = """\
                                         <th>
                                           <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                             <tbody><tr>
-                                              <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e326c36c2b47753401d5ecd/original.jpg?1580362806" title="Couple on a chair" style="font-size:13px;display:block;width:244px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                              <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
                                             </tr>
                                           </tbody></table>
                                         </th>
@@ -205,7 +205,7 @@ html = """\
                                         <th>
                                           <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                             <tbody><tr>
-                                              <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e326c367b648d3c87f4411c/original.jpg?1580362806" alt="Love" style="font-size:13px;display:block;width:244px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                              <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/1920x1080-Intrepid-Travel-Egypt-Cairo-Pyramids-group-hug-028.jpeg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
                                             </tr>
                                           </tbody></table>
                                         </th>
@@ -217,7 +217,7 @@ html = """\
                                           <th>
                                             <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                               <tbody><tr>
-                                                <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e374f9daf874e54c289153c/original.jpg?1580683165" alt="Young couple" style="font-size:13px;display:block;width:244px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e374f9daf874e54c289153c/original.jpg?1580683165" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
                                               </tr>
                                             </tbody></table>
                                           </th>
@@ -231,7 +231,7 @@ html = """\
                                             <th>
                                               <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                 <tbody><tr>
-                                                  <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e326c36af874e7b2a890a8c/original.jpg?1580362806" alt="Smiling Couple" style="font-size:13px;display:block;width:244px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                  <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peru_Inca_trail_machu_picchu_trek_015.jpg" style="font-size:13px;display:block;width:246px;height:139px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
                                                 </tr>
                                               </tbody></table>
                                             </th>
@@ -243,7 +243,7 @@ html = """\
                                             <th>
                                               <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                 <tbody><tr>
-                                                  <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e326c36cb832c05ef698686/original.jpg?1580362806" alt="Woman and dog" style="font-size:13px;display:block;width:244px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                  <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Peregrine-Adventures-THAILAND_KO-SURIN-TAI_BEACH50.jpg" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
                                                 </tr>
                                               </tbody></table>
                                             </th>
@@ -255,7 +255,7 @@ html = """\
                                               <th>
                                                 <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                                   <tbody><tr>
-                                                    <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://appboy-images.com/appboy/communication/assets/image_assets/images/5e326c36cda48821d4b7d9e9/original.jpg?1580362806" alt="Man and woman smiling" style="font-size:13px;display:block;width:244px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
+                                                    <td style="width:600px;border-collapse:collapse;"><img data-imagetype="External" src="https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-Portugal-Lisbon-043-4.jpg" style="font-size:13px;display:block;width:246px;height:185px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:12px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;"></a></td>
                                                   </tr>
                                                 </tbody></table>
                                               </th>
