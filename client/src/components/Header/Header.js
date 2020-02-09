@@ -32,8 +32,8 @@ const Header = (props) => {
 						<div className="text-center">
 							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
 							<SubscriptionModal
-								show
-								handleShow={handleClose}
+								show={show}
+								handleShow={handleShow}
 								handleClose={handleClose}
 							/>
 						</div>
