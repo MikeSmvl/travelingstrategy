@@ -1,10 +1,6 @@
 from helper_class.email_class import Email
 from lib.database import Database
-
-
-sender = "390soen@gmail.com"
-subject = "Test Email"
-password = "390minicapstone"
+from lib.config import sender, subject,password
 
 html = """\
 <html>

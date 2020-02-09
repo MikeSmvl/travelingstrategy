@@ -89,3 +89,8 @@ vaccine_url = 'https://wwwnc.cdc.gov/travel/destinations/list'
 
 # emergency
 emergency_url = 'http://chartsbin.com/view/1983'
+
+#email information
+sender = "travelingstrategy@gmail.com"
+subject = "Test Email"
+password = "buttSmell2020!"
