@@ -71,7 +71,7 @@ html = """\
                                   <th width="56" height="56">
                                     <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                                       <tbody><tr>
-                                        <td style="width:56px;border-collapse:collapse;"><img src="/data/logo.png" alt="canva" style="font-size:13px;display:block;width:56px;text-decoration:none;border-width:0;border-style:none;outline:none;line-height:13px;"></td>
+                                        <td style="width:56px;border-collapse:collapse;"><img data-imagetype="External" src="https://i.imgur.com/Z5A90af.png" alt="traveling strategy logo" style="font-size:13px;display:block;width:56px;text-decoration:none;border-width:0;border-style:none;outline:none;line-height:13px;"></td>
                                       </tr>
                                       </tbody></table>
                                   </th>
