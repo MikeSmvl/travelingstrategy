@@ -11,7 +11,6 @@ import DatePicker from 'react-date-picker';
 const SubscriptionModal = (props) => {
     const [date, setDate] = useState(new Date());
     const [email, setEmail] = useState("");
-    const [validEmail, setValidEmail] = useState(false);
     const today = date;
 	const {
 		show = '',
@@ -26,8 +25,21 @@ const SubscriptionModal = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log(email);
+        addUser()
     };
+
+    async function addUser() {
+        await fetch('http://localhost:4000/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/graphql' },
+            body: `mutation{
+                    addSubscriber(email:"${email}", date:"${date}") {
+                          email,
+                          departure_date
+                      }
+                }`
+        });
+    }
 
 	return (
 		<>

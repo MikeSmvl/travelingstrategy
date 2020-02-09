@@ -298,14 +298,18 @@ Array [
             >
               TimeDifference
             </div>
-            <button
-              className="subscribe btn btn-outline-primary"
-              disabled={false}
-              onClick=""
-              type="button"
+            <div
+              className="text-center"
             >
-              Subscribe
-            </button>
+              <button
+                className="subscribe btn btn-outline-primary"
+                disabled={false}
+                onClick=""
+                type="button"
+              >
+                Stay Informed
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -386,14 +390,18 @@ Array [
             >
               TimeDifference
             </div>
-            <button
-              className="subscribe btn btn-outline-primary"
-              disabled={false}
-              onClick=""
-              type="button"
+            <div
+              className="text-center"
             >
-              Subscribe
-            </button>
+              <button
+                className="subscribe btn btn-outline-primary"
+                disabled={false}
+                onClick=""
+                type="button"
+              >
+                Stay Informed
+              </button>
+            </div>
           </div>
         </div>
       </div>
