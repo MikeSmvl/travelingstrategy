@@ -1,7 +1,3 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-
-#https://www.promptcloud.com/blog/how-to-scrape-instagram-data-using-python/
 import requests
 import time
 import json
