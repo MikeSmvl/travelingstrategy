@@ -33,7 +33,7 @@ const Header = (props) => {
 							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
 							<SubscriptionModal
 								show
-								handleShow
+								handleShow={handleClose}
 								handleClose={handleClose}
 							/>
 						</div>
