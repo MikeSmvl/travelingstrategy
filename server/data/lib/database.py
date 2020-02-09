@@ -42,7 +42,10 @@ class Database:
         """
         self.data = ""
         for value in data:
-            self.data += '"'+value.replace('"', '')+'"'+','
+            if value == "null":
+                 self.data += ''+value.strip('"')+''+','
+            else:
+                self.data += '"'+value.replace('"', '')+'"'+','
         self.data = self.data[0:len(self.data)-1]
 
         self.db.execute("INSERT INTO {} values({})".format(

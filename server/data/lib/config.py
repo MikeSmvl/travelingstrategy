@@ -89,3 +89,6 @@ vaccine_url = 'https://wwwnc.cdc.gov/travel/destinations/list'
 
 # emergency
 emergency_url = 'http://chartsbin.com/view/1983'
+
+# instagram
+instagram_url = "https://www.instagram.com/explore/tags/"
