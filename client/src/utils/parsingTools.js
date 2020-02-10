@@ -54,15 +54,9 @@ const getOtherTrafficSide = (trafficSide) => {
 const formatingVisa = (visaInfo) => {
 	var removed_double_br = visaInfo.replace("<br><br>", '<li>');
 	var formatted_visa_info = removed_double_br.replace(/<br>/g, '<li>');
-	// var formatted_visa_info = replaceAll(visaInfo,"<br>", "<li>")
-	console.log(formatted_visa_info)
 	return formatted_visa_info
 }
 
-// function replaceAll(find, replace,str) {
-// 	var re = new RegExp(find, 'g');
-// 	str = str.replace(re, replace);
-// 	return str;
-// }
+
 
 export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa };

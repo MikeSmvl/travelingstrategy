@@ -3,10 +3,16 @@ const graphql = require("graphql");
 const queries = require('../resolvers/queries')
 const logger = require('../logger/logger.js')
 
+const { expect } = require("chai");
+const mutations = require('../resolvers/mutations')
+
+
+
+
 
 
 const schemaCode = new graphql.GraphQLSchema({
-  query: queries
+  query: queries,  mutation: mutations
 });
 
 const tester = new EasyGraphQLTester(schemaCode);
@@ -502,3 +508,50 @@ it("Querying emergency table", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+
+
+
+it("Querying subscribers table", () =>{
+  const query =`
+  {
+    subscriberTable{
+      email,
+      departure_date
+    }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+
+
+describe("Test for add-subscriber mutation", () => {
+  test("Should be a valid mutation", () => {
+      const mutation = `
+        mutation addSubscriber($email: String!, $date: String!) {
+          addSubscriber(email: $email, date: $date) {
+              email
+              departure_date
+          }
+        }
+      `;
+      tester.test(true, mutation, {
+        email: "demo@demo.com",
+        date: "01-01-01"
+      });
+    }
+  );
+});
+
+
+
