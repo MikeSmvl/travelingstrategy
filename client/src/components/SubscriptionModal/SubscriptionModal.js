@@ -5,17 +5,20 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import './SubscriptionModal.css';
 import DatePicker from 'react-date-picker';
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 
 const SubscriptionModal = (props) => {
     const [date, setDate] = useState(new Date());
     const [email, setEmail] = useState("");
+    const [isEmailValid, setEmailValid] = useState(false);
     const today = date;
 	const {
 		show = '',
 		handleShow = '',
-		handleClose = '',
+        handleClose = '',
+        city= '',
 		...rest
     } = props;
 
@@ -25,7 +28,8 @@ const SubscriptionModal = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        addUser()
+        addUser();
+        setEmailValid(true);
     };
 
     async function addUser() {
@@ -53,6 +57,7 @@ const SubscriptionModal = (props) => {
                 <Form.Group controlId="formGroupEmail">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control type="email" placeholder="Enter email" value={email} onChange={emailChange}/>
+                    <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group controlId="formGroupPassword">
                     <Form.Label>Departure date</Form.Label>
@@ -68,6 +73,20 @@ const SubscriptionModal = (props) => {
                 </Button>
                 </Modal.Footer>
             </Form>
+            {isEmailValid && (
+                <SweetAlert
+                    success
+                    title="Enjoy your trip!"
+                    onConfirm={handleClose}
+                    customButtons={
+                        <Button variant="primary">
+                            Sweet!
+                        </Button>
+                      }
+                    >
+                    You'll receive an email!
+                </SweetAlert>)
+            }
         </Modal>
         </>
 	);
@@ -76,7 +95,8 @@ const SubscriptionModal = (props) => {
 SubscriptionModal.propTypes = {
     show: PropTypes.bool,
 	handleShow: PropTypes.func,
-	handleClose: PropTypes.func
+    handleClose: PropTypes.func,
+    city: PropTypes.string,
 };
 
 

@@ -307,6 +307,7 @@ function Country({
 						show={show}
 						handleShow={handleShow}
 						handleClose={handleClose}
+						city={destinationCity}
 					/>
 					<Row className="justify-content-center">
 						<Col

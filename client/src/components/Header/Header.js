@@ -13,6 +13,7 @@ const Header = (props) => {
 		show='',
 		handleShow='',
 		handleClose='',
+		city='',
 		...rest
 	} = props;
 	return (
@@ -35,6 +36,7 @@ const Header = (props) => {
 								show={show}
 								handleShow={handleShow}
 								handleClose={handleClose}
+								city={city}
 							/>
 						</div>
 					</div>
@@ -50,7 +52,8 @@ Header.propTypes = {
 	title3: PropTypes.string,
 	show: PropTypes.bool,
 	handleShow: PropTypes.func,
-	handleClose: PropTypes.func
+	handleClose: PropTypes.func,
+	city: PropTypes.string
 
 };
 
