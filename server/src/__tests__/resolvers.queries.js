@@ -3,10 +3,16 @@ const graphql = require("graphql");
 const queries = require('../resolvers/queries')
 const logger = require('../logger/logger.js')
 
+const { expect } = require("chai");
+const mutations = require('../resolvers/mutations')
+
+
+
+
 
 
 const schemaCode = new graphql.GraphQLSchema({
-  query: queries
+  query: queries,  mutation: mutations
 });
 
 const tester = new EasyGraphQLTester(schemaCode);
@@ -528,6 +534,24 @@ it("Querying subscribers table", () =>{
 });
 
 
+
+describe("Test for add-subscriber mutation", () => {
+  test("Should be a valid mutation", () => {
+      const mutation = `
+        mutation addSubscriber($email: String!, $date: String!) {
+          addSubscriber(email: $email, date: $date) {
+              email
+              departure_date
+          }
+        }
+      `;
+      tester.test(true, mutation, {
+        email: "demo@demo.com",
+        date: "01-01-01"
+      });
+    }
+  );
+});
 
 
 

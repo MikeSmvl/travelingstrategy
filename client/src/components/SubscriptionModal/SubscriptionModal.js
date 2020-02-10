@@ -79,7 +79,7 @@ const SubscriptionModal = (props) => {
                     title="Enjoy your trip!"
                     onConfirm={handleClose}
                     customButtons={
-                        <Button variant="primary">
+                        <Button variant="outline-primary" onClick={handleClose}>
                             Sweet!
                         </Button>
                       }
