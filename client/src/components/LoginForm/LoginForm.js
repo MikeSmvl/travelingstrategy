@@ -4,39 +4,66 @@ import './LoginForm.css';
 import logo from '../Navbar/logo.png';
 
 const LoginForm = (props) => {
-	const passwordEl = useRef(null);
 	const usernameEl = useRef(null);
 	const faceEl = useRef(null);
-	const showPasswordEl = useRef(null);
-	const [buttonEye, setButtonEye] = useState("fa fa-eye-slash")
-	const [showRegister, setShowRegister] = useState(false)
+	const password1 = useRef(null);
+	const password2 = useRef(null);
+	const [buttonEye1, setButtonEye1] = useState('fa fa-eye-slash');
+	const [buttonEye2, setButtonEye2] = useState('fa fa-eye-slash');
+	const [showRegister, setShowRegister] = useState(false);
+	// ////// BEBI THESE ARE FOR YOU! email, password and confirmedPass entered by the user
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [confirmedPass, setConfirmedPass] = useState('');
+	// //////
+	const [buttonName, setButton] = useState('Register');
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
 	};
-
+	const [validEmail, setValidEmail] = useState(true);
+	const [passMatch, setPassMatch] = useState(true);
 	let showRegisterClass;
 	let buttonText;
 	if (showRegister) {
 		showRegisterClass = 'showIt';
 		buttonText = 'Register';
-	}
-	else {
+	} else {
 		showRegisterClass = 'hideIt';
 		buttonText = 'Login';
 	}
+
+	const validateEmail = (anEmail) => {
+		if (!(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(anEmail))) setValidEmail(false);
+		else setValidEmail(true);
+	};
+
+	const comparePasswords = () => {
+		if (confirmedPass === password) setPassMatch(true);
+		else setPassMatch(false);
+	};
 
 	const unrotateFace = () => {
 		faceEl.current.style.setProperty('--rotate-head', '0deg');
 	};
 
-	const showPassword = () => {
-		if (passwordEl.current.type === 'text') {
-			passwordEl.current.type = 'password';
-			setButtonEye("fa fa-eye-slash")
+	const showPassword1 = () => {
+		if (password1.current.type === 'text') {
+			password1.current.type = 'password';
+			setButtonEye1('fa fa-eye-slash');
 		} else {
-			passwordEl.current.type = 'text';
-			setButtonEye("fa fa-eye")
+			password1.current.type = 'text';
+			setButtonEye1('fa fa-eye');
+		}
+	};
+
+	const showPassword2 = () => {
+		if (password2.current.type === 'text') {
+			password2.current.type = 'password';
+			setButtonEye2('fa fa-eye-slash');
+		} else {
+			password2.current.type = 'text';
+			setButtonEye2('fa fa-eye');
 		}
 	};
 
@@ -44,6 +71,16 @@ const LoginForm = (props) => {
 		const length = Math.min(event.target.value.length - 16, 19);
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
 	};
+
+	const handleSubmit = () => {
+		if (validEmail && email !== '' && password !== '') {
+			alert('YAY');
+		}
+	};
+
+	React.useEffect(() => {
+		if (confirmedPass) comparePasswords();
+	}, [password, confirmedPass]);
 
 	return (
 		<>
@@ -113,23 +150,28 @@ const LoginForm = (props) => {
 						</svg>
 					</div>
 				</div>
-				<div className="login">
+				<form className="login" onSubmit={handleSubmit}>
 					<label>
 						<div className="fa fa-envelope" />
-						<input ref={usernameEl} onInput={(e) => { moveFace(e); }} onFocus={(e) => { rotateFace(); }} onBlur={(e) => { unrotateFace(); }} className="username" type="text" autoComplete="on" placeholder="Email" />
+						<input required ref={usernameEl} onInput={(e) => { moveFace(e); }} onFocus={(e) => { rotateFace(); }} onBlur={(e) => { unrotateFace(); validateEmail(e.target.value); setEmail(e.target.value); }} className="username" type="text" autoComplete="on" placeholder="Email" />
 					</label>
+					{!validEmail ? <span className="validation">Email is not valid</span> : <span className="validation" />}
 					<label>
 						<div className="fa fa-lock" />
-						<input ref={passwordEl} className="password" type="password" autoComplete="off" placeholder="Password" />
-						<button type="button" ref={showPasswordEl} onClick={throttle((e) => { showPassword(); }, 100)} className="password-button"><span className={buttonEye} /></button>
+						<input required ref={password1} className="password" type="password" autoComplete="off" placeholder="Password" onBlur={(e) => setPassword(e.target.value)} />
+						<button type="button" onClick={throttle((e) => { showPassword1(); }, 100)} className="password-button"><span className={buttonEye1} /></button>
 					</label>
-					<label className={showRegisterClass}>
-						<div className="fa fa-lock" />
-						<input ref={passwordEl} className="password" type="password" autoComplete="off" placeholder="Confirm password" />
-						<button type="button" ref={showPasswordEl} onClick={throttle((e) => { showPassword(); }, 100)} className="password-button"><span className={buttonEye} /></button>
-					</label>
-					<button type="button" className="login-button">{buttonText}</button>
-				</div>
+					<span className="validation" />
+					{showRegister && (
+						<label className={showRegisterClass}>
+							<div className="fa fa-lock" />
+							<input required ref={password2} className="password" type="password" autoComplete="off" placeholder="Confirm password" onBlur={(e) => setConfirmedPass(e.target.value)} />
+							<button type="button" onClick={throttle((e) => { showPassword2(); }, 100)} className="password-button"><span className={buttonEye2} /></button>
+						</label>
+					)}
+					{showRegister && !passMatch && <span className="validation">Passwords don&apos;t match</span>}
+					<button type="submit" className="login-button">{buttonText}</button>
+				</form>
 				<div className="social-buttons">
 					<div className="social">
 						<div className="fa fa-google" />
@@ -141,11 +183,18 @@ const LoginForm = (props) => {
 						<div className="fa fa-instagram" />
 					</div>
 				</div>
-				<div className="footer"><button onClick={() => {
+				<div className="footer">
+					<button
+						onClick={() => {
 							setShowRegister(!showRegister);
-							if (showRegister) {showRegisterClass = 'showIt'} else {showRegisterClass = 'hideIt'}
-							console.log(showRegister)
-            }} className='registerButton'><strong>Register</strong></button></div>
+							if (showRegister) { showRegisterClass = 'showIt'; setButton('Register'); } else { showRegisterClass = 'hideIt'; setButton('Login'); }
+						}}
+						className="registerButton"
+						type="button"
+					>
+						<strong>{buttonName}</strong>
+					</button>
+				</div>
 			</div>
 		</>
 	);

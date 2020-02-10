@@ -8,6 +8,9 @@
 .hideIt {
   display: none;
 }
+label {
+  margin-bottom: 0;
+}
 .registerButton {
   background-color: transparent;
   border: none;
@@ -17,6 +20,11 @@
 .rightTitle {
   background-color: transparent !important;
   outline: none !important;
+}
+.validation {
+  color: white;
+  margin-bottom: 0.5rem;
+  margin-left: 30px;
 }
 .center {
   position: -webkit-sticky;
@@ -76,6 +84,10 @@
 
 .center .eye.eye--right {
   margin-left: 100px;
+}
+
+.login {
+  margin: 0;
 }
 
 .center .login {
