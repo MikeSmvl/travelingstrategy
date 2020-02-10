@@ -72,10 +72,10 @@ const LoginForm = (props) => {
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = (event) => {
 		if (validEmail && email !== '' && password !== '') {
 			alert('YAY');
-		}
+		} else event.preventDefault();
 	};
 
 	React.useEffect(() => {
@@ -150,7 +150,7 @@ const LoginForm = (props) => {
 						</svg>
 					</div>
 				</div>
-				<form className="login" onSubmit={handleSubmit}>
+				<form className="login" onSubmit={(e) => handleSubmit(e)}>
 					<label>
 						<div className="fa fa-envelope" />
 						<input required ref={usernameEl} onInput={(e) => { moveFace(e); }} onFocus={(e) => { rotateFace(); }} onBlur={(e) => { unrotateFace(); validateEmail(e.target.value); setEmail(e.target.value); }} className="username" type="text" autoComplete="on" placeholder="Email" />
