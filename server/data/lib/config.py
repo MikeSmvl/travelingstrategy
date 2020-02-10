@@ -94,3 +94,6 @@ emergency_url = 'http://chartsbin.com/view/1983'
 sender = "travelingstrategy@gmail.com"
 subject = "Test Email"
 password = "buttSmell2020!"
+
+# instagram
+instagram_url = "https://www.instagram.com/explore/tags/"
