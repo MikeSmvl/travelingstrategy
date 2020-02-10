@@ -77,12 +77,12 @@ var getUser = {
                 });
                 context.res.cookie('token', token, { httpOnly: true });
                 resolve({
-                  user: true,
+                  email: true,
                   password: bool
                 })
               } else {
                 resolve({
-                  user: true,
+                  email: true,
                   password: bool
                 })
               }
