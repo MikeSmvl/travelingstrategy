@@ -3,7 +3,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-class Email:
+class Email():
 
     def __init__(self, subject, origin, destination, html):
         msg = MIMEMultipart('alternative')
@@ -18,11 +18,11 @@ class Email:
         self.mail_content = msg
 
     def sendEmail(self, password):
-        self.authenticaiton(password)
+        self.authentication(password)
         self.mail.sendmail(self.sender, self.recipient, self.mail_content.as_string())
         self.mail.quit()
 
-    def authenticaiton(self, password):
+    def authentication(self, password):
         self.mail = smtplib.SMTP('smtp.gmail.com', 587)
         self.mail.ehlo()
         self.mail.starttls()
