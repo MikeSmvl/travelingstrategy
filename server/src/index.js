@@ -17,7 +17,7 @@ const schema = new graphql.GraphQLSchema({
 const cors = require("cors");
 app.use(cors()) // Use this after the variable declaration
 app.use(cookieParser());
-app.use("/", (req, res) => {
+app.use("/graphql", (req, res) => {
     return ExpressGraphQL({
         schema: schema,
         graphiql: true,

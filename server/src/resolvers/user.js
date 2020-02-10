@@ -60,20 +60,33 @@ var getUser = {
                   logger.error(err)
                   reject(err);
               }
-            logger.info(__filename +"'SELECT * FROM "+args.email+";' successfully queried")
-            const bool = bcrypt.compareSync(args.password, rows["password"])
-            if(bool) {
-              // Issue token
-              var email = args.email
-              const payload = { email };
-              const token = jwt.sign(payload, secret, {
-                expiresIn: '1h'
-              });
-              context.res.cookie('token', token, { httpOnly: true });
+            if(rows == undefined){
+              resolve({
+                email: "Email is not registered.",
+                password: false
+              })
+            } else {
+              logger.info(__filename +"'SELECT * FROM "+args.email+";' successfully queried")
+              const bool = bcrypt.compareSync(args.password, rows["password"])
+              if(bool) {
+                // Issue token
+                var email = args.email
+                const payload = { email };
+                const token = jwt.sign(payload, secret, {
+                  expiresIn: '1h'
+                });
+                context.res.cookie('token', token, { httpOnly: true });
+                resolve({
+                  user: true,
+                  password: bool
+                })
+              } else {
+                resolve({
+                  user: true,
+                  password: bool
+                })
+              }
             }
-            resolve({
-              password: "Successful"
-            })
           });
       });
   }
