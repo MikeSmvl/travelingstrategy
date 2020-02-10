@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { throttle } from 'lodash';
 import './LoginForm.css';
 import logo from '../Navbar/logo.png';
+import { Redirect } from 'react-router-dom';
 
 const LoginForm = (props) => {
 	const usernameEl = useRef(null);
@@ -11,12 +12,13 @@ const LoginForm = (props) => {
 	const [buttonEye1, setButtonEye1] = useState('fa fa-eye-slash');
 	const [buttonEye2, setButtonEye2] = useState('fa fa-eye-slash');
 	const [showRegister, setShowRegister] = useState(false);
-	// ////// BEBI THESE ARE FOR YOU! email, password and confirmedPass entered by the user
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [emailBool, setEmailBool] = useState(false);
+	const [passwordBool, setPasswordBool] = useState(false);
 	const [confirmedPass, setConfirmedPass] = useState('');
-	// //////
 	const [buttonName, setButton] = useState('Register');
+	const [isLoading, setIsLoading] = useState(false);
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
@@ -74,13 +76,38 @@ const LoginForm = (props) => {
 
 	const handleSubmit = (event) => {
 		if (validEmail && email !== '' && password !== '') {
-			alert('YAY');
-		} else event.preventDefault();
+			event.preventDefault();
+			setIsLoading(true);
+			fetch('http://localhost:4000/graphql', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				credentials: 'include',
+				body: JSON.stringify({
+					query: `{
+						getUser(email:"${email}" password: "${password}") {
+							email
+							password
+						}
+					}`
+				})
+			})
+				.then((res) => res.json())
+				.then((res) => {
+					res.data.getUser && setEmailBool(res.data.getUser["email"]);
+					res.data.getUser && setPasswordBool(res.data.getUser["password"]);
+					setIsLoading(false);
+				})
+		}
 	};
 
-	React.useEffect(() => {
+	useEffect(() => {
 		if (confirmedPass) comparePasswords();
+
 	}, [password, confirmedPass]);
+
+	if (emailBool && passwordBool) {
+		return <Redirect to="/me" />;
+	}
 
 	return (
 		<>
@@ -158,7 +185,7 @@ const LoginForm = (props) => {
 					{!validEmail ? <span className="validation">Email is not valid</span> : <span className="validation" />}
 					<label>
 						<div className="fa fa-lock" />
-						<input required ref={password1} className="password" type="password" autoComplete="off" placeholder="Password" onBlur={(e) => setPassword(e.target.value)} />
+						<input required ref={password1} className="password" type="password" autoComplete="off" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
 						<button type="button" onClick={throttle((e) => { showPassword1(); }, 100)} className="password-button"><span className={buttonEye1} /></button>
 					</label>
 					<span className="validation" />

@@ -8,6 +8,7 @@ import {
 import Home from './pages/Home';
 import Country from './pages/Country';
 import Navbar from './components/Navbar/Navbar';
+import Me from './pages/Me';
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -40,6 +41,9 @@ function Application() {
 						destinationLat={query.get('destinationLat')}
 						destinationLng={query.get('destinationLng')}
 					/>
+				</Route>
+				<Route path="/me">
+					<Me />
 				</Route>
 			</Switch>
 		</div>
