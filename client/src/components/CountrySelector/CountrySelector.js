@@ -102,7 +102,7 @@ const CountrySelector = (props) => {
 							</Link>
 						) : (
 							<Button variant="outline-primary" type="submit">
-                Travel
+								<strong>Travel</strong>
 							</Button>
 						)}
 					</Col>
@@ -116,6 +116,7 @@ const CountrySelector = (props) => {
 									{matches.large
 										&& (
 											<img
+												id="try-form"
 												alt=""
 												src={tryMe}
 												width="100"

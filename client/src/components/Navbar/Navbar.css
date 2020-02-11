@@ -9,7 +9,8 @@
 .Navbar .rightTitle {
 	font-weight: 600;
 	background-color: transparent;
-	border: none;
+	border: solid 2px white;
+	border-radius: 8px;
 }
 a {
 	text-decoration: none !important;

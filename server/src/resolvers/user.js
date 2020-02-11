@@ -28,7 +28,6 @@ var addUser = {
             }
         });
         db.get("SELECT * FROM user ORDER BY user_id DESC LIMIT 1;", (err, row) => {
-          console.log(row)
           if(err){
             logger.error(err);
             reject(err);

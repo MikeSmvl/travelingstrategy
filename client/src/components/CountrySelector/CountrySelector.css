@@ -31,9 +31,10 @@
 
 .btn-outline-primary {
 	border-radius: 8px;
-	color: #ff6e61 !important;
-	border-color: #ff6e61;
-	background-color: rgba(0, 0, 0, 0.185);
+	border-width: 2px;
+	color: white !important;
+	border-color: white;
+	background-color: rgba(0, 0, 0, 0.219);
 }
 
 @media screen and (max-width: 576px) {
@@ -63,4 +64,8 @@ form {
 .validate {
 	color: #dc3545;
 	font-weight: 600;
+}
+
+#try-form {
+	transform: rotate(20deg);
 }

@@ -23,7 +23,6 @@ function Application() {
 		<div>
 			<Navbar
 				title="Traveling Strategy"
-				textRight="Login"
 				hrefBrand="/"
 			/>
 			<Switch>
