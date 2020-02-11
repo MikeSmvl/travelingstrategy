@@ -20,7 +20,7 @@ import {
 } from '../utils/parsingTools';
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
-
+import getSourceUrl from '../utils/visaSource';
 
 function Country({
 	originCountry,
@@ -429,7 +429,7 @@ function Country({
 											className="scrolling-card"
 											header="Visa Info"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
-											footer={<Row className="justify-content-center"><a href="https://query.wikidata.org/sparql" target="_blank"><i class="fa fa-globe"></i> Embassies & consulates </a></Row>}
+											footer={<Row className="justify-content-center"><a href={getSourceUrl(originCountry)}target="_blank"><i class="fa fa-globe"></i> Visa Info </a></Row>}
 										>
 											<CardBody className="scrolling-card">
 												<div
