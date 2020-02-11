@@ -8,5 +8,5 @@ LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
 
 # User ID
-# we neded a function to calculate date
+# we need a function to calculate date
 # Cron job
