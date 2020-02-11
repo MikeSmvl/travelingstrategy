@@ -15,10 +15,7 @@ const SubscriptionModal = (props) => {
 	const today = date;
 	const {
 		show = '',
-		handleShow = '',
-		handleClose = '',
-		city = '',
-		...rest
+		handleClose = ''
 	} = props;
 
 	const emailChange = (event) => {
@@ -94,9 +91,7 @@ const SubscriptionModal = (props) => {
 
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
-	handleShow: PropTypes.func,
-	handleClose: PropTypes.func,
-	city: PropTypes.string
+	handleClose: PropTypes.func
 };
 
 
