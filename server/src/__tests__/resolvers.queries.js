@@ -533,8 +533,6 @@ it("Querying subscribers table", () =>{
       .catch(err => logger.error(__filename +" "+err))
 });
 
-
-
 describe("Test for add-subscriber mutation", () => {
   test("Should be a valid mutation", () => {
       const mutation = `
@@ -548,6 +546,24 @@ describe("Test for add-subscriber mutation", () => {
       tester.test(true, mutation, {
         email: "demo@demo.com",
         date: "01-01-01"
+      });
+    }
+  );
+});
+
+describe("Test to validate a user with an existing email cannot be created", () => {
+  test("Should be an invalid mutation", () => {
+      const mutation = `
+        mutation addUser($email: String!, $password: String!) {
+          addUser(email: $email, password: $password) {
+              email
+              departure_date
+          }
+        }
+      `;
+      tester.test(false, mutation, {
+        email: "test@test.com",
+        password: "123"
       });
     }
   );
