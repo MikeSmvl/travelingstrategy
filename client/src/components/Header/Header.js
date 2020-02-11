@@ -10,10 +10,10 @@ const Header = (props) => {
 		title = '',
 		title2 = '',
 		title3 = '',
-		show='',
-		handleShow='',
-		handleClose='',
-		city='',
+		show = '',
+		handleShow = '',
+		handleClose = '',
+		city = '',
 		...rest
 	} = props;
 	return (

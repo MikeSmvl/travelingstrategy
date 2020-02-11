@@ -66,7 +66,6 @@ function Country({
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
 
-    
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -293,7 +292,7 @@ function Country({
 		return <Redirect to="/" />;
 	}
 	const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+	const handleShow = () => setShow(true);
 
 	return (
 		<div>

@@ -126,7 +126,6 @@ const LoginForm = (props) => {
 					} catch (e) {
 						setError('Email already exists!');
 					}
-
 					setIsLoading(false);
 					// window.location.reload();
 				});
