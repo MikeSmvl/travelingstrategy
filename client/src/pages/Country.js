@@ -348,6 +348,7 @@ function Country({
 									<CountryCard
 										flagSrc={flagSrc(destinationCountry)}
 										title="Country Flag"
+										footer={<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory" target="_blank"><i class="fa fa-globe"></i> wikipedia </a></Row>}
 									>
 										<CardBody>
 											{languagesInfo !== 'Not available yet.'
@@ -355,7 +356,7 @@ function Country({
 										</CardBody>
 									</CountryCard>
 									<br />
-									<Card header="Embassies and Consulates">
+									<Card header="Embassies and Consulates" footer={<Row className="justify-content-center"><a href="https://query.wikidata.org/sparql" target="_blank"><i class="fa fa-globe"></i> Embassies & consulates </a></Row>}>
 										<CardBody>
 											{!embassyInfo ? (
 												<div>
@@ -428,6 +429,7 @@ function Country({
 											className="scrolling-card"
 											header="Visa Info"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											footer={<Row className="justify-content-center"><a href="https://query.wikidata.org/sparql" target="_blank"><i class="fa fa-globe"></i> Embassies & consulates </a></Row>}
 										>
 											<CardBody className="scrolling-card">
 												<div
@@ -636,7 +638,7 @@ function Country({
 							<hr />
 							<Row id="Health" className="justify-content-center">
 								<Col xs="10" sm="8" style={{ padding: '25px 0 25px 0' }}>
-									<Card header="General Health">
+												<Card header="General Health" footer={<Row className="justify-content-center"><a href={"https://data.un.org/en/iso/" + destinationCountry + ".html"}><i class="fa fa-globe"></i> United Nations</a></Row>}>
 										<CardBody>
 											<Table striped bordered hover>
 												<tbody>
