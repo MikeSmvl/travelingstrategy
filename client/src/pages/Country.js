@@ -21,6 +21,7 @@ import {
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 
+
 function Country({
 	originCountry,
 	destinationCountry,
@@ -63,6 +64,9 @@ function Country({
 	const [emergencyInfo, setEmergency] = useState('');
 	const destCountryName = getCountryName2(destinationCountry);
 	const originCountryName = getCountryName2(originCountry);
+	const [show, setShow] = useState(false);
+
+    
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -288,6 +292,8 @@ function Country({
 	if (!originCountry || !destinationCountry) {
 		return <Redirect to="/" />;
 	}
+	const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
 	return (
 		<div>
@@ -297,6 +303,10 @@ function Country({
 						title={getCountryName(destinationCountry)}
 						title2={destinationCity}
 						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
+						show={show}
+						handleShow={handleShow}
+						handleClose={handleClose}
+						city={destinationCity}
 					/>
 					<Row className="justify-content-center">
 						<Col

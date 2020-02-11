@@ -32,6 +32,7 @@ app.get('/checkToken', withAuth, function(req, res) {
     res.sendStatus(200);
 });
 
+
 app.listen(4000, () => {
     console.log("🚀 GraphQL server running at http://localhost:4000.");
 });
