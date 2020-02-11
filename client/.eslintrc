@@ -27,6 +27,8 @@
             "allowTernary": true,
             "allowTaggedTemplates": true
         }],
-        "max-len": "off"
+        "max-len": "off",
+        "jsx-a11y/label-has-associated-control": "off",
+        "jsx-a11y/control-has-associated-label": "off"
     }
 }

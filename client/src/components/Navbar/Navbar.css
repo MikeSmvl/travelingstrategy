@@ -8,7 +8,13 @@
 }
 .Navbar .rightTitle {
 	font-weight: 600;
+	background-color: transparent;
+	border: solid 2px white;
+	border-radius: 8px;
 }
 a {
 	text-decoration: none !important;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+	background-color: #ff6e61;
 }

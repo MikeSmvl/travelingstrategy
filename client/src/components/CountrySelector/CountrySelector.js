@@ -3,6 +3,8 @@ import Autocomplete from 'react-google-autocomplete';
 import { Button, Form, Row, Col } from 'react-bootstrap/';
 import { Link } from 'react-router-dom';
 import './CountrySelector.css';
+import Media from 'react-media';
+import tryMe from './try-me.png';
 
 const CountrySelector = (props) => {
 	const [originCountry, setOriginCountry] = useState('');
@@ -100,9 +102,31 @@ const CountrySelector = (props) => {
 							</Link>
 						) : (
 							<Button variant="outline-primary" type="submit">
-                Travel
+								<strong>Travel</strong>
 							</Button>
 						)}
+					</Col>
+					<Col md="auto">
+						<Media queries={{
+							large: '(min-width: 1000px)'
+						}}
+						>
+							{(matches) => (
+								<>
+									{matches.large
+										&& (
+											<img
+												id="try-form"
+												alt=""
+												src={tryMe}
+												width="100"
+												height="100"
+												className="d-inline-block align-top"
+											/>
+										)}
+								</>
+							)}
+						</Media>
 					</Col>
 				</Row>
 			</Form>

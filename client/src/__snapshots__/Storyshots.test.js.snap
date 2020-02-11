@@ -445,6 +445,7 @@ Array [
   >
     <nav
       className="Navbar navbar navbar-expand navbar-dark fixed-top"
+      textRight="Login"
     >
       <span
         className="navbar-brand"
@@ -470,12 +471,16 @@ Array [
         <span
           className="navbar-text"
         >
-          <a
-            className="rightTitle"
-            href=""
+          <button
+            className="btn btn-outline-primary"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
           >
-            Login
-          </a>
+            <strong>
+              Login
+            </strong>
+          </button>
         </span>
       </div>
     </nav>
@@ -518,6 +523,7 @@ Array [
   >
     <nav
       className="Navbar navbar navbar-expand navbar-dark fixed-top"
+      textRight="Login"
     >
       <span
         className="navbar-brand"
@@ -543,12 +549,16 @@ Array [
         <span
           className="navbar-text"
         >
-          <a
-            className="rightTitle"
-            href=""
+          <button
+            className="btn btn-outline-primary"
+            disabled={false}
+            onClick={[Function]}
+            type="button"
           >
-            Login
-          </a>
+            <strong>
+              Login
+            </strong>
+          </button>
         </span>
       </div>
     </nav>

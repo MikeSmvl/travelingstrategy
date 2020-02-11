@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Row, Col, Table, Nav } from 'react-bootstrap/';
-import ErrorOutlineOutlinedIcon from '@material-ui/icons/ErrorOutlineOutlined';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
@@ -67,7 +66,6 @@ function Country({
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
 
-    
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -95,7 +93,7 @@ function Country({
 
 		async function fetchData() {
 			setIsLoading(true);
-			await fetch('http://localhost:4000/', {
+			await fetch('http://localhost:4000/graphql', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -294,7 +292,7 @@ function Country({
 		return <Redirect to="/" />;
 	}
 	const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+	const handleShow = () => setShow(true);
 
 	return (
 		<div>
