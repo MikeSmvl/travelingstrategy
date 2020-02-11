@@ -15,11 +15,12 @@ const SubscriptionModal = (props) => {
 	const today = date;
 	const {
 		show = '',
-		handleClose = ''
+        handleClose = '',
+        city = ''
 	} = props;
 
 	const emailChange = (event) => {
-		setEmail(event.target.value);
+        setEmail(event.target.value);
 	};
 
 	async function addUser() {
@@ -27,8 +28,9 @@ const SubscriptionModal = (props) => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-                    addSubscriber(email:"${email}", date:"${date}") {
+                    addSubscriber(email:"${email}",city:"${city}", date:"${date}") {
                           email,
+                          city,
                           departure_date
                       }
                 }`
@@ -81,7 +83,7 @@ const SubscriptionModal = (props) => {
 							</Button>
 						)}
 					>
-                    You&aposll receive an email!
+                    You will receive an email!
 					</SweetAlert>
 				)}
 			</Modal>
@@ -91,7 +93,8 @@ const SubscriptionModal = (props) => {
 
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
-	handleClose: PropTypes.func
+    handleClose: PropTypes.func,
+    city: PropTypes.string
 };
 
 
