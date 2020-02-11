@@ -117,9 +117,7 @@ const LoginForm = (props) => {
 					}`
 				})
 			})
-				.then((res) => {
-					res.json();
-				})
+				.then((res) => res.json())
 				.then((res) => {
 					try {
 						res.data.addUser && setConfirmation(res.data.addUser.email);
@@ -139,7 +137,7 @@ const LoginForm = (props) => {
 	return (
 		<>
 			<Button variant="outline-primary" onClick={handleShow}><strong>Login</strong></Button>
-			<Modal show={show} onHide={handleClose} centered>
+			<Modal id="modal-login" show={show} onHide={handleClose} centered>
 				<div className="center">
 					<div className="fixedrino">
 						<div className="cloud large cloud-1">
