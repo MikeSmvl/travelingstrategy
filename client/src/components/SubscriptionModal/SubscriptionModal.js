@@ -15,10 +15,7 @@ const SubscriptionModal = (props) => {
 	const today = date;
 	const {
 		show = '',
-		handleShow = '',
-		handleClose = '',
-		city = '',
-		...rest
+		handleClose = ''
 	} = props;
 
 	const emailChange = (event) => {
@@ -26,7 +23,7 @@ const SubscriptionModal = (props) => {
 	};
 
 	async function addUser() {
-		await fetch('http://localhost:4000/', {
+		await fetch('http://localhost:4000/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
@@ -47,7 +44,7 @@ const SubscriptionModal = (props) => {
 
 	return (
 		<>
-			<Modal show={show} onHide={handleClose} centered>
+			<Modal show={show} onHide={handleClose} centered className="modal-subscription">
 				<Modal.Header closeButton>
 					<Modal.Title>Subscribe for a reminder Email</Modal.Title>
 				</Modal.Header>
@@ -94,9 +91,7 @@ const SubscriptionModal = (props) => {
 
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
-	handleShow: PropTypes.func,
-	handleClose: PropTypes.func,
-	city: PropTypes.string
+	handleClose: PropTypes.func
 };
 
 
