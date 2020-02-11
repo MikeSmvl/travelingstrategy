@@ -24,12 +24,6 @@ const SubscriptionModal = (props) => {
 	const emailChange = (event) => {
 		setEmail(event.target.value);
 	};
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		event.stopPropagation();
-		addUser();
-		setEmailValid(true);
-	};
 
 	async function addUser() {
 		await fetch('http://localhost:4000/', {
@@ -43,6 +37,13 @@ const SubscriptionModal = (props) => {
                 }`
 		});
 	}
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		addUser();
+		setEmailValid(true);
+	};
 
 	return (
 		<>
@@ -60,7 +61,7 @@ const SubscriptionModal = (props) => {
 						</Form.Group>
 						<Form.Group controlId="formGroupPassword">
 							<Form.Label>Departure date</Form.Label>
-							<DatePicker minDate={today} value={date} onChange={(date) => setDate(date)} />
+							<DatePicker minDate={today} value={date} onChange={(newDate) => setDate(newDate)} />
 						</Form.Group>
 					</Modal.Body>
 					<Modal.Footer>
