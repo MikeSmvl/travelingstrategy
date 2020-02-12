@@ -7,6 +7,7 @@ import datetime
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
+# DB = Database("countries.sqlite")
 
 # Cron job , to handle logic
 # decrement # of days to trip
