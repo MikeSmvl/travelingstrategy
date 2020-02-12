@@ -10,6 +10,7 @@ from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.database import Database
 from lib.config import instagram_url
+import datetime
 
 # so were gonna want to get/do
 # 1. the caption C4VMK
@@ -22,6 +23,8 @@ FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
+NOW = datetime.datetime.now()
+DATE = NOW.strftime("%Y-%m-%d")
 
 #getting inforamtion for one image
 def get_image_info(driver, u):
@@ -69,8 +72,8 @@ def find_a_post(location):
 
     for g in garb_all:
         count += 1
-        # if count > 10:
-        #     break
+        if count > 5:
+            break
 
         u = "https://www.instagram.com"+g.get('href')
         try:
@@ -92,12 +95,12 @@ def save_image(tableName,image_info,tag):
     image_link = image_info['caption']
     geolocation = image_info['geolocation']
     caption = image_info['caption']
-    DB.insert(tableName,"null",image_link, geolocation, caption,tag)
+    DB.insert(tableName,"null",image_link, geolocation, caption,tag, DATE)
 
 #creating the table
 def create_table(tableName):
     DB.drop(tableName)
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT", image_link="text",
-            geolocation="text", cation="text" , tag="text")
+            geolocation="text", caption="text" , tag="text",date_retrieved="text")
 
 find_a_post("newyork")
