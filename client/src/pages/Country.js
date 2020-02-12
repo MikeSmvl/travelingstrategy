@@ -569,7 +569,7 @@ function Country({
 											className="scrolling-card"
 											header="Advisory"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
-											footer={<Row className="justify-content-center"><a href={getSourceAdvisory(originCountry)}target="_blank"><i class="fa fa-globe"></i> Advisory Info </a></Row>}
+											footer={<Row className="justify-content-center"><a href={getSourceAdvisory(originCountry, destinationCountry)}target="_blank"><i class="fa fa-globe"></i> Advisory Info </a></Row>}
 										>
 											<CardBody>
 												<img

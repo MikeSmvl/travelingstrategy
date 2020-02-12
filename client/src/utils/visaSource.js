@@ -5,7 +5,7 @@ var isoCountries = {
 'IE' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_Irish_citizens',
 'NZ' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_New_Zealand_citizens',
 'US' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_United_States_citizens',
-'BR' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_Belizean_citizens',
+'BZ' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_Belizean_citizens',
 'DM' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominica_citizens',
 'DO' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_Dominican_Republic_citizens',
 'MX' : 'https://en.wikipedia.org/wiki/Visa_requirements_for_Mexican_citizens',
