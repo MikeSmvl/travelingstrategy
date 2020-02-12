@@ -11,7 +11,12 @@ LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
 
 
-html = Email_html().get_email()
+email_html = Email_html()
+email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg", "Paris")
+email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg", "Sri Lanka")
+html = email_html.get_email()
+
+
 
 LOGGER.info(f'Getting information from table subscribers.')
 subscribers = DB.get_items("subscribers")
