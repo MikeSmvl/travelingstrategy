@@ -12,6 +12,22 @@ DB = Database("countries.sqlite")
 
 
 # Cron job scheduler
+# here to run the scripts daily
 
+	
+my_cron = CronTab(user='charleschan')
 
+print(1)
+job = my_cron.new(command='/usr/local/Cellar/python/3.7.5/Frameworks/Python.framework/Versions/3.7/Python /Users/charleschan/travelingstrategy/server/data/requests_handler.py')
 
+for jobs in my_cron:
+    print jobs
+
+print(2)
+
+job.minute.every(1)
+my_cron.write()
+
+print(3)
+
+print(4)
