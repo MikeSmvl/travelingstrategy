@@ -97,3 +97,8 @@ password = "buttSmell2020!"
 
 # instagram
 instagram_url = "https://www.instagram.com/explore/tags/"
+
+#Drug laws 
+canabais_url = "https://en.wikipedia.org/wiki/Legality_of_cannabis"
+cocaine_url =  "https://en.wikipedia.org/wiki/Legal_status_of_cocaine"
+methaphetamine_url = "https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine"
