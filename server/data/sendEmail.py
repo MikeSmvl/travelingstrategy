@@ -3,14 +3,15 @@ from lib.database import Database
 from lib.config import sender, subject,password
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from lib.email_html import email_html
+from helper_class.email_html import Email_html
 
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database("countries.sqlite")
 
-html = email_html
+
+html = Email_html().get_email()
 
 LOGGER.info(f'Getting information from table subscribers.')
 subscribers = DB.get_items("subscribers")
