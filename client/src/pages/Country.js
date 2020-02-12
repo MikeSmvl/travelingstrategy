@@ -21,6 +21,7 @@ import {
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import getSourceUrl from '../utils/visaSource';
+import getSourceAdvisory from '../utils/FindAdvisory';
 
 function Country({
 	originCountry,
@@ -568,6 +569,7 @@ function Country({
 											className="scrolling-card"
 											header="Advisory"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											footer={<Row className="justify-content-center"><a href={getSourceAdvisory(originCountry)}target="_blank"><i class="fa fa-globe"></i> Advisory Info </a></Row>}
 										>
 											<CardBody>
 												<img
@@ -757,7 +759,7 @@ function Country({
 								</Col>
 								<Col xs="10" sm="8" style={{ padding: '0 0 25px 0' }}>
 									{!(vaccines === null || vaccines === 'Not available yet') && (
-										<Card header="Vaccines" footer={<Row className="justify-content-center"><a href="https://wwwnc.cdc.gov/travel/destinations/list" target="_blank"><i class="fa fa-globe"></i> Vaccine Info </a></Row>}>
+										<Card header="Vaccines" footer={<Row className="justify-content-center"><a href={"https://wwwnc.cdc.gov/travel/destinations/traveler/none/" + (getCountryName(destinationCountry))} target="_blank"><i class="fa fa-globe"></i> Vaccine Info </a></Row>}>
 											<CardBody>
 												<Row
 													className="justify-content-center"
