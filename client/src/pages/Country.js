@@ -20,8 +20,7 @@ import {
 } from '../utils/parsingTools';
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
-import getSourceUrl from '../utils/visaSource';
-import getSourceAdvisory from '../utils/FindAdvisory';
+import {getSourceUrl, getSourceAdvisory} from '../utils/SourceHelper';
 
 function Country({
 	originCountry,
