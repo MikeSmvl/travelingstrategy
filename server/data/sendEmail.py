@@ -12,8 +12,10 @@ DB = Database("countries.sqlite")
 
 
 email_html = Email_html()
-email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg", "Paris")
-email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg", "Sri Lanka")
+email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg","246", "246", "Sri Lanka")
+email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/1920x1080-Intrepid-Travel-Egypt-Cairo-Pyramids-group-hug-028.jpeg", "246", "185", "Egypt")
+email_html.add_image("https://appboy-images.com/appboy/communication/assets/image_assets/images/5e374f9daf874e54c289153c/original.jpg?1580683165", "246", "139", "Netherlands")
+
 html = email_html.get_email()
 
 
