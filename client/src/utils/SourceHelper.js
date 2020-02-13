@@ -9,7 +9,7 @@ var isoCountries = {
     'MX' : 'https://guiadelviajero.sre.gob.mx/',
     'SG' : 'https://www.mfa.gov.sg/Where-Are-You-Travelling-To'
     }
-    function getSourceAdvisory (countryCode, destinationCountry) {
+    function getSourceAdvisory (countryCode) {
             if (isoCountries.hasOwnProperty(countryCode)) {
                 return isoCountries[countryCode];
         } 
