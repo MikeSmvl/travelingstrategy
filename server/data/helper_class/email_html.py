@@ -20,8 +20,10 @@ class Email_html():
                   <table border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-spacing:0;border-collapse:collapse;">
                     <tbody>
                       <tr>
-                        <td class="container" style="width:600px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="{}" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
-                          <img class="middle" data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png"> {}
+                        <td class="container" style="width:244px;border-collapse:collapse;"><img class="image" data-imagetype="External" src="{}" style="font-size:13px;display:block;width:246px;height:246px;text-decoration:none;border:1px solid #EEEEEF;border-top-right-radius:4px;border-bottom-right-radius:4px;border-bottom-left-radius:4px;line-height:13px;outline:none;border-top-left-radius:4px;">
+                          <div class="middle">
+                          <img data-imagetype="External" src="https://img.icons8.com/offices/30/000000/place-marker.png">{}
+                          </div>
                           </a>
                         </td>
                       </tr>

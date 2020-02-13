@@ -22,6 +22,7 @@ style = """<style>
           transform: translate(-50%, -50%);
           -ms-transform: translate(-50%, -50%);
           text-align: center;
+          color:white;
         }
 
         .container:hover .image {
@@ -142,7 +143,7 @@ message_body = """
                           <table width="100%" border="0" cellspacing="0" cellpadding="0" role="presentation" style="border-collapse:collapse;">
                       <tbody><tr>
                         <td align="left" style="font-size:0;border-collapse:collapse;padding:0 48px 8px 48px;word-break:break-word;">
-                          <div align="left" style="color: rgb(14, 19, 24); font-size: 32px; font-family: "Open Sans", Helvetica, Arial, "sans serif", serif, EmojiFont; font-weight: 700; line-height: 41.6px; letter-spacing: -0.5px;">
+                          <div align="left" style="color: rgb(14, 19, 24); font-size: 32px; font-family: &quot;Open Sans&quot;, Helvetica, Arial, &quot;sans serif&quot;, serif, EmojiFont; font-weight: 700; line-height: 41.6px; letter-spacing: -0.5px;">
                           TRAVEL OUTSIDE THE BOX</div>
                         </td>
                       </tr>
