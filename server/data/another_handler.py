@@ -20,7 +20,7 @@ def daily_decrement():
     # UPDATE requests SET days_to_trip = days_to_trip -1;
     DB.update("requests", 'user_id>"0"', days_to_trip='days_to_trip-1')
 
-with open('/Users/lineghanem/Documents/Capstone/travelingstrategy/server/data/dateInfo.txt','a') as outFile:
+with open('/Users/lineghanem/Documents/Capstone/travelingstrategy/server/data/dateInfo2.txt','a') as outFile:
     outFile.write('\n' + str(datetime.datetime.now()))
 
 # daily_decrement()

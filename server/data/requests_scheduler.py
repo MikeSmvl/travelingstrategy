@@ -13,22 +13,22 @@ LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
 # Cron job scheduler
 # here to run the scripts daily
+#LINE
+user = "lineghanem"
+command = "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 ~/Documents/Capstone"
 
-my_cron = CronTab(user='charleschan')
+#CHARLES
+# user = "charleschan"
+# command = "/usr/local/bin/python3 /Users/charleschan"
 
-print(1)
-job = my_cron.new(command='/usr/local/bin/python3 /Users/charleschan/travelingstrategy/server/data/requests_handler.py')
+my_cron = CronTab(user=user)
 
-for jobs in my_cron:
-    print (jobs)
-
-print(2)
-
-job.minute.every(1)
+job1 = my_cron.new(command=command+"/travelingstrategy/server/data/requests_handler.py")
+job1.minute.every(1)
+job2 = my_cron.new(command=command+"/travelingstrategy/server/data/another_handler.py")
+job2.minute.every(1)
 my_cron.write()
 
-print(3)
+for jobs in my_cron:
+    print(jobs.is_valid())
 
-print(job.is_valid())
-
-print(4)

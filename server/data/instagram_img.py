@@ -92,7 +92,7 @@ def find_a_post(location):
 
 # saving function
 def save_image(tableName,image_info,tag):
-    image_link = image_info['caption']
+    image_link = image_info['image_link']
     print (image_link)
     geolocation = image_info['geolocation']
     caption = image_info['caption']
