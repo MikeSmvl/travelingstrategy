@@ -52,7 +52,7 @@ def get_image_info(driver, u):
 def find_a_post(location):
 
     LOGGER.info(f'Starting the parser for the following location: {location}')
-    create_table("images")
+
     driver = create_driver()
 
     url = instagram_url + location + "/"
@@ -69,8 +69,8 @@ def find_a_post(location):
 
     for g in garb_all:
         count += 1
-        # if count > 10:
-        #     break
+        if count > 7:
+            break
 
         u = "https://www.instagram.com"+g.get('href')
         try:
@@ -89,7 +89,7 @@ def find_a_post(location):
 
 # saving function
 def save_image(tableName,image_info,tag):
-    image_link = image_info['caption']
+    image_link = image_info['image_link']
     geolocation = image_info['geolocation']
     caption = image_info['caption']
     DB.insert(tableName,"null",image_link, geolocation, caption,tag)
@@ -100,4 +100,5 @@ def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT", image_link="text",
             geolocation="text", cation="text" , tag="text")
 
-find_a_post("newyork")
+# find_a_post("newyork")
+# find_a_post("madrid")
