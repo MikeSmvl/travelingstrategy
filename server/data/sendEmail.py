@@ -18,8 +18,17 @@ email_html.add_image("https://appboy-images.com/appboy/communication/assets/imag
 
 html = email_html.get_email()
 
+def getImages():
+  
+  query = "SELECT tag FROM images"
+  db = Database("countries.sqlite")
+  x = db.query(query)
+  for image in x:
+    print (image)
 
 
+
+getImages()
 LOGGER.info(f'Getting information from table subscribers.')
 subscribers = DB.get_items("subscribers")
 for user in subscribers:
