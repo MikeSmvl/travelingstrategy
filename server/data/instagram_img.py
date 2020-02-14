@@ -93,6 +93,7 @@ def find_a_post(location):
 # saving function
 def save_image(tableName,image_info,tag):
     image_link = image_info['caption']
+    print (image_link)
     geolocation = image_info['geolocation']
     caption = image_info['caption']
     DB.insert(tableName,"null",image_link, geolocation, caption,tag, DATE)
