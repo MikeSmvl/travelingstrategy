@@ -12,15 +12,15 @@ DB = Database("countries.sqlite")
 
 
 
-def getImages():
+def getImages(city):
   
-  query = "SELECT image_link FROM images WHERE tag='newyork'"
+  stringCity = "'"+city+"'"
+  query = "SELECT image_link FROM images WHERE tag="+stringCity
   db = Database("countries.sqlite")
   x = db.query(query)
   for image in x:
     print (image)
 
-getImages()
     
 email_html = Email_html()
 email_html.add_image("https://content.fortune.com/wp-content/uploads/2019/09/Intrepid-Travel-sri-lanka_dambulla_sigiriya-lion-rock-fortress_group.jpg","246", "246", "Sri Lanka")
@@ -37,5 +37,6 @@ subscribers = DB.get_items("subscribers")
 for user in subscribers:
   LOGGER.info(f'Sending email to {user}.')
   recipient = user[0]
+  getImages(user[1]) 
   email = Email(subject, sender, recipient, html)
   email.sendEmail(password)
