@@ -16,11 +16,13 @@ DB = Database("countries.sqlite")
 # at 7 days we send out the reminder
 
 def daily_decrement():
-    print(1)
     # UPDATE requests SET days_to_trip = days_to_trip -1;
-    DB.update("requests", 'user_id>"0"', days_to_trip='days_to_trip-1')
+    try:
+        DB.update("requests", 'user_id>0',"days_to_trip = days_to_trip - 1")
+    except:
+        LOGGER.error(f'could not uodate the number of days')
 
 with open('/Users/lineghanem/Documents/Capstone/travelingstrategy/server/data/dateInfo.txt','a') as outFile:
     outFile.write('\n' + str(datetime.datetime.now()))
 
-# daily_decrement()
+daily_decrement()

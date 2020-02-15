@@ -71,7 +71,7 @@ class Database:
         self.db.commit()
 
 
-    def update(self, table_name, where, **columns):
+    def update(self, table_name, where, string_set , **columns):
         """
         Update row(s) in table where condition is met
 
@@ -80,26 +80,24 @@ class Database:
         :param **columns: Columns and values that will replace rows where condition is met.
         """
         self.cols = ""
-        print (0)
         for col_name, col_type in columns.items():
             self.cols += col_name+"='"+col_type+"',"
         self.cols = self.cols[0:len(self.cols)-1]
 
-        if not where:
-            print (1)
-            print (table_name)
+        if not string_set:
+            self.string_set = ""
+        else:
+            self.string_set = string_set
 
-            print (self.cols)
-            str = "days_to_trip = days_to_trip-1"
-            print (str)
-            self.db.execute("UPDATE {} SET {} ".format(
-                table_name, self.cols))
+        if not where:
+            self.db.execute("UPDATE {} SET {} {}".format(
+                table_name,self.string_set,self.cols))
 
             self.db.commit()
             return
-        print (2)
-        self.db.execute("UPDATE {} SET {} where {}".format(
-            table_name, self.cols, where))
+
+        self.db.execute("UPDATE {} SET {} {} where {}".format(
+            table_name,self.string_set ,self.cols, where))
 
         self.db.commit()
 
