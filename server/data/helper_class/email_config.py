@@ -203,7 +203,8 @@ message_body = """
         
         """
 
-image_top_tags = """<div style="background-color:white;max-width:600px;margin:0 auto;">
+image_left_table_top_tags = """
+<div style="background-color:white;max-width:600px;margin:0 auto;">
           <table align="center" bgcolor="white" border="0" cellspacing="0" cellpadding="0" role="presentation" style="width:600px;border-collapse:collapse;">
             <tbody><tr>
               <td align="center" valign="top" style="font-size:0;direction:ltr;border-collapse:collapse;padding:12px 0;">
@@ -222,34 +223,44 @@ image_top_tags = """<div style="background-color:white;max-width:600px;margin:0 
                                         <th style="width:48px;">&nbsp;</th>
                                           <th>
                                             <table cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
-                                              <tbody>
-                                              <tr>
+                                              <tbody><tr>
                                                 <th>
+                                                 <table cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                                                  <tbody>
                                                 """
 
-image_bottom_tags = """</th>
-                                              </tr>
-                                            </tbody>
-                                          </table>
+
+image_left_table_bottom_tags = """
+                                      </tbody></table>
+                                    </th>
+                                    <th width="16">&nbsp;</th>
+                               """
+
+image_right_table_top_tags = """
+                                     <th>
+                                        <table cellspacing="0" cellpadding="0" style="border-collapse:collapse;">
+                                          <tbody>
+                              """
+image_bottom_tags = """
+                                          </tbody></table>
                                         </th>
-                                          <th style="width:48px;">&nbsp;</th>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </td>
+                                      </tr>
+                                    </tbody></table>
+                                  </th>
+                                  <th style="width:48px;">&nbsp;</th>
                                 </tr>
-                              </tbody>
-                            </table>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                              </tbody></table>
+                            </td>
+                          </tr>
+                        </tbody></table>
+                      </td>
+                </tr>
+              </tbody></table>
+         </div>
+      </td>
+    </tr>
+  </tbody></table>
+</div>
         """
 
 footer = """<div style="max-width:600px;margin:0 auto;">
