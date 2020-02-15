@@ -13,6 +13,7 @@ class Email_html():
   def get_email(self):
     return "<html>"+self.style+self.message_body+self.images_left_section+self.image_right_section+self.footer+"</html>"
 
+  # function to grab images and store them on the left side of the table
   def add_left_image(self, url, width, height, city):
     additional_image = """
               <tr>
@@ -38,6 +39,7 @@ class Email_html():
     self.images_left_side = self.images_left_side + additional_image
     self.images_left_section = image_left_table_top_tags+self.images_left_side+image_left_table_bottom_tags
 
+  # function to grab images and store them on the right side of the table
   def add_right_image(self, url, width, height, city):
     additional_image = """
               <tr>

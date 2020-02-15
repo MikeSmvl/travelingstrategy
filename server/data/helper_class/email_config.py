@@ -229,7 +229,6 @@ image_left_table_top_tags = """
                                                   <tbody>
                                                 """
 
-
 image_left_table_bottom_tags = """
                                       </tbody></table>
                                     </th>

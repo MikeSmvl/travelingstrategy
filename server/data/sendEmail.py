@@ -33,8 +33,6 @@ email_html.add_right_image("https://content.fortune.com/wp-content/uploads/2019/
 html = email_html.get_email()
 
 
-
-
 LOGGER.info(f'Getting information from table subscribers.')
 subscribers = DB.get_items("subscribers")
 for user in subscribers:
