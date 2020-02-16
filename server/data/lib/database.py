@@ -133,6 +133,15 @@ class Database:
         self.tables = self.db.execute("SELECT name FROM sqlite_master")
         return list(self.tables)
 
+    def query_fech_one(self,query_string):
+        """
+        Execute sqlite query
+        """
+        self.results = self.db.execute(query_string)
+        row = self.results.fetchone()
+        self.db.commit()
+        return row
+
 
     def query(self, query_string):
         """
