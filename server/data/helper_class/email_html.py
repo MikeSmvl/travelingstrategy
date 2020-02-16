@@ -1,4 +1,10 @@
 from email_config import style, message_body, image_left_table_top_tags, image_left_table_bottom_tags, image_right_table_top_tags, image_bottom_tags, footer
+from flags import Flags
+from logger import Logger
+
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 class Email_html():
   def __init__(self):
     self.style= style
