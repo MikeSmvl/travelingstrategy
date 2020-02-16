@@ -19,12 +19,13 @@ def getImages(city):
   email_html = Email_html()
   count = 0
   for image in x:
-    if(count <= 3):
+    if(count <= 5):
       count  = count +1
       x = ' '.join(image)
-      print (x)
-      email_html.add_left_image(x,"246", "246", "Sri Lanka")
-      email_html.add_right_image(x, "246", "139", "Peru")
+      if(count%2 == 0):
+        email_html.add_left_image(x,"246", "246", "Sri Lanka")
+      else:
+        email_html.add_right_image(x, "246", "139", "Peru")
   return  email_html.get_email()
 
 
@@ -36,4 +37,5 @@ for user in subscribers:
   recipient = user[0]
   html =getImages(user[1].replace(" ", "").lower()) 
   email = Email(subject, sender, recipient, html)
+  print("askndalkdnsasdlsldfhsdklfnslkdfnlskdnfsakfnlkdsl")
   email.sendEmail(password)
