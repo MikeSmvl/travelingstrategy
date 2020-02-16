@@ -1,4 +1,4 @@
-import {getSourceUrl, getSourceAdvisory} from '../utils/SourceHelper';
+import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 
 describe('Testing the srouces advisory ', () => {
 	it('Currect link', () => {

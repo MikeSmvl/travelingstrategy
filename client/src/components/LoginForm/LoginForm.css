@@ -652,7 +652,7 @@ label {
   }
 }
 
-.modal-content {
+#modal-login > .modal-content {
   border: 0px !important;
   background-color: unset !important;
 }
