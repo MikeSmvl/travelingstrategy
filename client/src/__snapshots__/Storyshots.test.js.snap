@@ -158,6 +158,13 @@ Array [
           This is the body
         </p>
       </div>
+      <div
+        className="countryCardFooter card-footer"
+      >
+        <div>
+          
+        </div>
+      </div>
     </div>
   </div>,
   <button
@@ -220,6 +227,13 @@ Array [
         >
           
         </p>
+      </div>
+      <div
+        className="countryCardFooter card-footer"
+      >
+        <div>
+          
+        </div>
       </div>
     </div>
   </div>,

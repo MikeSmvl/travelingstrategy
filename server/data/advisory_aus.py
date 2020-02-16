@@ -165,7 +165,7 @@ def save_to_australia():
         advisory_text = url[country].get('advisory-text')
         link = "https://smartraveller.gov.au{}".format(href,sep='')
         additional_advisory = get_additional_advisory(link,driver)
-        advisory_text = advisory_text +additional_advisory
+        advisory_text = advisory_text + additional_advisory
         LOGGER.info(f"Begin parsing {name} to insert into AU table")
         visa_info = parse_a_country(link,driver,'Visas')
         LOGGER.success(f"The following information was retrieved for {name}: {visa_info}. {advisory_text}")

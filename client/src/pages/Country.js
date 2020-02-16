@@ -20,7 +20,7 @@ import {
 } from '../utils/parsingTools';
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
-
+import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 
 function Country({
 	originCountry,
@@ -348,6 +348,7 @@ function Country({
 									<CountryCard
 										flagSrc={flagSrc(destinationCountry)}
 										title="Country Flag"
+										footer={<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
 									>
 										<CardBody>
 											{languagesInfo !== 'Not available yet.'
@@ -355,7 +356,7 @@ function Country({
 										</CardBody>
 									</CountryCard>
 									<br />
-									<Card header="Embassies and Consulates">
+									<Card header="Embassies and Consulates" footer={<Row className="justify-content-center"><a href="https://wikidata.org/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											{!embassyInfo ? (
 												<div>
@@ -428,6 +429,7 @@ function Country({
 											className="scrolling-card"
 											header="Visa Info"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											footer={<Row className="justify-content-center"><a href={getSourceUrl(originCountry)} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
 										>
 											<CardBody className="scrolling-card">
 												<div
@@ -438,7 +440,15 @@ function Country({
 										</Card>
 									)}
 									<br />
-									<Card header="Drug Laws">
+									<Card
+										header="Drug Laws"
+										  footer={(
+											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/Legality_of_cannabis" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+												<a href="https://en.wikipedia.org/wiki/Legal_status_of_cocaine" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+												<a href="https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> M-Reference </a>
+											</Row>
+										)}
+									>
 										<CardBody>
 											<div
 												className="scrolling-card"
@@ -485,7 +495,7 @@ function Country({
 											advisoryInfo === null
 											|| advisoryInfo === 'Not available yet'
 										) && (
-											<Card header="Currency">
+											<Card header="Currency" footer={<Row className="justify-content-center"><a href="https://restcountries.eu/#api-endpoints-currency" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 												<CardBody>
 													<pre style={{ paddingLeft: '44px' }}>
 														<strong>Name:</strong> {currencyInfo.name}
@@ -516,7 +526,7 @@ function Country({
 								</Row>
 								<Row className="justify-content-center">
 									<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-										<Card header="Prices (in USD)">
+										<Card header="Prices (in USD)" footer={<Row className="justify-content-center"><a href="https://knoema.com/atlas" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												<pre style={{ textAlign: 'center' }}>
 													<img
@@ -563,6 +573,7 @@ function Country({
 											className="scrolling-card"
 											header="Advisory"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											footer={<Row className="justify-content-center"><a href={getSourceAdvisory(originCountry, destinationCountry)} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
 										>
 											<CardBody>
 												<img
@@ -586,7 +597,7 @@ function Country({
 									)}
 								</Col>
 								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									<Card header="Unsafe Areas">
+									<Card header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<div
 												className="scrolling-card"
@@ -597,7 +608,7 @@ function Country({
 									</Card>
 								</Col>
 								<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-									<Card header="Emergency Contacts">
+									<Card header="Emergency Contacts" footer={<Row className="justify-content-center"><a href="http://chartsbin.com/view/1983" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<pre style={{ textAlign: 'center' }}>
 												<img
@@ -636,7 +647,7 @@ function Country({
 							<hr />
 							<Row id="Health" className="justify-content-center">
 								<Col xs="10" sm="8" style={{ padding: '25px 0 25px 0' }}>
-									<Card header="General Health">
+									<Card header="General Health" footer={<Row className="justify-content-center"><a href={`https://data.un.org/en/iso/${destinationCountry}.html`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<Table striped bordered hover>
 												<tbody>
@@ -752,7 +763,7 @@ function Country({
 								</Col>
 								<Col xs="10" sm="8" style={{ padding: '0 0 25px 0' }}>
 									{!(vaccines === null || vaccines === 'Not available yet') && (
-										<Card header="Vaccines">
+										<Card header="Vaccines" footer={<Row className="justify-content-center"><a href={`https://wwwnc.cdc.gov/travel/destinations/traveler/none/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												<Row
 													className="justify-content-center"
@@ -810,7 +821,7 @@ function Country({
 							<Row id="Miscellaneous" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
 									<Row className="justify-content-center">
-										<Card header="Sockets & Plugs">
+										<Card header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												<p>
 													{getCountryName(destinationCountry)} uses{' '}
@@ -842,7 +853,7 @@ function Country({
 								</Col>
 								<Col xs="10" sm="10" style={{ padding: '0px 0px 50px 0px' }}>
 									<Row className="justify-content-center">
-										<Card header="Traffic Flow">
+										<Card header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												{trafficSide !== 'Not available yet' && (
 													<p>
