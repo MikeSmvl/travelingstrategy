@@ -87,7 +87,7 @@ class Database:
 
         self.db.execute("UPDATE {} SET {} where {}".format(
             table_name, self.cols, where))
-
+        self.db.commit()
 
     def insert_or_update(self, table_name, *data):
         """

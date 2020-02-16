@@ -247,6 +247,7 @@ const LoginForm = (props) => {
 					</div>
 					<button
 						onClick={() => {
+							setValidEmail(true);
 							setShowRegister(!showRegister);
 							if (showRegister) { showRegisterClass = 'showIt'; setButton('Register'); } else { showRegisterClass = 'hideIt'; setButton('Login'); }
 						}}

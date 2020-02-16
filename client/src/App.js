@@ -3,7 +3,8 @@ import {
 	BrowserRouter as Router,
 	Switch,
 	Route,
-	useLocation
+	useLocation,
+	Redirect
 } from 'react-router-dom';
 import Home from './pages/Home';
 import Country from './pages/Country';
@@ -43,6 +44,9 @@ function Application() {
 				</Route>
 				<Route path="/me">
 					<Me />
+				</Route>
+				<Route>
+					<Redirect to="/" />;
 				</Route>
 			</Switch>
 		</div>
