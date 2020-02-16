@@ -15,19 +15,19 @@ const SubscriptionModal = (props) => {
 	const today = date;
 	const {
 		show = '',
-        handleClose = '',
-        city = ''
+    	handleClose = '',
+		city = ''
 	} = props;
 
 	const emailChange = (event) => {
-        setEmail(event.target.value);
+    	setEmail(event.target.value);
 	};
 
 	async function addUser() {
-		var year = date.getFullYear();
-		var month = date.getMonth();
-		var day = date.getDate();
-		const dateString = year+"-"+month+"-"+day;
+		const year = date.getFullYear();
+		const month = date.getMonth();
+		const day = date.getDate();
+		const dateString = `${year}-${month}-${day}`;
 		await fetch('http://localhost:4000/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
@@ -97,8 +97,8 @@ const SubscriptionModal = (props) => {
 
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
-    handleClose: PropTypes.func,
-    city: PropTypes.string
+	handleClose: PropTypes.func,
+	city: PropTypes.string
 };
 
 
