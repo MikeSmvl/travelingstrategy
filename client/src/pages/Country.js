@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Row, Col, Table, Nav } from 'react-bootstrap/';
+import { Row, Col, Table, Nav, Container } from 'react-bootstrap/';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
@@ -21,6 +21,7 @@ import {
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
+import Footer from '../components/Footer/Footer';
 
 function Country({
 	originCountry,
@@ -895,7 +896,9 @@ function Country({
 							</Row>
 						</Col>
 					</Row>
-					<footer id="footer" />
+					<footer id="footer">
+						<Footer></Footer>
+					</footer>
 				</div>
 			)}
 		</div>
