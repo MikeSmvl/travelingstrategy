@@ -1,8 +1,8 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from helper_class.flags import Flags
-from helper_class.logger import Logger
+from flags import Flags
+from logger import Logger
 
 # Initialize flags, logger & database
 FLAGS = Flags()
