@@ -8,7 +8,6 @@ import datetime
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
-# DB = Database("countries.sqlite")
 
 
 # Cron job scheduler
@@ -25,10 +24,8 @@ my_cron = CronTab(user=user)
 
 job1 = my_cron.new(command=command+"/travelingstrategy/server/data/requests_handler.py")
 job1.minute.every(1)
-job2 = my_cron.new(command=command+"/travelingstrategy/server/data/another_handler.py")
-job2.minute.every(1)
 my_cron.write()
 
 for jobs in my_cron:
-    print(jobs.is_valid())
+    LOGGER.info(f"Job to run requests_scheduler is valid: {jobs.is_valid()}")
 

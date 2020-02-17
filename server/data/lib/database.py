@@ -74,7 +74,7 @@ class Database:
     def update(self, table_name, where, string_set , **columns):
         """
         Update row(s) in table where condition is met
-
+        None of the parameters can be left blank
         :param table_name:  Name of the table to be used.
         :param where: Condition to be used for update.
         :param **columns: Columns and values that will replace rows where condition is met.
@@ -121,10 +121,9 @@ class Database:
         self.db.commit()
 
 
-    def get_items(self, table_name, where=1):
+    def get_items(self, table_name, where = 1):
         """
         Get row(s) in table where condition is met
-
         :param table_name:  Name of the table to be used.
         :param where: Condition to be used.
         """
@@ -137,6 +136,17 @@ class Database:
         else:
             return {}
 
+    def select_items_with_cur(self,table_name,where=1):
+        if(where == 1):
+            self.where = ''
+        try:
+            self.db.row_factory = sqlite3.Row
+            cur = self.db.cursor()
+            cur.execute(f"SELECT * FROM {table_name} {self.where}")
+            rows = cur.fetchall()
+            return rows
+        except:
+            return None
 
     def get_tables(self):
         """
