@@ -22,6 +22,9 @@ const LoginForm = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [confirmation, setConfirmation] = useState('');
 	const [error, setError] = useState('');
+	const [verifyEmail, setVerifyEmail] = useState('');
+	const [loginError, setLoginError] = useState('');
+
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
@@ -90,16 +93,25 @@ const LoginForm = (props) => {
 						getUser(email:"${email}" password: "${password}") {
 							email
 							password
+							verified
 						}
 					}`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.data.getUser && setConfirmation(res.data.getUser.email);
-					setIsLoading(false);
-					if (res.data.getUser.email && res.data.getUser.password) {
-						window.location.reload();
+					try {
+						res.data.getUser && setConfirmation(res.data.getUser.email);
+						if (res.data.getUser.email === true && res.data.getUser.password === true && res.data.getUser.verified === 1) {
+							window.location.reload();
+						} else if (res.data.getUser.verified === 0) {
+							setVerifyEmail("Please verify email!")
+						} else {
+							setLoginError("Incorrect login!")
+						}
+						setIsLoading(false);
+					} catch(e) {
+						setLoginError("Email does not exist!")
 					}
 				});
 		} else if (showRegister && validEmail && email !== '' && password !== '' && confirmedPass !== '' && (password === confirmedPass)) {
@@ -121,9 +133,10 @@ const LoginForm = (props) => {
 				.then((res) => {
 					try {
 						res.data.addUser && setConfirmation(res.data.addUser.email);
-					} catch (e) {
-						setError('Email already exists!');
-					}
+					} catch (e) {}
+					try {
+						res['errors'] && setError(res['errors'][0]['message'])
+					} catch (e) {}
 					setIsLoading(false);
 					// window.location.reload();
 				});
@@ -230,7 +243,11 @@ const LoginForm = (props) => {
 							? (<button type="submit" className="login-button"><Spinner size="sm" animation="border" /></button>)
 							: (<button type="submit" className="login-button"><strong>{buttonText}</strong></button>)}
 						<Row className="justify-content-center">
-							{showRegister && confirmation && <span className="success-validation"><i className="fa fa-check-circle" /> Account created!</span>}
+							{verifyEmail && <span className="success-validation"><i className="fa fa-check-circle" /> Please confirm your email.</span>}
+							{loginError && <span className="error-validation"><i className="fa fa-times-circle" /> Wrong email and/or password!</span>}
+						</Row>
+						<Row className="justify-content-center">
+							{showRegister && confirmation && <span className="success-validation"><i className="fa fa-check-circle" /> Thanks for signing up! Please confirm your email.</span>}
 							{showRegister && error && <span className="error-validation"><i className="fa fa-times-circle" /> Email already exists!</span>}
 						</Row>
 					</form>
