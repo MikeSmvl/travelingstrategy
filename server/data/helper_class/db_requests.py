@@ -33,11 +33,11 @@ def test():
     DB.insert("user_images", "2","2")
     DB.insert("user_images", "3","1")
     DB.insert("user_images", "3","2")
-    to_trip1  = calculate_days_to_trip("2020-03-23")
-    to_trip2  = calculate_days_to_trip("2020-04-1")
+    to_trip1  = calculate_days_to_trip("2020-02-25")
+    to_trip2  = calculate_days_to_trip("2020-03-01")
     to_trip3  = calculate_days_to_trip("2020-04-23")
-    DB.insert("requests","1",str(to_trip1),"2020-03-23", "newyork", "chanc09@gmail.com")
-    DB.insert("requests","2",str(to_trip2),"2020-04-1", "newyork", "ghanemline@gmail.com")
+    DB.insert("requests","1",str(to_trip1),"2020-02-25", "newyork", "chanc09@gmail.com")
+    DB.insert("requests","2",str(to_trip2),"2020-03-01", "newyork", "ghanemline@gmail.com")
     DB.insert("requests","3",str(to_trip3),"2020-04-23", "newyork", "chanc09@outlook.com")
 
 # Since we are testing we are reusing the same ids
