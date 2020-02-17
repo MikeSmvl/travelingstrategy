@@ -4,9 +4,11 @@ const graphql = require("graphql");
 const cookieParser = require('cookie-parser');
 const withAuth = require('./middleware');
 const Redis = require('ioredis');
+const path = require('path')
 const { verifyUser } = require('./resolvers/user')
 
 const app = express();
+app.use('/confirm' , express.static(path.join(__dirname, 'endpoints')));
 
 const queries = require('./resolvers/queries');
 const mutations = require('./resolvers/mutations');
@@ -43,9 +45,9 @@ app.get('/confirm/:id', async function(req, res) {
     if (userEmail != null) {
         await verifyUser(userEmail);
         await redis.del(id);
-        res.send("Success");
+        res.sendFile('endpoints/success.html', {root: __dirname });
     } else {
-        res.send("Fail")
+        res.sendFile('endpoints/expired.html', {root: __dirname });
     }
 });
 

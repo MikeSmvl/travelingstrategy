@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { throttle } from 'lodash';
-import { Modal, Button, Spinner, Row } from 'react-bootstrap';
+import { Modal, Button, Spinner, Row, Toast } from 'react-bootstrap';
 import './LoginForm.css';
 import logo from '../Navbar/logo.png';
 
@@ -24,6 +24,7 @@ const LoginForm = (props) => {
 	const [error, setError] = useState('');
 	const [verifyEmail, setVerifyEmail] = useState('');
 	const [loginError, setLoginError] = useState('');
+	const [showToast, setShowToast] = useState(false);
 
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
@@ -102,21 +103,24 @@ const LoginForm = (props) => {
 				.then((res) => {
 					try {
 						res.data.getUser && setConfirmation(res.data.getUser.email);
-						if (res.data.getUser.email === true && res.data.getUser.password === true && res.data.getUser.verified === 1) {
+						if (res.data.getUser.email === 'true' && res.data.getUser.password === 'true' && res.data.getUser.verified === 1) {
 							window.location.reload();
 						} else if (res.data.getUser.verified === 0) {
-							setVerifyEmail("Please verify email!")
+							setVerifyEmail('Please verify email!');
 						} else {
-							setLoginError("Incorrect login!")
+							setLoginError('Incorrect login!');
 						}
 						setIsLoading(false);
-					} catch(e) {
-						setLoginError("Email does not exist!")
+					} catch (e) {
+						setLoginError('Email does not exist!');
+						setIsLoading(false);
 					}
 				});
 		} else if (showRegister && validEmail && email !== '' && password !== '' && confirmedPass !== '' && (password === confirmedPass)) {
 			event.preventDefault();
 			setIsLoading(true);
+			setConfirmation('');
+			setError('');
 			fetch('http://localhost:4000/graphql', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -133,10 +137,16 @@ const LoginForm = (props) => {
 				.then((res) => {
 					try {
 						res.data.addUser && setConfirmation(res.data.addUser.email);
-					} catch (e) {}
+						setShowRegister(false);
+						setShowToast(true);
+					} catch (e) {
+						setIsLoading(false);
+					}
 					try {
-						res['errors'] && setError(res['errors'][0]['message'])
-					} catch (e) {}
+						res.errors && setError(res.errors[0].message);
+					} catch (e) {
+						setIsLoading(false);
+					}
 					setIsLoading(false);
 					// window.location.reload();
 				});
@@ -255,13 +265,19 @@ const LoginForm = (props) => {
 						<div className="social">
 							<div className="fa fa-google" />
 						</div>
-						<div className="social">
-							<div className="fa fa-linkedin" />
-						</div>
-						<div className="social">
-							<div className="fa fa-instagram" />
-						</div>
 					</div>
+					<Toast id={`loginToast${showToast}`} onClose={() => setShowToast(false)} show={showToast} delay={8000} autohide>
+						<Toast.Header>
+							<img
+								src="holder.js/20x20?text=%20"
+								className="rounded mr-2"
+								alt=""
+							/>
+							<strong className="mr-auto">TravelingStrategy</strong>
+							<small>just now</small>
+						</Toast.Header>
+						<Toast.Body><br /><Row className="justify-content-center"><svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg></Row><br /><Row>Thank you for joining TravelingStrategy! To finish signing up, please check your inbox for a confirmation email. </Row></Toast.Body>
+					</Toast>
 					<button
 						onClick={() => {
 							setValidEmail(true);
