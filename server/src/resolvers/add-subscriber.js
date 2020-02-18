@@ -8,7 +8,10 @@ const db = new database().db;
 var addSubscriber = {
     type: graphql.GraphQLList(Subscriber),
     args: {
-        email: { 
+        email: {
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)
+        },
+        city: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         },
         date: {
@@ -17,7 +20,7 @@ var addSubscriber = {
     },
     resolve: function (source, args) {
         return new Promise((resolve, reject) => {
-            query = `INSERT INTO subscribers VALUES('${args.email}','${args.date}');`
+            query = `INSERT INTO subscribers VALUES('${args.email}','${args.city}','${args.date}');`
             logger.info("Trying to query "+query)
             db.run(query, function(err, rows) {
                 if(err){
