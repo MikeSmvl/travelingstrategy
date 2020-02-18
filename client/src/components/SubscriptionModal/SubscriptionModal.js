@@ -23,11 +23,14 @@ const SubscriptionModal = (props) => {
 	};
 
 	async function addUser() {
+		var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+		var dateFormated = date.toLocaleString('en-US', options);
+		console.log(dateFormated);
 		await fetch('http://localhost:4000/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-                    addSubscriber(email:"${email}", date:"${date}") {
+                    addSubscriber(email:"${email}", date:"${dateFormated}") {
                           email,
                           departure_date
                       }
