@@ -3,10 +3,20 @@ import { Row, Col } from 'react-bootstrap/';
 import './Footer.css';
 import logo from './logo.png';
 import emaillogo from './mail.gif';
+import Button from 'react-bootstrap/Button';
+import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
+import PropTypes from 'prop-types';
 
 const Footer = (props) => {
+	const {
+		show = '',
+		handleShow = '',
+		handleClose = '',
+		city = '',
+		...rest
+	} = props;
     return (
-			<Row style={{ padding: '40px 25px 25px 25px' }}>
+			<Row className= "justify-content-center" style={{ padding: '40px 25px 25px 25px' }}>
 				<Col sm={4} style={{ padding: '40px 25px 25px 40px' }}>
 						<Row>
 							<img
@@ -39,9 +49,27 @@ const Footer = (props) => {
 							<p className = "email"> help.travelingstrategy@gmail.com </p>	
 						</Row>
 					</Col>	
-				    <Col sm={4} style={{ padding: '40px 25px 25px 25px' }}></Col>		
+				    <Col className="align-middle" sm={4} style={{ padding: '40px 25px 25px 25px' }}>
+						<Row>
+						<h4>Subscribe for more info</h4>
+						</Row>
+						<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+						<SubscriptionModal
+								show={show}
+								handleShow={handleShow}
+								handleClose={handleClose}
+								city={city}
+							/>
+					</Col>		
 			</Row>
 	);
+};
+Footer.propTypes = {
+	show: PropTypes.bool,
+	handleShow: PropTypes.func,
+	handleClose: PropTypes.func,
+	city: PropTypes.string
+
 };
 
 export default Footer;
