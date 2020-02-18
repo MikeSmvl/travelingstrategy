@@ -1,6 +1,7 @@
 from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.database import Database
+from instagram_img import find_a_post,create_table
 
 import datetime
 
@@ -36,11 +37,16 @@ def take_photo():
         #no where clause all the records are updated :)
         data = DB.select_items_with_cur("requests")
         for d in data:
-            user_id = d['user_id']
+            request_id = d['request_id']
             days_to_trip = d['days_to_trip']
+            search_term = d['search_term']
+            # print(days_to_trip)
 
-            if days_to_trip <= 14 and days_to_trip > 7:
-                print(user_id)
+            if (days_to_trip <= 14) and (days_to_trip > 7):
+                try:
+                    find_a_post(search_term,request_id)
+                except:
+                    LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
 
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
@@ -48,5 +54,7 @@ def take_photo():
         LOGGER.error(f'Could not retreive the info')
 
 
+DB.drop_table("images")
+create_table("images")
 take_photo()
 # daily_decrement()
