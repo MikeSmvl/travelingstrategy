@@ -1,5 +1,5 @@
 .footerlogotitle{
-    margin-top :4%;
+    margin-top :7%;
 }
 
 .email{
@@ -17,5 +17,10 @@
 }
 .subscribe{
     align-self: center;
+    align-items: center;
+}
+
+.aligncol{
+    
     align-items: center;
 }

@@ -16,27 +16,30 @@ const Footer = (props) => {
 		...rest
 	} = props;
     return (
-			<Row className= "justify-content-center" style={{ padding: '40px 25px 25px 25px' }}>
-				<Col sm={4} style={{ padding: '40px 25px 25px 40px' }}>
-						<Row>
-							<img
-								alt=""
-								src={logo}
-								width="60"
-								height="60"
-								className="d-inline-block align-top"
-								/>
-							<h5 className = "footerlogotitle">Traveling Strategy</h5>
-						</Row>
-						<br></br>	
+		<div style={{ padding: '40px' }}>
+				<Row className="justify-content-center">
+					<Col sm="auto">
+							<Row>
+								<img
+									alt=""
+									src={logo}
+									width="60"
+									height="60"
+									className="d-inline-block align-top"
+									/>
+								<h5 className = "footerlogotitle">Traveling Strategy</h5>
+							</Row>
+					</Col>
+				</Row>
+				<Row className="justify-content-center">
+					<Col sm={4} style={{ padding: '40px 40px 25px 25px' }}>	
 						<h4>About Us</h4>
 						<p> This website was designed by Concordia students for the capstone project.
 							We wish you a happy vacation and a wonderful trip.
 						</p>
 						
 					</Col>
-					<Col sm={4} style={{ padding: '100px 40px 25px 25px' }}>
-						<br></br>
+					<Col sm={4} style={{ padding: '40px 40px 25px 25px' }}>
 						<h4>Contact Us</h4>
 						<Row>
 							<img 
@@ -49,10 +52,8 @@ const Footer = (props) => {
 							<p className = "email"> help.travelingstrategy@gmail.com </p>	
 						</Row>
 					</Col>	
-				    <Col className="align-middle" sm={4} style={{ padding: '40px 25px 25px 25px' }}>
-						<Row>
+				    <Col className="aligncol" sm="auto" style={{ padding: '40px 25px 25px 25px' }}>
 						<h4>Subscribe for more info</h4>
-						</Row>
 						<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
 						<SubscriptionModal
 								show={show}
@@ -60,8 +61,9 @@ const Footer = (props) => {
 								handleClose={handleClose}
 								city={city}
 							/>
-					</Col>		
-			</Row>
+					</Col>
+				</Row>
+		</div>	
 	);
 };
 Footer.propTypes = {
