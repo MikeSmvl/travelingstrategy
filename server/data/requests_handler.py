@@ -40,6 +40,7 @@ def take_photo():
             request_id = d['request_id']
             days_to_trip = d['days_to_trip']
             search_term = d['search_term']
+            user_id = d['user_id']
             # print(days_to_trip)
 
             if (days_to_trip <= 14) and (days_to_trip > 7):
@@ -47,14 +48,15 @@ def take_photo():
                     find_a_post(search_term,request_id)
                 except:
                     LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
-
+            if days_to_trip == 7:
+                print('sending email to user # ',user_id,'...')
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
     except:
         LOGGER.error(f'Could not retreive the info')
 
 
-DB.drop_table("images")
+# DB.drop_table("images")
 create_table("images")
-take_photo()
+# take_photo()
 # daily_decrement()
