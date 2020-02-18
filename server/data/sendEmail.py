@@ -1,9 +1,9 @@
-from helper_class.email_class import Email
+from email_classes.email_class import Email
 from lib.database import Database
 from lib.config import sender, subject,password
 from helper_class.flags import Flags
 from helper_class.logger import Logger
-from helper_class.email_html import Email_html
+from email_classes.email_html import Email_html
 
 FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
@@ -14,8 +14,8 @@ DB = Database("countries.sqlite")
 
 def getImages(city):
   try:
-    LOGGER.info(f'Retrieving pictures for: {stringCity}')
     stringCity = "'"+city+"'"
+    LOGGER.info(f'Retrieving pictures for: {stringCity}')
     query = "SELECT image_link FROM images WHERE tag="+stringCity
     x = DB.query(query)
     email_html = Email_html()
