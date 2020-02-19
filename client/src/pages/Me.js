@@ -7,10 +7,19 @@ import "../App.css";
 
 function Me() {
 	const [redirect, setRedirect] = useState(false);
+	const [email, setEmail] = useState('');
+	const [city, setCity] = useState('');
 
 	useEffect(() => {
 		async function getToken() {
 			const response = await fetch('http://localhost:4000/checktoken', { credentials: 'include' });
+			await fetch('http://localhost:4000/checktoken', { credentials: 'include' })
+			.then((res) => res.json())
+			.then((res) => {
+				res.email
+					&& res.email !== null
+					&& setEmail(res.email);
+			});
 			if (response.ok) { // if HTTP-status is 200-299
 			} else {
 				setRedirect(true);
@@ -23,17 +32,28 @@ function Me() {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-					}`
+						userSubscriptions(email:"${email}"){
+							email,
+							city,
+							departure_date
+						}
+					}
+					`
 				})
 			})
 			.then((res) => res.json())
 			.then((res) => {
+				res.data.userSubscriptions
+					&& res.data.userSubscriptions.length !== 0
+					&& setCity(res.data.userSubscriptions[0].city);
 			});
 		}
 
 		fetchData();
 		getToken();
 	});
+
+	console.log(city);
 
 	if (redirect) {
 		return <Redirect to="/" />;
@@ -67,7 +87,7 @@ function Me() {
 								>
 									<CardBody
 										classExtra="chosen-cities">
-										New York
+											{city}
 									</CardBody>
 								</Card>
 							</Row>

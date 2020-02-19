@@ -24,7 +24,7 @@ Array [
         className="cardDivider"
       />
       <div
-        className="TScardBody card-body"
+        className="TScardBody  card-body"
       >
         
         
@@ -84,7 +84,7 @@ Array [
     >
       
       <div
-        className="TScardBody card-body"
+        className="TScardBody  card-body"
       >
         
         

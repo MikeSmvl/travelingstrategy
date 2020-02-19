@@ -24,4 +24,27 @@ var subscriberTable = {
     }
 }
 
-module.exports = subscriberTable;
+var userSubscriptions = {
+    type: graphql.GraphQLList(Subscriber),
+    args: {
+        email: {
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)
+        }
+    },
+    resolve: (root, args, context, info) => {
+        return new Promise((resolve, reject) => {
+            query = `SELECT * FROM subscribers WHERE email='${args.email}';`
+            logger.info("Trying to query "+query)
+            db.all(query, function(err, rows) {
+                if(err){
+                    logger.error(err)
+                    reject(err);
+                }
+                logger.info(query+" successfully queried")
+                resolve(rows);
+            });
+        });
+    }
+}
+
+module.exports = {subscriberTable,userSubscriptions};
