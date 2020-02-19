@@ -897,11 +897,12 @@ function Country({
 						</Col>
 					</Row>
 					<footer id="footer">
-						<Footer>
+						<Footer
 							show={show}
 							handleShow={handleShow}
 							handleClose={handleClose}
 							city={destinationCity}
+							>
 						</Footer>
 					</footer>
 				</div>
