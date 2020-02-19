@@ -15,6 +15,7 @@ const unitedNations = require('./unitedNations')
 const drugs = require('./drugs')
 const { getUser } = require('./user')
 const {subscriberTable, userSubscriptions} = require('./subscribers')
+const {imagesTable,imagesForTag} = require('./images.js')
 
 const logger = require('../logger/logger.js')
 
@@ -46,7 +47,9 @@ var queryType = new graphql.GraphQLObjectType({
         vaccines_table,
         getUser,
         subscriberTable,
-        userSubscriptions
+        userSubscriptions,
+        imagesTable,
+        imagesForTag
     }
 });
 

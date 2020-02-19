@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Row} from 'react-bootstrap/';
 import { Card, CardBody} from '../components/Card/Card';
+import { Link } from 'react-router-dom';
 
 const languages = (object) => {
 	const items = [];
@@ -61,8 +62,13 @@ const formatingVisa = (visaInfo) => {
 
 function addChosenCities(arrayOfCities){
 	const items = [];
-	arrayOfCities.forEach(city =>{
+	arrayOfCities.forEach(citySubscription =>{
+		const city_in_url = citySubscription.city.toLowerCase().replace(' ', ''); // triming the city to match the tag
+		const cityName = citySubscription.city;
 		items.push(
+			<Link
+				to={`/trending_spots?city=${city_in_url}`}
+			>
 			<Row
 				style={{
 					backgroundColor: 'rgb(247,	247,	247)',
@@ -79,10 +85,11 @@ function addChosenCities(arrayOfCities){
 			>
 				<CardBody
 					classExtra="chosen-cities">
-						{city.city}
+						{cityName}
 				</CardBody>
 			</Card>
 			</Row>
+			</Link>
 		);
 	});
 	return (
