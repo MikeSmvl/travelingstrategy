@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Row, Col, Table, Nav } from 'react-bootstrap/';
-import { Card, CardBody} from '../components/Card/Card';
+import { Row, Col} from 'react-bootstrap/';
+import { addChosenCities} from '../utils/parsingTools';
+
 
 import "../App.css";
+
 
 function Me() {
 	const [redirect, setRedirect] = useState(false);
 	const [email, setEmail] = useState('');
-	const [city, setCity] = useState('');
+	const [cities, setCities] = useState([]);
 
 	useEffect(() => {
 		async function getToken() {
@@ -43,9 +45,10 @@ function Me() {
 			})
 			.then((res) => res.json())
 			.then((res) => {
+				// console.log(res.data.userSubscriptions);
 				res.data.userSubscriptions
 					&& res.data.userSubscriptions.length !== 0
-					&& setCity(res.data.userSubscriptions[0].city);
+					&& setCities(res.data.userSubscriptions);
 			});
 		}
 
@@ -53,11 +56,10 @@ function Me() {
 		getToken();
 	});
 
-	console.log(city);
-
 	if (redirect) {
 		return <Redirect to="/" />;
 	}
+
 
 	return (
 		<div>
@@ -71,26 +73,7 @@ function Me() {
 							}}
 							lg={8}
 						>
-							<Row
-									style={{
-										backgroundColor: 'rgb(247,	247,	247)',
-										padding: '0.5em',
-										borderRadius: '0px'
-									}}
-									className="justify-content-center sticky"
-								>
-								<Card
-									style={{
-										width: '395px',
-										height: '255px'
-									}}
-								>
-									<CardBody
-										classExtra="chosen-cities">
-											{city}
-									</CardBody>
-								</Card>
-							</Row>
+							{addChosenCities(cities)}
 						</Col>
 					</Row>
 				</Row>

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Row} from 'react-bootstrap/';
+import { Card, CardBody} from '../components/Card/Card';
 
 const languages = (object) => {
 	const items = [];
@@ -57,6 +59,40 @@ const formatingVisa = (visaInfo) => {
 	return formatted_visa_info
 }
 
+function addChosenCities(arrayOfCities){
+	const items = [];
+	arrayOfCities.forEach(city =>{
+		items.push(
+			<Row
+				style={{
+					backgroundColor: 'rgb(247,	247,	247)',
+					padding: '0.5em',
+					borderRadius: '0px'
+				}}
+				className="justify-content-center"
+			>
+			<Card
+				style={{
+					width: '385px',
+					height: '255px'
+				}}
+			>
+				<CardBody
+					classExtra="chosen-cities">
+						{city.city}
+				</CardBody>
+			</Card>
+			</Row>
+		);
+	});
+	return (
+		<div>
+			{items}
+		</div>
+	);
+
+}
 
 
-export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa };
+
+export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa, addChosenCities };
