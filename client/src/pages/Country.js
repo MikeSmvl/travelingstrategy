@@ -902,8 +902,7 @@ function Country({
 							handleShow={handleShow}
 							handleClose={handleClose}
 							city={destinationCity}
-							>
-						</Footer>
+						/>
 					</footer>
 				</div>
 			)}
