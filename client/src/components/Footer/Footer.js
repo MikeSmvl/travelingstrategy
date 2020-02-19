@@ -12,8 +12,7 @@ const Footer = (props) => {
 		show = '',
 		handleShow = '',
 		handleClose = '',
-		city = '',
-		...rest
+		city = ''
 	} = props;
 	return (
 		<div style={{ padding: '40px' }}>
