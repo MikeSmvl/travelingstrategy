@@ -160,8 +160,9 @@ class Database:
         """
         Execute sqlite query
         """
-        self.db.execute(query_string)
+        self.results = self.db.execute(query_string)
         self.db.commit()
+        return self.results
 
 
     def close_connection(self):

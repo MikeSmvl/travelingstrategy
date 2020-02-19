@@ -7,6 +7,7 @@ const CountryCard = (props) => {
 	const {
 		flagSrc = '',
 		title = '',
+		footer = '',
 		children,
 		...rest
 	} = props;
@@ -19,6 +20,9 @@ const CountryCard = (props) => {
 			<Card.Body className="countryCardBody">
 				{children}
 			</Card.Body>
+			<Card.Footer className="countryCardFooter">
+				<div>{footer}</div>
+			</Card.Footer>
 		</Card>
 	);
 };

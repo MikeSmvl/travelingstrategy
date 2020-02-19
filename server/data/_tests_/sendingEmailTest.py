@@ -6,6 +6,9 @@ import unittest
 sys.path.append('../helper_class/')
 from email_class import Email
 
+sys.path.append('../')
+from sendEmail import getImages
+
 class parseTest(unittest.TestCase):
 
         
@@ -22,6 +25,10 @@ class parseTest(unittest.TestCase):
         x = email.authentication('buttSmell2020!')
         # tests to make sure the returned dictionary is not empty
         self.assertFalse("", x)
+
+    def test_getImages(self):
+        images = getImages("newyork")
+        self.assertFalse("", images)
 
 
 if __name__ == '__main__':

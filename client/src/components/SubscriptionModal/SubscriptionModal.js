@@ -15,23 +15,26 @@ const SubscriptionModal = (props) => {
 	const today = date;
 	const {
 		show = '',
-		handleClose = ''
+    	handleClose = '',
+		city = ''
 	} = props;
 
 	const emailChange = (event) => {
-		setEmail(event.target.value);
+    	setEmail(event.target.value);
 	};
 
 	async function addUser() {
-		var options = { year: 'numeric', month: '2-digit', day: '2-digit' };
-		var dateFormated = date.toLocaleString('en-US', options);
-		console.log(dateFormated);
+		const year = date.getFullYear();
+		const month = date.getMonth()+1;
+		const day = date.getDate();
+		const dateString = `${year}-${month}-${day}`;
 		await fetch('http://localhost:4000/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-                    addSubscriber(email:"${email}", date:"${dateFormated}") {
+                    addSubscriber(email:"${email}",city:"${city}", date:"${dateString}") {
                           email,
+                          city,
                           departure_date
                       }
                 }`
@@ -84,7 +87,7 @@ const SubscriptionModal = (props) => {
 							</Button>
 						)}
 					>
-                    You&aposll receive an email!
+                    You will receive an email!
 					</SweetAlert>
 				)}
 			</Modal>
@@ -94,7 +97,8 @@ const SubscriptionModal = (props) => {
 
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
-	handleClose: PropTypes.func
+	handleClose: PropTypes.func,
+	city: PropTypes.string
 };
 
 
