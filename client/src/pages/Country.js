@@ -21,6 +21,7 @@ import {
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
+import Footer from '../components/Footer/Footer';
 
 function Country({
 	originCountry,
@@ -895,7 +896,14 @@ function Country({
 							</Row>
 						</Col>
 					</Row>
-					<footer id="footer" />
+					<footer id="footer">
+						<Footer
+							show={show}
+							handleShow={handleShow}
+							handleClose={handleClose}
+							city={destinationCity}
+						/>
+					</footer>
 				</div>
 			)}
 		</div>
