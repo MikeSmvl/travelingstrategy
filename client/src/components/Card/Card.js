@@ -15,11 +15,11 @@ const Card = (props) => {
 };
 
 const CardBody = (props) => {
-	const { children, title = '', subtitle = '',classExtra = '', ...rest } = props;
+	const { children, title = '', subtitle = '', classExtra = '', ...rest } = props;
 	return (
 		<RBCard.Body
 			{...rest}
-			className={"TScardBody "+classExtra}
+			className={`TScardBody ${classExtra}`}
 		>
 			{title && <RBCard.Title>{title}</RBCard.Title>}
 			{subtitle && (

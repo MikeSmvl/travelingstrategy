@@ -81,3 +81,10 @@ hr {
   text-align: center;
   padding-top: 50%;
 }
+
+.trending-spots{
+  font: normal normal normal 32px/1.4em georgia, palatino, 'book antiqua','palatino linotype', serif;
+  color: white;
+  text-align: center;
+  padding-top: 50%;
+}

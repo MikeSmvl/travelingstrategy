@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Row, Col} from 'react-bootstrap/';
-import { addChosenCities} from '../utils/parsingTools';
+import { Row, Col } from 'react-bootstrap/';
+import { addChosenCities } from '../utils/parsingTools';
 
 
-import "../App.css";
+import '../App.css';
 
 
 function Me() {
@@ -16,12 +16,12 @@ function Me() {
 		async function getToken() {
 			const response = await fetch('http://localhost:4000/checktoken', { credentials: 'include' });
 			await fetch('http://localhost:4000/checktoken', { credentials: 'include' })
-			.then((res) => res.json())
-			.then((res) => {
-				res.email
+				.then((res) => res.json())
+				.then((res) => {
+					res.email
 					&& res.email !== null
 					&& setEmail(res.email);
-			});
+				});
 			if (response.ok) { // if HTTP-status is 200-299
 			} else {
 				setRedirect(true);
@@ -43,13 +43,13 @@ function Me() {
 					`
 				})
 			})
-			.then((res) => res.json())
-			.then((res) => {
+				.then((res) => res.json())
+				.then((res) => {
 				// console.log(res.data.userSubscriptions);
-				res.data.userSubscriptions
+					res.data.userSubscriptions
 					&& res.data.userSubscriptions.length !== 0
 					&& setCities(res.data.userSubscriptions);
-			});
+				});
 		}
 
 		fetchData();
@@ -64,7 +64,7 @@ function Me() {
 	return (
 		<div>
 			<div className="parallax">
-				<Row className="justify-content-center" style={{paddingTop: '300px'}}>
+				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
 					<Row className="justify-content-center">
 						<Col
 							style={{

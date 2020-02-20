@@ -100,6 +100,60 @@ function addChosenCities(arrayOfCities){
 
 }
 
+function addTrendingSpots(arrayOfImages){
+	const items = [];
+	// console.log(arrayOfImages)
+	arrayOfImages.forEach(image =>{
+		// const city_in_url = citySubscription.city.toLowerCase().replace(' ', ''); // triming the city to match the tag
+		const image_url = image.image_link;
+		const geolocation = image.geolocation;
+		const caption = image.cation;
+		items.push(
+			<Row
+				style={{
+					backgroundColor: 'rgb(247,	247,	247)',
+					borderRadius: '0px',
+					paddingBottom:'500%'
+				}}
+				className="justify-content-center"
+			>
+			<Card
+				style={{
+					width: '385px',
+					height: '255px'
+				}}
+			>
+				<CardBody
+					style={{
+						padding: '0px',
+						height: '100%'
+				}}
+				>
+						{/* style={{backgroundImage: `url(${image_url})`}}> */}
+						<img 
+						src={image_url} 
+						alt="Logo" 
+						width='100%'
+						height='100%'/>
+						<div>
+							<b>Geo-location: </b>{geolocation}
+							<br></br>
+							<br></br>
+							{caption}
+						</div>
+				</CardBody>
+			</Card>
+			</Row>
+		);
+	});
+	return (
+		<div>
+			{items}
+		</div>
+	);
+
+}
 
 
-export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa, addChosenCities };
+
+export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa, addChosenCities,addTrendingSpots };
