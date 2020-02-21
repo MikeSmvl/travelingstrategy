@@ -1,0 +1,26 @@
+.footerlogotitle{
+    margin-top :7%;
+}
+
+.email{
+    margin-top :7%;
+    text-align: right;
+    align-self: right;
+}
+
+.emaillogo{
+ 
+        position: "absolute";
+        bottom: 0;
+        align-self: center;
+        
+}
+.subscribe{
+    align-self: center;
+    align-items: center;
+}
+
+.aligncol{
+    
+    align-items: center;
+}

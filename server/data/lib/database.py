@@ -87,7 +87,7 @@ class Database:
 
         self.db.execute("UPDATE {} SET {} where {}".format(
             table_name, self.cols, where))
-
+        self.db.commit()
 
     def insert_or_update(self, table_name, *data):
         """
@@ -138,8 +138,9 @@ class Database:
         """
         Execute sqlite query
         """
-        self.db.execute(query_string)
+        self.results = self.db.execute(query_string)
         self.db.commit()
+        return self.results
 
 
     def close_connection(self):

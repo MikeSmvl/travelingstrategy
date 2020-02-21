@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 
-class wiki_visa_parser():
+class wiki_visa_parser:
 
     def __init__(self, url, driver):
         self.url = url
