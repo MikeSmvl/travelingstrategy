@@ -137,12 +137,15 @@ class Database:
             return {}
 
     def select_items_with_cur(self,table_name,where=1):
-        if(where == 1):
-            self.where = ''
+        if where == 1:
+            query = "SELECT * FROM "+table_name
+        else:
+            self.where = where
+            query = "SELECT * FROM "+table_name+" WHERE "+self.where
         try:
             self.db.row_factory = sqlite3.Row
             cur = self.db.cursor()
-            cur.execute(f"SELECT * FROM {table_name} {self.where}")
+            cur.execute(query)
             rows = cur.fetchall()
             return rows
         except:

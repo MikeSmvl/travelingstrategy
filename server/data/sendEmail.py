@@ -12,12 +12,12 @@ DB = Database("countries.sqlite")
 
 
 
-def getImages(city):
+def getImages(request_id):
   try:
-    stringCity = "'"+city+"'"
-    LOGGER.info(f'Retrieving pictures for: {stringCity}')
-    query_image = "SELECT image_link FROM images WHERE tag="+stringCity
-    LOGGER.info(f'Retrieving pictures for: {stringCity}')
+
+    LOGGER.info(f'Retrieving pictures for: {request_id}')
+    query_image = "SELECT image_link FROM images WHERE request_id="+str(request_id)
+    LOGGER.info(f'Retrieving pictures for: {request_id}')
     x = DB.query(query_image)
     email_html = Email_html()
     count = 0
@@ -28,6 +28,7 @@ def getImages(city):
         query_geolocation = "SELECT geolocation FROM images WHERE image_link="+"'"+x+"'"
         row = DB.query(query_geolocation).fetchone()
         y = row[0]
+        print(y)
 
         if(count == 0):
           email_html.add_left_image(x,"246", "246", y)
@@ -49,20 +50,16 @@ def getImages(city):
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         count  = count +1
     return  email_html.get_email()
- 
+
   except Exception as error_msg:
-      LOGGER.error(f'The following error has occured while retrieving the image for {stringCity}: {error_msg}')
+      LOGGER.error(f'The following error has occured while retrieving the image for {request_id}: {error_msg}')
 
+def send_email(request_id, email):
+  LOGGER.info(f'Sending email to {email}.')
+  recipient = email
+  html = getImages(request_id)
+  email = Email(subject, sender, recipient, html)
+  email.sendEmail(password)
 
-
-LOGGER.info(f'Getting information from table subscribers.')
-subscribers = DB.get_items("subscribers")
-for user in subscribers:
-  try:
-    LOGGER.info(f'Sending email to {user}.')
-    recipient = user[0]
-    html =getImages(user[1].replace(" ", "").lower()) 
-    email = Email(subject, sender, recipient, html)
-    email.sendEmail(password)
-  except Exception as error_msg:
-    LOGGER.error(f'Email could not be sent to {user} for the following reason: {error_msg}')
+send_email(2,'chanc09@gmail.com')
+send_email(5,'lineghanem@gmail.com')

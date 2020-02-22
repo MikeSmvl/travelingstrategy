@@ -16,17 +16,41 @@ NOW = datetime.datetime.now()
 DATE_FORMAT = "%Y-%m-%d"
 DATE = NOW.strftime(DATE_FORMAT)
 
+# decrement # of days to trip
 # Cron job , to handle logic
-
 # at 14 days, we start taking photo
 # at 7 days we send out the reminder
+
+def calculate_days_to_trip(date_trip):
+    date_trip = datetime.datetime.strptime(date_trip, DATE_FORMAT)
+    delta = date_trip - NOW
+    days = delta.days
+    return days
+
+
+def to_trip():
+    try:
+        data = DB.select_items_with_cur("requests","days_to_trip=-1")
+        print(data)
+        for d in data:
+            date_of_trip = d['date_of_trip']
+            request_id = d['request_id']
+            print(request_id)
+            days_to_trip = calculate_days_to_trip(date_of_trip)
+            if days_to_trip == -1:
+                days_to_trip = 0
+            DB.update("requests", f'request_id = {request_id}', f"days_to_trip = {days_to_trip}")
+
+    except:
+        print('ERRRRRROR')
+
 
 # decrement # of days to trip
 def daily_decrement():
     # UPDATE requests SET days_to_trip = days_to_trip -1;
     try:
         #no where clause all the records are updated :)
-        DB.update("requests", '', "days_to_trip = days_to_trip - 1")
+        DB.update("requests", 'days_to_trip > 0', "days_to_trip = days_to_trip - 1")
         LOGGER.success(f'Decrement the date to trip of all users in table requests on: {DATE}')
     except:
         LOGGER.error(f'Could not decrement the numbers of day to trip in table requests on: {DATE}')
@@ -56,7 +80,8 @@ def take_photo():
         LOGGER.error(f'Could not retreive the info')
 
 
-# DB.drop_table("images")
+DB.drop_table("images")
 create_table("images")
-# take_photo()
-# daily_decrement()
+take_photo()
+#daily_decrement()
+# to_trip()
