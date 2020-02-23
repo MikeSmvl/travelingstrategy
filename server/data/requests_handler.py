@@ -90,6 +90,6 @@ def take_photo():
 
 DB.drop_table("images")
 create_table("images")
-take_photo()
+#take_photo()
 #daily_decrement()
 # to_trip()
