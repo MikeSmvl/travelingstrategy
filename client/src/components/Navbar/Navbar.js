@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Navbar as RBNavbar, Button } from 'react-bootstrap';
+import { Navbar as RBNavbar, Dropdown } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
 import LoginForm from '../LoginForm/LoginForm';
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
+	const [logOut, setLogOut] = useState(false);
 
 	useEffect(() => {
 		async function getToken() {
@@ -19,7 +19,17 @@ const Navbar = (props) => {
 			}
 		}
 		getToken();
-	}, [authenticated]);
+		async function exit() {
+			const response = await fetch('http://localhost:4000/logout', { credentials: 'include' });
+			if (response.ok) {
+				window.location.reload();
+			}
+		}
+		if (logOut) {
+			exit();
+			setLogOut(true);
+		}
+	}, [authenticated, logOut]);
 
 	const {
 		hrefBrand = '',
@@ -48,7 +58,18 @@ const Navbar = (props) => {
 				</RBNavbar.Brand>
 				<RBNavbar.Collapse className="justify-content-end">
 					{authenticated
-						? (<Link to="/me"><Button variant="outline-primary"><div className="fa fa-user" /></Button></Link>)
+						? (
+							<Dropdown>
+								<Dropdown.Toggle drop="left" variant="outline-primary" id="dropdown-basic">
+									<div className="fa fa-user" />
+								</Dropdown.Toggle>
+
+								<Dropdown.Menu alignRight>
+									<Dropdown.Item href="/me">Profile</Dropdown.Item>
+									<Dropdown.Item onClick={() => setLogOut(true)}>Sign Out</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+						)
 						: (
 							<RBNavbar.Text>
 								<LoginForm />
