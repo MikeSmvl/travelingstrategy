@@ -2,6 +2,7 @@ from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.database import Database
 from instagram_img import find_a_post,create_table
+from sendEmail import send_email
 
 import datetime
 
@@ -65,22 +66,25 @@ def take_photo():
             days_to_trip = d['days_to_trip']
             search_term = d['search_term']
             user_id = d['user_id']
-            # print(days_to_trip)
+            email = d['email']
+            print(days_to_trip)
 
             if (days_to_trip <= 14) and (days_to_trip > 7):
                 try:
                     find_a_post(search_term,request_id)
                 except:
                     LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
-            if days_to_trip == 7:
-                print('sending email to user # ',user_id,'...')
+            #change back to 7
+            if days_to_trip == 10:
+                send_email(request_id,email)
+
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
     except:
         LOGGER.error(f'Could not retreive the info')
 
 
-DB.drop_table("images")
+# DB.drop_table("images")
 create_table("images")
 take_photo()
 #daily_decrement()
