@@ -102,6 +102,7 @@ const LoginForm = (props) => {
 				.then((res) => res.json())
 				.then((res) => {
 					try {
+						event.preventDefault();
 						res.data.getUser && setConfirmation(res.data.getUser.email);
 						if (res.data.getUser.email === 'true' && res.data.getUser.password === 'true' && res.data.getUser.verified === 1) {
 							window.location.reload();

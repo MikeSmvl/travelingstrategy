@@ -51,6 +51,11 @@ app.get('/confirm/:id', async function(req, res) {
     }
 });
 
+app.get('/logout', function(req, res){
+    res.clearCookie('token');
+    res.send('ok');
+ });
+
 app.listen(4000, () => {
     console.log("🚀 GraphQL server running at http://localhost:4000.");
 });

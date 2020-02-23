@@ -103,7 +103,7 @@ var getUser = {
             const token = jwt.sign(payload, secret, {
               expiresIn: '1h'
             });
-            context.res.cookie('token', token, { httpOnly: true });
+            context.res.cookie('token', token, { expires: new Date(Date.now() + 3600000), httpOnly: true });
             resolve({
               email: true,
               password: bool,
@@ -137,6 +137,6 @@ async function verifyUser(user) {
       }
     );
   });
-}
+};
 
 module.exports = { addUser, getUser, verifyUser };
