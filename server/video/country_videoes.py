@@ -15,7 +15,10 @@ def main():
             "link": link
         }
         countryLinks.append(info)
-    print(countryLinks)
+    # print(countryLinks)
+    with open('videoLinks.txt', 'w') as f:
+        for item in countryLinks:
+            f.write("%s\n" % item)
 
 if __name__== "__main__":
   main()
