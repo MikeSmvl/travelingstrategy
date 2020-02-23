@@ -20,8 +20,8 @@ var addSubscriber = {
     },
     resolve: function (source, args) {
         return new Promise((resolve, reject) => {
-            query = `INSERT INTO requests VALUES(null,'-1','-1','${args.date}','${args.city}','${args.email}');`
-            //query = `INSERT INTO subscribers VALUES('${args.email}','${args.city}','${args.date}');`
+            //query = `INSERT INTO requests VALUES(null,'-1','-1','${args.date}','${args.city}','${args.email}');`
+            query = `INSERT INTO subscribers VALUES('${args.email}','${args.city}','${args.date}');`
             logger.info("Trying to query "+query)
             db.run(query, function(err, rows) {
                 if(err){
