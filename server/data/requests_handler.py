@@ -2,6 +2,7 @@ from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.database import Database
 from instagram_img import find_a_post,create_table
+from sendEmail import send_email
 
 import datetime
 
@@ -27,6 +28,12 @@ def calculate_days_to_trip(date_trip):
     days = delta.days
     return days
 
+def calculate_days_to_trip_test(date_trip):
+    date_trip = datetime.datetime.strptime(date_trip, DATE_FORMAT)
+    test_date = datetime.datetime.strptime("2020-2-25", DATE_FORMAT)
+    delta = date_trip - test_date
+    days = delta.days
+    return days
 
 def to_trip():
     try:
@@ -73,7 +80,7 @@ def take_photo():
                 except:
                     LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
             if days_to_trip == 7:
-                print('sending email to user # ',user_id,'...')
+                send_email(request_id,email)
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
     except:
@@ -82,6 +89,6 @@ def take_photo():
 
 DB.drop_table("images")
 create_table("images")
-take_photo()
+#take_photo()
 #daily_decrement()
 # to_trip()

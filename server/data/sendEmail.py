@@ -61,5 +61,3 @@ def send_email(request_id, email):
   email = Email(subject, sender, recipient, html)
   email.sendEmail(password)
 
-send_email(2,'chanc09@gmail.com')
-send_email(5,'lineghanem@gmail.com')
