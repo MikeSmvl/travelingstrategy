@@ -2,7 +2,7 @@ from helper_class.flags import Flags
 from helper_class.logger import Logger
 from lib.database import Database
 from instagram_img import find_a_post,create_table
-from sendEmail import send_email
+from send_email import send_an_email
 
 import datetime
 
@@ -81,7 +81,7 @@ def take_photo():
                 except:
                     LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
             if days_to_trip == 7:
-                send_email(request_id,email)
+                send_an_email(request_id,email)
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
     except:
