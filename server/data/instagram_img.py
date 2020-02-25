@@ -40,8 +40,10 @@ def get_image_info(driver, u):
 
     if not geoloc == None:
         image_info['geolocation'] = geoloc.text
+        image_info['geo_link'] = "https://www.instagram.com"+geoloc['href']
     else:
         image_info['geolocation'] = ""
+        image_info['geo_link'] = ""
     if not caption == None:
         image_info['caption'] = caption.text
     else:
@@ -92,13 +94,12 @@ def find_a_post(location, request_id):
 # saving function
 def save_image(tableName,image_info,tag,request_id ):
     image_link = image_info['image_link']
-    # print (image_link)
+    geo_link = image_info['geo_link']
     geolocation = image_info['geolocation']
     caption = image_info['caption']
-    DB.insert(tableName,"null",request_id,image_link, geolocation, caption,tag, DATE)
+    DB.insert(tableName,"null",request_id,image_link, geolocation, geo_link,caption,tag, DATE)
 
 #creating the table
 def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
-            geolocation="text", caption="text" , tag="text",date_retrieved="text")
-
+            geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")

@@ -36,4 +36,3 @@ def test():
 #TO BE DELETED
 DB.drop_table("requests")
 set_up_db()
-test()
