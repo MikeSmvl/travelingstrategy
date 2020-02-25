@@ -38,18 +38,19 @@ def calculate_days_to_trip_test(date_trip):
 def to_trip():
     try:
         data = DB.select_items_with_cur("requests","days_to_trip=-1")
-        print(data)
         for d in data:
             date_of_trip = d['date_of_trip']
             request_id = d['request_id']
             print(request_id)
             days_to_trip = calculate_days_to_trip(date_of_trip)
+            print(days_to_trip)
             if days_to_trip == -1:
                 days_to_trip = 0
+
             DB.update("requests", f'request_id = {request_id}', f"days_to_trip = {days_to_trip}")
 
     except:
-        print('ERRRRRROR')
+        LOGGER.error(f'Failed to decrement the dates to trip on:{DATE}')
 
 
 # decrement # of days to trip
@@ -82,14 +83,15 @@ def take_photo():
                     LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
             if days_to_trip == 7:
                 send_an_email(request_id,email)
+            if days_to_trip == 0:
+                DB.remove('requests', f'request_id = {request_id}')
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
     except:
         LOGGER.error(f'Could not retreive the info')
 
 
+to_trip()
 DB.drop_table("images")
 create_table("images")
 take_photo()
-#daily_decrement()
-# to_trip()
