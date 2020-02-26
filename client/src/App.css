@@ -46,7 +46,7 @@
 .parallax {
   /* The image used */
   background-color: #fef9e7;
-background-image: linear-gradient(315deg, #fef9e7 0%, #fddac5 74%);
+  background-image: linear-gradient(315deg, #fef9e7 0%, #fddac5 74%);
 
 }
 
@@ -72,4 +72,19 @@ hr {
 .row {
   margin-left: 0px !important;
   margin-right: 0px !important;
+}
+
+.chosen-cities{
+  background-image : url(https://popcanvasplus.com/wp-content/uploads/2018/08/Skyline-18-CMYk-1-256x256.jpg);
+  font: normal normal normal 32px/1.4em georgia, palatino, 'book antiqua','palatino linotype', serif;
+  color: white;
+  text-align: center;
+  padding-top: 50%;
+}
+
+.trending-spots{
+  font: normal normal normal 32px/1.4em georgia, palatino, 'book antiqua','palatino linotype', serif;
+  color: white;
+  text-align: center;
+  padding-top: 50%;
 }

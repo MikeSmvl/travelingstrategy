@@ -25,28 +25,28 @@ def getImages(request_id):
     for image in x:
       if(count <= 5):
         x = ' '.join(image)
-        query_geolocation = "SELECT geolocation FROM images WHERE image_link="+"'"+x+"'"
+        query_geolocation = "SELECT geolocation, geo_link FROM images WHERE image_link="+"'"+x+"'"
         row = DB.query(query_geolocation).fetchone()
         y = row[0]
-        print(y)
+        geo_link = row[1]
 
         if(count == 0):
-          email_html.add_left_image(x,"246", "246", y)
+          email_html.add_left_image(x,"246", "246", geo_link,y)
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         elif(count == 1):
-          email_html.add_right_image(x, "246", "139", y)
+          email_html.add_right_image(x, "246", "139", geo_link,y)
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         elif(count == 2):
-          email_html.add_left_image(x,"246", "185", y)
+          email_html.add_left_image(x,"246", "185", geo_link,y)
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         elif(count == 3):
-          email_html.add_right_image(x, "246", "246", y)
+          email_html.add_right_image(x, "246", "246", geo_link,y)
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         elif(count == 4):
-          email_html.add_left_image(x,"246", "139", y)
+          email_html.add_left_image(x,"246", "139", geo_link,y)
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         else:
-          email_html.add_right_image(x, "246", "185", y)
+          email_html.add_right_image(x, "246", "185", geo_link,y)
           LOGGER.success(f'Picture was succesfully retrieve: {x}')
         count  = count +1
     return  email_html.get_email()
@@ -60,3 +60,5 @@ def send_an_email(request_id, email):
   html = getImages(request_id)
   email = Email(subject, sender, recipient, html)
   email.sendEmail(password)
+
+send_an_email("1","ghanemline@gmail.com")

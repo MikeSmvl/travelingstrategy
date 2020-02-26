@@ -36,7 +36,7 @@ app.use("/graphql", (req, res) => {
 });
 
 app.get('/checkToken', withAuth, function(req, res) {
-    res.sendStatus(200);
+    res.json({email: req.email});
 });
 
 app.get('/confirm/:id', async function(req, res) {

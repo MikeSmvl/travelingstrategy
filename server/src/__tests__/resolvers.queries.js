@@ -533,6 +533,79 @@ it("Querying subscribers table", () =>{
       .catch(err => logger.error(__filename +" "+err))
 });
 
+it("Querying user subscription", () =>{
+  const query =`
+  {
+    userSubscriptions(email:"test@test.com"){
+      email,
+      city,
+      departure_date
+      }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying images table", () =>{
+  const query =`
+  {
+    imagesTable{
+      image_id,
+      image_link,
+      geolocation,
+      cation,
+      tag
+      }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying images retrieved for a tag", () =>{
+  const query =`
+  {
+    imagesForTag(tag:"newyork"){
+      image_id,
+      image_link,
+      geolocation,
+      cation,
+      tag
+      }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
 describe("Test for add-subscriber mutation", () => {
   test("Should be a valid mutation", () => {
       const mutation = `
