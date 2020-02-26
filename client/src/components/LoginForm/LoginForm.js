@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { throttle } from 'lodash';
-import { Modal, Button, Spinner, Row } from 'react-bootstrap';
+import { Modal, Button, Spinner, Row, Toast } from 'react-bootstrap';
 import './LoginForm.css';
 import logo from '../Navbar/logo.png';
 
@@ -22,6 +22,10 @@ const LoginForm = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [confirmation, setConfirmation] = useState('');
 	const [error, setError] = useState('');
+	const [verifyEmail, setVerifyEmail] = useState('');
+	const [loginError, setLoginError] = useState('');
+	const [showToast, setShowToast] = useState(false);
+
 	const rotateFace = () => {
 		const length = Math.min(usernameEl.current.selectionEnd - 16, 19);
 		faceEl.current.style.setProperty('--rotate-head', `${-length}deg`);
@@ -90,21 +94,34 @@ const LoginForm = (props) => {
 						getUser(email:"${email}" password: "${password}") {
 							email
 							password
+							verified
 						}
 					}`
 				})
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.data.getUser && setConfirmation(res.data.getUser.email);
-					setIsLoading(false);
-					if (res.data.getUser.email && res.data.getUser.password) {
-						window.location.reload();
+					try {
+						event.preventDefault();
+						res.data.getUser && setConfirmation(res.data.getUser.email);
+						if (res.data.getUser.email === 'true' && res.data.getUser.password === 'true' && res.data.getUser.verified === 1) {
+							window.location.reload();
+						} else if (res.data.getUser.verified === 0) {
+							setVerifyEmail('Please verify email!');
+						} else {
+							setLoginError('Incorrect login!');
+						}
+						setIsLoading(false);
+					} catch (e) {
+						setLoginError('Email does not exist!');
+						setIsLoading(false);
 					}
 				});
 		} else if (showRegister && validEmail && email !== '' && password !== '' && confirmedPass !== '' && (password === confirmedPass)) {
 			event.preventDefault();
 			setIsLoading(true);
+			setConfirmation('');
+			setError('');
 			fetch('http://localhost:4000/graphql', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -121,8 +138,15 @@ const LoginForm = (props) => {
 				.then((res) => {
 					try {
 						res.data.addUser && setConfirmation(res.data.addUser.email);
+						setShowRegister(false);
+						setShowToast(true);
 					} catch (e) {
-						setError('Email already exists!');
+						setIsLoading(false);
+					}
+					try {
+						res.errors && setError(res.errors[0].message);
+					} catch (e) {
+						setIsLoading(false);
 					}
 					setIsLoading(false);
 					// window.location.reload();
@@ -230,7 +254,11 @@ const LoginForm = (props) => {
 							? (<button type="submit" className="login-button"><Spinner size="sm" animation="border" /></button>)
 							: (<button type="submit" className="login-button"><strong>{buttonText}</strong></button>)}
 						<Row className="justify-content-center">
-							{showRegister && confirmation && <span className="success-validation"><i className="fa fa-check-circle" /> Account created!</span>}
+							{verifyEmail && <span className="success-validation"><i className="fa fa-check-circle" /> Please confirm your email.</span>}
+							{loginError && <span className="error-validation"><i className="fa fa-times-circle" /> Wrong email and/or password!</span>}
+						</Row>
+						<Row className="justify-content-center">
+							{showRegister && confirmation && <span className="success-validation"><i className="fa fa-check-circle" /> Thanks for signing up! Please confirm your email.</span>}
 							{showRegister && error && <span className="error-validation"><i className="fa fa-times-circle" /> Email already exists!</span>}
 						</Row>
 					</form>
@@ -238,13 +266,19 @@ const LoginForm = (props) => {
 						<div className="social">
 							<div className="fa fa-google" />
 						</div>
-						<div className="social">
-							<div className="fa fa-linkedin" />
-						</div>
-						<div className="social">
-							<div className="fa fa-instagram" />
-						</div>
 					</div>
+					<Toast id={`loginToast${showToast}`} onClose={() => setShowToast(false)} show={showToast} delay={8000} autohide>
+						<Toast.Header>
+							<img
+								src="holder.js/20x20?text=%20"
+								className="rounded mr-2"
+								alt=""
+							/>
+							<strong className="mr-auto">TravelingStrategy</strong>
+							<small>just now</small>
+						</Toast.Header>
+						<Toast.Body><br /><Row className="justify-content-center"><svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle className="checkmark__circle" cx="26" cy="26" r="25" fill="none" /><path className="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" /></svg></Row><br /><Row>Thank you for joining TravelingStrategy! To finish signing up, please check your inbox for a confirmation email. </Row></Toast.Body>
+					</Toast>
 					<button
 						onClick={() => {
 							setValidEmail(true);

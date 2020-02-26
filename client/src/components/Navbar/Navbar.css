@@ -18,3 +18,7 @@ a {
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
 	background-color: #ff6e61;
 }
+
+.dropdown-item.active, .dropdown-item:active {
+	background-color: #ff6e61 !important;
+}
