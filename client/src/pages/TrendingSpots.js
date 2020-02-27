@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap/';
-import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
 import { addTrendingSpots } from '../utils/parsingTools';
+import basicSearch from '../utils/event';
 
 
 function TrendingSpots({
@@ -36,8 +36,9 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	});
+	}, city);
 
+	basicSearch()
 	return (
 		<div>
 			<div className="parallax">

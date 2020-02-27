@@ -32,6 +32,7 @@
     "graphql-tag": "^2.10.1",
     "less": "^3.10.3",
     "lodash": "^4.17.15",
+    "predicthq": "^0.2.1",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-bootstrap": "^1.0.0-beta.14",
