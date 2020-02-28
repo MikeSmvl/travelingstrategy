@@ -60,5 +60,3 @@ def send_an_email(request_id, email):
   html = getImages(request_id)
   email = Email(subject, sender, recipient, html)
   email.sendEmail(password)
-
-send_an_email("1","ghanemline@gmail.com")

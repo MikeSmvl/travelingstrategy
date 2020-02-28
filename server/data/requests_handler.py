@@ -81,14 +81,20 @@ def take_photo():
                     find_a_post(search_term,request_id)
                 except:
                     LOGGER.error(f'Could not retreive the image for day {days_to_trip} and request {request_id}')
+
             if days_to_trip == 7:
                 send_an_email(request_id,email)
-            if days_to_trip == 0:
+
+            if days_to_trip == -14:
                 DB.remove('requests', f'request_id = {request_id}')
 
         LOGGER.success(f'Get the info from the requests table on: {DATE}')
     except:
         LOGGER.error(f'Could not retreive the info')
+
+def set_up_db():
+    DB.add_table("requests",request_id="INTEGER PRIMARY KEY AUTOINCREMENT", user_id = "INTEGER",days_to_trip="INTEGER",
+            date_of_trip="text", search_term="text", email="text",latitude="text",longitude="text")
 
 
 to_trip()
