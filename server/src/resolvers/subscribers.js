@@ -10,7 +10,7 @@ var subscriberTable = {
 
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            query = `SELECT * FROM subscribers;`
+            query = `SELECT * FROM requests;`
             logger.info("Trying to query "+query)
             db.all(query, function(err, rows) {
                 if(err){
@@ -33,7 +33,7 @@ var userSubscriptions = {
     },
     resolve: (root, args, context, info) => {
         return new Promise((resolve, reject) => {
-            query = `SELECT * FROM subscribers WHERE email='${args.email}';`
+            query = `SELECT * FROM requests WHERE email='${args.email}';`
             logger.info("Trying to query "+query)
             db.all(query, function(err, rows) {
                 if(err){

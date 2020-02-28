@@ -32,10 +32,10 @@ const SubscriptionModal = (props) => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-                    addSubscriber(email:"${email}",city:"${city}", date:"${dateString}") {
+                    addSubscriber(email:"${email}",search_term:"${city}", date_of_trip:"${dateString}") {
                           email,
-                          city,
-                          departure_date
+                          search_term,
+                          date_of_trip
                       }
                 }`
 		});

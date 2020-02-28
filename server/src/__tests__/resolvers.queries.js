@@ -516,7 +516,9 @@ it("Querying subscribers table", () =>{
   {
     subscriberTable{
       email,
-      departure_date
+      request_id,
+      search_term,
+
     }
 }`;
 
@@ -538,8 +540,7 @@ it("Querying user subscription", () =>{
   {
     userSubscriptions(email:"test@test.com"){
       email,
-      city,
-      departure_date
+      search_term
       }
 }`;
 
