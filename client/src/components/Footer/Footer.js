@@ -12,7 +12,9 @@ const Footer = (props) => {
 		show = '',
 		handleShow = '',
 		handleClose = '',
-		city = ''
+		city = '',
+		lat = '',
+		lng = ''
 	} = props;
 	return (
 		<div style={{ padding: '40px' }}>
@@ -59,6 +61,8 @@ const Footer = (props) => {
 						handleShow={handleShow}
 						handleClose={handleClose}
 						city={city}
+						lat={lat}
+						lng={lng}
 					/>
 				</Col>
 			</Row>
@@ -69,7 +73,9 @@ Footer.propTypes = {
 	show: PropTypes.bool,
 	handleShow: PropTypes.func,
 	handleClose: PropTypes.func,
-	city: PropTypes.string
+	city: PropTypes.string,
+	lat: PropTypes.string,
+	lng: PropTypes.string
 
 };
 

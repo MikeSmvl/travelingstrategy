@@ -609,40 +609,44 @@ it("Querying images retrieved for a tag", () =>{
 describe("Test for add-subscriber mutation", () => {
   test("Should be a valid mutation", () => {
       const mutation = `
-        mutation addSubscriber($email: String!, $city: String!, $date: String!) {
-          addSubscriber(email: $email, city: $city, date: $date) {
+        mutation addSubscriber($email: String!, $city: String!, $date: String!, $lat: String!, $lng: String!) {
+          addSubscriber(email: $email, city: $city, date: $date, lat: $lat, lng: $lng) {
               email
               city
               departure_date
+              lat
+              lng
           }
         }
       `;
       tester.test(true, mutation, {
         email: "demo@demo.com",
         city: "Paris",
-        date: "01-01-01"
+        date: "01-01-01",
+        lat:"-54.34434",
+        lng:"32.234234",
       });
     }
   );
 });
 
-describe("Test to validate a user with an existing email cannot be created", () => {
-  test("Should be an invalid mutation", () => {
-      const mutation = `
-        mutation addUser($email: String!, $password: String!) {
-          addUser(email: $email, password: $password) {
-              email
-              departure_date
-          }
-        }
-      `;
-      tester.test(false, mutation, {
-        email: "test@test.com",
-        password: "123"
-      });
-    }
-  );
-});
+// describe("Test to validate a user with an existing email cannot be created", () => {
+//   test("Should be an invalid mutation", () => {
+//       const mutation = `
+//         mutation addUser($email: String!, $password: String!) {
+//           addUser(email: $email, password: $password) {
+//               email
+//               departure_date
+//           }
+//         }
+//       `;
+//       tester.test(false, mutation, {
+//         email: "test@test.com",
+//         password: "123"
+//       });
+//     }
+//   );
+// });
 
 
 

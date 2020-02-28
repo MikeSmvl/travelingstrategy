@@ -24,7 +24,10 @@ const logEventsToConsole = events => {
 const basicSearch = ()=>{
     // Event search using `within` parameter.
     const withinParam = '45.5016889,-73.567256';
-    phqEvents.search({"location_around.origin": withinParam})
+    phqEvents.search({
+        "location_around.origin": withinParam,
+        "category":"community"
+                    })
     .then(logEventsToConsole)
     .catch(err => console.error(err));
 }

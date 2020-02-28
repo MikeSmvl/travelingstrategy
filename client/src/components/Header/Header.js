@@ -14,6 +14,8 @@ const Header = (props) => {
 		handleShow = '',
 		handleClose = '',
 		city = '',
+		lat = '',
+		lng = '',
 		...rest
 	} = props;
 	return (
@@ -37,6 +39,8 @@ const Header = (props) => {
 								handleShow={handleShow}
 								handleClose={handleClose}
 								city={city}
+								lat={lat}
+								lng={lng}
 							/>
 						</div>
 					</div>
@@ -53,7 +57,9 @@ Header.propTypes = {
 	show: PropTypes.bool,
 	handleShow: PropTypes.func,
 	handleClose: PropTypes.func,
-	city: PropTypes.string
+	city: PropTypes.string,
+	lat: PropTypes.string,
+	lng: PropTypes.string
 
 };
 

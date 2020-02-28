@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap/';
+import { Row, Col,Button } from 'react-bootstrap/';
 import '../App.css';
 import { addTrendingSpots } from '../utils/parsingTools';
-import basicSearch from '../utils/event';
+import basicSearch from '../utils/eventsAPI';
+
+import { Link } from 'react-router-dom';
 
 
 function TrendingSpots({
@@ -38,12 +40,16 @@ function TrendingSpots({
 		fetchData();
 	}, city);
 
-	basicSearch()
 	return (
 		<div>
 			<div className="parallax">
 				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
 					<Row className="justify-content-center">
+						<Link
+							to={`/events?city=${city}`}
+						>
+							<Button>To Events</Button>
+						</Link>
 						<Col
 							style={{
 								backgroundColor: 'rgb(255, 255, 255)',

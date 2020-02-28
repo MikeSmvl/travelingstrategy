@@ -6,6 +6,8 @@ Subscriber = new graphql.GraphQLObjectType({
         email: { type: graphql.GraphQLString },
         city: { type: graphql.GraphQLString },
         departure_date: { type: graphql.GraphQLString },
+        lat: { type: graphql.GraphQLString },
+        lng: { type: graphql.GraphQLString },
     }
 });
 
