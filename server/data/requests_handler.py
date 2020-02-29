@@ -91,11 +91,5 @@ def set_up_db():
             date_of_trip="text", search_term="text", email="text",latitude="text",longitude="text")
 
 
-# DB.drop_table("requests")
-# set_up_db()
-DB.drop_table("images")
-create_table("images")
-#update the dates until the trip then take the photo if necessay
-#create a MAIN function
 to_trip()
 take_photo()

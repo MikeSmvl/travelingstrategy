@@ -23,7 +23,7 @@ command = "/Library/Frameworks/Python.framework/Versions/3.7/bin/python3 ~/Docum
 my_cron = CronTab(user=user)
 
 job1 = my_cron.new(command=command+"/travelingstrategy/server/data/requests_handler.py")
-job1.minute.every(1)
+job1.day.every(1)
 my_cron.write()
 
 for jobs in my_cron:

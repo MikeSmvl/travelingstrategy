@@ -73,7 +73,7 @@ def find_a_post(location, request_id):
 
     for g in garb_all:
         count += 1
-        if count > 8:
+        if count > 1:
             break
 
         u = "https://www.instagram.com"+g.get('href')
