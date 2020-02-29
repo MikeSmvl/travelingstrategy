@@ -20,7 +20,7 @@ function TrendingSpots({
 							image_id,
                             image_link,
                             geolocation,
-                            cation,
+                            caption,
                             tag
 						}
 					}
@@ -50,6 +50,7 @@ function TrendingSpots({
 							}}
 							lg={8}
 						>
+							{trendingSpots.tag}
 							{addTrendingSpots(trendingSpots)}
 						</Col>
 					</Row>

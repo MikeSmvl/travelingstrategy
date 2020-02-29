@@ -28,12 +28,6 @@ def calculate_days_to_trip(date_trip):
     days = delta.days
     return days
 
-def calculate_days_to_trip_test(date_trip):
-    date_trip = datetime.datetime.strptime(date_trip, DATE_FORMAT)
-    test_date = datetime.datetime.strptime("2020-2-25", DATE_FORMAT)
-    delta = date_trip - test_date
-    days = delta.days
-    return days
 
 def to_trip():
     try:
@@ -76,7 +70,7 @@ def take_photo():
             email = d['email']
             print(days_to_trip)
 
-            if (days_to_trip <= 14) and (days_to_trip > 7):
+            if (days_to_trip <= 14) and (days_to_trip >=  7):
                 try:
                     find_a_post(search_term,request_id)
                 except:
@@ -97,7 +91,11 @@ def set_up_db():
             date_of_trip="text", search_term="text", email="text",latitude="text",longitude="text")
 
 
-to_trip()
+# DB.drop_table("requests")
+# set_up_db()
 DB.drop_table("images")
 create_table("images")
+#update the dates until the trip then take the photo if necessay
+#create a MAIN function
+to_trip()
 take_photo()

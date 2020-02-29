@@ -63,11 +63,11 @@ const formatingVisa = (visaInfo) => {
 function addChosenCities(arrayOfCities){
 	const items = [];
 	arrayOfCities.forEach(citySubscription =>{
-		const city_in_url = citySubscription.city.toLowerCase().replace(' ', ''); // triming the city to match the tag
-		const cityName = citySubscription.city;
+		const city_in_url = citySubscription.search_term.toLowerCase().replace(' ', ''); // triming the city to match the tag
+		const cityName = citySubscription.search_term;
 		items.push(
 			<Link
-				to={`/trending_spots?city=${city_in_url}`}
+				to={`/trending_spots?city=${cityName}`}
 			>
 			<Row
 				style={{
@@ -107,7 +107,7 @@ function addTrendingSpots(arrayOfImages){
 		// const city_in_url = citySubscription.city.toLowerCase().replace(' ', ''); // triming the city to match the tag
 		const image_url = image.image_link;
 		const geolocation = image.geolocation;
-		const caption = image.cation;
+		const caption = image.caption;
 		items.push(
 			<Row
 				style={{
@@ -130,9 +130,9 @@ function addTrendingSpots(arrayOfImages){
 				}}
 				>
 						{/* style={{backgroundImage: `url(${image_url})`}}> */}
-						<img 
-						src={image_url} 
-						alt="Logo" 
+						<img
+						src={image_url}
+						alt="Logo"
 						width='100%'
 						height='100%'/>
 						<div>
