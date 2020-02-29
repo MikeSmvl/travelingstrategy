@@ -37,7 +37,8 @@ function Me() {
 						userSubscriptions(email:"${email}"){
 							email,
 							search_term,
-							date_of_trip
+							date_of_trip,
+							request_id
 						}
 					}
 					`

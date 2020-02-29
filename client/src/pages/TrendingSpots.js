@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap/';
-import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
 import { addTrendingSpots } from '../utils/parsingTools';
 
@@ -16,12 +15,13 @@ function TrendingSpots({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						imagesForTag(tag:"${city}"){
+						imagesForRequestId(request_id:"${city}"){
 							image_id,
                             image_link,
                             geolocation,
                             caption,
-                            tag
+							tag
+
 						}
 					}
 					`
@@ -29,9 +29,9 @@ function TrendingSpots({
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.data.imagesForTag
-					&& res.data.imagesForTag.length !== 0
-					&& setTrendingSpots(res.data.imagesForTag);
+					res.data.imagesForRequestId
+					&& res.data.imagesForRequestId.length !== 0
+					&& setTrendingSpots(res.data.imagesForRequestId);
 				});
 		}
 
@@ -50,7 +50,6 @@ function TrendingSpots({
 							}}
 							lg={8}
 						>
-							{trendingSpots.tag}
 							{addTrendingSpots(trendingSpots)}
 						</Col>
 					</Row>

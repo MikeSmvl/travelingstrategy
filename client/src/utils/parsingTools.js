@@ -63,11 +63,12 @@ const formatingVisa = (visaInfo) => {
 function addChosenCities(arrayOfCities){
 	const items = [];
 	arrayOfCities.forEach(citySubscription =>{
-		const city_in_url = citySubscription.search_term.toLowerCase().replace(' ', ''); // triming the city to match the tag
+		//we should be sending a request id thats why we ghave it a string is too volatile
+		const request_id = citySubscription.request_id;
 		const cityName = citySubscription.search_term;
 		items.push(
 			<Link
-				to={`/trending_spots?city=${cityName}`}
+				to={`/trending_spots?city=${request_id}`}
 			>
 			<Row
 				style={{
@@ -104,7 +105,7 @@ function addTrendingSpots(arrayOfImages){
 	const items = [];
 	// console.log(arrayOfImages)
 	arrayOfImages.forEach(image =>{
-		// const city_in_url = citySubscription.city.toLowerCase().replace(' ', ''); // triming the city to match the tag
+		//const city_in_url = citySubscription.search_term.toLowerCase().replace(' ', ''); // triming the city to match the tag
 		const image_url = image.image_link;
 		const geolocation = image.geolocation;
 		const caption = image.caption;
