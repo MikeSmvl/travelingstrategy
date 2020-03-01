@@ -71,22 +71,34 @@ class Database:
         self.db.commit()
 
 
-    def update(self, table_name, where, **columns):
+    def update(self, table_name, where, string_set , **columns):
         """
         Update row(s) in table where condition is met
-
+        None of the parameters can be left blank
         :param table_name:  Name of the table to be used.
         :param where: Condition to be used for update.
         :param **columns: Columns and values that will replace rows where condition is met.
         """
         self.cols = ""
-
         for col_name, col_type in columns.items():
             self.cols += col_name+"='"+col_type+"',"
         self.cols = self.cols[0:len(self.cols)-1]
 
-        self.db.execute("UPDATE {} SET {} where {}".format(
-            table_name, self.cols, where))
+        if not string_set:
+            self.string_set = ""
+        else:
+            self.string_set = string_set
+
+        if not where:
+            self.db.execute("UPDATE {} SET {} {}".format(
+                table_name,self.string_set,self.cols))
+
+            self.db.commit()
+            return
+
+        self.db.execute("UPDATE {} SET {} {} where {}".format(
+            table_name,self.string_set ,self.cols, where))
+
         self.db.commit()
 
     def insert_or_update(self, table_name, *data):
@@ -109,10 +121,9 @@ class Database:
         self.db.commit()
 
 
-    def get_items(self, table_name, where=1):
+    def get_items(self, table_name, where = 1):
         """
         Get row(s) in table where condition is met
-
         :param table_name:  Name of the table to be used.
         :param where: Condition to be used.
         """
@@ -125,6 +136,20 @@ class Database:
         else:
             return {}
 
+    def select_items_with_cur(self,table_name,where=1):
+        if where == 1:
+            query = "SELECT * FROM "+table_name
+        else:
+            self.where = where
+            query = "SELECT * FROM "+table_name+" WHERE "+self.where
+        try:
+            self.db.row_factory = sqlite3.Row
+            cur = self.db.cursor()
+            cur.execute(query)
+            rows = cur.fetchall()
+            return rows
+        except:
+            return None
 
     def get_tables(self):
         """

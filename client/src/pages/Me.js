@@ -36,8 +36,9 @@ function Me() {
 					query: `{
 						userSubscriptions(email:"${email}"){
 							email,
-							city,
-							departure_date
+							search_term,
+							date_of_trip,
+							request_id
 						}
 					}
 					`
