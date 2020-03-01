@@ -607,6 +607,26 @@ it("Querying images retrieved for a tag", () =>{
       .catch(err => logger.error(__filename +" "+err))
 });
 
+describe("Test for add-subscriber mutation", () => {
+  test("Should be a valid mutation", () => {
+      const mutation = `
+        mutation addSubscriber($email: String!, $search_term: String!, $date_of_trip: String!) {
+          addSubscriber(email: $email, search_term: $search_term, date_of_trip: $date_of_trip) {
+              email
+              search_term
+              date_of_trip
+          }
+        }
+      `;
+      tester.test(true, mutation, {
+        email: "demo@demo.com",
+        search_term: "Paris",
+        date_of_trip: "2001-01-01"
+      });
+    }
+  );
+});
+
 describe("Test to validate a user with an existing email cannot be created", () => {
   test("Should be an invalid mutation", () => {
       const mutation = `
