@@ -67,9 +67,11 @@ function addChosenCities(arrayOfCities){
 		//we should be sending a request id thats why we ghave it a string is too volatile
 		const request_id = citySubscription.request_id;
 		const cityName = citySubscription.search_term;
+		const latitude = citySubscription.latitude;
+		const longitude = citySubscription.longitude;
 		items.push(
 			<Link
-				to={`/trending_spots?city=${request_id}`}
+				to={`/trending_spots?request_id=${request_id}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
 			>
 			<Row
 				style={{

@@ -50,11 +50,15 @@ function Application() {
 				<Route path="/trending_spots">
 					<TrendingSpots
 						city={query.get('city')}
+						latitude={query.get('latitude')}
+						longitude={query.get('longitude')}
+
 					 />
 				</Route>
 				<Route path="/events">
 					<Events
-						city={query.get('city')}
+						latitude={query.get('latitude')}
+						longitude={query.get('longitude')}
 					 />
 				</Route>
 				<Route>

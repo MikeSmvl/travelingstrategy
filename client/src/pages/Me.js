@@ -38,7 +38,9 @@ function Me() {
 							email,
 							search_term,
 							date_of_trip,
-							request_id
+							request_id,
+							latitude,
+							longitude
 						}
 					}
 					`
