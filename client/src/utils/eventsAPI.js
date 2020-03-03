@@ -2,7 +2,7 @@ import Client from 'predicthq';
 // Initialises PredictHQ client library using your access token
 const client = new Client({access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax'});
 const phqEvents = client.events;
-
+// conferences, expos, concerts, festivals, performing-arts, sports, community
 const logEventsToConsole = events => {
     for (const event of events) {
         // See https://developer.predicthq.com/resources/events/#fields for list of all event fields.
