@@ -516,7 +516,9 @@ it("Querying subscribers table", () =>{
   {
     subscriberTable{
       email,
-      departure_date
+      request_id,
+      search_term,
+
     }
 }`;
 
@@ -538,8 +540,7 @@ it("Querying user subscription", () =>{
   {
     userSubscriptions(email:"test@test.com"){
       email,
-      city,
-      departure_date
+      search_term
       }
 }`;
 
@@ -563,7 +564,7 @@ it("Querying images table", () =>{
       image_id,
       image_link,
       geolocation,
-      cation,
+      caption,
       tag
       }
 }`;
@@ -588,7 +589,7 @@ it("Querying images retrieved for a tag", () =>{
       image_id,
       image_link,
       geolocation,
-      cation,
+      caption,
       tag
       }
 }`;
@@ -609,22 +610,18 @@ it("Querying images retrieved for a tag", () =>{
 describe("Test for add-subscriber mutation", () => {
   test("Should be a valid mutation", () => {
       const mutation = `
-        mutation addSubscriber($email: String!, $city: String!, $date: String!, $lat: String!, $lng: String!) {
-          addSubscriber(email: $email, city: $city, date: $date, lat: $lat, lng: $lng) {
+        mutation addSubscriber($email: String!, $search_term: String!, $date_of_trip: String!) {
+          addSubscriber(email: $email, search_term: $search_term, date_of_trip: $date_of_trip) {
               email
-              city
-              departure_date
-              lat
-              lng
+              search_term
+              date_of_trip
           }
         }
       `;
       tester.test(true, mutation, {
         email: "demo@demo.com",
-        city: "Paris",
-        date: "01-01-01",
-        lat:"-54.34434",
-        lng:"32.234234",
+        search_term: "Paris",
+        date_of_trip: "2001-01-01"
       });
     }
   );

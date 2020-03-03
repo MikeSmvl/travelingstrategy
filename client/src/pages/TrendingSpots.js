@@ -18,12 +18,13 @@ function TrendingSpots({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						imagesForTag(tag:"${city}"){
+						imagesForRequestId(request_id:"${city}"){
 							image_id,
                             image_link,
                             geolocation,
-                            cation,
-                            tag
+                            caption,
+							tag
+
 						}
 					}
 					`
@@ -31,9 +32,9 @@ function TrendingSpots({
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.data.imagesForTag
-					&& res.data.imagesForTag.length !== 0
-					&& setTrendingSpots(res.data.imagesForTag);
+					res.data.imagesForRequestId
+					&& res.data.imagesForRequestId.length !== 0
+					&& setTrendingSpots(res.data.imagesForRequestId);
 				});
 		}
 
