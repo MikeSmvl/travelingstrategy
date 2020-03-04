@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 
 
 function TrendingSpots({
+	request_id,
 	city,
 	latitude,
 	longitude
@@ -49,7 +50,7 @@ function TrendingSpots({
 				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
 					<Row className="justify-content-center">
 						<Link
-							to={`/events?latitude=${latitude}&longitude=${longitude}`}
+							to={`/events?request_id=${request_id}&latitude=${latitude}&longitude=${longitude}`}
 						>
 							<Button>To Events</Button>
 						</Link>

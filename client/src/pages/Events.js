@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col,Button} from 'react-bootstrap/';
+import { Row, Col,Button, Nav} from 'react-bootstrap/';
 
 import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
@@ -31,14 +31,47 @@ function Events(
                         }}
                         lg={8}
                     >
-                        <div className="justify-content-center" style={{ paddingLeft: '12%'}}>
-                            <Button variant="outline-primary" value="conferences" onClick={categoryChosen}>Conferences</Button>
-                            <Button variant="outline-primary" value="expos" onClick={categoryChosen}>Expos</Button>
-                            <Button variant="outline-primary" value="concerts" onClick={categoryChosen}>Concerts</Button>
-                            <Button variant="outline-primary" value="festivals" onClick={categoryChosen}>Festivals</Button>
-                            <Button variant="outline-primary" value="performing-arts" onClick={categoryChosen}>Performing-arts</Button>
-                            <Button variant="outline-primary" value="sports" onClick={categoryChosen}>Sports</Button>
-                            <Button variant="outline-primary" value="community" onClick={categoryChosen}>Community</Button>
+                        <Row
+								style={{
+									backgroundColor: 'rgb(247,	247,	247)',
+									padding: '0.5em',
+									borderRadius: '0px'
+								}}
+								className="justify-content-center sticky"
+							>
+								<Nav variant="pills" className="flex-row">
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="conferences" onClick={categoryChosen}>Conferences</Button>
+									</Nav.Item>
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="expos" onClick={categoryChosen}>Expos</Button>
+									</Nav.Item>
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="concerts" onClick={categoryChosen}>Concerts</Button>
+									</Nav.Item>
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="festivals" onClick={categoryChosen}>Festivals</Button>
+									</Nav.Item>
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="performing-arts" onClick={categoryChosen}>Performing-arts</Button>
+									</Nav.Item>
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="sports" onClick={categoryChosen}>Sports</Button>
+									</Nav.Item>
+									<Nav.Item>
+                                        <Button variant="outline-primary" value="community" onClick={categoryChosen}>Community</Button>
+									</Nav.Item>
+								</Nav>
+							</Row>
+                        <div className="justify-content-center">
+                            <div id="My_Events">
+                                <Row className="justify-content-center" >
+                                    <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
+                                        Text
+                                    </Col>
+                                </Row>
+                            </div>
+
                         </div>
                         {/* <Row
                             style={{
