@@ -1,9 +1,11 @@
 import React,{useState} from 'react';
 import './Slider.css';
+import ImageComp from './ImageComp'
+import image_1 from './pictures/Events.jpg'
 
 function Slider() {
   //array to show the components for the Slider
-  let slideArray =  [1,2,3]
+  let slideArray =  [<ImageComp src={image_1} />,2,3]
   const [x, setX] = useState(0)
   //functionality for the buttons
   const goLeft=()=> {
