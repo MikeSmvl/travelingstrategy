@@ -606,12 +606,42 @@ it("Querying images retrieved for a tag", () =>{
       })
       .catch(err => logger.error(__filename +" "+err))
 });
+it("Querying events retrieved for a request_id", () =>{
+  const query =`
+  {
+    eventsForRequest(request_id:"5"){
+      request_id,
+      event_category,
+    	description,
+    	duration,
+    	start_date,
+    	end_date,
+    	title,
+    	labels,
+    	address,
+    	place_type,
+    	name_of_place
+    }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
 
 describe("Test for add-subscriber mutation", () => {
   test("Should be a valid mutation", () => {
       const mutation = `
-        mutation addSubscriber($email: String!, $search_term: String!, $date_of_trip: String!) {
-          addSubscriber(email: $email, search_term: $search_term, date_of_trip: $date_of_trip) {
+        mutation addSubscriber($email: String!, $search_term: String!, $date_of_trip: String!, $lat: String!, $lng: String!) {
+          addSubscriber(email: $email, search_term: $search_term, date_of_trip: $date_of_trip, lat: $lat, lng: $lng) {
               email
               search_term
               date_of_trip
@@ -621,7 +651,9 @@ describe("Test for add-subscriber mutation", () => {
       tester.test(true, mutation, {
         email: "demo@demo.com",
         search_term: "Paris",
-        date_of_trip: "2001-01-01"
+        date_of_trip: "2001-01-01",
+        lat:"5",
+        lng:"5"
       });
     }
   );
