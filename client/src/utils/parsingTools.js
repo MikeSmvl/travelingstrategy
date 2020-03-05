@@ -71,7 +71,7 @@ function addChosenCities(arrayOfCities){
 		const longitude = citySubscription.longitude;
 		items.push(
 			<Link
-				to={`/trending_spots?request_id=${request_id}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
+				to={`/user_selection?request_id=${request_id}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
 			>
 			<Row
 				style={{

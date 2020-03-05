@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Country from './pages/Country';
 import Navbar from './components/Navbar/Navbar';
 import Me from './pages/Me';
+import UserSelection from './pages/UserSelection';
 import TrendingSpots from './pages/TrendingSpots';
 import Events from './pages/Events';
 
@@ -46,6 +47,13 @@ function Application() {
 				</Route>
 				<Route path="/me">
 					<Me />
+				</Route>
+				<Route path="/user_selection">
+					<UserSelection
+						city={query.get('city')}
+						latitude={query.get('latitude')}
+						longitude={query.get('longitude')}
+					 />
 				</Route>
 				<Route path="/trending_spots">
 					<TrendingSpots

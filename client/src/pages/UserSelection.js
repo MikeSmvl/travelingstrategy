@@ -3,7 +3,7 @@ import '../App.css';
 import Slider from '../components/Slider/Slider';
 
 
-function EventsAndTrending(){
+function UserSelection(){
 	return (
 		<div>
 			<Slider/>
@@ -11,4 +11,4 @@ function EventsAndTrending(){
 	);
 }
 
-export default EventsAndTrending;
+export default UserSelection;
