@@ -2,10 +2,11 @@ import React,{useState} from 'react';
 import './Slider.css';
 import ImageComp from './ImageComp'
 import image_1 from './pictures/Events.jpg'
+import image_2 from './pictures/Trending.jpg'
 
 function Slider() {
   //array to show the components for the Slider
-  let slideArray =  [<ImageComp src={image_1} />,2,3]
+  let slideArray =  [<ImageComp src={image_1} />, <ImageComp src={image_2} />]
   const [x, setX] = useState(0)
   //functionality for the buttons
   const goLeft=()=> {
@@ -31,10 +32,13 @@ function Slider() {
           )
         })
       }
-
     {/* button to navigate left or right */}
-    <button id="leftButton" onClick={goLeft}>left</button>
-    <button id="rightButton" onClick={goRight}>right</button>
+    <button id="leftButton" onClick={goLeft}>
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <button id="rightButton" onClick={goRight}>
+      <i class="fas fa-chevron-right"></i>
+    </button>
     </div>
   )
 }

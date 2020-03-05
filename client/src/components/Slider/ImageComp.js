@@ -6,7 +6,7 @@ function ImageComp({src}) {
 
   let imageStyle = {
     width: 100 + "%",
-    height: 100 + "%"
+    height: "auto"
   }
   return <img src={src} alt="slide-img" style={imageStyle} />;
 }
