@@ -26,7 +26,7 @@ const basicSearch = ()=>{
     const withinParam = '40.7127753,-74.0059728';
     phqEvents.search({
         "location_around.origin": withinParam,
-        "category":"expos"
+        "category":"concerts"
                     })
     .then(logEventsToConsole)
     .catch(err => console.error(err));

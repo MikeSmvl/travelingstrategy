@@ -4,12 +4,15 @@ import { Row, Col,Button, Nav} from 'react-bootstrap/';
 import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
 import basicSearch from '../utils/eventsAPI';
+import addMyEvents from '../utils/eventsTools';
 
 function Events(
+    request_id,
 	latitude,
 	longitude
 ){
     const [category, setCategory] = useState('');
+    const [savedEvents, setSavedEvents] = useState([]);
 
 
     const categoryChosen = (event) => {
@@ -17,9 +20,47 @@ function Events(
         console.log(category);
     };
 
-    console.log(category);
+    useEffect(() => {
+        async function fetchEvents() {
+            await fetch(process.env.REACT_APP_BACKEND, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+                    query:`{
+                        eventsForRequest(request_id:"5"){
+                            request_id,
+                            event_category,
+                              description,
+                              duration,
+                              start_date,
+                              end_date,
+                              title,
+                              labels,
+                              address,
+                              place_type,
+                              name_of_place
+                            }
+                    }
+                    `
+                })
+            })
+            .then((res) => res.json())
+            .then((res) => {
+                res.data.eventsForRequest
+                    && res.data.eventsForRequest.length !=0
+                    && setSavedEvents(res.data.eventsForRequest);
+                console.log(category);
+                console.log(res.data.eventsForRequest)
+            });
+        }
 
-    // basicSearch()
+        fetchEvents();
+    },
+    category,
+    savedEvents);
+    console.log(category);
+    console.log(savedEvents)
+
     return (
 		<div>
 			<div className="parallax">
@@ -66,9 +107,11 @@ function Events(
                         <div className="justify-content-center">
                             <div id="My_Events">
                                 <Row className="justify-content-center" >
-                                    <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
+                                    {/* <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
                                         Text
-                                    </Col>
+                                    </Col> */}
+                                    {addMyEvents(savedEvents)}
+
                                 </Row>
                             </div>
 
