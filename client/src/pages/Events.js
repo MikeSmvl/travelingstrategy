@@ -106,15 +106,25 @@ function Events(
 							</Row>
                         <div className="justify-content-center">
                             <div id="My_Events">
-                                <Row className="justify-content-center" >
+                                {/* <Row className="justify-content-center"
+                                    style={{
+                                        backgroundColor: 'rgb(253, 218, 197)'
+                                    }}
+                                 >
                                     {/* <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
                                         Text
-                                    </Col> */}
-                                    {addMyEvents(savedEvents)}
-
-                                </Row>
+                                    </Col> 
+                                    
+                                </Row> */}
+                                <Card
+                                            header="Events"
+                                            
+                                        >
+                                            <CardBody>
+                                                {addMyEvents(savedEvents)}	
+                                            </CardBody>
+                                    </Card>
                             </div>
-
                         </div>
                         {/* <Row
                             style={{
