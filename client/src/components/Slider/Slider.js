@@ -27,7 +27,10 @@ function ControlledCarousel() {
                 </div>
               </div>
         </div>
-        <Carousel.Caption />
+        <Carousel.Caption>
+          <h3>Go discover special events near you!</h3>
+          <p />
+        </Carousel.Caption>
       </Carousel.Item>
 
       <Carousel.Item>
@@ -40,7 +43,9 @@ function ControlledCarousel() {
                 </div>
               </div>
         </div>
-        <Carousel.Caption />
+        <Carousel.Caption>
+          <h3>Go visit the most trending spots! </h3>
+        </Carousel.Caption>
       </Carousel.Item>
 
     </Carousel>
