@@ -1,46 +1,50 @@
 import React,{useState} from 'react';
 import './Slider.css';
-import ImageComp from './ImageComp'
+import './Button.css'
 import image_1 from './pictures/Events.jpg'
 import image_2 from './pictures/Trending.jpg'
+import Carousel from 'react-bootstrap/Carousel'
 
-function Slider() {
-  //array to show the components for the Slider
-  let slideArray =  [<ImageComp src={image_1} />, <ImageComp src={image_2} />]
-  const [x, setX] = useState(0)
-  //functionality for the buttons
-  const goLeft=()=> {
-    //if x is equal to the first component, clicking left will set set the slider back to the last component
-    //otherwise keep sliding to the left
-    x === 0 ? setX(-100 * (slideArray.length -1)) : setX(x + 100)
-  }
 
-  const goRight=()=> {
-    //if x is equal to the length of the array, clicking right will set the slider back to the first component
-    //otherwise keep sliding to the right
-    x === -100 * (slideArray.length -1) ? setX(0) : setX(x - 100)
-  }
+function ControlledCarousel() {
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(null);
 
-  return(
-    <div className="slider">
-      {
-        slideArray.map((item, index)=>{
-          return(
-            <div key={index} className="slide" style={{transform:`translateX(${x}%)`}}>
-              {item}
-            </div>
-          )
-        })
-      }
-    {/* button to navigate left or right */}
-    <button id="leftButton" onClick={goLeft}>
-      <i class="fas fa-chevron-left"></i>
-    </button>
-    <button id="rightButton" onClick={goRight}>
-      <i class="fas fa-chevron-right"></i>
-    </button>
-    </div>
-  )
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+    setDirection(e.direction);
+  };
+
+  return (
+    <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
+      <Carousel.Item>
+          <div className="content">
+          <div className="content-overlay"></div>
+            <img className="content-image" src={image_1} alt="slide-img" />
+              <div className="content-details fadeIn-bottom">
+                <div className="button">
+                  <span>Events</span>
+                </div>
+              </div>
+        </div>
+        <Carousel.Caption />
+      </Carousel.Item>
+
+      <Carousel.Item>
+          <div className="content">
+          <div className="content-overlay"></div>
+            <img className="content-image" src={image_2} alt="slide-img" />
+              <div className="content-details fadeIn-bottom">
+                <div className="button">
+                  <span>Trending</span>
+                </div>
+              </div>
+        </div>
+        <Carousel.Caption />
+      </Carousel.Item>
+
+    </Carousel>
+  );
 }
 
-export default Slider;
+export default ControlledCarousel;
