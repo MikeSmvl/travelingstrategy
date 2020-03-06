@@ -16,6 +16,7 @@ const drugs = require('./drugs')
 const { getUser } = require('./user')
 const {subscriberTable, userSubscriptions} = require('./subscribers')
 const {imagesTable,imagesForTag,imagesForRequestId} = require('./images.js')
+const eventsForRequest = require('./events')
 
 const logger = require('../logger/logger.js')
 
@@ -50,7 +51,8 @@ var queryType = new graphql.GraphQLObjectType({
         userSubscriptions,
         imagesTable,
         imagesForTag,
-        imagesForRequestId
+        imagesForRequestId,
+        eventsForRequest
     }
 });
 

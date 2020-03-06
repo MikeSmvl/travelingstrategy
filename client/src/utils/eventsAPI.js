@@ -23,10 +23,10 @@ const logEventsToConsole = events => {
 // Basic event search using title as parameter. By default, it will return the first ten events.
 const basicSearch = ()=>{
     // Event search using `within` parameter.
-    const withinParam = '45.5016889,-73.567256';
+    const withinParam = '40.7127753,-74.0059728';
     phqEvents.search({
         "location_around.origin": withinParam,
-        "category":"community"
+        "category":"concerts"
                     })
     .then(logEventsToConsole)
     .catch(err => console.error(err));
