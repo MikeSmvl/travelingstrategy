@@ -8,7 +8,7 @@ import image_1 from './pictures/Events.jpg'
 import image_2 from './pictures/Trending.jpg'
 
 
-const ControlledCarousel = (props) => {
+const Slider = (props) => {
   const {
     request_id = '',
     city = '',
@@ -22,7 +22,7 @@ const ControlledCarousel = (props) => {
     setIndex(selectedIndex);
     setDirection(e.direction);
   };
-  
+
   return (
     <Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
       <Carousel.Item>
@@ -49,7 +49,9 @@ const ControlledCarousel = (props) => {
             <img className="content-image" src={image_2} alt="slide-img" />
               <div className="content-details fadeIn-bottom">
                 <div className="button">
-                  <span>Trending</span>
+                  <Link to={`/trending_spots?request_id=${request_id}&city=${city}&latitude=${latitude}&longitude=${longitude}`} >
+                    <span>Trending</span>
+                  </Link>
                 </div>
               </div>
         </div>
@@ -62,11 +64,12 @@ const ControlledCarousel = (props) => {
   );
 };
 
-ControlledCarousel.propTypes = {
-	request_id: PropTypes.string,
+Slider.propTypes = {
+  request_id: PropTypes.string,
+  city: PropTypes.string,
 	latitude: PropTypes.string,
 	longitude: PropTypes.string,
 
 };
 
-export default ControlledCarousel;
+export default Slider;

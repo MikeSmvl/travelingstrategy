@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import '../App.css';
-import ControlledCarousel from '../components/Slider/Slider';
+import Slider from '../components/Slider/Slider';
 
 
 const UserSelection = (props) => {
@@ -13,7 +13,7 @@ const UserSelection = (props) => {
 
 	return (
 		<div>
-			<ControlledCarousel 
+			<Slider 
         request_id={request_id}
         city={city}
         latitue={latitude}
