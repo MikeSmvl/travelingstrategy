@@ -15,11 +15,11 @@ const Card = (props) => {
 };
 
 const CardBody = (props) => {
-	const { children, title = '', subtitle = '', ...rest } = props;
+	const { children, title = '', subtitle = '', classExtra = '', ...rest } = props;
 	return (
 		<RBCard.Body
 			{...rest}
-			className="TScardBody"
+			className={`TScardBody ${classExtra}`}
 		>
 			{title && <RBCard.Title>{title}</RBCard.Title>}
 			{subtitle && (
@@ -40,7 +40,8 @@ Card.propTypes = {
 	header: PropTypes.string,
 	footer: PropTypes.string,
 	title: PropTypes.string,
-	subtitle: PropTypes.string
+	subtitle: PropTypes.string,
+	classExtra: PropTypes.string
 };
 
 export { Card, CardBody, Divider };

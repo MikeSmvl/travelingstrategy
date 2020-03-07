@@ -11,16 +11,16 @@ var addSubscriber = {
         email: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         },
-        city: {
+        date_of_trip: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         },
-        date: {
+        search_term: {
             type: new graphql.GraphQLNonNull(graphql.GraphQLString)
         }
     },
     resolve: function (source, args) {
         return new Promise((resolve, reject) => {
-            query = `INSERT INTO subscribers VALUES('${args.email}','${args.city}','${args.date}');`
+            query = `INSERT INTO requests VALUES(null,'-1','-1','${args.date_of_trip}','${args.search_term}','${args.email}','lat','lon');`
             logger.info("Trying to query "+query)
             db.run(query, function(err, rows) {
                 if(err){
