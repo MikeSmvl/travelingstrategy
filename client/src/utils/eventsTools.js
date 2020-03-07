@@ -20,8 +20,7 @@ function addMyEvents(myEvents){
 		events.push(
             <Col sm={5} style={
                 { 
-                    padding: '40px 25px 25px 25px',
-                    border: 'double'
+                    padding: '40px 25px 25px 25px'
                 }
             }>
                 Category:{event_category}<br></br>
