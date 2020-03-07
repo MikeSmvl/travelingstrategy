@@ -3,6 +3,7 @@ import { Row, Col,Button, Nav} from 'react-bootstrap/';
 import '../App.css';
 import searchByCategory from '../utils/eventsAPI';
 import addMyEvents from '../utils/eventsTools';
+import { Card, CardBody} from '../components/Card/Card';
 
 function Events(
     request_id,

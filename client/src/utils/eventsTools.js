@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Col} from 'react-bootstrap/';
+import { Card, CardBody} from '../components/Card/Card';
 
 function addMyEvents(myEvents){
     const events = [];
