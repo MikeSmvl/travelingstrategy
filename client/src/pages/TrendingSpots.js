@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Row, Col,Button } from 'react-bootstrap/';
 import '../App.css';
 import { addTrendingSpots } from '../utils/parsingTools';
-import basicSearch from '../utils/eventsAPI';
 
 import { Link } from 'react-router-dom';
 
@@ -42,7 +41,7 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	}, city);
+	}, [city]);
 
 	return (
 		<div>

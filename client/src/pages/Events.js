@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col,Button, Nav} from 'react-bootstrap/';
-
-import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
-import basicSearch from '../utils/eventsAPI';
+import searchByCategory from '../utils/eventsAPI';
 import addMyEvents from '../utils/eventsTools';
 
 function Events(
@@ -13,14 +11,116 @@ function Events(
 ){
     const [category, setCategory] = useState('');
     const [savedEvents, setSavedEvents] = useState([]);
+    const [eventsForCategories, setEventsForCategories] = useState([]);
+    const [conferences, setConferences] = useState([]);
+    const [expos, setExpos] = useState([]);
+    const [concerts, seConcerts] = useState([]);
+    const [festivals, setFestivals] = useState([]);
+    const [performingArts, setPerformingArts] = useState([]);
+    const [sports, setSports] = useState([]);
+    const [community, setCommunity] = useState([]);
+    const [conferencesCalled, setConferencesCalled] = useState(false);
+
+    // var conferencesCalled =useRef(false);
+    var exposCalled =useRef(false);
+    var concertsCalled =useRef(false);
+    var festivalsCalled =useRef(false);
+    var performingArtsCalled =useRef(false);
+    var sportsCalled =useRef(false);
+    var communityCalled =useRef(false);
 
 
     const categoryChosen = (event) => {
-        const category = event.target.value;
-        console.log(category);
+        setCategory(event.target.value)
     };
 
     useEffect(() => {
+
+
+        /**
+         * This function checks if the events for a category were already requested
+         * in order to provide faster service and limit api calls
+         **/
+        async function eventsByCategoryToDispaly(){
+            var array_of_events = [];
+            switch(category) {
+                case "conferences":
+                    console.log(conferencesCalled)
+                    if(!conferencesCalled){
+                        array_of_events = searchByCategory(category);
+                        setConferences(array_of_events);
+                    }
+                    else{
+                        array_of_events = conferences;
+                    }
+                    setConferencesCalled(true)
+                break;
+                case "expos":
+                    if(!exposCalled.current){
+                        array_of_events = searchByCategory(category)
+                        setExpos(array_of_events)
+                    }
+                    else{
+                        array_of_events = expos;
+                    }
+                    exposCalled = true
+                break;
+                case "concerts":
+                    if(!concertsCalled.current){
+                        array_of_events = searchByCategory(category)
+                        seConcerts(array_of_events)
+                    }
+                    else{
+                        array_of_events = concerts;
+                    }
+                    concertsCalled = true
+                break;
+                case "festivals":
+                    if(!festivalsCalled.current){
+                        array_of_events = searchByCategory(category)
+                        setFestivals(array_of_events)
+                    }
+                    else{
+                        array_of_events = festivals;
+                    }
+                    festivalsCalled = true
+                break;
+                case "performing-arts":
+                    if(!performingArtsCalled.current){
+                        array_of_events = searchByCategory(category)
+                        setPerformingArts(array_of_events)
+                    }
+                    else{
+                        array_of_events = performingArts;
+                    }
+                    performingArtsCalled = true
+                break;
+                case "sports":
+                    if(!sportsCalled.current){
+                        array_of_events = searchByCategory(category)
+                        setSports(array_of_events)
+                    }
+                    else{
+                        array_of_events = sports;
+                    }
+                    sportsCalled = true
+                break;
+                case "community":
+                    if(!communityCalled.current){
+                        array_of_events = searchByCategory(category)
+                        setCommunity(array_of_events)
+                    }
+                    else{
+                        array_of_events = community;
+                    }
+                    communityCalled = true
+                break;
+                default:
+                ;
+              }
+              return array_of_events;
+        }
+
         async function fetchEvents() {
             await fetch(process.env.REACT_APP_BACKEND, {
 				method: 'POST',
@@ -47,19 +147,27 @@ function Events(
             .then((res) => res.json())
             .then((res) => {
                 res.data.eventsForRequest
-                    && res.data.eventsForRequest.length !=0
+                    && res.data.eventsForRequest.length !==0
                     && setSavedEvents(res.data.eventsForRequest);
                 console.log(category);
                 console.log(res.data.eventsForRequest)
             });
         }
 
+
         fetchEvents();
+
+        var events_by_category = eventsByCategoryToDispaly()
+        setEventsForCategories(events_by_category)
     },
-    category,
-    savedEvents);
-    console.log(category);
-    console.log(savedEvents)
+    [
+        category,
+        conferencesCalled
+
+    ]);
+
+    console.log("Category: ",category)
+    console.log("Events",eventsForCategories )
 
     return (
 		<div>
