@@ -1,0 +1,63 @@
+.TSCard {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.TScardBody {
+	text-align: left;
+}
+
+.cardHeader {
+	background-color: white;
+	color: rgb(134, 134, 146);
+    font-size: large;
+    /* text-align: center */
+}
+
+.cardDivider {
+	color: rgb(134, 134, 146);
+}
+
+.tablinks {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 10px 10px;
+	transition: 0.3s;
+	font-size: 15px;
+	color: #FF9A8D;
+}
+
+.tablinks:hover {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 10px 10px;
+	transition: 0.3s;
+	font-size: 15px;
+	color: #FF1C00;
+}
+
+.tablinks:focus {
+	background-color: inherit;
+	float: left;
+	border: none;
+	outline: none;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 10px 10px;
+	transition: 0.3s;
+	font-size: 15px;
+	color: #FF1C00;
+}
+
+.button{
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}

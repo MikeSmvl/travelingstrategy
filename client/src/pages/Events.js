@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Row, Col,Button, Nav} from 'react-bootstrap/';
+import { EventCard, EventCardBody} from '../components/EventCard/EventCard';
+import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
 import searchByCategory from '../utils/eventsAPI';
 import addMyEvents from '../utils/eventsTools';
