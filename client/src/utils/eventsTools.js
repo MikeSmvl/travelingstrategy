@@ -18,11 +18,12 @@ function addMyEvents(myEvents){
         // const place_type = event.place_type;
 		const name_of_place = event.name_of_place;
 		events.push(
-            <Col sm={5} style={
+            <Col style={
                 {
                     padding: '40px 25px 25px 25px'
                 }
             }>
+                <hr></hr>
                 Category:{event_category}<br></br>
                 Title: {title}<br></br>
                 Start Date: {start_date}<br></br>

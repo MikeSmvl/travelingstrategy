@@ -26,7 +26,6 @@ function TrendingSpots({
                             geolocation,
                             caption,
 							tag
-
 						}
 					}
 					`

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col,Button, Nav} from 'react-bootstrap/';
+import { EventCard, EventCardBody} from '../components/EventCard/EventCard';
+import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
 import searchByCategory from '../utils/eventsAPI';
 import addMyEvents from '../utils/eventsTools';
-import { Card, CardBody} from '../components/Card/Card';
+
 
 function Events(
     request_id,
@@ -44,7 +46,6 @@ function Events(
             var array_of_events = [];
             switch(category) {
                 case "conferences":
-                    console.log(conferencesCalled)
                     if(!conferencesCalled){
                         array_of_events = searchByCategory(category);
                         setConferences(array_of_events);
@@ -166,7 +167,7 @@ function Events(
     return (
 		<div>
 			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
+				<Row className="justify-content-center" style={{ paddingTop: '100px' }}>
                     <Col
                         style={{
                             backgroundColor: 'rgb(255, 255, 255)',
@@ -207,36 +208,37 @@ function Events(
 								</Nav>
 							</Row>
                         <div className="justify-content-center">
-                            <div id="My_Events">
-                                {/* <Row className="justify-content-center"
-                                    style={{
-                                        backgroundColor: 'rgb(253, 218, 197)'
-                                    }}
-                                 >
-                                    {/* <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
-                                        Text
-                                    </Col> 
-                                    
-                                </Row> */}
+                            <div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
                                 <Card
                                             header="Events"
-                                            
+                                            style={{ maxHeight: '600px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
                                         >
                                             <CardBody>
-                                                {addMyEvents(savedEvents)}	
-                                            </CardBody>
+                                                <div>
+                                                    <ul>
+                                                        <EventCard
+                                                            header= {"Suggested Events"}
+                                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
+                                                        >
+                                                            <EventCardBody>
+                                                            </EventCardBody>
+                                                        </EventCard>
+                                                    </ul>
+                                                    <ul>
+                                                        <Card
+                                                            header="Favorite Events"
+                                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
+                                                        >
+                                                            <CardBody>
+                                                            {addMyEvents(savedEvents)}
+                                                            </CardBody>
+                                                        </Card>
+                                                    </ul>
+                                                </div>
+                                        </CardBody>
                                     </Card>
                             </div>
                         </div>
-                        {/* <Row
-                            style={{
-                                backgroundColor: 'rgb(247,	247,	247)',
-                                borderRadius: '0px',
-                                paddingBottom:'1.25rem'
-                            }}
-                            className="justify-content-center"
-                        >
-                        </Row> */}
                     </Col>
 				</Row>
 				<footer id="footer" />
