@@ -229,7 +229,7 @@ function Events(
                                                             style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
                                                         >
                                                             <EventCardBody>
-                                                                {addMyEvents(savedEvents)}	
+                                                                	
                                                             </EventCardBody>
                                                         </EventCard>
                                                     </ul>
@@ -239,7 +239,7 @@ function Events(
                                                             style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
                                                         >
                                                             <CardBody>	
-                                                                
+                                                            {addMyEvents(savedEvents)}
                                                             </CardBody>
                                                         </Card>
                                                     </ul>

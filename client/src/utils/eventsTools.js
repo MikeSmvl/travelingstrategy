@@ -32,7 +32,6 @@ function addMyEvents(myEvents){
                 Description: {description}<br></br>
                 Address: {address}<br></br>
                 Venue: {name_of_place}<br></br>
-                <Button value="Add to Favorite" style={{float: 'left'}}>Add to Favorite</Button>
             </Col>
 		);
 	});
