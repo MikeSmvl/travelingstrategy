@@ -223,7 +223,7 @@ function Events(
                                     {/* <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
                                         Text
                                     </Col> 
-                                    
+
                                 </Row> */}
                                 <Card
                                             header="Events"
