@@ -5,16 +5,15 @@
 }
 .AppHeader {
 	/* background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3)), url('pictures/output-na.gif'); */
-	background: linear-gradient(rgb(253, 218, 197, 0.3), rgb(253, 218, 197, 0.2)), url('pictures/output-na.gif');
-	background-size: cover;
+	/* background: linear-gradient(rgb(253, 218, 197, 0.3), rgb(253, 218, 197, 0.2)), url('pictures/output-na.gif'); */
+	background-size: 100% 400px !important;
+	background-repeat: no-repeat !important;
 	width: 100%;
-	background-position: center center;
 	height: 400px !important;
 	z-index: 1;
-	position: relative;
 	border-radius: 20px 20px 0 0;
 }
-.AppHeader .title {
+.AppHeader .country {
 	text-align: center;
 	padding-top: 10%;
 	color: white;
@@ -23,7 +22,7 @@
 	font-family: 'Source Sans Pro', sans-serif;
 
 }
-.AppHeader .title2 {
+.AppHeader .city {
 	text-align: center;
 	color: white;
 	font-size: 30px;
@@ -31,7 +30,7 @@
 	font-family: 'Source Sans Pro', sans-serif;
 	position: relative;
 }
-.AppHeader .title3 {
+.AppHeader .time {
 	text-align: center;
 	color: white;
 	font-size: 20px;

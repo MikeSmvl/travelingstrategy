@@ -1,7 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, text, select, boolean } from '@storybook/addon-knobs';
+import { withKnobs, text } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import { withA11y } from '@storybook/addon-a11y';
 
@@ -15,13 +14,14 @@ stories.addDecorator(withA11y);
 
 stories
 	.add('Base usage', () => (
-		<Header style={{ height: '420px' }} title="Paris" title2="TimeZone" title3="TimeDifference" subtitle="France" />
+		<Header style={{ height: '420px' }} country="Paris" city="TimeZone" time="TimeDifference" subtitle="France" countryIso="FR" />
 	))
 	.add('Set props', () => {
-		const title = text('Title Text') || 'Paris';
-		const title2 = text('Title Text') || 'TimeZone';
-		const title3 = text('Title Text') || 'TimeDifference';
+		const country = text('Country Text') || 'Paris';
+		const city = text('City Text') || 'TimeZone';
+		const time = text('Time Text') || 'TimeDifference';
 		const subtitle = text('Right text') || 'France';
+		const countryIso = text('Country ISO Text') || 'FR';
 
-		return <Header style={{ height: '420px' }} title={title} title2={title2} title3={title3} subtitle={subtitle} />;
+		return <Header style={{ height: '420px' }} country={country} city={city} time={time} subtitle={subtitle} countryIso={countryIso} />;
 	});

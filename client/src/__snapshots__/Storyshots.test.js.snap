@@ -298,17 +298,17 @@ Array [
             subtitle="France"
           >
             <div
-              className="title"
+              className="country"
             >
               Paris
             </div>
             <div
-              className="title2"
+              className="city"
             >
               TimeZone
             </div>
             <div
-              className="title3"
+              className="time"
             >
               TimeDifference
             </div>
@@ -390,17 +390,17 @@ Array [
             subtitle="France"
           >
             <div
-              className="title"
+              className="country"
             >
               Paris
             </div>
             <div
-              className="title2"
+              className="city"
             >
               TimeZone
             </div>
             <div
-              className="title3"
+              className="time"
             >
               TimeDifference
             </div>
