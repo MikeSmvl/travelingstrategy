@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Col} from 'react-bootstrap/';
-import { Card, CardBody} from '../components/Card/Card';
 
 function addMyEvents(myEvents){
     const events = [];
@@ -20,7 +19,7 @@ function addMyEvents(myEvents){
 		const name_of_place = event.name_of_place;
 		events.push(
             <Col sm={5} style={
-                { 
+                {
                     padding: '40px 25px 25px 25px'
                 }
             }>

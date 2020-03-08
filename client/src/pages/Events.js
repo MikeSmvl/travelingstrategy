@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col,Button, Nav} from 'react-bootstrap/';
 import '../App.css';
 import searchByCategory from '../utils/eventsAPI';
@@ -21,14 +21,12 @@ function Events(
     const [sports, setSports] = useState([]);
     const [community, setCommunity] = useState([]);
     const [conferencesCalled, setConferencesCalled] = useState(false);
-
-    // var conferencesCalled =useRef(false);
-    var exposCalled =useRef(false);
-    var concertsCalled =useRef(false);
-    var festivalsCalled =useRef(false);
-    var performingArtsCalled =useRef(false);
-    var sportsCalled =useRef(false);
-    var communityCalled =useRef(false);
+    const [exposCalled, setExposCalled] = useState(false);
+    const [concertsCalled, setConcertsCalled] = useState(false);
+    const [festivalsCalled, setFestivalsCalled] = useState(false);
+    const [performingArtsCalled, setPerformingArtsCalled] = useState(false);
+    const [sportsCalled, setSportsCalled] = useState(false);
+    const [communityCalled, setCommunityCalled] = useState(false);
 
 
     const categoryChosen = (event) => {
@@ -57,64 +55,64 @@ function Events(
                     setConferencesCalled(true)
                 break;
                 case "expos":
-                    if(!exposCalled.current){
+                    if(!exposCalled){
                         array_of_events = searchByCategory(category)
                         setExpos(array_of_events)
                     }
                     else{
                         array_of_events = expos;
                     }
-                    exposCalled = true
+                    setExposCalled(true)
                 break;
                 case "concerts":
-                    if(!concertsCalled.current){
+                    if(!concertsCalled){
                         array_of_events = searchByCategory(category)
                         seConcerts(array_of_events)
                     }
                     else{
                         array_of_events = concerts;
                     }
-                    concertsCalled = true
+                    setConcertsCalled(true)
                 break;
                 case "festivals":
-                    if(!festivalsCalled.current){
+                    if(!festivalsCalled){
                         array_of_events = searchByCategory(category)
                         setFestivals(array_of_events)
                     }
                     else{
                         array_of_events = festivals;
                     }
-                    festivalsCalled = true
+                    setFestivalsCalled(true)
                 break;
                 case "performing-arts":
-                    if(!performingArtsCalled.current){
+                    if(!performingArtsCalled){
                         array_of_events = searchByCategory(category)
                         setPerformingArts(array_of_events)
                     }
                     else{
                         array_of_events = performingArts;
                     }
-                    performingArtsCalled = true
+                    setPerformingArtsCalled(true)
                 break;
                 case "sports":
-                    if(!sportsCalled.current){
+                    if(!sportsCalled){
                         array_of_events = searchByCategory(category)
                         setSports(array_of_events)
                     }
                     else{
                         array_of_events = sports;
                     }
-                    sportsCalled = true
+                    setSportsCalled(true)
                 break;
                 case "community":
-                    if(!communityCalled.current){
+                    if(!communityCalled){
                         array_of_events = searchByCategory(category)
                         setCommunity(array_of_events)
                     }
                     else{
                         array_of_events = community;
                     }
-                    communityCalled = true
+                    setCommunityCalled(true)
                 break;
                 default:
                 ;
@@ -150,8 +148,6 @@ function Events(
                 res.data.eventsForRequest
                     && res.data.eventsForRequest.length !==0
                     && setSavedEvents(res.data.eventsForRequest);
-                console.log(category);
-                console.log(res.data.eventsForRequest)
             });
         }
 
@@ -162,13 +158,10 @@ function Events(
         setEventsForCategories(events_by_category)
     },
     [
-        category,
-        conferencesCalled
+        category
 
     ]);
 
-    console.log("Category: ",category)
-    console.log("Events",eventsForCategories )
 
     return (
 		<div>
