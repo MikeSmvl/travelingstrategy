@@ -5,7 +5,7 @@ import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
 import searchByCategory from '../utils/eventsAPI';
 import addMyEvents from '../utils/eventsTools';
-import { Card, CardBody} from '../components/Card/Card';
+
 
 function Events(
     request_id,
@@ -216,25 +216,26 @@ function Events(
 								</Nav>
 							</Row>
                         <div className="justify-content-center">
-                            <div id="My_Events">
-                                {/* <Row className="justify-content-center"
-                                    style={{
-                                        backgroundColor: 'rgb(253, 218, 197)'
-                                    }}
-                                 >
-                                    {/* <Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
-                                        Text
-                                    </Col> 
-
-                                </Row> */}
+                            <div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
                                 <Card
                                             header="Events"
-                                            
+                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
                                         >
-                                            <CardBody>
-                                                {addMyEvents(savedEvents)}	
+                                            <CardBody>	
+                                                <div>
+                                                    <ul>
+                                                        <EventCard
+                                                            header= {"Event title"}
+                                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
+                                                        >
+                                                            <EventCardBody>
+                                                                {addMyEvents(savedEvents)}	
+                                                            </EventCardBody>
+                                                        </EventCard>
+                                                    </ul>
+                                                </div>
                                             </CardBody>
-                                    </Card>
+                                </Card>
                             </div>
                         </div>
                         {/* <Row
