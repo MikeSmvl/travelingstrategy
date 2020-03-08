@@ -175,7 +175,7 @@ function Events(
     return (
 		<div>
 			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
+				<Row className="justify-content-center" style={{ paddingTop: '100px' }}>
                     <Col
                         style={{
                             backgroundColor: 'rgb(255, 255, 255)',
@@ -219,13 +219,13 @@ function Events(
                             <div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
                                 <Card
                                             header="Events"
-                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
+                                            style={{ maxHeight: '600px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
                                         >
                                             <CardBody>	
                                                 <div>
                                                     <ul>
                                                         <EventCard
-                                                            header= {"Event title"}
+                                                            header= {"Suggested Events"}
                                                             style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
                                                         >
                                                             <EventCardBody>
@@ -233,9 +233,19 @@ function Events(
                                                             </EventCardBody>
                                                         </EventCard>
                                                     </ul>
+                                                    <ul>
+                                                        <Card
+                                                            header="Favorite Events"
+                                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
+                                                        >
+                                                            <CardBody>	
+                                                                
+                                                            </CardBody>
+                                                        </Card>
+                                                    </ul>
                                                 </div>
-                                            </CardBody>
-                                </Card>
+                                        </CardBody>
+                                    </Card>
                             </div>
                         </div>
                         {/* <Row

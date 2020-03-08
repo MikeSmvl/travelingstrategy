@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Card as RBCard, Button } from 'react-bootstrap';
+import { Card as RBCard } from 'react-bootstrap';
 import './EventCard.css';
 
 
@@ -9,8 +9,6 @@ const EventCard = (props) => {
 	return (
 		<RBCard {...rest} className="TSCard">
 			{header && <RBCard.Header className="cardHeader">
-                {header}
-                <Button value="Add to Favorite" style={{float: 'right'}}>Add to Favorite</Button>
             </RBCard.Header>}
 			{children}
 			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
