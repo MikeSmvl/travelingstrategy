@@ -16,15 +16,15 @@ const Header = (props) => {
 		countryIso = 'IT',
 		...rest
 	} = props;
-	const bg = require('./country_videos/' + countryIso + '.mp4');
+	const bg = require(`./country_videos/${countryIso}.mp4`);
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
 				<Col lg={8} style={{ border: '5px solid white', borderRadius: '20px 20px 0 0' }}>
 					<div className="AppHeader" {...rest}>
-						<div className="overlay"></div>
+						<div className="overlay" />
 						<video className="videoHeader" autoPlay muted loop>
-							<source src={bg} type="video/mp4"></source>
+							<source src={bg} type="video/mp4" />
 						</video>
 						<div className="country">
 							{country}

@@ -298,6 +298,20 @@ Array [
             subtitle="France"
           >
             <div
+              className="overlay"
+            />
+            <video
+              autoPlay={true}
+              className="videoHeader"
+              loop={true}
+              muted={true}
+            >
+              <source
+                src="FR.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <div
               className="country"
             >
               Paris
@@ -389,6 +403,20 @@ Array [
             }
             subtitle="France"
           >
+            <div
+              className="overlay"
+            />
+            <video
+              autoPlay={true}
+              className="videoHeader"
+              loop={true}
+              muted={true}
+            >
+              <source
+                src="FR.mp4"
+                type="video/mp4"
+              />
+            </video>
             <div
               className="country"
             >
