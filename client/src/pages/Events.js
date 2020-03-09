@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col,Button, Nav} from 'react-bootstrap/';
-import { EventCard, EventCardBody} from '../components/EventCard/EventCard';
 import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
 import {addMyEvents, addApiEvents} from '../utils/eventsTools';
@@ -10,11 +9,11 @@ const phqEvents = client.events;
 
 
 
-function Events(
+function Events({
     request_id,
 	latitude,
 	longitude
-){
+}){
     const [category, setCategory] = useState('');
     const [savedEvents, setSavedEvents] = useState([]);
     const [eventsForCategories, setEventsForCategories] = useState([]);
@@ -34,6 +33,8 @@ function Events(
     const [communityCalled, setCommunityCalled] = useState(false);
 
 
+
+
     const categoryChosen = (event) => {
         setCategory(event.target.value)
     };
@@ -42,13 +43,11 @@ function Events(
 
         // Basic event search using category as parameter. By default, it will return the first ten events.
         async function searchByCategory(category){
-            console.log("Function just got called")
-            const withinParam = '40.7127753,-74.0059728';
+            const withinParam = `${latitude},${longitude}`;
             let searchResults = await phqEvents.search({
                 "location_around.origin": withinParam,
                 "category":category
             });
-            console.log("inside api function:", searchResults.result.results)
             return searchResults.result.results
         }
         /**
@@ -62,7 +61,6 @@ function Events(
                     if(!conferencesCalled){
                         array_of_events = await searchByCategory(category)
                         setConferences(array_of_events);
-                        console.log("hhaha",array_of_events)
                     }
                     else{
                         array_of_events = conferences;
@@ -171,7 +169,6 @@ function Events(
 
         async function setEventsToDisplay(){
             var events_by_category = await eventsByCategoryToDispaly()
-            console.log("asdlkasjdlk ",events_by_category)
             setEventsForCategories(events_by_category)
         }
 
@@ -192,7 +189,9 @@ function Events(
         festivalsCalled,
         performingArtsCalled,
         sportsCalled,
-        communityCalled
+        communityCalled,
+        latitude,
+        longitude
 
     ]);
 
@@ -242,35 +241,21 @@ function Events(
 							</Row>
                         <div className="justify-content-center">
                             <div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
-                                <Card
-                                            header="Events"
-                                            style={{ maxHeight: '600px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
+                                <div>
+                                    <ul>
+                                        {addApiEvents(eventsForCategories)}
+                                    </ul>
+                                    <ul>
+                                        <Card
+                                            header="Favorite Events"
+                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
                                         >
                                             <CardBody>
-                                                <div>
-                                                    <ul>
-                                                        <EventCard
-                                                            header= {"Suggested Events"}
-                                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
-                                                        >
-                                                            <EventCardBody>
-                                                                {addApiEvents(eventsForCategories)}
-                                                            </EventCardBody>
-                                                        </EventCard>
-                                                    </ul>
-                                                    <ul>
-                                                        <Card
-                                                            header="Favorite Events"
-                                                            style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center'}}
-                                                        >
-                                                            <CardBody>
-                                                            {addMyEvents(savedEvents)}
-                                                            </CardBody>
-                                                        </Card>
-                                                    </ul>
-                                                </div>
-                                        </CardBody>
-                                    </Card>
+                                            {addMyEvents(savedEvents)}
+                                            </CardBody>
+                                        </Card>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </Col>

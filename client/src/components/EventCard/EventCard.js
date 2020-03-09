@@ -5,25 +5,14 @@ import './EventCard.css';
 
 
 const EventCard = (props) => {
-	const { header = '', footer = '', children, ...rest } = props;
-	return (
-		<RBCard {...rest} className="TSCard">
-			{header && <RBCard.Header className="cardHeader">
-				<Button value="Add to Favorite" style={{float: 'left'}}>Add to Favorite</Button>
-            </RBCard.Header>}
-			{children}
-			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
-		</RBCard>
-	);
-};
-
-const EventCardBody = (props) => {
 	const { children, title = '', subtitle = '', classExtra = '', ...rest } = props;
 	return (
 		<RBCard.Body
 			{...rest}
 			className={`TScardBody ${classExtra}`}
 		>
+			<Button value="Add to Favorite" style={{float: 'left'}}>Add to Favorite</Button>
+
 			{title && <RBCard.Title>{title}</RBCard.Title>}
 			{subtitle && (
 				<RBCard.Subtitle className="mb-2 text-muted">
@@ -47,4 +36,4 @@ EventCard.propTypes = {
 	classExtra: PropTypes.string
 };
 
-export { EventCard, EventCardBody, Divider };
+export { EventCard, Divider };

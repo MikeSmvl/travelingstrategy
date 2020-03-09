@@ -3,20 +3,19 @@ import '../App.css';
 import Slider from '../components/Slider/Slider';
 
 
-const UserSelection = (props) => {
-  const {
-    request_id = '',
-    city = '',
-    latitude = '',
-    longitude
-  } = props;
+function UserSelection({
+  request_id,
+  city,
+  latitude,
+  longitude
+}){
 
 	return (
 		<div>
-			<Slider 
+			<Slider
         request_id={request_id}
         city={city}
-        latitue={latitude}
+        latitude={latitude}
         longitude={longitude}/>
 		</div>
 	);

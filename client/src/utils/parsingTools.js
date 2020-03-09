@@ -69,6 +69,7 @@ function addChosenCities(arrayOfCities){
 		const cityName = citySubscription.search_term;
 		const latitude = citySubscription.latitude;
 		const longitude = citySubscription.longitude;
+		console.log(request_id)
 		items.push(
 			<Link
 				to={`/user_selection?request_id=${request_id}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
