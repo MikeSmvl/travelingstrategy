@@ -298,17 +298,31 @@ Array [
             subtitle="France"
           >
             <div
-              className="title"
+              className="overlay"
+            />
+            <video
+              autoPlay={true}
+              className="videoHeader"
+              loop={true}
+              muted={true}
+            >
+              <source
+                src="FR.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <div
+              className="country"
             >
               Paris
             </div>
             <div
-              className="title2"
+              className="city"
             >
               TimeZone
             </div>
             <div
-              className="title3"
+              className="time"
             >
               TimeDifference
             </div>
@@ -390,17 +404,31 @@ Array [
             subtitle="France"
           >
             <div
-              className="title"
+              className="overlay"
+            />
+            <video
+              autoPlay={true}
+              className="videoHeader"
+              loop={true}
+              muted={true}
+            >
+              <source
+                src="FR.mp4"
+                type="video/mp4"
+              />
+            </video>
+            <div
+              className="country"
             >
               Paris
             </div>
             <div
-              className="title2"
+              className="city"
             >
               TimeZone
             </div>
             <div
-              className="title3"
+              className="time"
             >
               TimeDifference
             </div>
