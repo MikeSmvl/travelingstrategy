@@ -3,8 +3,11 @@ import { Row, Col,Button, Nav} from 'react-bootstrap/';
 import { EventCard, EventCardBody} from '../components/EventCard/EventCard';
 import { Card, CardBody} from '../components/Card/Card';
 import '../App.css';
-import searchByCategory from '../utils/eventsAPI';
-import addMyEvents from '../utils/eventsTools';
+import {addMyEvents, addApiEvents} from '../utils/eventsTools';
+import Client from 'predicthq';
+const client = new Client({access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax'});
+const phqEvents = client.events;
+
 
 
 function Events(
@@ -37,7 +40,17 @@ function Events(
 
     useEffect(() => {
 
-
+        // Basic event search using category as parameter. By default, it will return the first ten events.
+        async function searchByCategory(category){
+            console.log("Function just got called")
+            const withinParam = '40.7127753,-74.0059728';
+            let searchResults = await phqEvents.search({
+                "location_around.origin": withinParam,
+                "category":category
+            });
+            console.log("inside api function:", searchResults.result.results)
+            return searchResults.result.results
+        }
         /**
          * This function checks if the events for a category were already requested
          * in order to provide faster service and limit api calls
@@ -47,8 +60,9 @@ function Events(
             switch(category) {
                 case "conferences":
                     if(!conferencesCalled){
-                        array_of_events = searchByCategory(category);
+                        array_of_events = await searchByCategory(category)
                         setConferences(array_of_events);
+                        console.log("hhaha",array_of_events)
                     }
                     else{
                         array_of_events = conferences;
@@ -57,7 +71,7 @@ function Events(
                 break;
                 case "expos":
                     if(!exposCalled){
-                        array_of_events = searchByCategory(category)
+                        array_of_events = await searchByCategory(category)
                         setExpos(array_of_events)
                     }
                     else{
@@ -67,7 +81,7 @@ function Events(
                 break;
                 case "concerts":
                     if(!concertsCalled){
-                        array_of_events = searchByCategory(category)
+                        array_of_events = await searchByCategory(category)
                         seConcerts(array_of_events)
                     }
                     else{
@@ -77,7 +91,7 @@ function Events(
                 break;
                 case "festivals":
                     if(!festivalsCalled){
-                        array_of_events = searchByCategory(category)
+                        array_of_events = await searchByCategory(category)
                         setFestivals(array_of_events)
                     }
                     else{
@@ -87,7 +101,7 @@ function Events(
                 break;
                 case "performing-arts":
                     if(!performingArtsCalled){
-                        array_of_events = searchByCategory(category)
+                        array_of_events = await searchByCategory(category)
                         setPerformingArts(array_of_events)
                     }
                     else{
@@ -97,7 +111,7 @@ function Events(
                 break;
                 case "sports":
                     if(!sportsCalled){
-                        array_of_events = searchByCategory(category)
+                        array_of_events = await searchByCategory(category)
                         setSports(array_of_events)
                     }
                     else{
@@ -107,7 +121,7 @@ function Events(
                 break;
                 case "community":
                     if(!communityCalled){
-                        array_of_events = searchByCategory(category)
+                        array_of_events = await searchByCategory(category)
                         setCommunity(array_of_events)
                     }
                     else{
@@ -155,11 +169,30 @@ function Events(
 
         fetchEvents();
 
-        var events_by_category = eventsByCategoryToDispaly()
-        setEventsForCategories(events_by_category)
+        async function setEventsToDisplay(){
+            var events_by_category = await eventsByCategoryToDispaly()
+            console.log("asdlkasjdlk ",events_by_category)
+            setEventsForCategories(events_by_category)
+        }
+
+        setEventsToDisplay();
     },
     [
-        category
+        category,
+        conferences,
+        expos,
+        concerts,
+        festivals,
+        performingArts,
+        sports,
+        community,
+        conferencesCalled,
+        exposCalled,
+        concertsCalled,
+        festivalsCalled,
+        performingArtsCalled,
+        sportsCalled,
+        communityCalled
 
     ]);
 
@@ -221,6 +254,7 @@ function Events(
                                                             style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
                                                         >
                                                             <EventCardBody>
+                                                                {addApiEvents(eventsForCategories)}
                                                             </EventCardBody>
                                                         </EventCard>
                                                     </ul>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Col} from 'react-bootstrap/';
+import { EventCard, EventCardBody} from '../components/EventCard/EventCard';
 
 function addMyEvents(myEvents){
     const events = [];
@@ -41,4 +42,23 @@ function addMyEvents(myEvents){
 	);
 }
 
-export default addMyEvents;
+function addApiEvents(apiEvents){
+    const events = [];
+    console.log("api:",apiEvents)
+    // apiEvents.then(function(response) {
+    //     // here the promise is resolved so you can see the data
+    //    // so if you want to perform some changes here's the place
+    //      console.log (response.json())
+    // })
+    // apiEvents.forEach(event =>{
+    //     console.log(event);
+    // });
+
+    return (
+        <div>
+            Test
+        </div>
+    );
+}
+
+export {addMyEvents,addApiEvents};
