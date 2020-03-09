@@ -21,7 +21,11 @@ const Header = (props) => {
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
 				<Col lg={8} style={{ border: '5px solid white', borderRadius: '20px 20px 0 0' }}>
-					<div className="AppHeader" style={{ background: `linear-gradient(rgb(253, 218, 197, 0.3), rgb(253, 218, 197, 0.2)), url(${bg})` }} {...rest}>
+					<div className="AppHeader" {...rest}>
+						<div className="overlay"></div>
+						<video className="videoHeader" autoPlay muted loop>
+							<source src={bg} type="video/mp4"></source>
+						</video>
 						<div className="country">
 							{country}
 						</div>
