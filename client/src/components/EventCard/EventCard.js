@@ -4,13 +4,13 @@ import { Card as RBCard, Button } from 'react-bootstrap';
 import './EventCard.css';
 
 const EventCard = (props) => {
-	const { 
+	const {
 		children,
-		title = '', 
-		subtitle = '', 
+		title = '',
+		subtitle = '',
 		classExtra = '',
 		event_array,
-		...rest 
+		...rest
 	} = props;
 
 	const handleSubmit = (event) => {
@@ -39,14 +39,14 @@ const EventCard = (props) => {
 						name_of_place
 					} 
 				}`
-		})
+		});
 	}
 	return (
 		<RBCard.Body
 			{...rest}
 			className={`TScardBody ${classExtra}`}
 		>
-			<Button value="Add to Favorite" style={{float: 'left'}} onClick={handleSubmit}>Add to Favorite</Button>
+			<Button value="Add to Favorite" style={{ float: 'left' }} onClick={handleSubmit}>Add to Favorite</Button>
 
 			{title && <RBCard.Title>{title}</RBCard.Title>}
 			{subtitle && (

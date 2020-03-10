@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col,Button } from 'react-bootstrap/';
+import { Row, Col, Button } from 'react-bootstrap/';
 import '../App.css';
-import { addTrendingSpots } from '../utils/parsingTools';
-
 import { Link } from 'react-router-dom';
+import { addTrendingSpots } from '../utils/parsingTools';
 
 
 function TrendingSpots({
