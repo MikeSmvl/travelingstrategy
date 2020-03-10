@@ -9,15 +9,9 @@ const EventCard = (props) => {
 		title = '',
 		subtitle = '',
 		classExtra = '',
-		event_array,
+		eventArray,
 		...rest
 	} = props;
-
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		event.stopPropagation();
-		addEvent();
-	};
 
 
 	async function addEvent() {
@@ -25,7 +19,7 @@ const EventCard = (props) => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-					addEvents(request_id:"${event_array[0]}", event_category:"${event_array[1]}", description:"${event_array[2]}", duration:"${event_array[3]}", start_date:"${event_array[4]}", end_date:"${event_array[5]}", title:"${event_array[6]}", labels:"${event_array[7]}", address:"${event_array[8]}", place_type:"${event_array[9]}", name_of_place:"${event_array[10]}")
+					addEvents(request_id:"${eventArray[0]}", event_category:"${eventArray[1]}", description:"${eventArray[2]}", duration:"${eventArray[3]}", start_date:"${eventArray[4]}", end_date:"${eventArray[5]}", title:"${eventArray[6]}", labels:"${eventArray[7]}", address:"${eventArray[8]}", place_type:"${eventArray[9]}", name_of_place:"${eventArray[10]}")
 					{   request_id,
 						event_category,
 						description,
@@ -41,6 +35,13 @@ const EventCard = (props) => {
 				}`
 		});
 	}
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		addEvent();
+	};
+
 	return (
 		<RBCard.Body
 			{...rest}
@@ -69,7 +70,7 @@ EventCard.propTypes = {
 	title: PropTypes.string,
 	subtitle: PropTypes.string,
 	classExtra: PropTypes.string,
-	event_array: PropTypes.array
+	eventArray: PropTypes.instanceOf(Array)
 };
 
 export { EventCard, Divider };

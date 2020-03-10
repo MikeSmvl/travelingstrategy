@@ -4,7 +4,7 @@ import Slider from '../components/Slider/Slider';
 
 
 function UserSelection({
-	request_id,
+	requestId,
 	city,
 	latitude,
 	longitude
@@ -12,7 +12,7 @@ function UserSelection({
 	return (
 		<div>
 			<Slider
-				request_id={request_id}
+				requestId={requestId}
 				city={city}
 				latitude={latitude}
 				longitude={longitude}

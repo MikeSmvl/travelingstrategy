@@ -4,13 +4,13 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
 import './Slider.css';
 import './Button.css';
-import image_1 from './pictures/Events.jpg';
-import image_2 from './pictures/Trending.jpg';
+import imageOne from './pictures/Events.jpg';
+import imageTwo from './pictures/Trending.jpg';
 
 
 const Slider = (props) => {
 	const {
-		request_id = '',
+		requestId = '',
 		city = '',
 		latitude = '',
 		longitude
@@ -28,10 +28,10 @@ const Slider = (props) => {
 			<Carousel.Item>
 				<div className="content">
 					<div className="content-overlay" />
-					<img className="content-image" src={image_1} alt="slide-img" />
+					<img className="content-image" src={imageOne} alt="slide-img" />
 					<div className="content-details fadeIn-bottom">
 						<div className="button">
-							<Link to={`/events?request_id=${request_id}&latitude=${latitude}&longitude=${longitude}`}>
+							<Link to={`/events?request_id=${requestId}&latitude=${latitude}&longitude=${longitude}`}>
 								<span>Events</span>
 							</Link>
 						</div>
@@ -46,10 +46,10 @@ const Slider = (props) => {
 			<Carousel.Item>
 				<div className="content">
 					<div className="content-overlay" />
-					<img className="content-image" src={image_2} alt="slide-img" />
+					<img className="content-image" src={imageTwo} alt="slide-img" />
 					<div className="content-details fadeIn-bottom">
 						<div className="button">
-							<Link to={`/trending_spots?request_id=${request_id}&city=${city}&latitude=${latitude}&longitude=${longitude}`}>
+							<Link to={`/trending_spots?request_id=${requestId}&city=${city}&latitude=${latitude}&longitude=${longitude}`}>
 								<span>Trending</span>
 							</Link>
 						</div>
@@ -65,7 +65,7 @@ const Slider = (props) => {
 };
 
 Slider.propTypes = {
-	request_id: PropTypes.string,
+	requestId: PropTypes.string,
 	city: PropTypes.string,
 	latitude: PropTypes.string,
 	longitude: PropTypes.string

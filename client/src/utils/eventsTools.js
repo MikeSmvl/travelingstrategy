@@ -67,9 +67,8 @@ function addApiEvents(apiEvents, request_id){
         }
 
         const event_for_card = [request_id, category,description, duration,start,end, title,labels,address,venue_type,venue_name];
-        console.log(event_for_card)
         events.push(
-            <EventCard event_array={event_for_card}>
+            <EventCard eventArray={event_for_card}>
                 <hr></hr>
                 Category:{category}<br></br>
                 Title: {title}<br></br>

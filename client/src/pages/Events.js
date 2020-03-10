@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col, Button, Nav } from 'react-bootstrap/';
+import Client from 'predicthq';
 import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
 import { addMyEvents, addApiEvents } from '../utils/eventsTools';
-import Client from 'predicthq';
+
 
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
 const phqEvents = client.events;
 
 
 function Events({
-	request_id,
+	requestId,
 	latitude,
 	longitude
 }) {
@@ -39,8 +40,8 @@ function Events({
 
 	useEffect(() => {
 		// Basic event search using category as parameter. By default, it will return the first ten events.
-		async function searchByCategory(category) {
-			console.log('called');
+		async function searchByCategory() {
+			console.log('hello')
 			const withinParam = `${latitude},${longitude}`;
 			const searchResults = await phqEvents.search({
 				'location_around.origin': withinParam,
@@ -53,74 +54,74 @@ function Events({
          * in order to provide faster service and limit api calls
          * */
 		async function eventsByCategoryToDispaly() {
-			let array_of_events = [];
+			let arrayOfEvents = [];
 			switch (category) {
 				case 'conferences':
 					if (!conferencesCalled) {
-						array_of_events = await searchByCategory(category);
-						setConferences(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						setConferences(arrayOfEvents);
 					} else {
-						array_of_events = conferences;
+						arrayOfEvents = conferences;
 					}
 					setConferencesCalled(true);
 					break;
 				case 'expos':
 					if (!exposCalled) {
-						array_of_events = await searchByCategory(category);
-						setExpos(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						setExpos(arrayOfEvents);
 					} else {
-						array_of_events = expos;
+						arrayOfEvents = expos;
 					}
 					setExposCalled(true);
 					break;
 				case 'concerts':
 					if (!concertsCalled) {
-						array_of_events = await searchByCategory(category);
-						seConcerts(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						seConcerts(arrayOfEvents);
 					} else {
-						array_of_events = concerts;
+						arrayOfEvents = concerts;
 					}
 					setConcertsCalled(true);
 					break;
 				case 'festivals':
 					if (!festivalsCalled) {
-						array_of_events = await searchByCategory(category);
-						setFestivals(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						setFestivals(arrayOfEvents);
 					} else {
-						array_of_events = festivals;
+						arrayOfEvents = festivals;
 					}
 					setFestivalsCalled(true);
 					break;
 				case 'performing-arts':
 					if (!performingArtsCalled) {
-						array_of_events = await searchByCategory(category);
-						setPerformingArts(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						setPerformingArts(arrayOfEvents);
 					} else {
-						array_of_events = performingArts;
+						arrayOfEvents = performingArts;
 					}
 					setPerformingArtsCalled(true);
 					break;
 				case 'sports':
 					if (!sportsCalled) {
-						array_of_events = await searchByCategory(category);
-						setSports(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						setSports(arrayOfEvents);
 					} else {
-						array_of_events = sports;
+						arrayOfEvents = sports;
 					}
 					setSportsCalled(true);
 					break;
 				case 'community':
 					if (!communityCalled) {
-						array_of_events = await searchByCategory(category);
-						setCommunity(array_of_events);
+						arrayOfEvents = await searchByCategory();
+						setCommunity(arrayOfEvents);
 					} else {
-						array_of_events = community;
+						arrayOfEvents = community;
 					}
 					setCommunityCalled(true);
 					break;
 				default:
 			}
-			return array_of_events;
+			return arrayOfEvents;
 		}
 
 		async function fetchEvents() {
@@ -155,8 +156,8 @@ function Events({
 		}
 
 		async function setEventsToDisplay() {
-			const events_by_category = await eventsByCategoryToDispaly();
-			setEventsForCategories(events_by_category);
+			const eventsByCategory = await eventsByCategoryToDispaly();
+			setEventsForCategories(eventsByCategory);
 		}
 
 		fetchEvents();
@@ -231,7 +232,7 @@ function Events({
 							<div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
 								<div>
 									<ul>
-										{addApiEvents(eventsForCategories, request_id)}
+										{addApiEvents(eventsForCategories, requestId)}
 									</ul>
 									<ul>
 										<Card
