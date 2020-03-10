@@ -14,7 +14,6 @@ const EventCard = (props) => {
 	} = props;
 
 	const handleSubmit = (event) => {
-		console.log("ahahahahahahahah");
 		event.preventDefault();
 		event.stopPropagation();
 		addEvent();
@@ -22,23 +21,6 @@ const EventCard = (props) => {
 
 
 	async function addEvent() {
-		const variable = `mutation{
-			addEvents(request_id:"${event_array[0]}", event_category:"${event_array[1]}", description:"${event_array[2]}", duration:"${event_array[3]}", start_date:"${event_array[4]}", end_date:"${event_array[5]}", title:"${event_array[6]}", labels:"${event_array[7]}", address:"${event_array[8]}", place_type:"${event_array[9]}", name_of_place:"${event_array[10]}")
-			{   request_id,
-				event_category,
-				description,
-				duration,
-				start_date,
-				end_date,
-				title,
-				labels,
-				address,
-				place_type,
-				name_of_place
-			} 
-		}`
-
-		console.log(variable)
 		await fetch('http://localhost:4000/graphql', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
@@ -58,10 +40,6 @@ const EventCard = (props) => {
 					} 
 				}`
 		})
-		.then((res) => res.json())
-		.then((res) => {
-			console.log(res)
-		});;
 	}
 	return (
 		<RBCard.Body

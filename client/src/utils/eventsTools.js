@@ -48,7 +48,6 @@ function addMyEvents(myEvents){
  */
 function addApiEvents(apiEvents, request_id){
     const events = [];
-    console.log("\"sdasd\"".replace(/"/g, "'"))
     apiEvents.forEach(event =>{
         var category = event.category.replace(/"/g, "'");
         var title = event.title.replace(/"/g, "'");
