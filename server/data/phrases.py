@@ -130,6 +130,15 @@ def translate(iso_language):
     quit_driver(driver)
     return
 
+def save_language_country_mapping():
+    DB.drop_table("language_iso")
+    DB.add_table("language_iso", country_iso = "text", language_iso="text",language="text")
+    for country_iso in country_language:
+        l = country_language[country_iso]
+        language_iso = l[0]
+        language = l[1]
+        DB.insert("language_iso",country_iso,language_iso,language)
+
 def prep_to_pars():
     res = DB.query("SELECT language_iso FROM phrases")
 
@@ -150,5 +159,6 @@ def prep_to_pars():
 
     return to_pars
 
-to_pars = prep_to_pars()
-translate(to_pars)
+# to_pars = prep_to_pars()
+# translate(to_pars)
+save_language_country_mapping()

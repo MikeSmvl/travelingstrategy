@@ -17,6 +17,7 @@ const { getUser } = require('./user')
 const {subscriberTable, userSubscriptions} = require('./subscribers')
 const {imagesTable,imagesForTag,imagesForRequestId} = require('./images.js')
 const {phrasesTranslation} = require('./phrases')
+const {getLanguageIso} = require('./languageIso')
 
 const logger = require('../logger/logger.js')
 
@@ -52,7 +53,8 @@ var queryType = new graphql.GraphQLObjectType({
         imagesTable,
         imagesForTag,
         imagesForRequestId,
-        phrasesTranslation
+        phrasesTranslation,
+        getLanguageIso
     }
 });
 
