@@ -10,7 +10,9 @@ import Home from './pages/Home';
 import Country from './pages/Country';
 import Navbar from './components/Navbar/Navbar';
 import Me from './pages/Me';
+import UserSelection from './pages/UserSelection';
 import TrendingSpots from './pages/TrendingSpots';
+import Events from './pages/Events';
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -46,9 +48,28 @@ function Application() {
 				<Route path="/me">
 					<Me />
 				</Route>
+				<Route path="/user_selection">
+					<UserSelection
+						requestId={query.get('request_id')}
+						city={query.get('city')}
+						latitude={query.get('latitude')}
+						longitude={query.get('longitude')}
+					 />
+				</Route>
 				<Route path="/trending_spots">
 					<TrendingSpots
+						requestId={query.get('request_id')}
 						city={query.get('city')}
+						latitude={query.get('latitude')}
+						longitude={query.get('longitude')}
+
+					 />
+				</Route>
+				<Route path="/events">
+					<Events
+						requestId={query.get('request_id')}
+						latitude={query.get('latitude')}
+						longitude={query.get('longitude')}
 					 />
 				</Route>
 				<Route>

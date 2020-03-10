@@ -295,6 +295,7 @@ function Country({
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+
 	return (
 		<div>
 			{!isLoading && (
@@ -306,6 +307,8 @@ function Country({
 						show={show}
 						handleShow={handleShow}
 						handleClose={handleClose}
+						lat={destinationLat}
+						lng={destinationLng}
 						countryIso={destinationCountry}
 					/>
 					<Row className="justify-content-center">
@@ -902,6 +905,8 @@ function Country({
 							handleShow={handleShow}
 							handleClose={handleClose}
 							city={destinationCity}
+							lat={destinationLat}
+							lng={destinationLng}
 						/>
 					</footer>
 				</div>

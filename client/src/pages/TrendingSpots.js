@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap/';
+import { Row, Col, Button } from 'react-bootstrap/';
 import '../App.css';
+import { Link } from 'react-router-dom';
 import { addTrendingSpots } from '../utils/parsingTools';
 
 
 function TrendingSpots({
-	city
+	requestId,
+	city,
+	latitude,
+	longitude
 }) {
 	const [trendingSpots, setTrendingSpots] = useState([]);
 	useEffect(() => {
@@ -15,13 +19,12 @@ function TrendingSpots({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						imagesForRequestId(request_id:"${city}"){
+						imagesForRequestId(request_id:"${requestId}"){
 							image_id,
                             image_link,
                             geolocation,
                             caption,
 							tag
-
 						}
 					}
 					`
@@ -29,6 +32,7 @@ function TrendingSpots({
 			})
 				.then((res) => res.json())
 				.then((res) => {
+					console.log(res)
 					res.data.imagesForRequestId
 					&& res.data.imagesForRequestId.length !== 0
 					&& setTrendingSpots(res.data.imagesForRequestId);
@@ -36,7 +40,7 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	});
+	}, [city]);
 
 	return (
 		<div>
