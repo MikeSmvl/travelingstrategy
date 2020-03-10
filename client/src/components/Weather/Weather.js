@@ -1,30 +1,19 @@
 import React, {useEffect } from 'react';
 
-const Weather = (props) => {
-  const {
-    request_id = '',
-    city = '',
-    lat = '',
-    lon = '',
-  } = props;
+function Weather() {
+
 
   // const[weather, setWeather] = useState('Not available yet');
 
   useEffect(() => {
     async function fetchData() {
-      try{
       // asynchronously load contents of the url
       // return a Promise that resolves when res is loaded
-      fetch('http://api.openweathermap.org/data/2.5/weather?lat=40.7127753&lon=-74.0059728&appid=d6c4b004f1817f813610a2328f14891c')
+      await fetch('https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0bd6aca8cf0481c6aed071562937a466/37.8267,-122.4233')
         .then((response)=>response.json()) // call this function when res is loaded
         // return a Promise with result of above function
         .then(response =>
           console.log("ello", response));
-      } catch (error) {
-        console.log(error);
-      }
-
-
     }
 
     fetchData()
