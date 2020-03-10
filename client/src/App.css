@@ -88,3 +88,9 @@ hr {
   text-align: center;
   padding-top: 50%;
 }
+
+.button{
+  height: 25px;
+  width: 25px;
+  background-image : url('../src/trafficImages/speaker.png');
+}

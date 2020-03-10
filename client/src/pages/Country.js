@@ -22,6 +22,8 @@ import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
+import textToSpeech from '../utils/text-to-speech';
+
 
 function Country({
 	originCountry,
@@ -844,6 +846,17 @@ function Country({
 													<Col>
 														{value.pronunciation}
 													</Col>
+													<div
+                      									style={{
+                        									textAlign:"right"
+                      									}}>
+													<Col>
+														<button
+															class="button"
+															onClick={() => textToSpeech(value.translated_phrase)}
+														/>
+													</Col>
+													</div>
 												</Row>
 											))}
 											{ (phrases.length === 0) && (<span>TBD</span>)}
