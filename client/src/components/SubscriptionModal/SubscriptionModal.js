@@ -16,7 +16,9 @@ const SubscriptionModal = (props) => {
 	const {
 		show = '',
     	handleClose = '',
-		city = ''
+		city = '',
+		lat = '',
+		lng = ''
 	} = props;
 
 	const emailChange = (event) => {
@@ -32,7 +34,7 @@ const SubscriptionModal = (props) => {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-                    addSubscriber(email:"${email}",search_term:"${city}", date_of_trip:"${dateString}") {
+                    addSubscriber(email:"${email}",search_term:"${city}", date_of_trip:"${dateString}", lat:"${lat}", lng:"${lng}") {
                           email,
                           search_term,
                           date_of_trip
@@ -98,7 +100,9 @@ const SubscriptionModal = (props) => {
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
 	handleClose: PropTypes.func,
-	city: PropTypes.string
+	city: PropTypes.string,
+	lat: PropTypes.string,
+	lng: PropTypes.string
 };
 
 

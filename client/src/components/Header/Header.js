@@ -7,28 +7,35 @@ import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
 const Header = (props) => {
 	const {
-		title = '',
-		title2 = '',
-		title3 = '',
+		country = '',
+		city = '',
+		time = '',
 		show = '',
 		handleShow = '',
 		handleClose = '',
-		city = '',
+		lat = '',
+		lng = '',
+		countryIso = 'IT',
 		...rest
 	} = props;
+	const bg = require(`./country_videos/${countryIso}.mp4`);
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
 				<Col lg={8} style={{ border: '5px solid white', borderRadius: '20px 20px 0 0' }}>
 					<div className="AppHeader" {...rest}>
-						<div className="title">
-							{title}
+						<div className="overlay" />
+						<video className="videoHeader" autoPlay muted loop>
+							<source src={bg} type="video/mp4" />
+						</video>
+						<div className="country">
+							{country}
 						</div>
-						<div className="title2">
-							{title2}
+						<div className="city">
+							{city}
 						</div>
-						<div className="title3">
-							{title3}
+						<div className="time">
+							{time}
 						</div>
 						<div className="text-center">
 							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
@@ -37,6 +44,8 @@ const Header = (props) => {
 								handleShow={handleShow}
 								handleClose={handleClose}
 								city={city}
+								lat={lat}
+								lng={lng}
 							/>
 						</div>
 					</div>
@@ -47,14 +56,15 @@ const Header = (props) => {
 };
 
 Header.propTypes = {
-	title: PropTypes.string,
-	title2: PropTypes.string,
-	title3: PropTypes.string,
+	country: PropTypes.string,
+	city: PropTypes.string,
+	time: PropTypes.string,
 	show: PropTypes.bool,
 	handleShow: PropTypes.func,
 	handleClose: PropTypes.func,
-	city: PropTypes.string
-
+	lat: PropTypes.string,
+	lng: PropTypes.string,
+	countryIso: PropTypes.string
 };
 
 
