@@ -46,11 +46,6 @@ function TrendingSpots({
 			<div className="parallax">
 				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
 					<Row className="justify-content-center">
-						<Link
-							to={`/events?request_id=${requestId}&latitude=${latitude}&longitude=${longitude}`}
-						>
-							<Button>To Events</Button>
-						</Link>
 						<Col
 							style={{
 								backgroundColor: 'rgb(255, 255, 255)',
