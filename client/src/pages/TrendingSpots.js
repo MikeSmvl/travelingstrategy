@@ -19,7 +19,7 @@ function TrendingSpots({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						imagesForRequestId(request_id:"${city}"){
+						imagesForRequestId(request_id:"${requestId}"){
 							image_id,
                             image_link,
                             geolocation,
@@ -32,6 +32,7 @@ function TrendingSpots({
 			})
 				.then((res) => res.json())
 				.then((res) => {
+					console.log(res)
 					res.data.imagesForRequestId
 					&& res.data.imagesForRequestId.length !== 0
 					&& setTrendingSpots(res.data.imagesForRequestId);
