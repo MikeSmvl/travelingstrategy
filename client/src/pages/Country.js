@@ -191,7 +191,7 @@ function Country({
 							ambulance
 							fire
 						}
-						phrasesTranslation(language_iso:"ru"){
+						phrasesTranslationCountry(country_iso:"${destinationCountry}"){
 							phrase
 							translated_phrase
 							pronunciation
@@ -274,9 +274,9 @@ function Country({
 					res.data.emergency
 						&& res.data.emergency.length !== 0
 						&& setEmergency(res.data.emergency[0]);
-					res.data.phrasesTranslation
-						&& res.data.phrasesTranslation.length !== 0
-						&& setPhrases(res.data.phrasesTranslation);
+					res.data.phrasesTranslationCountry
+						&& res.data.phrasesTranslationCountry.length !== 0
+						&& setPhrases(res.data.phrasesTranslationCountry);
 					fetchRate(
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
@@ -846,6 +846,7 @@ function Country({
 													</Col>
 												</Row>
 											))}
+											{ (phrases.length === 0) && (<span>TBD</span>)}
 										</Card>
 									</Row>
 								</Col>
