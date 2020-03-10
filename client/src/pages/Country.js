@@ -66,6 +66,7 @@ function Country({
 	const destCountryName = getCountryName2(destinationCountry);
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
+	const [phrases, setPhrases] = useState([]);
 
 
 	useEffect(() => {
@@ -190,6 +191,11 @@ function Country({
 							ambulance
 							fire
 						}
+						phrasesTranslation(language_iso:"ru"){
+							phrase
+							translated_phrase
+							pronunciation
+						}
 					}`
 				})
 			})
@@ -268,6 +274,9 @@ function Country({
 					res.data.emergency
 						&& res.data.emergency.length !== 0
 						&& setEmergency(res.data.emergency[0]);
+					res.data.phrasesTranslation
+						&& res.data.phrasesTranslation.length !== 0
+						&& setPhrases(res.data.phrasesTranslation);
 					fetchRate(
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
@@ -819,6 +828,29 @@ function Country({
 								</Col>
 							</Row>
 							<hr />
+							<Row id="Culture" className="justify-content-center">
+								<Col xs="10" sm="10" style={{ padding: '25px' }}>
+									<Row className="justify-content-center">
+
+										<Card header="Phrases" footer="ref">
+											{phrases.map((value,index) => (
+												<Row>
+													<Col>
+														{value.phrase.split('%20').join(' ')}
+													</Col>
+													<Col>
+														{value.translated_phrase}
+													</Col>
+													<Col>
+														{value.pronunciation}
+													</Col>
+												</Row>
+											))}
+										</Card>
+									</Row>
+								</Col>
+							</Row>
+							<hr/>
 							<Row id="Miscellaneous" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
 									<Row className="justify-content-center">
