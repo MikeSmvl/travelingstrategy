@@ -34,7 +34,8 @@ var addEvents = {
     },
     resolve: function (source, args) {
         return new Promise((resolve, reject) => {
-            query = `INSERT INTO chosen_events VALUES('hello','hello','hello','hello','hello','hello','hello','hello','hello','hello','hello');`
+            query = `INSERT INTO chosen_events VALUES(${args.request_id}','${args.event_category}','${args.description}','${args.duration}','
+                                             ${args.start_date},${args.end_date}','${args.title}','${args.labels}','${args.address}','${args.place_type},'${args.name_of_place});`
             logger.info("Trying to query "+query)
             db.run(query, function(err, rows) {
                 if(err){
