@@ -3,7 +3,10 @@ import {Col} from 'react-bootstrap/';
 import { EventCard} from '../components/EventCard/EventCard';
 import { Card} from '../components/Card/Card';
 
-
+/**
+ * 
+ * These are basically the events for this request in the db
+ */
 function addMyEvents(myEvents){
     const events = [];
 	myEvents.forEach(event =>{
@@ -38,24 +41,30 @@ function addMyEvents(myEvents){
 	);
 }
 
+/**
+ * 
+ * In this method with use replace(/"/g, "'") to remove all
+ *  the occurences of " because it makes the grapqhl query fail
+ */
 function addApiEvents(apiEvents, request_id){
     const events = [];
+    console.log("\"sdasd\"".replace(/"/g, "'"))
     apiEvents.forEach(event =>{
-        var category = event.category;
-        var title = event.title;
-        var start = event.start;
-        var end = event.end;
-        var description = event.description;
-        var duration = event.duration;
-        var address = '';
-        var venue_name = '';
-        var venue_type = '';
+        var category = event.category.replace(/"/g, "'");
+        var title = event.title.replace(/"/g, "'");
+        var start = event.start.replace(/"/g, "'");
+        var end = event.end.replace(/"/g, "'");
+        var description = event.description.replace(/(\r\n|\n|\r)/gm, "").replace(/"/g, "'");
+        var duration = event.duration
+        var address = ''.replace(/"/g, "'");
+        var venue_name = ''.replace(/"/g, "'");
+        var venue_type = ''.replace(/"/g, "'");
         var labels = getLabels(event);
 
         if(event.entities.length>0){
-            address = event.entities[0].formatted_address;
-            venue_name = event.entities[0].name;
-            venue_type = event.entities[0].type;
+            address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, "").replace(/"/g, "'");
+            venue_name = event.entities[0].name.replace(/"/g, "'");
+            venue_type = event.entities[0].type.replace(/"/g, "'");
         }
 
         const event_for_card = [request_id, category,description, duration,start,end, title,labels,address,venue_type,venue_name];
@@ -86,13 +95,17 @@ function addApiEvents(apiEvents, request_id){
     );
 }
 
+/**
+ * There might be multiple labels for an event that's
+ * why we need to loop through the array of labels
+ */
 function getLabels(event){
     var labels = '';
     event.labels.forEach(label =>{
         labels += label+", ";
     })
 
-    labels = labels.slice(0, -2);
+    labels = labels.slice(0, -2).replace(/"/g, "'");
     return labels;
 }
 

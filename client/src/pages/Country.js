@@ -295,7 +295,6 @@ function Country({
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	console.log(destinationLat)
 
 	return (
 		<div>
@@ -308,7 +307,6 @@ function Country({
 						show={show}
 						handleShow={handleShow}
 						handleClose={handleClose}
-						city={destinationCity}
 						lat={destinationLat}
 						lng={destinationLng}
 						countryIso={destinationCountry}
