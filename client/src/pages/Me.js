@@ -48,7 +48,6 @@ function Me() {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-				// console.log(res.data.userSubscriptions);
 					res.data.userSubscriptions
 					&& res.data.userSubscriptions.length !== 0
 					&& setCities(res.data.userSubscriptions);

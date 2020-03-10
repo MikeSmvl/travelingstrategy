@@ -164,14 +164,12 @@ function Events({
             });
         }
 
-
-        fetchEvents();
-
         async function setEventsToDisplay(){
             var events_by_category = await eventsByCategoryToDispaly()
             setEventsForCategories(events_by_category)
         }
 
+        fetchEvents();
         setEventsToDisplay();
     },
     [
@@ -243,7 +241,7 @@ function Events({
                             <div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
                                 <div>
                                     <ul>
-                                        {addApiEvents(eventsForCategories)}
+                                        {addApiEvents(eventsForCategories,request_id)}
                                     </ul>
                                     <ul>
                                         <Card

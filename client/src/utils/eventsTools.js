@@ -38,7 +38,7 @@ function addMyEvents(myEvents){
 	);
 }
 
-function addApiEvents(apiEvents){
+function addApiEvents(apiEvents, request_id){
     const events = [];
     apiEvents.forEach(event =>{
         var category = event.category;
@@ -46,14 +46,22 @@ function addApiEvents(apiEvents){
         var start = event.start;
         var end = event.end;
         var description = event.description;
-        var address = "";
-        var venue_name = "";
+        var duration = event.duration;
+        var address = '';
+        var venue_name = '';
+        var venue_type = '';
+        var labels = getLabels(event);
+
         if(event.entities.length>0){
             address = event.entities[0].formatted_address;
             venue_name = event.entities[0].name;
+            venue_type = event.entities[0].type;
         }
+
+        const event_for_card = [request_id, category,description, duration,start,end, title,labels,address,venue_type,venue_name];
+        console.log(event_for_card)
         events.push(
-            <EventCard>
+            <EventCard event_array={event_for_card}>
                 <hr></hr>
                 Category:{category}<br></br>
                 Title: {title}<br></br>
@@ -76,6 +84,16 @@ function addApiEvents(apiEvents){
             </Card>
         </div>
     );
+}
+
+function getLabels(event){
+    var labels = '';
+    event.labels.forEach(label =>{
+        labels += label+", ";
+    })
+
+    labels = labels.slice(0, -2);
+    return labels;
 }
 
 export {addMyEvents,addApiEvents};
