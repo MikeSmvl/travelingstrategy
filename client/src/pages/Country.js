@@ -23,6 +23,8 @@ import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
 
+import Weather from '../components/Weather/Weather'
+
 function Country({
 	originCountry,
 	destinationCountry,
@@ -343,6 +345,9 @@ function Country({
 										<Nav.Link href="#Health">Health</Nav.Link>
 									</Nav.Item>
 									<Nav.Item>
+										<Nav.Link href="#Weather">Weather</Nav.Link>
+									</Nav.Item>
+									<Nav.Item>
 										<Nav.Link href="#Miscellaneous">Miscellaneous</Nav.Link>
 									</Nav.Item>
 								</Nav>
@@ -489,6 +494,11 @@ function Country({
 											</div>
 										</CardBody>
 									</Card>
+									<Weather
+									        lat = {destinationLat}
+											lng = {destinationLng}>
+
+									</Weather>
 								</Col>
 							</Row>
 							<hr />
