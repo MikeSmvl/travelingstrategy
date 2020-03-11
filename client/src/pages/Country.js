@@ -69,6 +69,7 @@ function Country({
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
 	const [phrases, setPhrases] = useState([]);
+	const [phraseIso, setPhraseIso] = useState('')
 
 
 	useEffect(() => {
@@ -195,8 +196,10 @@ function Country({
 						}
 						phrasesTranslationCountry(country_iso:"${destinationCountry}"){
 							phrase
+							language
 							translated_phrase
 							pronunciation
+							language_iso
 						}
 					}`
 				})
@@ -278,7 +281,10 @@ function Country({
 						&& setEmergency(res.data.emergency[0]);
 					res.data.phrasesTranslationCountry
 						&& res.data.phrasesTranslationCountry.length !== 0
-						&& setPhrases(res.data.phrasesTranslationCountry);
+						&& setPhrases(res.data.phrasesTranslationCountry)
+					res.data.phrasesTranslationCountry
+						&& res.data.phrasesTranslationCountry.length !== 0
+						&& setPhraseIso(res.data.phrasesTranslationCountry[0].language_iso);
 					fetchRate(
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
@@ -305,6 +311,7 @@ function Country({
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	console.log(phraseIso);
 
 	return (
 		<div>
@@ -834,7 +841,40 @@ function Country({
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
 									<Row className="justify-content-center">
 
-										<Card header="Phrases" footer="ref">
+										<Card header="Phrases"
+												style={{ maxHeight: '500px', overflow: 'scroll' }}
+												footer={<Row className="justify-content-center">
+															<a href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
+																target="_blank" rel="noopener noreferrer">
+																<i className="fa fa-globe" /> Reference
+															</a>
+														</Row>}>
+
+											<Row>
+												<Col span="2">
+													<div style={{textAlign:"left"}}>
+														<b style={{ color: '#FF9A8D' }}>English</b>
+													</div>
+												</Col>
+												<Col span="2">
+													<div style={{textAlign:"left"}}>
+														<b style={{ color: '#FF9A8D' }}>Lang</b>
+													</div>
+												</Col >
+												<Col span="2">
+													<div style={{textAlign:"left"}}>
+														<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
+													</div>
+												</Col>
+												<hr/>
+												<hr/>
+												<Col span="2">
+													<div style={{textAlign:"right"}}>
+														<b style={{ color: '#FF9A8D' }}>Play</b>
+													</div>
+												</Col>
+											</Row>
+											<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
 											{phrases.map((value,index) => (
 												<Row>
 													<Col>
@@ -846,20 +886,20 @@ function Country({
 													<Col>
 														{value.pronunciation}
 													</Col>
-													<div
-                      									style={{
-                        									textAlign:"right"
-                      									}}>
+
 													<Col>
-														<button
-															class="button"
-															onClick={() => textToSpeech(value.translated_phrase)}
-														/>
+														<div style={{textAlign:"right"}}>
+															<button
+																class="button"
+																onClick={() => textToSpeech(value.translated_phrase,value.language_iso)}
+															/>
+														</div>
 													</Col>
-													</div>
+
 												</Row>
 											))}
 											{ (phrases.length === 0) && (<span>TBD</span>)}
+											</span>
 										</Card>
 									</Row>
 								</Col>
