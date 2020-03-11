@@ -251,6 +251,24 @@ def create_table():
     DB.drop_table('phrases')
     DB.add_table('phrases',language_iso='text',language='text',phrase='text',translated_phrase='text',pronunciation='text')
 
+def translateTest():
+
+    url  = 'https://translate.google.com/?sl=en&tl=#view=home&op=translate&sl=en&tl=fr&text=thank%20you'
+    try:
+        driver = create_driver()
+        driver.get(url)
+        soup = BeautifulSoup(driver.page_source, 'lxml')
+    except:
+        print("ERRROOOOOR 1:")
+
+    try:
+        translation  = soup.find('span',{'class':'tlid-translation translation'}).text
+
+    except:
+        print("ERRROOOOOR 2:")
+        translation = "-"
+
+    return translation
 
 def translate(iso_language):
     count = 0
