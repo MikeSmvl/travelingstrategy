@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "REACT_APP_BACKEND=http://localhost:4000/graphql react-scripts start",
-    "start-windows": "set \"REACT_APP_BACKEND=http://localhost:4000/graphql\" && react-scripts start",
-    "build": "REACT_APP_BACKEND=https://travelingstrategy.com/graphql react-scripts build",
+    "start": "REACT_APP_BACKEND=http://localhost:4000/ react-scripts start",
+    "start-windows": "set \"REACT_APP_BACKEND=http://localhost:4000/\" && react-scripts start",
+    "build": "REACT_APP_BACKEND=https://travelingstrategy.com/ react-scripts build",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.js src/components/**/*.js",

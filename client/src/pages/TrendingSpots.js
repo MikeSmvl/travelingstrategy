@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col} from 'react-bootstrap/';
+import { Row, Col } from 'react-bootstrap/';
 import '../App.css';
 import { addTrendingSpots } from '../utils/parsingTools';
 
@@ -13,7 +13,7 @@ function TrendingSpots({
 	const [trendingSpots, setTrendingSpots] = useState([]);
 	useEffect(() => {
 		async function fetchData() {
-			await fetch('http://localhost:4000/graphql', {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -38,7 +38,7 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	}, [city,requestId]);
+	}, [city, requestId]);
 
 	return (
 		<div>
