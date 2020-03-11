@@ -901,12 +901,14 @@ function Country({
 														<Col>
 															<div style={{ textAlign: 'right' }}>
 																<button
+																	type="button"
 																	className="buttonSpeaker"
 																	onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
 																>
 																	<img
 																		src={require('../miscImages/phraseSpeaker.png')}
 																		style={{ width: '24px' }}
+
 																	/>
 																</button>
 															</div>
