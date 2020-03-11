@@ -69,8 +69,8 @@ function Country({
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
 	const [phrases, setPhrases] = useState([]);
-	const [phraseIso, setPhraseIso] = useState('')
-	const [phraseLanguage, setPhraseLanguage] = useState('')
+	const [phraseIso, setPhraseIso] = useState('');
+	const [phraseLanguage, setPhraseLanguage] = useState('');
 
 
 	useEffect(() => {
@@ -282,7 +282,7 @@ function Country({
 						&& setEmergency(res.data.emergency[0]);
 					res.data.phrasesTranslationCountry
 						&& res.data.phrasesTranslationCountry.length !== 0
-						&& setPhrases(res.data.phrasesTranslationCountry)
+						&& setPhrases(res.data.phrasesTranslationCountry);
 					res.data.phrasesTranslationCountry
 						&& res.data.phrasesTranslationCountry.length !== 0
 						&& setPhraseIso(res.data.phrasesTranslationCountry[0].language_iso);
@@ -845,72 +845,82 @@ function Country({
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
 									<Row className="justify-content-center">
 
-										<Card header="Phrases"
-												style={{ maxHeight: '500px', overflow: 'scroll' }}
-												footer={<Row className="justify-content-center">
-															<a href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
-																target="_blank" rel="noopener noreferrer">
-																<i className="fa fa-globe" /> Reference
-															</a>
-														</Row>}>
+										<Card
+											header="Phrases"
+											style={{ maxHeight: '500px', overflow: 'scroll' }}
+											footer={(
+												<Row className="justify-content-center">
+													<a
+														href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														<i className="fa fa-globe" /> Reference
+													</a>
+												</Row>
+											)}
+										>
 
 											<Row>
 												<Col span="2">
-													<div style={{textAlign:"left"}}>
+													<div style={{ textAlign: 'left' }}>
 														<b style={{ color: '#FF9A8D' }}>English</b>
 													</div>
 												</Col>
 												<Col span="2">
-													<div style={{textAlign:"left"}}>
+													<div style={{ textAlign: 'left' }}>
 														<b style={{ color: '#FF9A8D' }}>{phraseLanguage}</b>
 													</div>
-												</Col >
+												</Col>
 												<Col span="2">
-													<div style={{textAlign:"left"}}>
+													<div style={{ textAlign: 'left' }}>
 														<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
 													</div>
 												</Col>
-												<hr/>
-												<hr/>
+												<hr />
+												<hr />
 												<Col span="2">
-													<div style={{textAlign:"right"}}>
+													<div style={{ textAlign: 'right' }}>
 														<b style={{ color: '#FF9A8D' }}>Play</b>
 													</div>
 												</Col>
 											</Row>
 											<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
-											{phrases.map((value,index) => (
-												<Row>
-													<Col>
-														{value.phrase.split('%20').join(' ')}
-													</Col>
-													<Col>
-														{value.translated_phrase}
-													</Col>
-													<Col>
-														{value.pronunciation}
-													</Col>
+												{phrases.map((value, index) => (
+													<Row>
+														<Col>
+															{value.phrase.split('%20').join(' ')}
+														</Col>
+														<Col>
+															{value.translated_phrase}
+														</Col>
+														<Col>
+															{value.pronunciation}
+														</Col>
 
-													<Col>
-														<div style={{textAlign:"right"}}>
-															<button
-																class = 'buttonSpeaker'
-																onClick={() => textToSpeech(value.translated_phrase,value.language_iso)}
-															><img src={require('../miscImages/phraseSpeaker.png')}
-																	style={{width: '24px'}}/>
-															</button>
-														</div>
-													</Col>
+														<Col>
+															<div style={{ textAlign: 'right' }}>
+																<button
+																	className="buttonSpeaker"
+																	onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
+																>
+																	<img
+																		src={require('../miscImages/phraseSpeaker.png')}
+																		style={{ width: '24px' }}
+																	/>
+																</button>
+															</div>
+														</Col>
 
-												</Row>
-											))}
-											{ (phrases.length === 0) && (<span>TBD</span>)}
+													</Row>
+												))}
+												{ (phrases.length === 0) && (<span>TBD</span>)}
 											</span>
 										</Card>
 									</Row>
 								</Col>
 							</Row>
-							<hr/>
+							<hr />
 							<Row id="Miscellaneous" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
 									<Row className="justify-content-center">
