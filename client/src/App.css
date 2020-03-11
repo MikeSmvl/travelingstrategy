@@ -89,8 +89,8 @@ hr {
   padding-top: 50%;
 }
 
-.button{
-  height: 25px;
-  width: 25px;
-  background-image : url('../src/miscImages/speaker.png');
+.buttonSpeaker{
+  height: 35px;
+  width: 33px;
+  border: none;
 }
