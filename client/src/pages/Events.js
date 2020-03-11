@@ -41,7 +41,6 @@ function Events({
 	useEffect(() => {
 		// Basic event search using category as parameter. By default, it will return the first ten events.
 		async function searchByCategory() {
-			console.log('hello');
 			const withinParam = `${latitude},${longitude}`;
 			const searchResults = await phqEvents.search({
 				'location_around.origin': withinParam,

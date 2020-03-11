@@ -42,7 +42,7 @@ const getRate = (originCurrency, destCurrency) => {
 	fetch(api)
 	.then((resp) => console.log('RESP.JSON ', resp.json())) // Transform the data into json
   .then((data) =>{
-    console.log('DATAAAAA ', data)
+    // console.log('DATAAAAA ', data)
     })
 }
 
