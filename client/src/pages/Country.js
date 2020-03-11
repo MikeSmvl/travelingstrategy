@@ -908,7 +908,7 @@ function Country({
 																	<img
 																		src={require('../miscImages/phraseSpeaker.png')}
 																		style={{ width: '24px' }}
-
+																		alt="error loading image"
 																	/>
 																</button>
 															</div>
