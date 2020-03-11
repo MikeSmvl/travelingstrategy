@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button } from 'react-bootstrap/';
+import { Row, Col} from 'react-bootstrap/';
 import '../App.css';
-import { Link } from 'react-router-dom';
 import { addTrendingSpots } from '../utils/parsingTools';
 
 
@@ -32,7 +31,6 @@ function TrendingSpots({
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					console.log(res)
 					res.data.imagesForRequestId
 					&& res.data.imagesForRequestId.length !== 0
 					&& setTrendingSpots(res.data.imagesForRequestId);
@@ -40,7 +38,7 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	}, [city]);
+	}, [city,requestId]);
 
 	return (
 		<div>
