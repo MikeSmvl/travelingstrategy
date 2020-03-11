@@ -184,9 +184,32 @@ function Events({
 
 	]);
 
-
 	return (
 		<div>
+			<div className="sidebar sidebar--expanded"  >
+			  <span className="shape"></span>
+			  <span className="shape"></span>
+			</div>
+			<section className={"main-content main-content--expanded"}>
+				<header>
+				<span></span>
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+				</header>
+				<div className="container">
+				<div className="module--full">
+				</div>
+				<div className="module-wrapper">
+					<div className="module--half">
+					</div>
+					<div className="module--half">
+					</div>
+				</div>
+				</div>
+			</section>
 			<div className="parallax">
 				<Row className="justify-content-center" style={{ paddingTop: '100px' }}>
 					<Col
