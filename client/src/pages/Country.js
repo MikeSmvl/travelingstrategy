@@ -70,6 +70,7 @@ function Country({
 	const [show, setShow] = useState(false);
 	const [phrases, setPhrases] = useState([]);
 	const [phraseIso, setPhraseIso] = useState('')
+	const [phraseLanguage, setPhraseLanguage] = useState('')
 
 
 	useEffect(() => {
@@ -285,6 +286,9 @@ function Country({
 					res.data.phrasesTranslationCountry
 						&& res.data.phrasesTranslationCountry.length !== 0
 						&& setPhraseIso(res.data.phrasesTranslationCountry[0].language_iso);
+					res.data.phrasesTranslationCountry
+						&& res.data.phrasesTranslationCountry.length !== 0
+						&& setPhraseLanguage(res.data.phrasesTranslationCountry[0].language);
 					fetchRate(
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
@@ -858,7 +862,7 @@ function Country({
 												</Col>
 												<Col span="2">
 													<div style={{textAlign:"left"}}>
-														<b style={{ color: '#FF9A8D' }}>Lang</b>
+														<b style={{ color: '#FF9A8D' }}>{phraseLanguage}</b>
 													</div>
 												</Col >
 												<Col span="2">
