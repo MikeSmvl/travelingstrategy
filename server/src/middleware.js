@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
-const secret = 'mysecretsshhh';
+const { secretEnv } = require('./config')
+const secret = secretEnv;
 
 const withAuth = function(req, res, next) {
   try {
