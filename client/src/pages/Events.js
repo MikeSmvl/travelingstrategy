@@ -44,6 +44,7 @@ function Events({
 	useEffect(() => {
 		// Basic event search using category as parameter. By default, it will return the first ten events.
 		async function searchByCategory() {
+			console.log('hello')
 			const withinParam = `${latitude},${longitude}`;
 			const searchResults = await phqEvents.search({
 				'location_around.origin': withinParam,
@@ -127,7 +128,7 @@ function Events({
 		}
 
 		async function fetchEvents() {
-			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`,  {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -234,88 +235,31 @@ function Events({
 
 			<section className={mainContentClass}>
 				<header>
-				<span></span>
-				<ul>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ul>
 				</header>
 				<div className="container">
-				<div className="module--full">
-				</div>
-				<div className="module-wrapper">
-					<div className="module--half">
+					<div className="module-wrapper">
+						<div className="module--half">
+							<ul>
+								{addApiEvents(eventsForCategories, requestId)}
+							</ul>
+						</div>
 					</div>
-					<div className="module--half">
+					<div className="module-wrapper">
+						<div className="module--half">
+							<ul>
+								<Card
+									header="Favorite Events"
+									style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
+								>
+									<CardBody>
+										{addMyEvents(savedEvents)}
+									</CardBody>
+								</Card>
+							</ul>
+						</div>
 					</div>
-				</div>
 				</div>
 			</section>
-			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '100px' }}>
-					<Col
-						style={{
-							backgroundColor: 'rgb(255, 255, 255)',
-							borderRadius: '20px'
-						}}
-						lg={8}
-					>
-						<Row
-							style={{
-								backgroundColor: 'rgb(247,	247,	247)',
-								padding: '0.5em',
-								borderRadius: '0px'
-							}}
-							className="justify-content-center sticky"
-						>
-							<Nav variant="pills" className="flex-row">
-								<Nav.Item>
-									<Button variant="outline-primary" value="conferences" onClick={categoryChosen}>Conferences</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="expos" onClick={categoryChosen}>Expos</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="concerts" onClick={categoryChosen}>Concerts</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="festivals" onClick={categoryChosen}>Festivals</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="performing-arts" onClick={categoryChosen}>Performing-arts</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="sports" onClick={categoryChosen}>Sports</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="community" onClick={categoryChosen}>Community</Button>
-								</Nav.Item>
-							</Nav>
-						</Row>
-						<div className="justify-content-center">
-							<div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
-								<div>
-									<ul>
-										{addApiEvents(eventsForCategories, requestId)}
-									</ul>
-									<ul>
-										<Card
-											header="Favorite Events"
-											style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-										>
-											<CardBody>
-												{addMyEvents(savedEvents)}
-											</CardBody>
-										</Card>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</Col>
-				</Row>
-				<footer id="footer" />
-			</div>
 		</div>
 	);
 }

@@ -167,7 +167,7 @@ main {
   padding: 0 3% 4rem;
   margin-left: 4.5rem;
   transition: 300ms ease-in-out;
-  position: relative;
+  position: initial;
   z-index: 2;
 }
 .main-content--expanded {
@@ -202,10 +202,11 @@ main {
   margin-right: 0;
 }
 .main-content .container {
-  width: 100%;
+  width: 75%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
+  margin-left: unset;
 }
 .main-content .module--full {
   width: 100%;
