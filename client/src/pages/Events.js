@@ -44,7 +44,6 @@ function Events({
 	useEffect(() => {
 		// Basic event search using category as parameter. By default, it will return the first ten events.
 		async function searchByCategory() {
-			console.log('hello')
 			const withinParam = `${latitude},${longitude}`;
 			const searchResults = await phqEvents.search({
 				'location_around.origin': withinParam,
@@ -128,7 +127,7 @@ function Events({
 		}
 
 		async function fetchEvents() {
-			await fetch(process.env.REACT_APP_BACKEND, {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
