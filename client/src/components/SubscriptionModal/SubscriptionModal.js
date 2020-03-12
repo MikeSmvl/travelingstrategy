@@ -30,7 +30,7 @@ const SubscriptionModal = (props) => {
 		const month = date.getMonth() + 1;
 		const day = date.getDate();
 		const dateString = `${year}-${month}-${day}`;
-		await fetch('http://localhost:4000/graphql', {
+		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{

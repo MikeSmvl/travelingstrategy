@@ -11,7 +11,7 @@ const Navbar = (props) => {
 
 	useEffect(() => {
 		async function getToken() {
-			const response = await fetch('http://localhost:4000/checktoken', { credentials: 'include' });
+			const response = await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, { credentials: 'include' });
 			if (response.ok) { // if HTTP-status is 200-299
 				setAuthenticated(true);
 			} else {
@@ -20,7 +20,7 @@ const Navbar = (props) => {
 		}
 		getToken();
 		async function exit() {
-			const response = await fetch('http://localhost:4000/logout', { credentials: 'include' });
+			const response = await fetch(`${process.env.REACT_APP_BACKEND}logout`, { credentials: 'include' });
 			if (response.ok) {
 				window.location.reload();
 			}
