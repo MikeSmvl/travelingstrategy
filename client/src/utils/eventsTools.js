@@ -61,7 +61,7 @@ function addApiEvents(apiEvents, request_id){
         var labels = getLabels(event);
 
         if(event.entities.length>0){
-            address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, "").replace(/"/g, "'");
+            address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
             venue_name = event.entities[0].name.replace(/"/g, "'");
             venue_type = event.entities[0].type.replace(/"/g, "'");
         }

@@ -32,6 +32,9 @@ function Events({
 	const [performingArtsCalled, setPerformingArtsCalled] = useState(false);
 	const [sportsCalled, setSportsCalled] = useState(false);
 	const [communityCalled, setCommunityCalled] = useState(false);
+	const [toggled,setToggled] = useState(true);
+	const [navbarClass, setNavbarClass ] = useState('sidebar sidebar--expanded');
+	const [mainContentClass, setMainContentClass ] = useState('main-content main-content--expanded');
 
 
 	const categoryChosen = (event) => {
@@ -184,13 +187,28 @@ function Events({
 
 	]);
 
+	
+
+	const expandNavBar= (event) => {
+		if(toggled){
+			setNavbarClass("sidebar")
+			setMainContentClass("main-content")
+			setToggled(false)
+		}
+		else{
+			setNavbarClass("sidebar sidebar--expanded")
+			setMainContentClass("main-content main-content--expanded")
+			setToggled(true)
+		}
+	}
+
 	return (
 		<div>
-			<div className="sidebar sidebar--expanded"  >
+			<div className={navbarClass}  onClick={expandNavBar}>
 			  <span className="shape"></span>
 			  <span className="shape"></span>
 			</div>
-			<section className={"main-content main-content--expanded"}>
+			<section className={mainContentClass}>
 				<header>
 				<span></span>
 				<ul>
