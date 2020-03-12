@@ -15,7 +15,7 @@ const weather = {
   color2: 'blue',
   color3: 'gray',
   color4: 'black',
-  color4: 'white',
+  color5: 'white',
   size: 50,
   animate: true
 };
@@ -26,9 +26,9 @@ const data = {
 
 
 
-
 function Weather(props) {
-  const [icon, setIcon] = useState("CLEAR_DAY");
+  const [icon, setIcon] = useState("");
+  const [color, setColor] = useState("");
   const {
 		lat = '',
 		lng = ''
@@ -48,27 +48,35 @@ function Weather(props) {
         switch(data.icon){
           case 'clear-day':
             setIcon(weather.icon1)
+            setColor(weather.color1)
             break;
           case 'partly-cloudy-day':
             setIcon(weather.icon2)
+            setColor(weather.color1)
             break;
           case 'coudy':
             setIcon(weather.icon3)
+            setColor(weather.color2)
             break;
           case 'rain':
             setIcon(weather.icon4)
+            setColor(weather.color3)
             break;
           case 'sleet':
             setIcon(weather.icon5)
+            setColor(weather.color3)
             break;
           case 'snow':
             setIcon(weather.icon6)
+            setColor(weather.color4)
             break;
           case 'wind':
             setIcon(weather.icon7)
+            setColor(weather.color5)
             break;
           case 'fog':
             setIcon(weather.icon8)
+            setColor(weather.color3)
             break;
      }
     }
