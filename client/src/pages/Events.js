@@ -205,9 +205,34 @@ function Events({
 	return (
 		<div>
 			<div className={navbarClass}  onClick={expandNavBar}>
-			  <span className="shape"></span>
-			  <span className="shape"></span>
+				<span className="shape"></span>
+				<span className="shape"></span>
+				<div className='categories-btn'>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="conferences" onClick={categoryChosen}>Conferences</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="expos" onClick={categoryChosen}>Expos</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="concerts" onClick={categoryChosen}>Concerts</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="festivals" onClick={categoryChosen}>Festivals</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="performing-arts" onClick={categoryChosen}>Performing-arts</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="sports" onClick={categoryChosen}>Sports</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="community" onClick={categoryChosen}>Community</Button>
+					</div>
+				</div>
 			</div>
+			
+
 			<section className={mainContentClass}>
 				<header>
 				<span></span>
