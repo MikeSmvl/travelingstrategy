@@ -9,6 +9,8 @@ Subscriber = new graphql.GraphQLObjectType({
         date_of_trip: { type: graphql.GraphQLString },
         search_term: { type: graphql.GraphQLString },
         email: { type: graphql.GraphQLString },
+        latitude:{ type: graphql.GraphQLString },
+        longitude:{ type: graphql.GraphQLString },
     }
 });
 

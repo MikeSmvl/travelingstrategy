@@ -5,23 +5,25 @@ import { addTrendingSpots } from '../utils/parsingTools';
 
 
 function TrendingSpots({
-	city
+	requestId,
+	city,
+	latitude,
+	longitude
 }) {
 	const [trendingSpots, setTrendingSpots] = useState([]);
 	useEffect(() => {
 		async function fetchData() {
-			await fetch('http://localhost:4000/graphql', {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						imagesForRequestId(request_id:"${city}"){
+						imagesForRequestId(request_id:"${requestId}"){
 							image_id,
                             image_link,
                             geolocation,
                             caption,
 							tag
-
 						}
 					}
 					`
@@ -36,7 +38,7 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	});
+	}, [city, requestId]);
 
 	return (
 		<div>

@@ -7,8 +7,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sendEmail } = require('./emailVerification/emailVerification');
 const { v4 } = require('uuid')
+const { secretEnv, backendEnv } = require('../../src/config')
 
-const secret = 'mysecretsshhh';
+const secret = secretEnv;
 
 var addUser = {
   type: User,
@@ -45,7 +46,7 @@ var addUser = {
                 });
                 const id = v4();
                 context.redis.set(id, row['email'], "ex", 60*60*24);
-                sendEmail(row['email'], `http://localhost:4000/confirm/${id}`);
+                sendEmail(row['email'], `${backendEnv}/confirm/${id}`);
               }
             );
           }

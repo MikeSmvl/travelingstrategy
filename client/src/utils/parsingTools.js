@@ -3,6 +3,7 @@ import { Row} from 'react-bootstrap/';
 import { Card, CardBody} from '../components/Card/Card';
 import { Link } from 'react-router-dom';
 
+
 const languages = (object) => {
 	const items = [];
 	const keys = Object.keys(object);
@@ -41,7 +42,7 @@ const getRate = (originCurrency, destCurrency) => {
 	fetch(api)
 	.then((resp) => console.log('RESP.JSON ', resp.json())) // Transform the data into json
   .then((data) =>{
-    console.log('DATAAAAA ', data)
+    // console.log('DATAAAAA ', data)
     })
 }
 
@@ -66,9 +67,11 @@ function addChosenCities(arrayOfCities){
 		//we should be sending a request id thats why we ghave it a string is too volatile
 		const request_id = citySubscription.request_id;
 		const cityName = citySubscription.search_term;
+		const latitude = citySubscription.latitude;
+		const longitude = citySubscription.longitude;
 		items.push(
 			<Link
-				to={`/trending_spots?city=${request_id}`}
+				to={`/user_selection?request_id=${request_id}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
 			>
 			<Row
 				style={{

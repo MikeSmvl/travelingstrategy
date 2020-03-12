@@ -14,22 +14,21 @@ function Me() {
 
 	useEffect(() => {
 		async function getToken() {
-			const response = await fetch('http://localhost:4000/checktoken', { credentials: 'include' });
-			await fetch('http://localhost:4000/checktoken', { credentials: 'include' })
+			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, { credentials: 'include' })
 				.then((res) => res.json())
 				.then((res) => {
 					res.email
-					&& res.email !== null
-					&& setEmail(res.email);
+                && res.email !== null
+                && setEmail(res.email);
+				})
+				.catch((error) => {
+					// if status code 401...
+					setRedirect(true);
 				});
-			if (response.ok) { // if HTTP-status is 200-299
-			} else {
-				setRedirect(true);
-			}
 		}
 
 		async function fetchData() {
-			await fetch('http://localhost:4000/graphql', {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -38,7 +37,9 @@ function Me() {
 							email,
 							search_term,
 							date_of_trip,
-							request_id
+							request_id,
+							latitude,
+							longitude
 						}
 					}
 					`
@@ -46,7 +47,6 @@ function Me() {
 			})
 				.then((res) => res.json())
 				.then((res) => {
-				// console.log(res.data.userSubscriptions);
 					res.data.userSubscriptions
 					&& res.data.userSubscriptions.length !== 0
 					&& setCities(res.data.userSubscriptions);
@@ -55,7 +55,7 @@ function Me() {
 
 		fetchData();
 		getToken();
-	});
+	}, [email]);
 
 	if (redirect) {
 		return <Redirect to="/" />;

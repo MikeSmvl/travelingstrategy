@@ -16,7 +16,9 @@ const SubscriptionModal = (props) => {
 	const {
 		show = '',
     	handleClose = '',
-		city = ''
+		city = '',
+		lat = '',
+		lng = ''
 	} = props;
 
 	const emailChange = (event) => {
@@ -28,11 +30,11 @@ const SubscriptionModal = (props) => {
 		const month = date.getMonth() + 1;
 		const day = date.getDate();
 		const dateString = `${year}-${month}-${day}`;
-		await fetch('http://localhost:4000/graphql', {
+		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-                    addSubscriber(email:"${email}",search_term:"${city}", date_of_trip:"${dateString}") {
+                    addSubscriber(email:"${email}",search_term:"${city}", date_of_trip:"${dateString}", lat:"${lat}", lng:"${lng}") {
                           email,
                           search_term,
                           date_of_trip
@@ -98,7 +100,9 @@ const SubscriptionModal = (props) => {
 SubscriptionModal.propTypes = {
 	show: PropTypes.bool,
 	handleClose: PropTypes.func,
-	city: PropTypes.string
+	city: PropTypes.string,
+	lat: PropTypes.string,
+	lng: PropTypes.string
 };
 
 

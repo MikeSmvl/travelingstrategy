@@ -99,7 +99,7 @@ function Country({
 
 		async function fetchData() {
 			setIsLoading(true);
-			await fetch(process.env.REACT_APP_BACKEND, {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -317,18 +317,21 @@ function Country({
 	const handleShow = () => setShow(true);
 	console.log(phraseIso);
 
+
 	return (
 		<div>
 			{!isLoading && (
 				<div className="parallax">
 					<Header
-						title={getCountryName(destinationCountry)}
-						title2={destinationCity}
-						title3={getTimeDifference(timeOrigin, timeDestination, originCity)}
+						country={getCountryName(destinationCountry)}
+						city={destinationCity}
+						time={getTimeDifference(timeOrigin, timeDestination, originCity)}
 						show={show}
 						handleShow={handleShow}
 						handleClose={handleClose}
-						city={destinationCity}
+						lat={destinationLat}
+						lng={destinationLng}
+						countryIso={destinationCountry}
 					/>
 					<Row className="justify-content-center">
 						<Col
@@ -994,6 +997,8 @@ function Country({
 							handleShow={handleShow}
 							handleClose={handleClose}
 							city={destinationCity}
+							lat={destinationLat}
+							lng={destinationLng}
 						/>
 					</footer>
 				</div>
