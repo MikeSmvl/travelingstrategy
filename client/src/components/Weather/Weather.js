@@ -1,6 +1,13 @@
 import React, {useEffect } from 'react';
+import ReactAnimatedWeather from 'react-animated-weather';
 
 
+const defaults = {
+  icon: 'CLEAR_DAY',
+  color: 'goldenrod',
+  size: 512,
+  animate: true
+};
 
 
 function Weather(props) {
@@ -28,6 +35,12 @@ function Weather(props) {
   return (
     <div>
       <h3>hello</h3>
+      <ReactAnimatedWeather
+    icon={defaults.icon}
+    color={defaults.color}
+    size={defaults.size}
+    animate={defaults.animate}
+  />
     </div>
   )
 }
