@@ -88,3 +88,9 @@ hr {
   text-align: center;
   padding-top: 50%;
 }
+
+.buttonSpeaker{
+  height: 35px;
+  width: 33px;
+  border: none;
+}
