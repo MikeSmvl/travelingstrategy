@@ -13,8 +13,14 @@ from lib.database import Database
 from lib.config import instagram_url
 import datetime
 
+#initialize DB
 DB = Database('countries.sqlite')
+# Initialize flags, logger & database
+FLAGS = Flags()
+LEVEL = FLAGS.get_logger_level()
+LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
+#Mapping of languages and countires using 2 letter iso
 country_language = {
     'GE': ['ru','Russian'],
     'AF': ['ps','Pashto'],
@@ -223,6 +229,7 @@ country_language = {
 
 }
 
+#The basic phrases that we think are usefull for a traveler
 PHRASES = {
     'Thank you',
     'Hello',
@@ -247,34 +254,38 @@ PHRASES = {
     'Exit'
 }
 
+#creating the table for phrases
 def create_table():
     DB.drop_table('phrases')
     DB.add_table('phrases',language_iso='text',language='text',phrase='text',translated_phrase='text',pronunciation='text')
 
+#TRANSLATION for Thank You
 def translateTest():
-
+    #We are parsing the sentences from google translae
     url  = 'https://translate.google.com/?sl=en&tl=#view=home&op=translate&sl=en&tl=fr&text=thank%20you'
     try:
         driver = create_driver()
         driver.get(url)
         soup = BeautifulSoup(driver.page_source, 'lxml')
     except:
-        print("ERRROOOOOR 1:")
+        LOGGER.error("Could not connet to google translate.")
 
     try:
         translation  = soup.find('span',{'class':'tlid-translation translation'}).text
 
     except:
-        print("ERRROOOOOR 2:")
+        LOGGER.info("Data is missing for Thank You, 'en' to 'fr' and will be replace by '-'")
         translation = "-"
 
     return translation
 
+
+#Translation all sentences
 def translate(iso_language):
+    #parse the languages 10 by 10 to track any error more easily
     count = 0
     driver = create_driver()
     for lg in iso_language:
-        print(lg)
         for p in PHRASES:
             iso = iso_language[lg]
             p_edit = p.replace(" ","%20")
@@ -285,14 +296,14 @@ def translate(iso_language):
                 driver.get(url)
                 soup = BeautifulSoup(driver.page_source, 'lxml')
             except:
-                print("ERRROOOOOR 1:",lg)
+                LOGGER.error(f'Could not parse {lg}')
                 continue
 
             try:
                 translation  = soup.find('span',{'class':'tlid-translation translation'}).text
                 pronunciation = soup.find_all('div',{'class':'tlid-transliteration-content transliteration-content full'})[1].text
             except:
-                print("ERRROOOOOR 2:",lg)
+                LOGGER.info(f'Could not find data for {lg}; will ne replace by -')
                 translation = "-"
                 pronunciation = "-"
 
@@ -308,6 +319,7 @@ def translate(iso_language):
     return
 
 def save_language_country_mapping():
+    #function to save the data
     DB.drop_table("language_iso")
     DB.add_table("language_iso", country_iso = "text", language_iso="text",language="text")
     for country_iso in country_language:
@@ -316,6 +328,7 @@ def save_language_country_mapping():
         language = l[1]
         DB.insert("language_iso",country_iso,language_iso,language)
 
+#prepare the data before parsing to not duplicate languages
 def prep_to_pars():
     res = DB.query("SELECT language_iso FROM phrases")
 
@@ -335,8 +348,3 @@ def prep_to_pars():
             to_pars[language] = iso
 
     return to_pars
-
-
-# to_pars = prep_to_pars()
-# translate(to_pars)
-save_language_country_mapping()
