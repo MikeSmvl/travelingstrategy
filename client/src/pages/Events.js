@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button} from 'react-bootstrap/';
+import { Button, Row, Col} from 'react-bootstrap/';
 import Client from 'predicthq';
 import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
@@ -205,6 +205,9 @@ function Events({
 	console.log(category)
 	return (
 		<div>
+			<Row>
+
+			
 			<div className={navbarClass}  onClick={expandNavBar}>
 				<span className="shape"></span>
 				<span className="shape"></span>
@@ -244,23 +247,21 @@ function Events({
 					<div className="module-wrapper">
 						<div className="module--half">
 							<ul>
-							<Card
+							{/* <Card
 									header="Events"
 									style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-								>
+								> */}
 								{category ==="likes"
-        						?
-									<CardBody>
-										{addMyEvents(savedEvents)}
-									</CardBody>
+        						? addMyEvents(savedEvents)
         						: addApiEvents(eventsForCategories, requestId)
 								}
-							</Card>
+							{/* </Card> */}
 							</ul>
 						</div>
 					</div>
 				</div>
 			</section>
+			</Row>
 		</div>
 	);
 }

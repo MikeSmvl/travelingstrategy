@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Col} from 'react-bootstrap/';
 import { EventCard} from '../components/EventCard/EventCard';
+import { Card, CardBody } from '../components/Card/Card';
+
 
 /**
  * 
@@ -17,11 +19,12 @@ function addMyEvents(myEvents){
         const address = event.address;
 		const name_of_place = event.name_of_place;
 		events.push(
-            <Col style={
-                {
-                    padding: '40px 25px 25px 25px'
-                }
-            }>
+
+            <Card
+                header="Events"
+                style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
+            >
+            <CardBody>
                 <hr></hr>
                 Category:{event_category}<br></br>
                 Title: {title}<br></br>
@@ -30,7 +33,8 @@ function addMyEvents(myEvents){
                 Description: {description}<br></br>
                 Address: {address}<br></br>
                 Venue: {name_of_place}<br></br>
-            </Col>
+            </CardBody>
+            </Card>
 		);
 	});
 	return (
@@ -67,16 +71,24 @@ function addApiEvents(apiEvents, request_id){
 
         const event_for_card = [request_id, category,description, duration,start,end, title,labels,address,venue_type,venue_name];
         events.push(
-            <EventCard eventArray={event_for_card}>
-                <hr></hr>
-                Category:{category}<br></br>
-                Title: {title}<br></br>
-                Start Date: {start}<br></br>
-                End Date: {end}<br></br>
-                Description: {description}<br></br>
-                Address: {address}<br></br>
-                Venue: {venue_name}<br></br>
-            </EventCard>
+            <Card
+                header="Events"
+                style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
+            >
+                <CardBody>
+                    <EventCard eventArray={event_for_card}>
+                        <hr></hr>
+                        Category:{category}<br></br>
+                        Title: {title}<br></br>
+                        Start Date: {start}<br></br>
+                        End Date: {end}<br></br>
+                        Description: {description}<br></br>
+                        Address: {address}<br></br>
+                        Venue: {venue_name}<br></br>
+                    </EventCard>
+                </CardBody>
+            </Card>
+            
         );
     });
 
