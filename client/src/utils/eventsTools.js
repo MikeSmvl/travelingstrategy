@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { EventCard} from '../components/EventCard/EventCard';
 import { Card, CardBody } from '../components/Card/Card';
+import TestCard from '../components/TestCard/TestCard';
+
+
 
 
 /**
@@ -10,30 +13,41 @@ import { Card, CardBody } from '../components/Card/Card';
 function addMyEvents(myEvents){
     const events = [];
 	myEvents.forEach(event =>{
-		const event_category = event.event_category;
+		const eventCategory = event.event_category;
         const description = event.description;
-		const start_date = event.start_date;
-        const end_date = event.end_date;
+		const startDate = event.start_date;
+        const endDate = event.end_date;
         const title = event.title;
         const address = event.address;
-		const name_of_place = event.name_of_place;
+		const nameOfPlace = event.name_of_place;
 		events.push(
 
-            <Card
-                header="Events"
-                style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-            >
-            <CardBody>
-                <hr></hr>
-                Category:{event_category}<br></br>
-                Title: {title}<br></br>
-                Start Date: {start_date}<br></br>
-                End Date: {end_date}<br></br>
-                Description: {description}<br></br>
-                Address: {address}<br></br>
-                Venue: {name_of_place}<br></br>
-            </CardBody>
-            </Card>
+            <TestCard 
+                eventCategory={eventCategory}
+                description={description}
+                eventCategory={eventCategory}
+                startDate={startDate}
+                endDate={endDate}
+                title={title}
+                address={address}
+                nameOfPlace={address}
+
+            ></TestCard>
+            // <Card
+            //     header="Events"
+            //     style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
+            // >
+            // <CardBody>
+            //     <hr></hr>
+            //     Category:{event_category}<br></br>
+            //     Title: {title}<br></br>
+            //     Start Date: {start_date}<br></br>
+            //     End Date: {end_date}<br></br>
+            //     Description: {description}<br></br>
+            //     Address: {address}<br></br>
+            //     Venue: {name_of_place}<br></br>
+            // </CardBody>
+            // </Card>
 		);
 	});
 	return (

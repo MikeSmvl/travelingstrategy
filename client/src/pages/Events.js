@@ -3,7 +3,6 @@ import { Button, Row} from 'react-bootstrap/';
 import Client from 'predicthq';
 import '../App.css';
 import { addMyEvents, addApiEvents } from '../utils/eventsTools';
-import TestCard from '../components/TestCard/TestCard';
 
 
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -283,13 +282,10 @@ const PostsData = [
 			</div>
 			<section className={mainContentClass} style={{marginTop:'5%'}}>
 			<div className="app-card-list" id="app-card-list">
-				<TestCard></TestCard>
-				<TestCard></TestCard>
-				<TestCard></TestCard>
-				<TestCard></TestCard>
-				<TestCard></TestCard>
-				<TestCard></TestCard>
-				
+				{category ==="likes"
+					? addMyEvents(savedEvents)
+					: addApiEvents(eventsForCategories, requestId)
+					}
 			</div>
 
 			</section>
