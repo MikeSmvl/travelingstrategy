@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Col} from 'react-bootstrap/';
 import { EventCard} from '../components/EventCard/EventCard';
 import { Card, CardBody } from '../components/Card/Card';
 

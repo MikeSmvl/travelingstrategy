@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Col} from 'react-bootstrap/';
+import { Button, Row} from 'react-bootstrap/';
 import Client from 'predicthq';
-import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
 import { addMyEvents, addApiEvents } from '../utils/eventsTools';
+import TestCard from '../components/TestCard/TestCard';
 
 
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -202,12 +202,55 @@ function Events({
 		}
 	}
 
-	console.log(category)
-	return (
-		<div>
-			<Row>
+	//Temporarily store data here
+const PostsData = [
+	{
+	  "category": "News",
+	  "title": "CNN Acquire BEME",
+	  "text": "CNN purchased Casey Neistat's Beme app for $25million.",
+	  "image": "https://source.unsplash.com/user/erondu/600x400"
+	},
+	{
+	  "category": "Travel",
+	  "title": "Nomad Lifestyle",
+	  "text": "Learn our tips and tricks on living a nomadic lifestyle",
+	  "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+	},
+	{
+	  "category": "Development",
+	  "title": "React and the WP-API",
+	  "text": "The first ever decoupled starter theme for React & the WP-API",
+	  "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
+	},
+	{
+	  "category": "News",
+	  "title": "CNN Acquire BEME",
+	  "text": "CNN purchased Casey Neistat's Beme app for $25million.",
+	  "image": "https://source.unsplash.com/user/erondu/600x400"
+	},
+	{
+	  "category": "Travel",
+	  "title": "Nomad Lifestyle",
+	  "text": "Learn our tips and tricks on living a nomadic lifestyle",
+	  "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+	},
+	{
+	  "category": "Travel",
+	  "title": "Nomad Lifestyle",
+	  "text": "Learn our tips and tricks on living a nomadic lifestyle",
+	  "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
+	},
+	{
+	  "category": "Development",
+	  "title": "React and the WP-API",
+	  "text": "The first ever decoupled starter theme for React & the WP-API",
+	  "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
+	}
+  ]
 
-			
+	return (
+		<div  id="events-section">
+			<Row>
 			<div className={navbarClass}  onClick={expandNavBar}>
 				<span className="shape"></span>
 				<span className="shape"></span>
@@ -238,29 +281,34 @@ function Events({
 					</div>
 				</div>
 			</div>
-			
+			<section className={mainContentClass} style={{marginTop:'5%'}}>
+			<div className="app-card-list" id="app-card-list">
+				<TestCard></TestCard>
+				<TestCard></TestCard>
+				<TestCard></TestCard>
+				<TestCard></TestCard>
+				<TestCard></TestCard>
+				<TestCard></TestCard>
+				
+			</div>
 
-			<section className={mainContentClass}>
+			</section>
+			{/* <section className={mainContentClass}>
 				<header>
 				</header>
 				<div className="container">
 					<div className="module-wrapper">
 						<div className="module--half">
 							<ul>
-							{/* <Card
-									header="Events"
-									style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-								> */}
 								{category ==="likes"
         						? addMyEvents(savedEvents)
         						: addApiEvents(eventsForCategories, requestId)
 								}
-							{/* </Card> */}
 							</ul>
 						</div>
 					</div>
 				</div>
-			</section>
+			</section> */}
 			</Row>
 		</div>
 	);

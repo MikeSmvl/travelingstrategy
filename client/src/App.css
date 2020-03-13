@@ -116,7 +116,7 @@ main {
   position: relative;
 }
 .sidebar {
-  width: 300px;
+  width: 290px;
   background-image: linear-gradient(#fcbd78, #ff65c3);
   background-size: 200%;
   background-position: 0 100%;
@@ -277,6 +277,13 @@ main {
     top: 500px;
     left: -100px;
  }
+}
+
+#events-section {
+  /* The image used */
+  background-color: #fef9e7;
+  background-image: linear-gradient(#fcbd784f, #ff65c37a);
+
 }
 
 
