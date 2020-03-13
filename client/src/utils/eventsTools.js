@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Col} from 'react-bootstrap/';
 import { EventCard} from '../components/EventCard/EventCard';
-import { Card} from '../components/Card/Card';
 
 /**
  * 
@@ -83,12 +82,7 @@ function addApiEvents(apiEvents, request_id){
 
     return (
         <div>
-            <Card
-                header= {"Suggested Events"}
-                style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px' }}
-            >
-                {events}
-            </Card>
+            {events}
         </div>
     );
 }

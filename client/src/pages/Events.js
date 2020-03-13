@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Nav } from 'react-bootstrap/';
+import { Button} from 'react-bootstrap/';
 import Client from 'predicthq';
 import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
@@ -15,7 +15,7 @@ function Events({
 	latitude,
 	longitude
 }) {
-	const [category, setCategory] = useState('');
+	const [category, setCategory] = useState('likes');
 	const [savedEvents, setSavedEvents] = useState([]);
 	const [eventsForCategories, setEventsForCategories] = useState([]);
 	const [conferences, setConferences] = useState([]);
@@ -202,12 +202,16 @@ function Events({
 		}
 	}
 
+	console.log(category)
 	return (
 		<div>
 			<div className={navbarClass}  onClick={expandNavBar}>
 				<span className="shape"></span>
 				<span className="shape"></span>
 				<div className='categories-btn'>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="likes" onClick={categoryChosen}>Likes</Button>
+					</div>
 					<div className='choice-btn'>
 						<Button variant="outline-primary" style={{width:'100%'}} value="conferences" onClick={categoryChosen}>Conferences</Button>
 					</div>
@@ -240,21 +244,18 @@ function Events({
 					<div className="module-wrapper">
 						<div className="module--half">
 							<ul>
-								{addApiEvents(eventsForCategories, requestId)}
-							</ul>
-						</div>
-					</div>
-					<div className="module-wrapper">
-						<div className="module--half">
-							<ul>
-								<Card
-									header="Favorite Events"
+							<Card
+									header="Events"
 									style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
 								>
+								{category ==="likes"
+        						?
 									<CardBody>
 										{addMyEvents(savedEvents)}
 									</CardBody>
-								</Card>
+        						: addApiEvents(eventsForCategories, requestId)
+								}
+							</Card>
 							</ul>
 						</div>
 					</div>
