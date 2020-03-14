@@ -1,6 +1,7 @@
 import React, {useEffect, useState } from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
 import { setSkycon } from '../../utils/weatherIcon';
+var moment = require('moment');
 
 
 const weather = {
@@ -31,42 +32,32 @@ const data = {
 
 const Icon = (props) => {
   const [icon, setIcon] = useState(data.icon);
+  const [color, setColor] = useState('Not Available Yet');
+  setSkycon(data.icon, setColor, setIcon);
+
   const {
 		lat = '',
-		lng = ''
-	} = props;
-
-
-  const [color, setColor] = useState('Not Available Yet');
-
-  useEffect(() => {
-     async function fetchData() {
-
-      // asynchronously load contents of the url
-      // return a Promise that resolves when res is loaded
-       await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0bd6aca8cf0481c6aed071562937a466/${lat},${lng}`)
-        .then((response)=>response.json()) // call this function when res is loaded
-        // return a Promise with result of above function
-        .then(response =>{
-          data.icon = response.currently.icon;
-          setSkycon(data.icon, setColor, setIcon);
-        })
-
-    }
-
-    fetchData();
-  });
+    lng = '',
+    response = []
+  } = props;
+  let newDate = new Date();
+  console.log(response)
 
   return (
-    <div>
-      <h3>Icon</h3>
+    <div className="col-sm-6">
+    <div className="card">
+      <h4 className="card-title">{moment(newDate).format('dddd')}</h4>
+      <p className="text-muted">{moment(newDate).format('MMMM Do, h:mm a')}</p>
+      <div className="card-body">
       <ReactAnimatedWeather
         icon={icon}
         color={weather.color3}
         size={weather.size}
         animate={weather.animate}
       />
+     </div>
     </div>
+  </div>
   )
 }
 

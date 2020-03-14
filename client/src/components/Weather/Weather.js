@@ -1,44 +1,63 @@
 import React, {useEffect, useState } from 'react';
-import ReactAnimatedWeather from 'react-animated-weather';
-import { setSkycon } from '../../utils/weatherIcon';
 import Icon from './Icon';
+import './Weather.css';
 
 
-function Weather({
-  lat,
-  lng
-})
-  {
+const Weather =  (props) => {
+  
+     const [currentTemp, setCurrentTemp] = useState('Not Available Yet');
+     const [currentSummary, setCurrentSummary] = useState('Not Available Yet');
+     const [responseObj, setResponseObj]  = useState('Not Available Yet');
+     const{
+        lat,
+        lng,
+     } = props;
 
-  const [currentTemp, setCurrentTemp] = useState('Not Available Yet');
-  const [currentSummary, setCurrentSummary] = useState('Not Available Yet');
 
-  useEffect(() => {
-     async function fetchData() {
+     useEffect(() => {
+       async function fetchData() {
 
       // asynchronously load contents of the url
       // return a Promise that resolves when res is loaded
-         await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0bd6aca8cf0481c6aed071562937a466/${lat},${lng}`)
+         await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/7bf77670c6eb79e1318dbdad36f851da/${lat},${lng}`)
         .then((response)=>response.json()) // call this function when res is loaded
         // return a Promise with result of above function
-        .then(response =>{
-          setCurrentTemp(response.currently.temperature);
-          setCurrentSummary(response.currently.summary);
+        .then(response =>{setResponseObj(response)
         })
 
     }
 
     fetchData();
+    console.log(responseObj+"aaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb")
   });
 
-  return (
-    <div>
-      <h3>{currentTemp} {currentSummary}</h3>
-      <Icon
-        lat={lat}
-        lng={lng}
-      />
-    </div>
+     return (
+      <div className='flexbox-container'>
+         <Icon
+           lat={lat}
+           lng={lng}
+           response ={responseObj}/>
+         <Icon 
+          lat={lat}
+          lng={lng}
+          response ={responseObj}>
+         </Icon>
+         <Icon 
+          lat={lat}
+          lng={lng}
+          response ={responseObj}>
+         </Icon>
+         <Icon 
+          lat={lat}
+          lng={lng}
+          response ={responseObj}>
+         </Icon>
+         <Icon 
+          lat={lat}
+          lng={lng}
+          response ={responseObj}>
+         </Icon>
+     </div>
   )
 }
 
