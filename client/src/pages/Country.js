@@ -494,12 +494,16 @@ function Country({
 											</div>
 										</CardBody>
 									</Card>
-									<Weather
+								</Col>
+							</Row>
+							<Row className="justify-content-between">
+							  <Col sm={5} style={{ padding: '20px' }}>
+							     <Weather 
 									        lat = {destinationLat}
 											lng = {destinationLng}>
 
-									</Weather>
-								</Col>
+								</Weather>
+							  </Col>
 							</Row>
 							<hr />
 							<div id="Financials">
