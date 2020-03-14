@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Card, Button } from 'react-bootstrap';
+import { Card, Button, Modal } from 'react-bootstrap';
 import './TestCard.css'
 import PropTypes from 'prop-types';
 
 
 const TestCard = (props) =>{
+    const [modal, setModal] = useState(false);
     const {
         eventCategory='',
         description='',
@@ -12,8 +13,10 @@ const TestCard = (props) =>{
         endDate='',
         title='',
         address='',
-        nameOfPlace=''
+        nameOfPlace='',
+        duration ='',
     } = props;
+    
 
     const getDateText = () => {
         const dateObject = new Date(startDate)
@@ -29,20 +32,64 @@ const TestCard = (props) =>{
         return dateText;
     }
 
+
+    const InfoModal = () => {
+        return(
+            <Modal
+            show={modal}
+            onHide={() => setModal(false)}
+            centered
+            >
+                <Modal.Header closeButton>
+                <Modal.Title id="example-modal-sizes-title-lg">
+                    <h2 className="card-title">{title}</h2>
+                </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <img variant="top" src="https://source.unsplash.com/user/erondu/600x400" className="more-info-img"/>
+                    <div className="card-body">
+                        <p className="date"><b>{getDateText()}</b></p>
+                        {address!=='' && <p>
+                                            <b>Address:</b>{address}
+                                        </p>
+                        }
+                        {nameOfPlace!=='' && <p>
+                                            <b>Venue Name:</b>{nameOfPlace}
+                                        </p>
+                        }
+                        <p className="body-content-modal">{description}</p>
+                    </div>
+                </Modal.Body>
+            </Modal>
+        );
+    }
+
+    const EventCard = () => {
+        return(
+            <Card className="card" >
+                <Card.Img variant="top" src="https://source.unsplash.com/user/erondu/600x400" />
+                <div className="card-body">
+                    <p className="date">{getDateText()}</p>
+                    <h2 className="card-title">{title}</h2>
+                    {/* <p className="body-content">{description}</p> */}
+                    <Button variant="outline-primary" onClick={() => setModal(true)}>
+                        <i className="fa fa-chevron-right"></i> Find out more
+                    </Button>
+                </div>
+            </Card>
+        );
+
+    }
+
     return(
-        <Card className="card" >
-            <Card.Img variant="top" src="https://source.unsplash.com/user/erondu/600x400" />
-            <div className="card-body">
-                <p className="date">{getDateText()}</p>
-                <h2 className="card-title">{title}</h2>
-                {/* <p className="body-content">{description}</p> */}
-                <Button variant="outline-primary">
-                    <i className="fa fa-chevron-right"></i> Find out more
-                </Button>
-            </div>
-        </Card>
+        <>
+        <EventCard></EventCard>
+        <InfoModal></InfoModal>
+      </>
     );
+
 }
+
 
 TestCard.propTypes = {
     eventCategory: PropTypes.string,
@@ -51,7 +98,8 @@ TestCard.propTypes = {
     endDate: PropTypes.string,
     title: PropTypes.string,
     address: PropTypes.string,
-    nameOfPlace: PropTypes.string
+    nameOfPlace: PropTypes.string,
+    duration: PropTypes.string
 };
 
 export default TestCard;

@@ -81,3 +81,13 @@ body, html {
     text-align: center;
     margin-bottom: 25%;
 }
+
+.modal-content{
+    max-width: 45%;
+    margin-left: 30%;
+}
+
+.more-info-img{
+    max-width: 100%;
+}
+

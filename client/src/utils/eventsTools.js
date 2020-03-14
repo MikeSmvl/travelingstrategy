@@ -19,7 +19,8 @@ function addMyEvents(myEvents){
         const endDate = event.end_date;
         const title = event.title;
         const address = event.address;
-		const nameOfPlace = event.name_of_place;
+        const nameOfPlace = event.name_of_place;
+        const duration = event.duration
 		events.push(
 
             <TestCard 
@@ -31,6 +32,7 @@ function addMyEvents(myEvents){
                 title={title}
                 address={address}
                 nameOfPlace={address}
+                duration={duration}
 
             ></TestCard>
             // <Card
