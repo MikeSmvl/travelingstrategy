@@ -1,8 +1,7 @@
 import React, {useEffect, useState } from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
 import { setSkycon } from '../../utils/weatherIcon';
-var moment = require('moment');
-
+import moment from "moment";
 
 const weather = {
   icon1: 'CLEAR_DAY',
