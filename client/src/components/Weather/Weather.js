@@ -19,7 +19,7 @@ const Weather = (props) => {
 
       // asynchronously load contents of the url
       // return a Promise that resolves when res is loaded
-         await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/7bf77670c6eb79e1316f851da/${lat},${lng}`)
+         await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/7bf77670c6eb79e1318dbdad36f851da/${lat},${lng}`)
         .then((response)=>response.json()) // call this function when res is loaded
         // return a Promise with result of above function
         .then(response =>{setResponseObj(response)
@@ -28,7 +28,7 @@ const Weather = (props) => {
 
     fetchData();
     console.log(responseObj+"aaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbb")
-  });
+  },[]);
 
      return (
       <div className='flexbox-container'>
