@@ -31,25 +31,10 @@ function addMyEvents(myEvents){
                 endDate={endDate}
                 title={title}
                 address={address}
-                nameOfPlace={address}
+                nameOfPlace={nameOfPlace}
                 duration={duration}
 
             ></TestCard>
-            // <Card
-            //     header="Events"
-            //     style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-            // >
-            // <CardBody>
-            //     <hr></hr>
-            //     Category:{event_category}<br></br>
-            //     Title: {title}<br></br>
-            //     Start Date: {start_date}<br></br>
-            //     End Date: {end_date}<br></br>
-            //     Description: {description}<br></br>
-            //     Address: {address}<br></br>
-            //     Venue: {name_of_place}<br></br>
-            // </CardBody>
-            // </Card>
 		);
 	});
 	return (
