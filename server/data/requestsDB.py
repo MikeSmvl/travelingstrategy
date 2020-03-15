@@ -5,13 +5,13 @@ import sqlite3
 sys.path.append("..")
 from lib.database import Database
 
-DB = Database("countries.sqlite")
+DB = Database("../countries.sqlite")
 #This maybe will no be done in this script but we keep for testing
 NOW = datetime.datetime.now()
 DATE_FORMAT = "%Y-%m-%d"
 DATE = NOW.strftime(DATE_FORMAT)
 
-conn = sqlite3.connect('countries.sqlite')
+conn = sqlite3.connect('../countries.sqlite')
 
 def set_up_db():
     c = conn.cursor()
@@ -21,9 +21,9 @@ def set_up_db():
              (request_id INTEGER PRIMARY KEY, user_id INTEGER, days_to_trip INTEGER, date_of_trip VARCHAR, search_term VARCHAR, email VARCHAR, latitude VARCHAR, longitude VARCHAR, UNIQUE(search_term, email))''')
     conn.commit()
     # Insert a row of data
-    c.execute("INSERT INTO 'requestss' VALUES (1, -1, 8,'2020-3-23','Mardid', 'ghanemline@gmail.com', 'lat', 'long')")
+    c.execute("INSERT INTO 'requests' VALUES (1, -1, 8,'2020-3-23','Mardid', 'ghanemline@gmail.com', 'lat', 'long')")
     conn.commit()
-    c.execute("INSERT INTO 'requestss' VALUES (2, -1, 8,'2020-3-30','New York', 'test@test.com', 'lat', 'long')")
+    c.execute("INSERT INTO 'requests' VALUES (2, -1, 8,'2020-3-30','New York', 'test@test.com', 'lat', 'long')")
     # Save (commit) the changes
     conn.commit()
 
