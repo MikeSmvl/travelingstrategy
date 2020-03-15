@@ -37,15 +37,17 @@ const Icon = (props) => {
   const {
 		lat = '',
     lng = '',
+    time = '',
     response = []
   } = props;
-  let newDate = new Date();
-  console.log(response)
+
+  let newDate = new Date(time.time*1000);
+  console.log(newDate)
 
   return (
     <div className="col-sm-6">
     <div className="card">
-      <h4 className="card-title">{moment(newDate).format('dddd')}</h4>
+      <h5 className="card-title">{moment(newDate).format('dddd')}</h5>
       <p className="text-muted">{moment(newDate).format('MMMM Do, h:mm a')}</p>
       <div className="card-body">
       <ReactAnimatedWeather
