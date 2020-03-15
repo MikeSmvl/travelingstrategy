@@ -15,9 +15,37 @@ const TestCard = (props) =>{
         address='',
         nameOfPlace='',
         duration ='0',
-        isLiked = true
+        isLiked = true,
+        eventInfo
     } = props;
-    
+
+    async function addEvent() {
+		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/graphql' },
+			body: `mutation{
+					addEvents(request_id:"${eventInfo[0]}", event_category:"${eventInfo[1]}", description:"${eventInfo[2]}", duration:"${eventInfo[3]}", start_date:"${eventInfo[4]}", end_date:"${eventInfo[5]}", title:"${eventInfo[6]}", labels:"${eventInfo[7]}", address:"${eventInfo[8]}", place_type:"${eventInfo[9]}", name_of_place:"${eventInfo[10]}")
+					{   request_id,
+						event_category,
+						description,
+						duration,
+						start_date,
+						end_date,
+						title,
+						labels,
+						address,
+						place_type,
+						name_of_place
+					}
+				}`
+		});
+	}
+
+	const handleLike = (event) => {
+		event.preventDefault();
+		event.stopPropagation();
+		addEvent();
+	};
 
     /**
      * Dates are transformed to English format
@@ -87,6 +115,13 @@ const TestCard = (props) =>{
                 <Modal.Body>
                     <img variant="top" src="https://source.unsplash.com/user/erondu/600x400" className="more-info-img"/>
                     <div className="card-body">
+                        { !isLiked &&(
+                                    <div className="modal-like-button">
+                                        <Button variant="outline-primary" centered onClick={handleLike}>
+                                            Like
+                                        </Button>
+                                    </div>)
+                        }
                         <p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
                         <p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
                         {address!=='' && <p>
@@ -122,11 +157,10 @@ const TestCard = (props) =>{
                     <Button variant="outline-primary" onClick={() => setModal(true)}>
                         Find out more
                     </Button>
-                    { !isLiked &&(<Button variant="outline-primary" onClick={() => setModal(true)}>
+                    { !isLiked &&(<Button variant="outline-primary" onClick={handleLike}>
                         Like
                         </Button>)
                     }
-                    
                 </div>
             </Card>
         );
@@ -152,7 +186,8 @@ TestCard.propTypes = {
     address: PropTypes.string,
     nameOfPlace: PropTypes.string,
     duration: PropTypes.string,
-    isLiked: PropTypes.bool
+    isLiked: PropTypes.bool,
+	eventInfo: PropTypes.instanceOf(Array)
 };
 
 export default TestCard;

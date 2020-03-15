@@ -43,7 +43,6 @@ function Events({
 	useEffect(() => {
 		// Basic event search using category as parameter. By default, it will return the first ten events.
 		async function searchByCategory() {
-			console.log('hello')
 			const withinParam = `${latitude},${longitude}`;
 			const searchResults = await phqEvents.search({
 				'location_around.origin': withinParam,
@@ -186,7 +185,6 @@ function Events({
 
 	]);
 
-	
 
 	const expandNavBar= (event) => {
 		if(toggled){
@@ -200,52 +198,6 @@ function Events({
 			setToggled(true)
 		}
 	}
-
-	//Temporarily store data here
-const PostsData = [
-	{
-	  "category": "News",
-	  "title": "CNN Acquire BEME",
-	  "text": "CNN purchased Casey Neistat's Beme app for $25million.",
-	  "image": "https://source.unsplash.com/user/erondu/600x400"
-	},
-	{
-	  "category": "Travel",
-	  "title": "Nomad Lifestyle",
-	  "text": "Learn our tips and tricks on living a nomadic lifestyle",
-	  "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
-	},
-	{
-	  "category": "Development",
-	  "title": "React and the WP-API",
-	  "text": "The first ever decoupled starter theme for React & the WP-API",
-	  "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
-	},
-	{
-	  "category": "News",
-	  "title": "CNN Acquire BEME",
-	  "text": "CNN purchased Casey Neistat's Beme app for $25million.",
-	  "image": "https://source.unsplash.com/user/erondu/600x400"
-	},
-	{
-	  "category": "Travel",
-	  "title": "Nomad Lifestyle",
-	  "text": "Learn our tips and tricks on living a nomadic lifestyle",
-	  "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
-	},
-	{
-	  "category": "Travel",
-	  "title": "Nomad Lifestyle",
-	  "text": "Learn our tips and tricks on living a nomadic lifestyle",
-	  "image": "https://source.unsplash.com/user/_vickyreyes/600x400"
-	},
-	{
-	  "category": "Development",
-	  "title": "React and the WP-API",
-	  "text": "The first ever decoupled starter theme for React & the WP-API",
-	  "image": "https://source.unsplash.com/user/ilyapavlov/600x400"
-	}
-  ]
 
 	return (
 		<div  id="events-section">
@@ -289,22 +241,6 @@ const PostsData = [
 			</div>
 
 			</section>
-			{/* <section className={mainContentClass}>
-				<header>
-				</header>
-				<div className="container">
-					<div className="module-wrapper">
-						<div className="module--half">
-							<ul>
-								{category ==="likes"
-        						? addMyEvents(savedEvents)
-        						: addApiEvents(eventsForCategories, requestId)
-								}
-							</ul>
-						</div>
-					</div>
-				</div>
-			</section> */}
 			</Row>
 		</div>
 	);

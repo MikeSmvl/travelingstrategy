@@ -170,6 +170,7 @@ main {
   transition: 300ms ease-in-out;
   position: initial;
   z-index: 2;
+  overflow-x: scroll;
 }
 .main-content--expanded {
   margin-left: 310px;

@@ -69,9 +69,9 @@ function addApiEvents(apiEvents, requestId){
             venueType = event.entities[0].type.replace(/"/g, "'");
         }
 
-        const event_for_card = [requestId, category,description, duration,startDate,endDate, title,labels,address,venueType,nameOfPlace];
+        const eventInfo = [requestId, category,description, duration,startDate,endDate, title,labels,address,venueType,nameOfPlace];
         events.push(
-            <TestCard 
+            <TestCard
                 eventCategory={category}
                 description={description}
                 startDate={startDate}
@@ -81,6 +81,7 @@ function addApiEvents(apiEvents, requestId){
                 nameOfPlace={nameOfPlace}
                 duration={duration}
                 isLiked={false}
+                eventInfo={eventInfo}
 
             ></TestCard>
             // <Card
