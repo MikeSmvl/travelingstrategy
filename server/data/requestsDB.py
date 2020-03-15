@@ -23,7 +23,7 @@ def set_up_db():
     # Insert a row of data
     c.execute("INSERT INTO 'requests' VALUES (1, -1, 8,'2020-3-23','Mardid', 'ghanemline@gmail.com', 'lat', 'long')")
     conn.commit()
-    c.execute("INSERT INTO 'requests' VALUES (2, -1, 8,'2020-3-30','New York', 'test@test.com', 'lat', 'long')")
+    c.execute("INSERT INTO 'requests' VALUES (2, -1, 15,'2020-3-30','New York', 'test@test.com', 'lat', 'long')")
     # Save (commit) the changes
     conn.commit()
 
