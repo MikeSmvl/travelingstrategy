@@ -26,13 +26,13 @@ function addMyEvents(myEvents){
             <TestCard 
                 eventCategory={eventCategory}
                 description={description}
-                eventCategory={eventCategory}
                 startDate={startDate}
                 endDate={endDate}
                 title={title}
                 address={address}
                 nameOfPlace={nameOfPlace}
                 duration={duration}
+                isLiked={true}
 
             ></TestCard>
 		);
@@ -49,45 +49,57 @@ function addMyEvents(myEvents){
  * In this method with use replace(/"/g, "'") to remove all
  *  the occurences of " because it makes the grapqhl query fail
  */
-function addApiEvents(apiEvents, request_id){
+function addApiEvents(apiEvents, requestId){
     const events = [];
     apiEvents.forEach(event =>{
         var category = event.category.replace(/"/g, "'");
         var title = event.title.replace(/"/g, "'");
-        var start = event.start.replace(/"/g, "'");
-        var end = event.end.replace(/"/g, "'");
+        var startDate = event.start.replace(/"/g, "'");
+        var endDate = event.end.replace(/"/g, "'");
         var description = event.description.replace(/(\r\n|\n|\r)/gm, "").replace(/"/g, "'");
         var duration = event.duration
         var address = ''.replace(/"/g, "'");
-        var venue_name = ''.replace(/"/g, "'");
-        var venue_type = ''.replace(/"/g, "'");
+        var nameOfPlace = ''.replace(/"/g, "'");
+        var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
-            venue_name = event.entities[0].name.replace(/"/g, "'");
-            venue_type = event.entities[0].type.replace(/"/g, "'");
+            nameOfPlace = event.entities[0].name.replace(/"/g, "'");
+            venueType = event.entities[0].type.replace(/"/g, "'");
         }
 
-        const event_for_card = [request_id, category,description, duration,start,end, title,labels,address,venue_type,venue_name];
+        const event_for_card = [requestId, category,description, duration,startDate,endDate, title,labels,address,venueType,nameOfPlace];
         events.push(
-            <Card
-                header="Events"
-                style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-            >
-                <CardBody>
-                    <EventCard eventArray={event_for_card}>
-                        <hr></hr>
-                        Category:{category}<br></br>
-                        Title: {title}<br></br>
-                        Start Date: {start}<br></br>
-                        End Date: {end}<br></br>
-                        Description: {description}<br></br>
-                        Address: {address}<br></br>
-                        Venue: {venue_name}<br></br>
-                    </EventCard>
-                </CardBody>
-            </Card>
+            <TestCard 
+                eventCategory={category}
+                description={description}
+                startDate={startDate}
+                endDate={endDate}
+                title={title}
+                address={address}
+                nameOfPlace={nameOfPlace}
+                duration={duration}
+                isLiked={false}
+
+            ></TestCard>
+            // <Card
+            //     header="Events"
+            //     style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
+            // >
+            //     <CardBody>
+            //         <EventCard eventArray={event_for_card}>
+            //             <hr></hr>
+            //             Category:{category}<br></br>
+            //             Title: {title}<br></br>
+            //             Start Date: {start}<br></br>
+            //             End Date: {end}<br></br>
+            //             Description: {description}<br></br>
+            //             Address: {address}<br></br>
+            //             Venue: {venue_name}<br></br>
+            //         </EventCard>
+            //     </CardBody>
+            // </Card>
             
         );
     });

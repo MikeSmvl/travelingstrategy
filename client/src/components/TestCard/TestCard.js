@@ -15,9 +15,13 @@ const TestCard = (props) =>{
         address='',
         nameOfPlace='',
         duration ='0',
+        isLiked = true
     } = props;
     
 
+    /**
+     * Dates are transformed to English format
+     */
     const getDateText = (date) => {
         const dateObject = new Date(date)
         const days = ["Sunday", "Monday", "Tuesday", "Wednesday",
@@ -31,6 +35,12 @@ const TestCard = (props) =>{
         return dateText;
     }
     
+    /**
+     * 
+     * This method basically adds an 's' to the duration unit
+     * in case the value is more than. This allows the sentence
+     * to be grammatically correct
+     */
     const sentenceToDisplay = (duration, monthOrDaysOrHours) =>{
         var truncatedDuration = Math.trunc(duration)
         if(truncatedDuration >1){
@@ -39,8 +49,11 @@ const TestCard = (props) =>{
         return truncatedDuration +" "+monthOrDaysOrHours;
     }
 
+    /**
+     * The duration is given in seconds.
+     * This method converts to duration to an appropriate duration unit
+     */
     const getDuration = () => {
-        console.log(duration)
         var durationToDisplay = duration/60;
 
         if(durationToDisplay > 60){
@@ -68,7 +81,7 @@ const TestCard = (props) =>{
             >
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-lg">
-                    <h2 className="card-title">{title}</h2>
+                    <h2 >{title}</h2>
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -88,7 +101,10 @@ const TestCard = (props) =>{
                                             <b>Duration: </b>{getDuration()}
                                         </p>
                         }
-                        <p className="body-content-modal">{description}</p>
+                        {description!=='' && <p className="body-content-modal">
+                                            <b>Description: </b>{description}
+                                            </p>
+                        }
                     </div>
                 </Modal.Body>
             </Modal>
@@ -100,12 +116,17 @@ const TestCard = (props) =>{
             <Card className="card" >
                 <Card.Img variant="top" src="https://source.unsplash.com/user/erondu/600x400" />
                 <div className="card-body">
+                    <p className="card-category"><b>{eventCategory.charAt(0).toUpperCase()+eventCategory.slice(1,-1)}</b></p> 
                     <p className="date">{getDateText(startDate)}</p>
                     <h2 className="card-title">{title}</h2>
-                    {/* <p className="body-content">{description}</p> */}
                     <Button variant="outline-primary" onClick={() => setModal(true)}>
-                        <i className="fa fa-chevron-right"></i> Find out more
+                        Find out more
                     </Button>
+                    { !isLiked &&(<Button variant="outline-primary" onClick={() => setModal(true)}>
+                        Like
+                        </Button>)
+                    }
+                    
                 </div>
             </Card>
         );
@@ -130,7 +151,8 @@ TestCard.propTypes = {
     title: PropTypes.string,
     address: PropTypes.string,
     nameOfPlace: PropTypes.string,
-    duration: PropTypes.string
+    duration: PropTypes.string,
+    isLiked: PropTypes.bool
 };
 
 export default TestCard;

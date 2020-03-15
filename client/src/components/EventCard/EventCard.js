@@ -13,7 +13,6 @@ const EventCard = (props) => {
 		...rest
 	} = props;
 
-
 	async function addEvent() {
 		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',

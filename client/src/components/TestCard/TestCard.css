@@ -90,7 +90,16 @@ body, html {
     margin-left: 30%;
 }
 
+
 .more-info-img{
     max-width: 100%;
+}
+
+.card-category{
+    text-align: center;
+}
+
+.date{
+    font-style: italic;
 }
 
