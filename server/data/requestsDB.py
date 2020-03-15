@@ -2,10 +2,6 @@ import datetime
 import sys
 import sqlite3
 
-sys.path.append("..")
-from lib.database import Database
-
-DB = Database("../countries.sqlite")
 #This maybe will no be done in this script but we keep for testing
 NOW = datetime.datetime.now()
 DATE_FORMAT = "%Y-%m-%d"
@@ -38,11 +34,6 @@ def calculate_days_to_trip(date_trip):
     days = delta.days
     return days
 
-
-#TO DELETE
-def test():
-    DB.insert("requests", "1", "-1", str(to_trip), "2020-03-23", "Madrid", "ghanemline@gmail.com")
-    DB.insert("requests", "2", str(to_trip), "2020-03-30", "New York", "test@test.com")
 
 # Since we are testing we are reusing the same ids
 #TO BE DELETED
