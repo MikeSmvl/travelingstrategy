@@ -16,57 +16,63 @@ const weather = {
   color3: 'gray',
   color4: 'black',
   color5: 'white',
-  size: 50,
   animate: true
 };
 
 const data = {
-  icon : ''
+  icon : '',
+  color : ''
 }
 
-function setSkycon(icon, setColor, setIcon) {
+function setSkycon(icon) {
   //fetch the appropraite icon repective to the city
   switch(icon){
     case 'clear-day':
-      setIcon(weather.icon1)
-      setColor(weather.color1)
+      data.icon= weather.icon1
+      data.color= weather.color1
       break;
     case 'clear-night':
-      setIcon(weather.icon2)
-      setColor(weather.color1)
+      data.icon= weather.icon2
+      data.color= weather.color4
       break;
     case 'partly-cloudy-day':
-      setIcon(weather.icon3)
-      setColor(weather.color1)
+      data.icon= weather.icon3
+      data.color= weather.color1
       break;
     case 'partly-cloudy-night':
-      setIcon(weather.icon4)
-      setColor(weather.color1)
+      data.icon= weather.icon4
+      data.color= weather.color3
     case 'cloudy':
-      setIcon(weather.icon3)
-      setColor(weather.color2)
+      data.icon= weather.icon5
+      data.color= weather.color3
       break;
     case 'rain':
-      setIcon(weather.icon4)
-      setColor(weather.color3)
+      data.icon= weather.icon6
+      data.color= weather.color3
+      break;
+    case 'drizzle':
+      data.icon= weather.icon7
+      data.color= weather.color2
       break;
     case 'sleet':
-      setIcon(weather.icon5)
-      setColor(weather.color3)
+      data.icon= weather.icon8
+      data.color= weather.color3
       break;
     case 'snow':
-      setIcon(weather.icon6)
-      setColor(weather.color4)
+      data.icon= weather.icon9
+      data.color= weather.color5
       break;
     case 'wind':
-      setIcon(weather.icon7)
-      setColor(weather.color5)
+      data.icon= weather.icon10
+      data.color= weather.color3
       break;
     case 'fog':
-      setIcon(weather.icon8)
-      setColor(weather.color3)
+      data.icon= weather.icon11
+      data.color= weather.color3
       break;
     }
+
+    return data
 }
 
-export {setSkycon};
+export {setSkycon, data};
