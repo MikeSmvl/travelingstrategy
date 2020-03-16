@@ -1,3 +1,4 @@
+
 # Database
 sqlite_db = 'countries.sqlite'
 

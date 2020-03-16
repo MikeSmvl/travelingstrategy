@@ -17,6 +17,7 @@ const { getUser } = require('./user')
 const {subscriberTable, userSubscriptions} = require('./subscribers')
 const {imagesTable,imagesForTag,imagesForRequestId} = require('./images.js')
 const eventsForRequest = require('./events')
+const {city_average_monthly_weather, monthly_weather_table} = require('./monthlyWeather')
 
 const logger = require('../logger/logger.js')
 
@@ -52,7 +53,9 @@ var queryType = new graphql.GraphQLObjectType({
         imagesTable,
         imagesForTag,
         imagesForRequestId,
-        eventsForRequest
+        eventsForRequest,
+        city_average_monthly_weather,
+        monthly_weather_table
     }
 });
 
