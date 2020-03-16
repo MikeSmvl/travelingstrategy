@@ -102,3 +102,6 @@ instagram_url = "https://www.instagram.com/explore/tags/"
 canabais_url = "https://en.wikipedia.org/wiki/Legality_of_cannabis"
 cocaine_url =  "https://en.wikipedia.org/wiki/Legal_status_of_cocaine"
 methaphetamine_url = "https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine"
+
+#Weather
+wiki_visa_temperature = "https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature"
