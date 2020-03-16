@@ -50,7 +50,6 @@ function Events({
 			if(category !== 'likes'){
 				array = await unsplash.search.photos(category, 1, 100,{ orientation: "landscape" })
 				.then(toJson)
-				console.log(array)
 				return array.results;
 			}
 			return array
@@ -157,7 +156,8 @@ function Events({
                               labels,
                               address,
                               place_type,
-                              name_of_place
+							  name_of_place,
+							  image
                             }
                     }
                     `

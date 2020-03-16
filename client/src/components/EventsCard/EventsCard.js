@@ -26,7 +26,13 @@ const EventsCard = (props) =>{
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
 			body: `mutation{
-					addEvents(request_id:"${eventInfo[0]}", event_category:"${eventInfo[1]}", description:"${eventInfo[2]}", duration:"${eventInfo[3]}", start_date:"${eventInfo[4]}", end_date:"${eventInfo[5]}", title:"${eventInfo[6]}", labels:"${eventInfo[7]}", address:"${eventInfo[8]}", place_type:"${eventInfo[9]}", name_of_place:"${eventInfo[10]}")
+                    addEvents(request_id:"${eventInfo[0]}",
+                    event_category:"${eventInfo[1]}", description:"${eventInfo[2]}",
+                    duration:"${eventInfo[3]}", start_date:"${eventInfo[4]}",
+                    end_date:"${eventInfo[5]}", title:"${eventInfo[6]}",
+                    labels:"${eventInfo[7]}", address:"${eventInfo[8]}",
+                    place_type:"${eventInfo[9]}", name_of_place:"${eventInfo[10]}",
+                    image:"${eventInfo[11]}")
 					{   request_id,
 						event_category,
 						description,
@@ -174,7 +180,6 @@ const EventsCard = (props) =>{
     }
 
     const EventCard = () => {
-        console.log("card", eventImg)
         return(
             <Card className="card" >
                 <Card.Img variant="top" src={eventImg} style={{height:'21em'}}/>

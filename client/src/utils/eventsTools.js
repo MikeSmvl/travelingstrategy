@@ -17,7 +17,7 @@ function addMyEvents(myEvents){
         const address = event.address;
         const nameOfPlace = event.name_of_place;
         const duration = event.duration;
-        const eventImg = require(`../eventsImages/addedToFavorites.gif`);
+        const eventImg = event.image;
 
 		events.push(
 
@@ -50,6 +50,7 @@ function addMyEvents(myEvents){
 function addApiEvents(apiEvents, requestId, images){
     const events = [];
     const imagesUsed = [];
+    const apiImages = images;
     var count = 0;
     apiEvents.forEach(event =>{
         var category = event.category.replace(/"/g, "'");
@@ -62,7 +63,7 @@ function addApiEvents(apiEvents, requestId, images){
         var nameOfPlace = ''.replace(/"/g, "'");
         var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
-        const eventImg = getRandomImageForCategory(images,imagesUsed)
+        const eventImg = getRandomImageForCategory(apiImages,imagesUsed)
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
@@ -70,7 +71,9 @@ function addApiEvents(apiEvents, requestId, images){
             venueType = event.entities[0].type.replace(/"/g, "'");
         }
 
-        const eventInfo = [requestId, category,description, duration,startDate,endDate, title,labels,address,venueType,nameOfPlace];
+        const eventInfo = [requestId, category,description, duration,
+                            startDate,endDate, title,labels,address,venueType,
+                            nameOfPlace,eventImg];
         events.push(
             <EventsCard
                 eventCategory={category}
@@ -111,7 +114,7 @@ function getLabels(event){
 }
 
 function getRandomImageForCategory(images,imagesUsed){
-    var imageLink='https://us.anteagroup.com/sites/default/files/styles/width1520/public/ag03435.jpg?itok=ZnIIrWqo'//default image
+    var imageLink='https://source.unsplash.com/user/_vickyreyes/600x400'//default image
     do{
         var randomNumber = Math.floor((Math.random() * images.length) + 0);
         if(images.length >0){
