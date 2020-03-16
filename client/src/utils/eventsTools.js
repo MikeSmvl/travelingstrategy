@@ -59,7 +59,7 @@ function addApiEvents(apiEvents, requestId){
         var nameOfPlace = ''.replace(/"/g, "'");
         var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
-        const eventImg = "https://source.unsplash.com/user/erondu/600x400"
+        const eventImg = getRandomImageForCategory(category);
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
@@ -82,7 +82,6 @@ function addApiEvents(apiEvents, requestId){
                 eventInfo={eventInfo}
                 eventImg={eventImg}
             ></EventsCard>
-            
         );
     });
 
@@ -105,6 +104,15 @@ function getLabels(event){
 
     labels = labels.slice(0, -2).replace(/"/g, "'");
     return labels;
+}
+
+function getRandomImageForCategory(category){
+    console.log(category)
+    // var randomNumber = Math.floor((Math.random() * images.length) + 0);
+    // if(images.length >0){
+    //     return images[randomNumber].urls.full+"w=600&h=400";
+    // }
+    return "https://source.unsplash.com/user/erondu/600x400" //default image
 }
 
 export {addMyEvents,addApiEvents};
