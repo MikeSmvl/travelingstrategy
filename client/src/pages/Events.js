@@ -46,10 +46,13 @@ function Events({
 
 		// Api for getting different images for different categories
 		async function getImages(){
-			var array = await unsplash.search.photos(category, 1, 100)
-			.then(toJson)
-			console.log("in function", array)
-			return array;
+			var array = []
+			if(category !== 'likes'){
+				array = await unsplash.search.photos(category, 1, 100)
+				.then(toJson)
+				return array;
+			}
+			return array
 		}
 
 		// Basic event search using category as parameter. By default, it will return the first ten events.
@@ -174,7 +177,6 @@ function Events({
 
 		async function setImagesForCategory(){
 			const imagesArray = await getImages();
-			console.log("sdfs",imagesArray.results)
 			setImages(imagesArray.results);
 		}
 

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Card, Button, Modal, ModalBody } from 'react-bootstrap';
-import './TestCard.css'
+import './EventsCard.css'
 import PropTypes from 'prop-types';
 
 
-const TestCard = (props) =>{
+const EventsCard = (props) =>{
     const [modal, setModal] = useState(false);
     const [likedModal, setLikedModal] = useState(false);
     const {
@@ -205,7 +205,7 @@ const TestCard = (props) =>{
 }
 
 
-TestCard.propTypes = {
+EventsCard.propTypes = {
     eventCategory: PropTypes.string,
     description: PropTypes.string,
     startDate: PropTypes.string,
@@ -218,5 +218,5 @@ TestCard.propTypes = {
 	eventInfo: PropTypes.instanceOf(Array)
 };
 
-export default TestCard;
+export default EventsCard;
 

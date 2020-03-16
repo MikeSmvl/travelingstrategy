@@ -1,10 +1,5 @@
 import * as React from 'react';
-import TestCard from '../components/TestCard/TestCard';
-import Unsplash , { toJson } from 'unsplash-js';
-
-const unsplash = new Unsplash({ accessKey: "sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M" });
-
-
+import EventsCard from '../components/EventsCard/EventsCard';
 
 
 /**
@@ -25,7 +20,7 @@ function addMyEvents(myEvents){
         const eventImg = "https://source.unsplash.com/user/erondu/600x400"
 		events.push(
 
-            <TestCard 
+            <EventsCard 
                 eventCategory={eventCategory}
                 description={description}
                 startDate={startDate}
@@ -36,7 +31,7 @@ function addMyEvents(myEvents){
                 duration={duration}
                 isLiked={true}
                 eventImg={eventImg}
-            ></TestCard>
+            ></EventsCard>
 		);
 	});
 	return (
@@ -74,7 +69,7 @@ function addApiEvents(apiEvents, requestId){
 
         const eventInfo = [requestId, category,description, duration,startDate,endDate, title,labels,address,venueType,nameOfPlace];
         events.push(
-            <TestCard
+            <EventsCard
                 eventCategory={category}
                 description={description}
                 startDate={startDate}
@@ -86,7 +81,7 @@ function addApiEvents(apiEvents, requestId){
                 isLiked={false}
                 eventInfo={eventInfo}
                 eventImg={eventImg}
-            ></TestCard>
+            ></EventsCard>
             
         );
     });
