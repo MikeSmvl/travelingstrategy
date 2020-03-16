@@ -18,6 +18,7 @@ function addMyEvents(myEvents){
         const nameOfPlace = event.name_of_place;
         const duration = event.duration;
         const eventImg = require(`../eventsImages/addedToFavorites.gif`);
+
 		events.push(
 
             <EventsCard 
@@ -60,8 +61,10 @@ function addApiEvents(apiEvents, requestId){
         var nameOfPlace = ''.replace(/"/g, "'");
         var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
-        const eventImg = require(`../eventsImages/conferences/conferences${count}.jpg`);
-        console.log(eventImg)
+        const eventImg = require(`../eventsImages/${category}/${category}${count}.jpg`);
+        console.log("here",eventImg)
+        console.log("sdsa",`../eventsImages/${category}/${category}${count}.jpg`)
+        console.log(category)
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");

@@ -177,7 +177,7 @@ const EventsCard = (props) =>{
         console.log("card", eventImg)
         return(
             <Card className="card" >
-                <Card.Img variant="top" src={eventImg} />
+                <Card.Img variant="top" src={eventImg} style={{height:'21em'}}/>
                 <div className="card-body">
                     <p className="card-category"><b>{eventCategory.charAt(0).toUpperCase()+eventCategory.slice(1,-1)}</b></p> 
                     <p className="date">{getDateText(startDate)}</p>
