@@ -23,7 +23,8 @@ import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
 
-import Weather from '../components/Weather/Weather'
+import Weather from '../components/Weather/Skycon/Weather'
+import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph'
 
 function Country({
 	originCountry,
@@ -68,6 +69,7 @@ function Country({
 	const destCountryName = getCountryName2(destinationCountry);
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
+	const [monthlyWeather, setMonthlyWeather] = useState('Not available yet');
 
 
 	useEffect(() => {
@@ -192,6 +194,21 @@ function Country({
 							ambulance
 							fire
 						}
+						city_average_monthly_weather(city: "${destinationCountry}"){
+							city,
+							january,
+							february,
+							march,
+							april,
+							may,
+							june,
+							july,
+							august,
+							septembre,
+							octobre,
+							novembre,
+							decembre
+						}
 					}`
 				})
 			})
@@ -274,8 +291,12 @@ function Country({
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
 					);
+					res.data.monthlyWeather
+						&& res.data.monthlyWeather.length !== 0
+						&& setMonthlyWeather(res.data.monthlyWeather[0]);
 				});
 		}
+
 
 		fetchData();
 	}, [
@@ -374,7 +395,7 @@ function Country({
 												</div>
 											) : (
 												<span>
-													{embassyInfo.type === 'embassy' && (
+													{embassyInfo.type === '2' && (
 														<strong>
 															Embassy of{' '}
 															<span style={{ color: '#FF1C00' }}>
@@ -431,6 +452,26 @@ function Country({
 											)}
 										</CardBody>
 									</Card>
+									<br />
+									<Card
+										header="Average monthly weather"
+										  footer={(
+											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/Legality_of_cannabis" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+											</Row>
+										)}
+									>
+								  <CardBody>
+											<div
+												className="scrolling-card"
+												style={{ maxHeight: '400px', overflow: 'scroll' }}
+											>
+											 <WeatherGraph
+											   destinationCity={destinationCity}
+											 />
+											</div>
+									</CardBody>
+
+									</Card>
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
@@ -445,6 +486,18 @@ function Country({
 													className="scrolling-card"
 													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 												/>
+													<div
+														className="scrolling-card"
+														style={{ maxHeight: '400px', overflow: 'scroll' }}
+													>
+													<p>
+													<strong>Canabais recreational:</strong>{' '}
+													{JSON.stringify(canabaisRecreational).replace(
+														/(^")|("$)/g,
+														''
+													)}
+												</p>
+													</div>
 											</CardBody>
 										</Card>
 									)}

@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
-import { setSkycon, data } from '../../utils/weatherIcon';
+import { setSkycon, data } from '../../../utils/weatherIcon';
 import moment from "moment";
 
 
