@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal } from 'react-bootstrap';
+import { Card, Button, Modal, ModalBody } from 'react-bootstrap';
 import './TestCard.css'
 import PropTypes from 'prop-types';
 
 
 const TestCard = (props) =>{
     const [modal, setModal] = useState(false);
+    const [likedModal, setLikedModal] = useState(false);
     const {
         eventCategory='',
         description='',
@@ -44,7 +45,9 @@ const TestCard = (props) =>{
 	const handleLike = (event) => {
 		event.preventDefault();
 		event.stopPropagation();
-		addEvent();
+        addEvent();
+        setLikedModal(true);
+
 	};
 
     /**
@@ -105,7 +108,8 @@ const TestCard = (props) =>{
             <Modal
             show={modal}
             onHide={() => setModal(false)}
-            centered
+            centered={true}
+            id='modal-info'
             >
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-lg">
@@ -132,7 +136,7 @@ const TestCard = (props) =>{
                                             <b>Venue Name: </b>{nameOfPlace}
                                         </p>
                         }
-                        {duration!=='0' && <p>
+                        {duration!==0 && <p>
                                             <b>Duration: </b>{getDuration()}
                                         </p>
                         }
@@ -144,6 +148,28 @@ const TestCard = (props) =>{
                 </Modal.Body>
             </Modal>
         );
+    }
+
+    const LikedModal = () => {
+        return(
+            <Modal
+                show={likedModal}
+                onHide={() => setLikedModal(false)}
+                centered={true}
+                id='modal-favorites'
+
+            >
+                <Modal.Header closeButton>
+                <Modal.Title id="example-modal-sizes-title-lg">
+                    <h2>Added To your Favorites !!</h2>
+                </Modal.Title>
+                </Modal.Header>
+                <ModalBody>
+                    <img src={require(`../../eventsImages/addedToFavorites.gif`)}></img>
+                </ModalBody>
+            </Modal>
+
+        )
     }
 
     const EventCard = () => {
@@ -171,6 +197,7 @@ const TestCard = (props) =>{
         <>
         <EventCard></EventCard>
         <InfoModal></InfoModal>
+        <LikedModal></LikedModal>
       </>
     );
 

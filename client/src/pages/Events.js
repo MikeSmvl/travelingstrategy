@@ -232,7 +232,7 @@ function Events({
 					</div>
 				</div>
 			</div>
-			<section className={mainContentClass} style={{marginTop:'5%'}}>
+			<section className={mainContentClass} style={{marginTop:'4%'}}>
 			<div className="app-card-list" id="app-card-list">
 				{category ==="likes"
 					? addMyEvents(savedEvents)

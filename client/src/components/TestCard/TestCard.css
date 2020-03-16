@@ -85,9 +85,13 @@ body, html {
     white-space: nowrap;
 }
 
-.modal-content{
-    max-width: 45%;
+#modal-info{
+    max-width: 45% !important;
     margin-left: 30%;
+}
+
+#modal-favorites{
+    margin-left: 35%;
 }
 
 .modal-like-button{
