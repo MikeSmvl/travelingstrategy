@@ -174,6 +174,7 @@ const EventsCard = (props) =>{
     }
 
     const EventCard = () => {
+        console.log("card", eventImg)
         return(
             <Card className="card" >
                 <Card.Img variant="top" src={eventImg} />

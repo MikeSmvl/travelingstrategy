@@ -16,8 +16,8 @@ function addMyEvents(myEvents){
         const title = event.title;
         const address = event.address;
         const nameOfPlace = event.name_of_place;
-        const duration = event.duration
-        const eventImg = "https://source.unsplash.com/user/erondu/600x400"
+        const duration = event.duration;
+        const eventImg = require(`../eventsImages/addedToFavorites.gif`);
 		events.push(
 
             <EventsCard 
@@ -48,6 +48,7 @@ function addMyEvents(myEvents){
  */
 function addApiEvents(apiEvents, requestId){
     const events = [];
+    var count = 0;
     apiEvents.forEach(event =>{
         var category = event.category.replace(/"/g, "'");
         var title = event.title.replace(/"/g, "'");
@@ -59,7 +60,8 @@ function addApiEvents(apiEvents, requestId){
         var nameOfPlace = ''.replace(/"/g, "'");
         var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
-        const eventImg = getRandomImageForCategory(category);
+        const eventImg = require(`../eventsImages/conferences/conferences${count}.jpg`);
+        console.log(eventImg)
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
@@ -83,6 +85,7 @@ function addApiEvents(apiEvents, requestId){
                 eventImg={eventImg}
             ></EventsCard>
         );
+        count++;
     });
 
     return (
@@ -112,7 +115,7 @@ function getRandomImageForCategory(category){
     // if(images.length >0){
     //     return images[randomNumber].urls.full+"w=600&h=400";
     // }
-    return "https://source.unsplash.com/user/erondu/600x400" //default image
+    return "https://us.anteagroup.com/sites/default/files/styles/width1520/public/ag03435.jpg?itok=ZnIIrWqo" //default image
 }
 
 export {addMyEvents,addApiEvents};
