@@ -47,8 +47,9 @@ function addMyEvents(myEvents){
  * In this method with use replace(/"/g, "'") to remove all
  *  the occurences of " because it makes the grapqhl query fail
  */
-function addApiEvents(apiEvents, requestId){
+function addApiEvents(apiEvents, requestId, images){
     const events = [];
+    const imagesUsed = [];
     var count = 0;
     apiEvents.forEach(event =>{
         var category = event.category.replace(/"/g, "'");
@@ -61,10 +62,7 @@ function addApiEvents(apiEvents, requestId){
         var nameOfPlace = ''.replace(/"/g, "'");
         var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
-        const eventImg = require(`../eventsImages/${category}/${category}${count}.jpg`);
-        console.log("here",eventImg)
-        console.log("sdsa",`../eventsImages/${category}/${category}${count}.jpg`)
-        console.log(category)
+        const eventImg = getRandomImageForCategory(images,imagesUsed)
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
@@ -112,13 +110,17 @@ function getLabels(event){
     return labels;
 }
 
-function getRandomImageForCategory(category){
-    console.log(category)
-    // var randomNumber = Math.floor((Math.random() * images.length) + 0);
-    // if(images.length >0){
-    //     return images[randomNumber].urls.full+"w=600&h=400";
-    // }
-    return "https://us.anteagroup.com/sites/default/files/styles/width1520/public/ag03435.jpg?itok=ZnIIrWqo" //default image
+function getRandomImageForCategory(images,imagesUsed){
+    var imageLink='https://us.anteagroup.com/sites/default/files/styles/width1520/public/ag03435.jpg?itok=ZnIIrWqo'//default image
+    do{
+        var randomNumber = Math.floor((Math.random() * images.length) + 0);
+        if(images.length >0){
+            imageLink = images[randomNumber].urls.full+"w=600&h=400";
+        }
+    }while (imagesUsed.includes(imageLink)) //Making sure we don't have repeated images
+    imagesUsed.push(imageLink);
+
+    return imageLink
 }
 
 export {addMyEvents,addApiEvents};
