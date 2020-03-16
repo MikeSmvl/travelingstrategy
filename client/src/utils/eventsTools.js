@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { EventCard} from '../components/EventCard/EventCard';
-import { Card, CardBody } from '../components/Card/Card';
 import TestCard from '../components/TestCard/TestCard';
+import Unsplash , { toJson } from 'unsplash-js';
+
+const unsplash = new Unsplash({ accessKey: "sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M" });
 
 
 
@@ -21,6 +22,7 @@ function addMyEvents(myEvents){
         const address = event.address;
         const nameOfPlace = event.name_of_place;
         const duration = event.duration
+        const eventImg = "https://source.unsplash.com/user/erondu/600x400"
 		events.push(
 
             <TestCard 
@@ -33,7 +35,7 @@ function addMyEvents(myEvents){
                 nameOfPlace={nameOfPlace}
                 duration={duration}
                 isLiked={true}
-
+                eventImg={eventImg}
             ></TestCard>
 		);
 	});
@@ -62,6 +64,7 @@ function addApiEvents(apiEvents, requestId){
         var nameOfPlace = ''.replace(/"/g, "'");
         var venueType = ''.replace(/"/g, "'");
         var labels = getLabels(event);
+        const eventImg = "https://source.unsplash.com/user/erondu/600x400"
 
         if(event.entities.length>0){
             address = event.entities[0].formatted_address.replace(/(\r\n|\n|\r)/gm, " ").replace(/"/g, "'");
@@ -82,25 +85,8 @@ function addApiEvents(apiEvents, requestId){
                 duration={duration}
                 isLiked={false}
                 eventInfo={eventInfo}
-
+                eventImg={eventImg}
             ></TestCard>
-            // <Card
-            //     header="Events"
-            //     style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-            // >
-            //     <CardBody>
-            //         <EventCard eventArray={event_for_card}>
-            //             <hr></hr>
-            //             Category:{category}<br></br>
-            //             Title: {title}<br></br>
-            //             Start Date: {start}<br></br>
-            //             End Date: {end}<br></br>
-            //             Description: {description}<br></br>
-            //             Address: {address}<br></br>
-            //             Venue: {venue_name}<br></br>
-            //         </EventCard>
-            //     </CardBody>
-            // </Card>
             
         );
     });

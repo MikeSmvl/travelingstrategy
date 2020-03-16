@@ -45,7 +45,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-typed": "^1.2.0",
-    "require-context.macro": "^1.2.2"
+    "require-context.macro": "^1.2.2",
+    "unsplash-js": "^6.0.0"
   },
   "devDependencies": {
     "enzyme": "^3.10.0",

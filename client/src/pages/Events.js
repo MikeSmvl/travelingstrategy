@@ -3,8 +3,9 @@ import { Button, Row} from 'react-bootstrap/';
 import Client from 'predicthq';
 import '../App.css';
 import { addMyEvents, addApiEvents } from '../utils/eventsTools';
+import Unsplash , { toJson } from 'unsplash-js';
 
-
+const unsplash = new Unsplash({ accessKey: "sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M" });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
 const phqEvents = client.events;
 
@@ -34,6 +35,7 @@ function Events({
 	const [toggled,setToggled] = useState(true);
 	const [navbarClass, setNavbarClass ] = useState('sidebar sidebar--expanded');
 	const [mainContentClass, setMainContentClass ] = useState('main-content main-content--expanded');
+	const [images, setImages] = useState([]);
 
 
 	const categoryChosen = (event) => {
@@ -41,6 +43,15 @@ function Events({
 	};
 
 	useEffect(() => {
+
+		// Api for getting different images for different categories
+		async function getImages(){
+			var array = await unsplash.search.photos(category, 1, 100)
+			.then(toJson)
+			console.log("in function", array)
+			return array;
+		}
+
 		// Basic event search using category as parameter. By default, it will return the first ten events.
 		async function searchByCategory() {
 			const withinParam = `${latitude},${longitude}`;
@@ -161,8 +172,15 @@ function Events({
 			setEventsForCategories(eventsByCategory);
 		}
 
+		async function setImagesForCategory(){
+			const imagesArray = await getImages();
+			console.log("sdfs",imagesArray.results)
+			setImages(imagesArray.results);
+		}
+
 		fetchEvents();
 		setEventsToDisplay();
+		setImagesForCategory();
 	},
 	[
 		category,
@@ -198,6 +216,9 @@ function Events({
 			setToggled(true)
 		}
 	}
+
+
+	console.log("images",images)
 
 	return (
 		<div  id="events-section">
