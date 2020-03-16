@@ -5,14 +5,7 @@ import './Weather.css';
 
 const Weather = (props) => {
   
-     const [currentTemp, setCurrentTemp] = useState('Not Available Yet');
-     const [currentSummary, setCurrentSummary] = useState('Not Available Yet');
      const [responseObj, setResponseObj]  = useState('Not Available Yet');
-     const [day1, setDay1] = useState('Not Available Yet');
-     const [day2, setDay2] = useState('Not Available Yet');
-     const [day3, setDay3] = useState('Not Available Yet');
-     const [day4, setDay4] = useState('Not Available Yet');
-     const [day5, setDay5] = useState('Not Available Yet');
      const{
         lat,
         lng,
@@ -31,41 +24,36 @@ const Weather = (props) => {
     }
 
     fetchData();
+    console.log(responseObj)
   },[]);
 
-  const hold = responseObj
-  console.log(hold[0])
      return (
       <div className='flexbox-container'>
          <Icon
            lat={lat}
            lng={lng}
-           time ={responseObj[0]}
-           response ={responseObj}/>
+           weekday ={responseObj[0]}
+           />
          <Icon 
           lat={lat}
           lng={lng}
-          time ={responseObj[1]}
-          response ={responseObj}>
-         </Icon>
+          weekday ={responseObj[1]}
+          />
          <Icon 
           lat={lat}
           lng={lng}
-          time ={responseObj[2]}
-          response ={responseObj}>
-         </Icon>
+          weekday ={responseObj[2]}
+          />
          <Icon 
           lat={lat}
           lng={lng}
-          time ={responseObj[3]}
-          response ={responseObj}>
-         </Icon>
+          weekday ={responseObj[3]}
+          />
          <Icon 
           lat={lat}
           lng={lng}
-          time ={responseObj[4]}
-          response ={responseObj}>
-         </Icon>
+          weekday ={responseObj[4]}
+          />
      </div>
   )
 }
