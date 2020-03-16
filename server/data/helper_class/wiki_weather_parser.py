@@ -1,3 +1,4 @@
+
 class wiki_weather_parser:
 
     def __init__(self, url, driver):
