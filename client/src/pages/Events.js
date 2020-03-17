@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Row} from 'react-bootstrap/';
+import { Button, Row } from 'react-bootstrap/';
 import Client from 'predicthq';
 import '../App.css';
+import Unsplash, { toJson } from 'unsplash-js';
 import { addMyEvents, addApiEvents, getButtonContent } from '../utils/eventsTools';
-import Unsplash , { toJson } from 'unsplash-js';
 
-const unsplash = new Unsplash({ accessKey: "sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M" });
+const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
 const phqEvents = client.events;
 
@@ -32,9 +32,9 @@ function Events({
 	const [performingArtsCalled, setPerformingArtsCalled] = useState(false);
 	const [sportsCalled, setSportsCalled] = useState(false);
 	const [communityCalled, setCommunityCalled] = useState(false);
-	const [toggled,setToggled] = useState(true);
-	const [navbarClass, setNavbarClass ] = useState('sidebar sidebar--expanded');
-	const [mainContentClass, setMainContentClass ] = useState('main-content main-content--expanded');
+	const [toggled, setToggled] = useState(true);
+	const [navbarClass, setNavbarClass] = useState('sidebar sidebar--expanded');
+	const [mainContentClass, setMainContentClass] = useState('main-content main-content--expanded');
 	const [images, setImages] = useState([]);
 
 
@@ -43,16 +43,15 @@ function Events({
 	};
 
 	useEffect(() => {
-
 		// Api for getting different images for different categories
-		async function getImages(){
-			var array = []
-			if(category !== 'likes'){
-				array = await unsplash.search.photos(category, 1, 100,{ orientation: "landscape" })
-				.then(toJson)
+		async function getImages() {
+			let array = [];
+			if (category !== 'likes') {
+				array = await unsplash.search.photos(category, 1, 100, { orientation: 'landscape' })
+					.then(toJson);
 				return array.results;
 			}
-			return array
+			return array;
 		}
 
 		// Basic event search using category as parameter. By default, it will return the first ten events.
@@ -140,7 +139,7 @@ function Events({
 		}
 
 		async function fetchEvents() {
-			await fetch(`${process.env.REACT_APP_BACKEND}graphql`,  {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -176,7 +175,7 @@ function Events({
 			setEventsForCategories(eventsByCategory);
 		}
 
-		async function setImagesForCategory(){
+		async function setImagesForCategory() {
 			const imagesArray = await getImages();
 			setImages(imagesArray);
 		}
@@ -207,82 +206,80 @@ function Events({
 	]);
 
 
-	const expandNavBar= (event) => {
-		if(toggled){
-			setNavbarClass("sidebar")
-			setMainContentClass("main-content")
-			setToggled(false)
+	const expandNavBar = (event) => {
+		if (toggled) {
+			setNavbarClass('sidebar');
+			setMainContentClass('main-content');
+			setToggled(false);
+		} else {
+			setNavbarClass('sidebar sidebar--expanded');
+			setMainContentClass('main-content main-content--expanded');
+			setToggled(true);
 		}
-		else{
-			setNavbarClass("sidebar sidebar--expanded")
-			setMainContentClass("main-content main-content--expanded")
-			setToggled(true)
-		}
-	}
+	};
 
 	return (
-		<div  id="events-section">
+		<div id="events-section">
 			<Row>
-			<div className={navbarClass}  >
-				<span className="shape"></span>
-				<span className="shape"></span>
-				<div className='categories-btn'>
-					<div className='choice-btn'>
-					<Button variant="outline-primary" style={{width:'100%'}} value="likes" onClick={expandNavBar}>
-						{getButtonContent("Hamburger")}
-					</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="likes" onClick={categoryChosen}>
-							{getButtonContent("Likes")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="conferences" onClick={categoryChosen}>
-							{getButtonContent("Conferences")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="expos" onClick={categoryChosen}>
-							{getButtonContent("Expos")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="concerts" onClick={categoryChosen}>
-						{getButtonContent("Concerts")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="festivals" onClick={categoryChosen}>
-							{getButtonContent("Festivals")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="performing-arts" onClick={categoryChosen}>
-							{getButtonContent("Performing-arts")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="sports" onClick={categoryChosen}>
-							{getButtonContent("Sports")}
-						</Button>
-					</div>
-					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="community" onClick={categoryChosen}>
-							{getButtonContent("Community")}
-						</Button>
+				<div className={navbarClass}>
+					<span className="shape" />
+					<span className="shape" />
+					<div className="categories-btn">
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={expandNavBar}>
+								{getButtonContent('Hamburger')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={categoryChosen}>
+								{getButtonContent('Likes')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="conferences" onClick={categoryChosen}>
+								{getButtonContent('Conferences')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="expos" onClick={categoryChosen}>
+								{getButtonContent('Expos')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="concerts" onClick={categoryChosen}>
+								{getButtonContent('Concerts')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="festivals" onClick={categoryChosen}>
+								{getButtonContent('Festivals')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="performing-arts" onClick={categoryChosen}>
+								{getButtonContent('Performing-arts')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="sports" onClick={categoryChosen}>
+								{getButtonContent('Sports')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="community" onClick={categoryChosen}>
+								{getButtonContent('Community')}
+							</Button>
+						</div>
 					</div>
 				</div>
-			</div>
-			<section className={mainContentClass} style={{marginTop:'4%'}}>
-			<div className="app-card-list" id="app-card-list">
-				{category ==="likes"
-					? addMyEvents(savedEvents)
-					: addApiEvents(eventsForCategories, requestId, images)
-					}
-			</div>
+				<section className={mainContentClass} style={{ marginTop: '4%' }}>
+					<div className="app-card-list" id="app-card-list">
+						{category === 'likes'
+							? addMyEvents(savedEvents)
+							: addApiEvents(eventsForCategories, requestId, images)}
+					</div>
 
-			</section>
+				</section>
 			</Row>
 		</div>
 	);

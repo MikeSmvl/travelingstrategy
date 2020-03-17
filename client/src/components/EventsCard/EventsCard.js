@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import { Card, Button, Modal, ModalBody } from 'react-bootstrap';
-import './EventsCard.css'
+import './EventsCard.css';
 import PropTypes from 'prop-types';
 
 
-const EventsCard = (props) =>{
-    const [modal, setModal] = useState(false);
-    const [likedModal, setLikedModal] = useState(false);
-    const {
-        eventCategory='',
-        description='',
-        startDate='',
-        endDate='',
-        title='',
-        address='',
-        nameOfPlace='',
-        duration ='0',
-        eventImg ='',
-        isLiked = true,
-        eventInfo
-    } = props;
+const EventsCard = (props) => {
+	const [modal, setModal] = useState(false);
+	const [likedModal, setLikedModal] = useState(false);
+	const {
+		eventCategory = '',
+		description = '',
+		startDate = '',
+		endDate = '',
+		title = '',
+		address = '',
+		nameOfPlace = '',
+		duration = '0',
+		eventImg = '',
+		isLiked = true,
+		eventInfo
+	} = props;
 
-    async function addEvent() {
+	async function addEvent() {
 		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
@@ -52,177 +52,178 @@ const EventsCard = (props) =>{
 	const handleLike = (event) => {
 		event.preventDefault();
 		event.stopPropagation();
-        addEvent();
-        setLikedModal(true);
-
+		addEvent();
+		setLikedModal(true);
 	};
 
-    /**
+	/**
      * Dates are transformed to English format
      */
-    const getDateText = (date) => {
-        const dateObject = new Date(date)
-        const days = ["Sunday", "Monday", "Tuesday", "Wednesday",
-                    "Thursday", "Friday", "Saturday"];
-        const months = ["January", "February", "March", "April",
-                    "May", "June", "July", "August", "September",
-                    "October", "November", "December"];
-        const dateText = days[dateObject.getDay()]+" "+months[dateObject.getMonth()]
-                    + " " + dateObject.getDate() + " " +dateObject.getFullYear();
+	const getDateText = (date) => {
+		const dateObject = new Date(date);
+		const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+			'Thursday', 'Friday', 'Saturday'];
+		const months = ['January', 'February', 'March', 'April',
+			'May', 'June', 'July', 'August', 'September',
+			'October', 'November', 'December'];
+		const dateText = `${days[dateObject.getDay()]} ${months[dateObject.getMonth()]
+		} ${dateObject.getDate()} ${dateObject.getFullYear()}`;
 
-        return dateText;
-    }
-    
-    /**
-     * 
+		return dateText;
+	};
+
+	/**
+     *
      * This method basically adds an 's' to the duration unit
      * in case the value is more than. This allows the sentence
      * to be grammatically correct
      */
-    const sentenceToDisplay = (duration, monthOrDaysOrHours) =>{
-        var truncatedDuration = Math.trunc(duration)
-        if(truncatedDuration >1){
-            return truncatedDuration +" "+monthOrDaysOrHours +"s";
-        }
-        return truncatedDuration +" "+monthOrDaysOrHours;
-    }
+	const sentenceToDisplay = (durationToDisplay, monthOrDaysOrHours) => {
+		const truncatedDuration = Math.trunc(durationToDisplay);
+		if (truncatedDuration > 1) {
+			return `${truncatedDuration} ${monthOrDaysOrHours}s`;
+		}
+		return `${truncatedDuration} ${monthOrDaysOrHours}`;
+	};
 
-    /**
+	/**
      * The duration is given in seconds.
      * This method converts to duration to an appropriate duration unit
      */
-    const getDuration = () => {
-        var durationToDisplay = duration/60;
+	const getDuration = () => {
+		let durationToDisplay = duration / 60;
 
-        if(durationToDisplay > 60){
-            durationToDisplay = durationToDisplay/60;
-            if (durationToDisplay > 24){
-                durationToDisplay = durationToDisplay/24;
-                if(durationToDisplay > 30){
-                    durationToDisplay = durationToDisplay/30;
-                    return sentenceToDisplay(durationToDisplay,"month")
-                }
-                return sentenceToDisplay(durationToDisplay,"day")
-            }
-            return sentenceToDisplay(durationToDisplay,"hour")
-        }
-        return sentenceToDisplay(durationToDisplay,"minute")
-    }
+		if (durationToDisplay > 60) {
+			durationToDisplay /= 60;
+			if (durationToDisplay > 24) {
+				durationToDisplay /= 24;
+				if (durationToDisplay > 30) {
+					durationToDisplay /= 30;
+					return sentenceToDisplay(durationToDisplay, 'month');
+				}
+				return sentenceToDisplay(durationToDisplay, 'day');
+			}
+			return sentenceToDisplay(durationToDisplay, 'hour');
+		}
+		return sentenceToDisplay(durationToDisplay, 'minute');
+	};
 
 
-    const InfoModal = () => {
-        return(
-            <Modal
-            show={modal}
-            onHide={() => setModal(false)}
-            centered={true}
-            id='modal-info'
-            >
-                <Modal.Header closeButton>
-                <Modal.Title id="example-modal-sizes-title-lg">
-                    <h2 >{title}</h2>
-                </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <img variant="top" src={eventImg} className="more-info-img"/>
-                    <div className="card-body">
-                        { !isLiked &&(
-                                    <div className="modal-like-button">
-                                        <Button variant="outline-primary" centered onClick={handleLike}>
+	const InfoModal = () => {
+		return (
+			<Modal
+				show={modal}
+				onHide={() => setModal(false)}
+				centered
+				id="modal-info"
+			>
+				<Modal.Header closeButton>
+					<Modal.Title id="example-modal-sizes-title-lg">
+						<h2>{title}</h2>
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<img alt="Modal pic" variant="top" src={eventImg} className="more-info-img" />
+					<div className="card-body">
+						{ !isLiked && (
+							<div className="modal-like-button">
+								<Button variant="outline-primary" centered onClick={handleLike}>
                                             Like
-                                        </Button>
-                                    </div>)
-                        }
-                        <p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
-                        <p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
-                        {address!=='' && <p>
-                                            <b>Address: </b>{address}
-                                        </p>
-                        }
-                        {nameOfPlace!=='' && <p>
-                                            <b>Venue Name: </b>{nameOfPlace}
-                                        </p>
-                        }
-                        {duration!==0 && <p>
-                                            <b>Duration: </b>{getDuration()}
-                                        </p>
-                        }
-                        {description!=='' && <p className="body-content-modal">
-                                            <b>Description: </b>{description}
-                                            </p>
-                        }
-                    </div>
-                </Modal.Body>
-            </Modal>
-        );
-    }
+								</Button>
+							</div>
+						)}
+						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
+						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
+						{address !== '' && (
+							<p>
+								<b>Address: </b>{address}
+							</p>
+						)}
+						{nameOfPlace !== '' && (
+							<p>
+								<b>Venue Name: </b>{nameOfPlace}
+							</p>
+						)}
+						{(getDuration().charAt(0) !== '0') && (
+							<p>
+								<b>Duration: </b>{getDuration()}
+							</p>
+						)}
+						{description !== '' && (
+							<p className="body-content-modal">
+								<b>Description: </b>{description}
+							</p>
+						)}
+					</div>
+				</Modal.Body>
+			</Modal>
+		);
+	};
 
-    const LikedModal = () => {
-        return(
-            <Modal
-                show={likedModal}
-                onHide={() => setLikedModal(false)}
-                centered={true}
-                id='modal-favorites'
+	const LikedModal = () => {
+		return (
+			<Modal
+				show={likedModal}
+				onHide={() => setLikedModal(false)}
+				centered
+				id="modal-favorites"
 
-            >
-                <Modal.Header closeButton>
-                <Modal.Title id="example-modal-sizes-title-lg">
-                    <h2>Added To your Favorites !!</h2>
-                </Modal.Title>
-                </Modal.Header>
-                <ModalBody>
-                    <img src={require(`../../eventsImages/addedToFavorites.gif`)}></img>
-                </ModalBody>
-            </Modal>
+			>
+				<Modal.Header closeButton>
+					<Modal.Title id="example-modal-sizes-title-lg">
+						<h2>Added To your Favorites !!</h2>
+					</Modal.Title>
+				</Modal.Header>
+				<ModalBody>
+					<img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
+				</ModalBody>
+			</Modal>
 
-        )
-    }
+		);
+	};
 
-    const EventCard = () => {
-        return(
-            <Card className="card" >
-                <Card.Img variant="top" src={eventImg} style={{height:'21em'}}/>
-                <div className="card-body">
-                    <p className="card-category"><b>{eventCategory.charAt(0).toUpperCase()+eventCategory.slice(1,-1)}</b></p> 
-                    <p className="date">{getDateText(startDate)}</p>
-                    <h2 className="card-title">{title}</h2>
-                    <Button variant="outline-primary" onClick={() => setModal(true)}>
+	const EventCard = () => {
+		return (
+			<Card className="card">
+				<Card.Img variant="top" src={eventImg} style={{ height: '21em' }} />
+				<div className="card-body">
+					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
+					<p className="date">{getDateText(startDate)}</p>
+					<h2 className="card-title">{title}</h2>
+					<Button variant="outline-primary" onClick={() => setModal(true)}>
                         Find out more
-                    </Button>
-                    { !isLiked &&(<Button variant="outline-primary" onClick={handleLike}>
+					</Button>
+					{ !isLiked && (
+						<Button variant="outline-primary" onClick={handleLike}>
                         Like
-                        </Button>)
-                    }
-                </div>
-            </Card>
-        );
+						</Button>
+					)}
+				</div>
+			</Card>
+		);
+	};
 
-    }
-
-    return(
-        <>
-        <EventCard></EventCard>
-        <InfoModal></InfoModal>
-        <LikedModal></LikedModal>
-      </>
-    );
-
-}
+	return (
+		<>
+			<EventCard />
+			<InfoModal />
+			<LikedModal />
+		</>
+	);
+};
 
 
 EventsCard.propTypes = {
-    eventCategory: PropTypes.string,
-    description: PropTypes.string,
-    startDate: PropTypes.string,
-    endDate: PropTypes.string,
-    title: PropTypes.string,
-    address: PropTypes.string,
-    nameOfPlace: PropTypes.string,
-    duration: PropTypes.string,
-    isLiked: PropTypes.bool,
+	eventCategory: PropTypes.string,
+	description: PropTypes.string,
+	startDate: PropTypes.string,
+	endDate: PropTypes.string,
+	title: PropTypes.string,
+	address: PropTypes.string,
+	nameOfPlace: PropTypes.string,
+	duration: PropTypes.string,
+	isLiked: PropTypes.bool,
 	eventInfo: PropTypes.instanceOf(Array)
 };
 
 export default EventsCard;
-

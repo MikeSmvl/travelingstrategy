@@ -53,7 +53,6 @@ function addApiEvents(apiEvents, requestId, images){
     const events = [];
     const imagesUsed = [];
     const apiImages = images;
-    var count = 0;
     apiEvents.forEach(event =>{
         var category = event.category.replace(/"/g, "'");
         var title = event.title.replace(/"/g, "'");
@@ -91,7 +90,6 @@ function addApiEvents(apiEvents, requestId, images){
                 eventImg={eventImg}
             ></EventsCard>
         );
-        count++;
     });
 
     return (
@@ -106,14 +104,14 @@ function getButtonContent(category){
         <Row>
             {category==='Hamburger'
             ? <Col xs={12} md={8} >
-               <img src={require(`../eventsImages/Hamburger-Icon.png`)} style={{height:'3em'}}></img>
+               <img alt="Hamburger" src={require(`../eventsImages/Hamburger-Icon.png`)} style={{height:'3em'}}></img>
             </Col>
             :
             <Col xs={12} md={8}>
                {category}
             </Col>}
             <Col xs={6} md={4} style={{textAlign:'end'}}>
-                <img src={require(`../eventsImages/${category}.png`)} style={{height:'2em'}}></img>
+                <img alt="Icon" src={require(`../eventsImages/${category}.png`)} style={{height:'2em'}}></img>
             </Col>
         </Row>
     )
