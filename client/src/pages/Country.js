@@ -430,26 +430,7 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
-									{!(WeatherGraph === null || WeatherGraph === 'Not available yet') && (
-									<Card
-										header="Average monthly weather"
-											footer={(
-											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
-											</Row>
-										)}
-									>
-										<CardBody>
-											<div
-												className="scrolling-card"
-												style={{ maxHeight: '400px', overflow: 'scroll' }}
-											>
-												<WeatherGraph
-													destinationCity={destinationCity}
-												/>
-											</div>
-										</CardBody>
-									</Card>
-									)}
+									<WeatherGraph destinationCity={destinationCity} />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
