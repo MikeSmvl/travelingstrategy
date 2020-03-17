@@ -47,15 +47,16 @@ def save_to_weather():
 
   #Antigua and Barbuda
   LOGGER.info(f'Beginning parsing for average monthly temperature')
+  avg_monthly_temperature = ''
   try:
     driver = create_driver()
     wiki_temperature = wiki_weather_parser(wiki_visa_temperature, driver)
     avg_monthly_temperature = wiki_temperature.visa_parser_table()
     LOGGER.success(f'Following data was retrieved: {avg_monthly_temperature}')
+    save_into_db('weather', avg_monthly_temperature)
+    quit_driver(driver)
   except Exception as error_msg:
     LOGGER.error(f'An error has occured while parsing for temperature because of the following error: {error_msg}')
- 
-  save_into_db('weather', avg_monthly_temperature)
-  driver.quit()
+
 
 save_to_weather()
