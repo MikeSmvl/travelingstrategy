@@ -55,7 +55,7 @@ const WeatherGraph = (props) => {
 
   return (
         <Card
-          header="Average monthly weather"
+          header="Average Monthly Temperature"
             footer={(
             <Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
             </Row>

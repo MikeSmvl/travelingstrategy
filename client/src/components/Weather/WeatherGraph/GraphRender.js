@@ -11,7 +11,7 @@ const GraphRender = (props) => {
     labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
     datasets: [
       {
-        label: 'Weather in °',
+        label: '°C',
         backgroundColor: 'rgba(75,192,192,0.4)',
         borderColor: 'rgba(75,192,192,1)',
         pointBorderColor: 'rgba(75,192,192,1)',
