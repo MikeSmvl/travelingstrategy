@@ -17,7 +17,7 @@ const WeatherGraph = (props) => {
 
   useEffect(() => {
     async function fetchData() {
-      await fetch(process.env.REACT_APP_BACKEND, {
+      await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
