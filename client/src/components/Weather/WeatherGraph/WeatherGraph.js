@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Card as RBCard, Button } from 'react-bootstrap';
+import { Card as RBCard} from 'react-bootstrap';
+import GraphRender from './GraphRender'
 
 const WeatherGraph = (props) => {
 	const {
@@ -9,7 +10,7 @@ const WeatherGraph = (props) => {
 		...rest
 	} = props;
 
-  const [monthlyWeather, setMonthlyWeather] = useState('')
+  const [monthlyWeather, setMonthlyWeather] = useState('Not available yet')
 
   useEffect(() => {
 		async function fetchData() {
@@ -18,7 +19,7 @@ const WeatherGraph = (props) => {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-						avgMonthlyWeather:city_average_monthly_weather(city: "Paris"){
+						avgMonthlyWeather:city_average_monthly_weather(city: "${destinationCity}"){
 							city,
 							january,
 							february,
@@ -51,10 +52,13 @@ const WeatherGraph = (props) => {
 	]);
 
 	return (
-		<RBCard.Body>
-    <strong>Police: </strong>
-												{monthlyWeather.january}
-		</RBCard.Body>
+		<div>
+		{!(monthlyWeather === null || monthlyWeather === 'Not available yet') && (
+			<RBCard.Body>
+				<GraphRender monthlyWeather={monthlyWeather}/>
+			</RBCard.Body>
+		)}
+		</div>
 	);
 };
 

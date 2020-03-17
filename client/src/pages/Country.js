@@ -22,7 +22,6 @@ import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
-
 import Weather from '../components/Weather/Skycon/Weather'
 import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph'
 
@@ -69,7 +68,6 @@ function Country({
 	const destCountryName = getCountryName2(destinationCountry);
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
-	const [monthlyWeather, setMonthlyWeather] = useState('Not available yet');
 
 
 	useEffect(() => {
@@ -194,21 +192,6 @@ function Country({
 							ambulance
 							fire
 						}
-						city_average_monthly_weather(city: "${destinationCountry}"){
-							city,
-							january,
-							february,
-							march,
-							april,
-							may,
-							june,
-							july,
-							august,
-							septembre,
-							octobre,
-							novembre,
-							decembre
-						}
 					}`
 				})
 			})
@@ -291,9 +274,6 @@ function Country({
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
 					);
-					res.data.monthlyWeather
-						&& res.data.monthlyWeather.length !== 0
-						&& setMonthlyWeather(res.data.monthlyWeather[0]);
 				});
 		}
 
@@ -364,9 +344,6 @@ function Country({
 									</Nav.Item>
 									<Nav.Item>
 										<Nav.Link href="#Health">Health</Nav.Link>
-									</Nav.Item>
-									<Nav.Item>
-										<Nav.Link href="#Weather">Weather</Nav.Link>
 									</Nav.Item>
 									<Nav.Item>
 										<Nav.Link href="#Miscellaneous">Miscellaneous</Nav.Link>
@@ -453,25 +430,26 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
+									{!(WeatherGraph === null || WeatherGraph === 'Not available yet') && (
 									<Card
 										header="Average monthly weather"
-										  footer={(
-											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/Legality_of_cannabis" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+											footer={(
+											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
 											</Row>
 										)}
 									>
-								  <CardBody>
+										<CardBody>
 											<div
 												className="scrolling-card"
 												style={{ maxHeight: '400px', overflow: 'scroll' }}
 											>
-											 <WeatherGraph
-											   destinationCity={destinationCity}
-											 />
+												<WeatherGraph
+													destinationCity={destinationCity}
+												/>
 											</div>
-									</CardBody>
-
+										</CardBody>
 									</Card>
+									)}
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
