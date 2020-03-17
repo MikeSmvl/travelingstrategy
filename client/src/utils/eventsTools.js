@@ -1,5 +1,7 @@
 import * as React from 'react';
 import EventsCard from '../components/EventsCard/EventsCard';
+import {Row, Col} from 'react-bootstrap/';
+
 
 
 /**
@@ -99,6 +101,24 @@ function addApiEvents(apiEvents, requestId, images){
     );
 }
 
+function getButtonContent(category){
+    return(
+        <Row>
+            {category==='Hamburger'
+            ? <Col xs={12} md={8} >
+               <img src={require(`../eventsImages/Hamburger-Icon.png`)} style={{height:'3em'}}></img>
+            </Col>
+            :
+            <Col xs={12} md={8}>
+               {category}
+            </Col>}
+            <Col xs={6} md={4} style={{textAlign:'end'}}>
+                <img src={require(`../eventsImages/${category}.png`)} style={{height:'2em'}}></img>
+            </Col>
+        </Row>
+    )
+}
+
 /**
  * There might be multiple labels for an event that's
  * why we need to loop through the array of labels
@@ -126,4 +146,4 @@ function getRandomImageForCategory(images,imagesUsed){
     return imageLink
 }
 
-export {addMyEvents,addApiEvents};
+export {addMyEvents,addApiEvents,getButtonContent};

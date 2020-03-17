@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Row} from 'react-bootstrap/';
 import Client from 'predicthq';
 import '../App.css';
-import { addMyEvents, addApiEvents } from '../utils/eventsTools';
+import { addMyEvents, addApiEvents, getButtonContent } from '../utils/eventsTools';
 import Unsplash , { toJson } from 'unsplash-js';
 
 const unsplash = new Unsplash({ accessKey: "sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M" });
@@ -223,33 +223,54 @@ function Events({
 	return (
 		<div  id="events-section">
 			<Row>
-			<div className={navbarClass}  onClick={expandNavBar}>
+			<div className={navbarClass}  >
 				<span className="shape"></span>
 				<span className="shape"></span>
 				<div className='categories-btn'>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="likes" onClick={categoryChosen}>Likes</Button>
+					<Button variant="outline-primary" style={{width:'100%'}} value="likes" onClick={expandNavBar}>
+						{getButtonContent("Hamburger")}
+					</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="conferences" onClick={categoryChosen}>Conferences</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="likes" onClick={categoryChosen}>
+							{getButtonContent("Likes")}
+						</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="expos" onClick={categoryChosen}>Expos</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="conferences" onClick={categoryChosen}>
+							{getButtonContent("Conferences")}
+						</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="concerts" onClick={categoryChosen}>Concerts</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="expos" onClick={categoryChosen}>
+							{getButtonContent("Expos")}
+						</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="festivals" onClick={categoryChosen}>Festivals</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="concerts" onClick={categoryChosen}>
+						{getButtonContent("Concerts")}
+						</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="performing-arts" onClick={categoryChosen}>Performing-arts</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="festivals" onClick={categoryChosen}>
+							{getButtonContent("Festivals")}
+						</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="sports" onClick={categoryChosen}>Sports</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="performing-arts" onClick={categoryChosen}>
+							{getButtonContent("Performing-arts")}
+						</Button>
 					</div>
 					<div className='choice-btn'>
-						<Button variant="outline-primary" style={{width:'100%'}} value="community" onClick={categoryChosen}>Community</Button>
+						<Button variant="outline-primary" style={{width:'100%'}} value="sports" onClick={categoryChosen}>
+							{getButtonContent("Sports")}
+						</Button>
+					</div>
+					<div className='choice-btn'>
+						<Button variant="outline-primary" style={{width:'100%'}} value="community" onClick={categoryChosen}>
+							{getButtonContent("Community")}
+						</Button>
 					</div>
 				</div>
 			</div>
