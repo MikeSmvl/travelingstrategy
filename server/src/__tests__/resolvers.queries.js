@@ -7,10 +7,6 @@ const { expect } = require("chai");
 const mutations = require('../resolvers/mutations')
 
 
-
-
-
-
 const schemaCode = new graphql.GraphQLSchema({
   query: queries,  mutation: mutations
 });
@@ -690,6 +686,50 @@ const query =`
   }
 }`;
 
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying translation by language_iso for french", () =>{
+  const query =`
+  {
+    phrasesTranslation(language_iso:"fr"){
+      phrase,
+      translated_phrase
+    }
+}`;
+
+  tester.test(true, query)
+  tester.graphql(query, undefined, undefined, { isLocal: false })
+      .then(result => {
+        if(result.error != undefined){
+          logger.error(__filename +result.errors[0].message)
+        }
+        else{
+          logger.info(__filename +"There is no error in the query parameters")
+        }
+      })
+      .catch(err => logger.error(__filename +" "+err))
+});
+
+it("Querying translation by country_iso for CO", () =>{
+  const query =`
+  {
+    phrasesTranslationCountry(country_iso:"CO"){
+      phrase,
+      translated_phrase
+    }
+}`;
 
   tester.test(true, query)
   tester.graphql(query, undefined, undefined, { isLocal: false })

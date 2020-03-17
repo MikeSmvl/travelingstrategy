@@ -6,6 +6,7 @@ const withAuth = require('./middleware');
 const Redis = require('ioredis');
 const path = require('path')
 const { verifyUser } = require('./resolvers/user')
+const { originEnv, graphiqlEnv } = require('./config')
 
 const app = express();
 app.use('/confirm' , express.static(path.join(__dirname, 'endpoints')));
@@ -21,7 +22,7 @@ const schema = new graphql.GraphQLSchema({
 const cors = require("cors");
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:3000"
+    origin: originEnv
 })) // Use this after the variable declaration
 app.use(cookieParser());
 
@@ -30,7 +31,7 @@ const redis = new Redis();
 app.use("/graphql", (req, res) => {
     return ExpressGraphQL({
         schema: schema,
-        graphiql: true,
+        graphiql: graphiqlEnv,
         context: { req, res, redis },
     })(req, res);
 });

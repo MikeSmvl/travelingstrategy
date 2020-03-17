@@ -24,6 +24,9 @@ import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
 import Weather from '../components/Weather/Skycon/Weather'
 import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph'
+import textToSpeech from '../utils/text-to-speech';
+
+
 
 function Country({
 	originCountry,
@@ -68,6 +71,9 @@ function Country({
 	const destCountryName = getCountryName2(destinationCountry);
 	const originCountryName = getCountryName2(originCountry);
 	const [show, setShow] = useState(false);
+	const [phrases, setPhrases] = useState([]);
+	const [phraseIso, setPhraseIso] = useState('');
+	const [phraseLanguage, setPhraseLanguage] = useState('');
 
 
 	useEffect(() => {
@@ -96,7 +102,7 @@ function Country({
 
 		async function fetchData() {
 			setIsLoading(true);
-			await fetch(process.env.REACT_APP_BACKEND, {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -192,6 +198,13 @@ function Country({
 							ambulance
 							fire
 						}
+						phrasesTranslationCountry(country_iso:"${destinationCountry}"){
+							phrase
+							language
+							translated_phrase
+							pronunciation
+							language_iso
+						}
 					}`
 				})
 			})
@@ -270,6 +283,15 @@ function Country({
 					res.data.emergency
 						&& res.data.emergency.length !== 0
 						&& setEmergency(res.data.emergency[0]);
+					res.data.phrasesTranslationCountry
+						&& res.data.phrasesTranslationCountry.length !== 0
+						&& setPhrases(res.data.phrasesTranslationCountry);
+					res.data.phrasesTranslationCountry
+						&& res.data.phrasesTranslationCountry.length !== 0
+						&& setPhraseIso(res.data.phrasesTranslationCountry[0].language_iso);
+					res.data.phrasesTranslationCountry
+						&& res.data.phrasesTranslationCountry.length !== 0
+						&& setPhraseLanguage(res.data.phrasesTranslationCountry[0].language);
 					fetchRate(
 						res.data.originCurrencies[0].code,
 						res.data.destinationCurrencies[0].code
@@ -297,6 +319,7 @@ function Country({
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+	console.log(phraseIso);
 
 
 	return (
@@ -845,6 +868,88 @@ function Country({
 											</CardBody>
 										</Card>
 									)}
+								</Col>
+							</Row>
+							<hr />
+							<Row id="Culture" className="justify-content-center">
+								<Col xs="10" sm="10" style={{ padding: '25px' }}>
+									<Row className="justify-content-center">
+
+										<Card
+											header="Phrases"
+											style={{ maxHeight: '500px', overflow: 'scroll' }}
+											footer={(
+												<Row className="justify-content-center">
+													<a
+														href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
+														target="_blank"
+														rel="noopener noreferrer"
+													>
+														<i className="fa fa-globe" /> Reference
+													</a>
+												</Row>
+											)}
+										>
+
+											<Row>
+												<Col span="2">
+													<div style={{ textAlign: 'left' }}>
+														<b style={{ color: '#FF9A8D' }}>English</b>
+													</div>
+												</Col>
+												<Col span="2">
+													<div style={{ textAlign: 'left' }}>
+														<b style={{ color: '#FF9A8D' }}>{phraseLanguage}</b>
+													</div>
+												</Col>
+												<Col span="2">
+													<div style={{ textAlign: 'left' }}>
+														<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
+													</div>
+												</Col>
+												<hr />
+												<hr />
+												<Col span="2">
+													<div style={{ textAlign: 'right' }}>
+														<b style={{ color: '#FF9A8D' }}>Play</b>
+													</div>
+												</Col>
+											</Row>
+											<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
+												{phrases.map((value, index) => (
+													<Row>
+														<Col>
+															{value.phrase.split('%20').join(' ')}
+														</Col>
+														<Col>
+															{value.translated_phrase}
+														</Col>
+														<Col>
+															{value.pronunciation}
+														</Col>
+
+														<Col>
+															<div style={{ textAlign: 'right' }}>
+																<button
+																	type="button"
+																	className="buttonSpeaker"
+																	onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
+																>
+																	<img
+																		src={require('../miscImages/phraseSpeaker.png')}
+																		style={{ width: '24px' }}
+																		alt="error loading"
+																	/>
+																</button>
+															</div>
+														</Col>
+
+													</Row>
+												))}
+												{ (phrases.length === 0) && (<span>TBD</span>)}
+											</span>
+										</Card>
+									</Row>
 								</Col>
 							</Row>
 							<hr />

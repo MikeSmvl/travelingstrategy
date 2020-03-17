@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button } from 'react-bootstrap/';
+import { Row, Col } from 'react-bootstrap/';
 import '../App.css';
-import { Link } from 'react-router-dom';
 import { addTrendingSpots } from '../utils/parsingTools';
 
 
@@ -14,7 +13,7 @@ function TrendingSpots({
 	const [trendingSpots, setTrendingSpots] = useState([]);
 	useEffect(() => {
 		async function fetchData() {
-			await fetch('http://localhost:4000/graphql', {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
@@ -32,7 +31,6 @@ function TrendingSpots({
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					console.log(res)
 					res.data.imagesForRequestId
 					&& res.data.imagesForRequestId.length !== 0
 					&& setTrendingSpots(res.data.imagesForRequestId);
@@ -40,7 +38,7 @@ function TrendingSpots({
 		}
 
 		fetchData();
-	}, [city]);
+	}, [city, requestId]);
 
 	return (
 		<div>

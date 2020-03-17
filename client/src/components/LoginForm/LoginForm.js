@@ -85,7 +85,7 @@ const LoginForm = (props) => {
 		if (validEmail && email !== '' && password !== '' && !showRegister) {
 			event.preventDefault();
 			setIsLoading(true);
-			fetch('http://localhost:4000/graphql', {
+			fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',
@@ -122,7 +122,7 @@ const LoginForm = (props) => {
 			setIsLoading(true);
 			setConfirmation('');
 			setError('');
-			fetch('http://localhost:4000/graphql', {
+			fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				credentials: 'include',

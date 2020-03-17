@@ -16,6 +16,8 @@ const drugs = require('./drugs')
 const { getUser } = require('./user')
 const {subscriberTable, userSubscriptions} = require('./subscribers')
 const {imagesTable,imagesForTag,imagesForRequestId} = require('./images.js')
+const {phrasesTranslation, phrasesTranslationCountry} = require('./phrases')
+const {getLanguageIso} = require('./languageIso')
 const eventsForRequest = require('./events')
 const {city_average_monthly_weather, monthly_weather_table} = require('./monthlyWeather')
 
@@ -55,7 +57,10 @@ var queryType = new graphql.GraphQLObjectType({
         imagesForRequestId,
         eventsForRequest,
         city_average_monthly_weather,
-        monthly_weather_table
+        monthly_weather_table,
+        phrasesTranslation,
+        getLanguageIso,
+        phrasesTranslationCountry
     }
 });
 

@@ -63,5 +63,10 @@
 }
 
 .subscribe{
-    margin-top: 2%;
+	margin-top: 2%;
+}
+
+.text-center{
+	position: relative;
+	z-index: 1;
 }
