@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Card, CardBody, Divider } from '../../Card/Card';
-import { Row, Col, Table, Nav } from 'react-bootstrap/';
+import { Link } from 'react-router-dom'
+import { Card, CardBody} from '../../Card/Card';
+import { Row} from 'react-bootstrap/';
 import GraphRender from './GraphRender';
 import Footer from '../../Footer/Footer';
 
@@ -47,11 +48,18 @@ const WeatherGraph = (props) => {
             && setMonthlyWeather(res.data.avgMonthlyWeather[0]);
         });
     }
-
+    console.log(monthlyWeather.city)
     fetchData();
   }, [
     destinationCity
   ]);
+
+  // if we dont have data for monthly temperature, we will have a link
+  // this link will redirect to google with the data for temperature for the respective city
+  function yourFunction(){
+    var searchText = 'average monthly temperature for '+ destinationCity
+    let win1 = window.open("//" + "google.com/search?q=" + searchText, '_blank');
+  }
 
   return (
         <Card
@@ -64,8 +72,9 @@ const WeatherGraph = (props) => {
           <CardBody>
           {!monthlyWeather ? (
             <div>
-              Note: We don&apos;t have any info on monthly weather for
-              {destinationCity}. Try Googling instead.
+            <span style={{ color: '#FF1C00' }}>Note: </span>
+               We don&apos;t have any info on the average monthly temperature for
+               {destinationCity}. Try <a href="#" onClick={yourFunction}>Googling</a> instead 
             </div>
           ) : (
             <div
