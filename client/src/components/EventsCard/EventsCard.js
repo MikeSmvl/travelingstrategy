@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Card, Button, Modal, ModalBody } from 'react-bootstrap';
 import './EventsCard.css';
 import PropTypes from 'prop-types';
+import {
+	AwesomeButton
+  } from 'react-awesome-button';
+import "react-awesome-button/dist/styles.css";
 
 
 const EventsCard = (props) => {
@@ -49,9 +53,7 @@ const EventsCard = (props) => {
 		});
 	}
 
-	const handleLike = (event) => {
-		event.preventDefault();
-		event.stopPropagation();
+	const handleLike = () => {
 		addEvent();
 		setLikedModal(true);
 	};
@@ -127,9 +129,11 @@ const EventsCard = (props) => {
 					<div className="card-body">
 						{ !isLiked && (
 							<div className="modal-like-button">
-								<Button variant="outline-primary" centered onClick={handleLike}>
+								{/* <Button variant="outline-primary" centered onClick={handleLike}>
                                             Like
-								</Button>
+								</Button> */}
+								<AwesomeButton type="primary" size="small" centered onPress={handleLike}
+								>Like</AwesomeButton>
 							</div>
 						)}
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
