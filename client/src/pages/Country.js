@@ -22,10 +22,9 @@ import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
-import Weather from '../components/Weather/Skycon/Weather'
-import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph'
+import Weather from '../components/Weather/Skycon/Weather';
+import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
 import textToSpeech from '../utils/text-to-speech';
-
 
 
 function Country({
@@ -468,18 +467,18 @@ function Country({
 													className="scrolling-card"
 													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 												/>
-													<div
-														className="scrolling-card"
-														style={{ maxHeight: '400px', overflow: 'scroll' }}
-													>
+												<div
+													className="scrolling-card"
+													style={{ maxHeight: '400px', overflow: 'scroll' }}
+												>
 													<p>
-													<strong>Canabais recreational:</strong>{' '}
-													{JSON.stringify(canabaisRecreational).replace(
-														/(^")|("$)/g,
-														''
-													)}
-												</p>
-													</div>
+														<strong>Canabais recreational:</strong>{' '}
+														{JSON.stringify(canabaisRecreational).replace(
+															/(^")|("$)/g,
+															''
+														)}
+													</p>
+												</div>
 											</CardBody>
 										</Card>
 									)}
@@ -532,13 +531,12 @@ function Country({
 								</Col>
 							</Row>
 							<Row className="justify-content-between">
-							  <Col sm={5} style={{ padding: '20px' }}>
-							     <Weather 
-									        lat = {destinationLat}
-											lng = {destinationLng}>
-
-								</Weather>
-							  </Col>
+								<Col sm={5} style={{ padding: '20px' }}>
+									<Weather
+										lat={destinationLat}
+										lng={destinationLng}
+									/>
+								</Col>
 							</Row>
 							<hr />
 							<div id="Financials">
