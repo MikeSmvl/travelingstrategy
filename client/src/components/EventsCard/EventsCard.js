@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Button, Modal, ModalBody } from 'react-bootstrap';
+import { Card, Modal, ModalBody } from 'react-bootstrap';
 import './EventsCard.css';
 import PropTypes from 'prop-types';
 import {
@@ -194,7 +194,7 @@ const EventsCard = (props) => {
 					<AwesomeButton type="secondary" size="medium" onPress={() => setModal(true)}
 					>Find out more</AwesomeButton>
 					{ !isLiked && (
-						<AwesomeButton type="secondary" size="small" onPress={handleLike}
+						<AwesomeButton type="secondary" size="small" onPress={handleLike} style={{float: 'right'}}
 						>Like</AwesomeButton>
 					)}
 				</div>
