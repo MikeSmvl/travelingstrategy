@@ -129,10 +129,7 @@ const EventsCard = (props) => {
 					<div className="card-body">
 						{ !isLiked && (
 							<div className="modal-like-button">
-								{/* <Button variant="outline-primary" centered onClick={handleLike}>
-                                            Like
-								</Button> */}
-								<AwesomeButton type="primary" size="small" centered onPress={handleLike}
+								<AwesomeButton type="secondary" size="small" centered onPress={handleLike}
 								>Like</AwesomeButton>
 							</div>
 						)}
@@ -194,13 +191,11 @@ const EventsCard = (props) => {
 					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
 					<p className="date">{getDateText(startDate)}</p>
 					<h2 className="card-title">{title}</h2>
-					<Button variant="outline-primary" onClick={() => setModal(true)}>
-                        Find out more
-					</Button>
+					<AwesomeButton type="secondary" size="medium" onPress={() => setModal(true)}
+					>Find out more</AwesomeButton>
 					{ !isLiked && (
-						<Button variant="outline-primary" onClick={handleLike}>
-                        Like
-						</Button>
+						<AwesomeButton type="secondary" size="small" onPress={handleLike}
+						>Like</AwesomeButton>
 					)}
 				</div>
 			</Card>
