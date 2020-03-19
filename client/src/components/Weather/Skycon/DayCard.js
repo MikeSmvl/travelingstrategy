@@ -29,7 +29,7 @@ const DayCard = (props) => {
 						/>
 					</i><p />
 					<h3 className="d-flex justify-content-center">{degreeType === "celsius" ? celsius + "°C" : fahrenheit + "°F"}</h3>
-					<p className="d-flex justify-content-center">{weekday.summary}</p>
+					<p className="d-flex justify-content-center text-center">{weekday.summary}</p>
 				</div>
 			</div>
 		</div>

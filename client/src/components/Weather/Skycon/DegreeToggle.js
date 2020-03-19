@@ -1,4 +1,5 @@
-import React, {useState } from 'react';
+import React from 'react';
+import Radio from '@material-ui/core/Radio';
 
 
 
@@ -14,7 +15,7 @@ const DegreeToggle = (props) => {
   return (
     <React.Fragment>
     <div className="form-check form-check-inline">
-        <input
+        <Radio
         className="form-check-input"
         type="radio"
         name="degree-type"
@@ -26,7 +27,7 @@ const DegreeToggle = (props) => {
         <label className="form-check-label" for="celsius">Celsius</label>
       </div>
       <div className="form-check form-check-inline">
-        <input
+        <Radio
         className="form-check-input"
         type="radio"
         name="degree-type"
