@@ -30,13 +30,13 @@ const Weather = (props) => {
    
 	return (
 		<div>
-		<div className="justify-content-center">
-		<DegreeToggle
-		     degree ={degreeType} 
-			 updateDegree ={setDegreeType} />
-			 </div>
-
 		<div className="flexbox-container">
+		<DegreeToggle
+		degree = {degreeType}
+			 updateDegree ={setDegreeType} />
+		</div>
+
+		<div className="flexbox-container2">
 			<DayCard
 			    degreeType ={degreeType}
 				weekday={responseObj[1]}

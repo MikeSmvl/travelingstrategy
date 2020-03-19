@@ -20,6 +20,7 @@ const DegreeToggle = (props) => {
         name="degree-type"
         id="celsius"
         value="celsius"
+        checked ={degree === 'celsius'}
         onClick={()=>updateDegree('celsius')}
         />
         <label className="form-check-label" for="celsius">Celsius</label>
@@ -31,6 +32,7 @@ const DegreeToggle = (props) => {
         name="degree-type"
         id="farenheit"
         value="farenheit"
+        checked ={degree === 'farenheit'}
         onClick={()=>updateDegree('farenheit')}
         />
         <label className="form-check-label" for="farenheit">Farenheit</label>
