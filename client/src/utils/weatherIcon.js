@@ -75,4 +75,4 @@ function setSkycon(icon) {
     return data
 }
 
-export {setSkycon, data};
+export {setSkycon};
