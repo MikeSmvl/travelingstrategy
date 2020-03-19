@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Icon from './Icon';
+import DayCard from './DayCard';
 import './Weather.css';
 
 
@@ -26,30 +26,30 @@ const Weather = (props) => {
 
 	return (
 		<div className="flexbox-container">
-			<Icon
-				lat={lat}
-				lng={lng}
-				weekday={responseObj[0]}
-			/>
-			<Icon
+			<DayCard
 				lat={lat}
 				lng={lng}
 				weekday={responseObj[1]}
 			/>
-			<Icon
+			<DayCard
 				lat={lat}
 				lng={lng}
 				weekday={responseObj[2]}
 			/>
-			<Icon
+			<DayCard
 				lat={lat}
 				lng={lng}
 				weekday={responseObj[3]}
 			/>
-			<Icon
+			<DayCard
 				lat={lat}
 				lng={lng}
 				weekday={responseObj[4]}
+			/>
+			<DayCard
+				lat={lat}
+				lng={lng}
+				weekday={responseObj[5]}
 			/>
 		</div>
 	);

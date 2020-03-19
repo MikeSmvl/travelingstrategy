@@ -4,7 +4,7 @@ import moment from 'moment';
 import { setSkycon } from '../../../utils/weatherIcon';
 
 
-const Icon = (props) => {
+const DayCard = (props) => {
 	const {
 		weekday = ''
 	} = props;
@@ -34,4 +34,4 @@ const Icon = (props) => {
 	);
 };
 
-export default Icon;
+export default DayCard;
