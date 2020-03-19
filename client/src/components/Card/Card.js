@@ -1,13 +1,15 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Card as RBCard } from 'react-bootstrap';
+import { Card as RBCard, Button} from 'react-bootstrap';
 import './Card.css';
 
 const Card = (props) => {
 	const { header = '', footer = '', children, ...rest } = props;
 	return (
 		<RBCard {...rest} className="TSCard">
-			{header && <RBCard.Header className="cardHeader">{header}</RBCard.Header>}
+			{header && <RBCard.Header className="cardHeader">{header}
+				<button class="iImage"></button>
+			</RBCard.Header>}
 			{children}
 			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
 		</RBCard>
