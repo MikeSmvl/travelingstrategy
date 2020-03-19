@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Row } from 'react-bootstrap/';
 import { Card, CardBody } from '../../Card/Card';
 import GraphRender from './GraphRender';
-import Footer from '../../Footer/Footer';
 
 const WeatherGraph = (props) => {
 	const {
