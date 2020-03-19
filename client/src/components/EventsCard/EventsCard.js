@@ -185,7 +185,7 @@ const EventsCard = (props) => {
 
 	const EventCard = () => {
 		return (
-			<Card className="card">
+			<Card className="card" border="dark">
 				<Card.Img variant="top" src={eventImg} style={{ height: '21em' }} />
 				<div className="card-body">
 					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
