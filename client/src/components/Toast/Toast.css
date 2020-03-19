@@ -1,0 +1,17 @@
+.TSToast {
+  z-index: 600;
+}
+.toast-body a{
+  color: black;
+}
+.alertToast .toast-body a{
+  color: white;
+}
+.TSToast.alertToast {
+  color: white;
+  background-color: #CE4F4A;
+}
+.TSToast.alertToast .toast-header{
+  color: white;
+  background-color: #CE4F4A;
+}
