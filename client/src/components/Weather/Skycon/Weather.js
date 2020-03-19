@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import DayCard from './DayCard';
 import './Weather.css';
+import DegreeToggle from './DegreeToggle';
+
+
 
 
 const Weather = (props) => {
 	const [responseObj, setResponseObj] = useState('Not Available Yet');
+	const [degreeType, setDegreeType] = useState('celsius')
 	const {
 		lat,
 		lng
@@ -23,34 +27,37 @@ const Weather = (props) => {
 
 		fetchData();
 	}, []);
-
+   
 	return (
+		<div>
+		<div className="justify-content-center">
+		<DegreeToggle
+		     degree ={degreeType} 
+			 updateDegree ={setDegreeType} />
+			 </div>
+
 		<div className="flexbox-container">
 			<DayCard
-				lat={lat}
-				lng={lng}
+			    degreeType ={degreeType}
 				weekday={responseObj[1]}
 			/>
 			<DayCard
-				lat={lat}
-				lng={lng}
+			    degreeType ={degreeType}
 				weekday={responseObj[2]}
 			/>
 			<DayCard
-				lat={lat}
-				lng={lng}
+			    degreeType ={degreeType}
 				weekday={responseObj[3]}
 			/>
 			<DayCard
-				lat={lat}
-				lng={lng}
+			    degreeType ={degreeType}
 				weekday={responseObj[4]}
 			/>
 			<DayCard
-				lat={lat}
-				lng={lng}
+			    degreeType ={degreeType}
 				weekday={responseObj[5]}
 			/>
+		</div>
 		</div>
 	);
 };

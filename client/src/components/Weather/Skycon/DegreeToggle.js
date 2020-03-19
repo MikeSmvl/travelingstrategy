@@ -1,19 +1,15 @@
 import React, {useState } from 'react';
 
 
-const degree = {
-
-    type ='celcius'
-}
 
 
-updateDegreeType = (event) => {
-
-      degree.type = event.target.value
-  }
 
 const DegreeToggle = (props) => {
-  const [degreeType, setDegreeType] = useState('celcius');
+
+  const {
+    degree = '',
+    updateDegree =''
+  } = props
 
   return (
     <React.Fragment>
@@ -24,8 +20,7 @@ const DegreeToggle = (props) => {
         name="degree-type"
         id="celsius"
         value="celsius"
-        checked={degree.type === "celsius"}
-        onClick={updateDegreeType}
+        onClick={()=>updateDegree('celsius')}
         />
         <label className="form-check-label" for="celsius">Celsius</label>
       </div>
@@ -35,9 +30,8 @@ const DegreeToggle = (props) => {
         type="radio"
         name="degree-type"
         id="farenheit"
-        value="fahrenheit"
-        checked={degree.type === "fahrenheit"}
-        onClick={updateDegreeType}
+        value="farenheit"
+        onClick={()=>updateDegree('farenheit')}
         />
         <label className="form-check-label" for="farenheit">Farenheit</label>
       </div>
