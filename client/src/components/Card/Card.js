@@ -1,7 +1,7 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { Card as RBCard} from 'react-bootstrap';
 import {useState} from 'react';
+import PropTypes from 'prop-types';
+import { Card as RBCard } from 'react-bootstrap';
 import './Card.css';
 
 const InfoCard = (props) => {
@@ -20,7 +20,7 @@ const Card = (props) => {
 	const [showInfo, setShowInfo] = useState(false);
 	const infoWindow = () => {
 		setShowInfo(!showInfo);
-	}
+	};
 	return (
 		<RBCard {...rest} className="TSCard">
 			{header && <RBCard.Header className="cardHeader">{header}
