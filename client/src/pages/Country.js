@@ -27,6 +27,7 @@ import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
 import textToSpeech from '../utils/text-to-speech';
 
 
+
 function Country({
 	originCountry,
 	destinationCountry,
@@ -73,7 +74,6 @@ function Country({
 	const [phrases, setPhrases] = useState([]);
 	const [phraseIso, setPhraseIso] = useState('');
 	const [phraseLanguage, setPhraseLanguage] = useState('');
-
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -318,8 +318,6 @@ function Country({
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	console.log(phraseIso);
-
 
 	return (
 		<div>
@@ -530,9 +528,6 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
-									<Card >
-										<iframe height='500px'src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},10`}/>
-									</Card>
 								</Col>
 							</Row>
 							<Row className="justify-content-between">
@@ -543,6 +538,18 @@ function Country({
 									/>
 								</Col>
 							</Row>
+							<br />
+							<Card
+										header="Weather Map"
+										  footer={(
+											<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+											</Row>
+										)}
+									>
+									<CardBody>
+										<iframe className="map-darksky" src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},11`}/>
+									</CardBody>
+							</Card>
 							<hr />
 							<div id="Financials">
 								<Row className="justify-content-center">

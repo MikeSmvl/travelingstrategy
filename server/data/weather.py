@@ -15,7 +15,7 @@ DB = Database("countries.sqlite")
 #save weather intol DB
 def save_into_db(tableName, data):
     # create an an sqlite_advisory object
-    LOGGER.info(f'Start saving {tableName} table into the database')
+    LOGGER.info(f'Start saving {tableName} table into the database');
     try:
         DB.drop_table(tableName)
         DB.add_table(tableName, city= "text", january = "text", february= "text", march = "text", april= "text", may = "text", june = "text", july = "text", august = "text", septembre = "text", octobre = "text", novembre = "text", decembre = "text")
@@ -37,10 +37,10 @@ def save_into_db(tableName, data):
             try:
                 DB.insert(tableName,city,january,february,march,april,may,june,july,august,septembre,octobre,novembre,decembre)
             except:
-                LOGGER.info(f'The following did not get insterted {city}')
+                LOGGER.info(f'The following did not get insterted {city}');
         LOGGER.success(f'{tableName} was successfully saved to the database')
     except Exception as error_msg:
-        LOGGER.error(f'{tableName} was not successfully saved to the database because of the following error: {error_msg}')
+        LOGGER.error(f'{tableName} was not successfully saved to the database because of the following error: {error_msg}');
 
 
 def save_to_weather():
@@ -52,11 +52,11 @@ def save_to_weather():
     driver = create_driver()
     wiki_temperature = wiki_weather_parser(wiki_visa_temperature, driver)
     avg_monthly_temperature = wiki_temperature.visa_parser_table()
-    LOGGER.success(f'Following data was retrieved: {avg_monthly_temperature}')
+    LOGGER.success(f'Following data was retrieved: {avg_monthly_temperature}');
     save_into_db('weather', avg_monthly_temperature)
     quit_driver(driver)
   except Exception as error_msg:
-    LOGGER.error(f'An error has occured while parsing for temperature because of the following error: {error_msg}')
+    LOGGER.error(f'An error has occured while parsing for temperature because of the following error: {error_msg}');
 
 
 save_to_weather()
