@@ -9,7 +9,7 @@ const InfoCard = (props) => {
 		<div className='popup'>
 		  <div className='popup_inner'>
 		  <span onClick={() => props.toggle()}>&times;</span>
-		  <p>I'm A Pop Up!!!</p>
+		  <p>{props.info}</p>
 		 </div>
 		</div>
 	   );
@@ -28,7 +28,7 @@ const Card = (props) => {
 			</RBCard.Header>}
 			{children}
 			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
-    		{showInfo ? <InfoCard toggle={infoWindow} /> : null}
+    		{showInfo ? <InfoCard toggle={infoWindow} info={info} /> : null}
 		</RBCard>
 	);
 };
