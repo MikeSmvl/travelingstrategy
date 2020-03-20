@@ -1,20 +1,37 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { Card as RBCard, Button} from 'react-bootstrap';
+import { Card as RBCard} from 'react-bootstrap';
+import {useState} from 'react';
 import './Card.css';
 
+const InfoCard = (props) => {
+	return (
+		<div className='popup'>
+		  <div className='popup_inner'>
+		  <span onClick={() => props.toggle()}>&times;</span>
+		  <p>I'm A Pop Up!!!</p>
+		 </div>
+		</div>
+	   );
+}
 const Card = (props) => {
 	const { header = '', footer = '', children, ...rest } = props;
+	const [showInfo, setShowInfo] = useState(false);
+	const infoWindow = () => {
+		setShowInfo(!showInfo);
+	}
 	return (
 		<RBCard {...rest} className="TSCard">
 			{header && <RBCard.Header className="cardHeader">{header}
-				<button class="iImage"></button>
+				<button onClick={infoWindow} class="iImage"></button>
 			</RBCard.Header>}
 			{children}
 			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
+    		{showInfo ? <InfoCard toggle={infoWindow} /> : null}
 		</RBCard>
 	);
 };
+
 
 const CardBody = (props) => {
 	const { children, title = '', subtitle = '', classExtra = '', ...rest } = props;
