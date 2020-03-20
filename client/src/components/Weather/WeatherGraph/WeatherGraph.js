@@ -6,9 +6,9 @@ import GraphRender from './GraphRender';
 
 const WeatherGraph = (props) => {
 	const {
-		children,
 		destinationCity = '',
-		...rest
+		destinationLat = '',
+		destinationLng = ''
 	} = props;
 
 	const [monthlyWeather, setMonthlyWeather] = useState('');
@@ -70,7 +70,7 @@ const WeatherGraph = (props) => {
 					<div>
 						<span style={{ color: '#FF1C00' }}>Note: </span>
                We don&apos;t have any info on the average monthly temperature for
-						{destinationCity}. Try <button type="button" href="#" onClick={redirect}>Googling</button> instead
+						{destinationCity}. Try <a href="#" onClick={redirect}>Googling</a> instead
 					</div>
 				) : (
 					<div
@@ -82,6 +82,7 @@ const WeatherGraph = (props) => {
 				)}
 			</CardBody>
 		</Card>
+
 	);
 };
 

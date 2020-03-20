@@ -453,6 +453,7 @@ function Country({
 									</Card>
 									<br />
 									<WeatherGraph destinationCity={destinationCity} />
+									<br />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
@@ -527,6 +528,10 @@ function Country({
 												</p>
 											</div>
 										</CardBody>
+									</Card>
+									<br />
+									<Card >
+										<iframe height='500px'src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},10`}/>
 									</Card>
 								</Col>
 							</Row>
