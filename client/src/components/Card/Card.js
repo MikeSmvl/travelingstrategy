@@ -14,8 +14,9 @@ const InfoCard = (props) => {
 		</div>
 	   );
 }
+
 const Card = (props) => {
-	const { header = '', footer = '', children, ...rest } = props;
+	const { header = '', footer = '', info = '', children, ...rest } = props;
 	const [showInfo, setShowInfo] = useState(false);
 	const infoWindow = () => {
 		setShowInfo(!showInfo);
@@ -23,7 +24,7 @@ const Card = (props) => {
 	return (
 		<RBCard {...rest} className="TSCard">
 			{header && <RBCard.Header className="cardHeader">{header}
-				<button onClick={infoWindow} class="iImage"></button>
+			{info && <button onClick={infoWindow} class="iImage"></button>}
 			</RBCard.Header>}
 			{children}
 			{footer && <RBCard.Footer className="text-muted">{footer}</RBCard.Footer>}
