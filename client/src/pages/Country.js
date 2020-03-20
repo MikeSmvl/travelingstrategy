@@ -382,9 +382,11 @@ function Country({
 										</CardBody>
 									</CountryCard>
 									<br />
-									<Card header="Embassies and Consulates"
+									<Card
+										header="Embassies and Consulates"
 										info="Here you can find information about embassies"
-										footer={<Row className="justify-content-center"><a href="https://wikidata.org/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										footer={<Row className="justify-content-center"><a href="https://wikidata.org/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
+									>
 										<CardBody>
 											{!embassyInfo ? (
 												<div>
