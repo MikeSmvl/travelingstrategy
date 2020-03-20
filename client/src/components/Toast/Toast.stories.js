@@ -16,33 +16,33 @@ stories.addDecorator(withA11y);
 stories
 	.add('Basic Toast', () => (
 		<Toast
-      title="Toast Title"
+			title="Toast Title"
 		>
       Body of Toast
-    </Toast>
-  ))
-  .add('Toast of type "alert"', () => (
+		</Toast>
+	))
+	.add('Toast of type "alert"', () => (
 		<Toast
-      type="alert"
-      title="Toast Title"
+			type="alert"
+			title="Toast Title"
 		>
       Body of Toast
-    </Toast>
+		</Toast>
 	))
 	.add('Set props', () => {
 		const type = select('Type', [
-      'default',
-      'alert',
-    ]) || 'default';
+			'default',
+			'alert'
+		]) || 'default';
 		const title = text('Title') || 'Title';
-    const body = text('Body Text') || 'Toast Body';
+		const body = text('Body Text') || 'Toast Body';
 
 		return (
 			<Toast
-      type={type}
-      title={title}
-		>
-      {body}
-    </Toast>
+				type={type}
+				title={title}
+			>
+				{body}
+			</Toast>
 		);
 	});

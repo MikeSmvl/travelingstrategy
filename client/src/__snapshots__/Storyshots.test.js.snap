@@ -904,7 +904,7 @@ Array [
     <div
       aria-atomic="true"
       aria-live="assertive"
-      className="fade toast TSToast  show"
+      className="fade toast TSToast "
       role="alert"
     >
       <div
@@ -980,7 +980,7 @@ Array [
     <div
       aria-atomic="true"
       aria-live="assertive"
-      className="fade toast TSToast  show"
+      className="fade toast TSToast "
       role="alert"
     >
       <div
@@ -1056,7 +1056,7 @@ Array [
     <div
       aria-atomic="true"
       aria-live="assertive"
-      className="fade toast TSToast alertToast show"
+      className="fade toast TSToast alertToast"
       role="alert"
     >
       <div
