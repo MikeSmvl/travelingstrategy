@@ -7,6 +7,9 @@ import {
   } from 'react-awesome-button';
 import "react-awesome-button/dist/styles.css";
 
+import { MDBIcon} from "mdbreact";
+
+
 
 const EventsCard = (props) => {
 	const [modal, setModal] = useState(false);
@@ -130,7 +133,7 @@ const EventsCard = (props) => {
 						{ !isLiked && (
 							<div className="modal-like-button">
 								<AwesomeButton type="secondary" size="small" centered onPress={handleLike}
-								>Like</AwesomeButton>
+								><MDBIcon icon="heart" /></AwesomeButton>
 							</div>
 						)}
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
@@ -195,7 +198,7 @@ const EventsCard = (props) => {
 					>Find out more</AwesomeButton>
 					{ !isLiked && (
 						<AwesomeButton type="secondary" size="small" onPress={handleLike} style={{float: 'right'}}
-						>Like</AwesomeButton>
+						><MDBIcon icon="heart" /></AwesomeButton>
 					)}
 				</div>
 			</Card>

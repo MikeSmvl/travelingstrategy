@@ -214,6 +214,8 @@ function Events({
 		}
 	};
 
+	
+
 	return (
 		<div id="events-section">
 			<Row>

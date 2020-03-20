@@ -9,6 +9,7 @@ import {Row, Col} from 'react-bootstrap/';
  * These are basically the events for this request in the db
  */
 function addMyEvents(myEvents){
+    spotlightCall("Real madrid")
     const events = [];
 	myEvents.forEach(event =>{
 		const eventCategory = event.event_category;
@@ -143,5 +144,7 @@ function getRandomImageForCategory(images,imagesUsed){
 
     return imageLink
 }
+
+
 
 export {addMyEvents,addApiEvents,getButtonContent};
