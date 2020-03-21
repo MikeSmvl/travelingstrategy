@@ -19,7 +19,7 @@ Array [
         className="cardHeader card-header"
       >
         Header
-        
+
       </div>
       <hr
         className="cardDivider"
@@ -27,8 +27,8 @@ Array [
       <div
         className="TScardBody  card-body"
       >
-        
-        
+
+
         <span
           className="card-text"
         >
@@ -42,29 +42,7 @@ Array [
       </div>
     </div>
   </div>,
-  <button
-    className="info__show-button"
-    onClick={[Function]}
-    style={
-      Object {
-        "background": "#027ac5",
-        "border": "none",
-        "borderRadius": "0 0 0 5px",
-        "color": "#fff",
-        "cursor": "pointer",
-        "display": "block",
-        "fontFamily": "sans-serif",
-        "fontSize": "12px",
-        "padding": "5px 15px",
-        "position": "fixed",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    type="button"
-  >
-    Show Info
-  </button>,
+
 ]
 `;
 
@@ -83,19 +61,19 @@ Array [
       subtitle=""
       title=""
     >
-      
+
       <div
         className="TScardBody  card-body"
       >
-        
-        
+
+
         <span
           className="card-text"
         >
-          
+
         </span>
       </div>
-      
+
     </div>
   </div>,
   <button
@@ -163,7 +141,7 @@ Array [
         className="countryCardFooter card-footer"
       >
         <div>
-          
+
         </div>
       </div>
     </div>
@@ -217,7 +195,7 @@ Array [
         <div
           className="countryCardTitle"
         >
-          
+
         </div>
       </div>
       <div
@@ -226,14 +204,14 @@ Array [
         <p
           className="card-text"
         >
-          
+
         </p>
       </div>
       <div
         className="countryCardFooter card-footer"
       >
         <div>
-          
+
         </div>
       </div>
     </div>
@@ -863,7 +841,7 @@ Array [
     <div
       className="subtitle"
     >
-      
+
     </div>
   </div>,
   <button
