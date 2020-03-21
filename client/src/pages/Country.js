@@ -466,18 +466,6 @@ function Country({
 													className="scrolling-card"
 													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 												/>
-												<div
-													className="scrolling-card"
-													style={{ maxHeight: '400px', overflow: 'scroll' }}
-												>
-													<p>
-														<strong>Canabais recreational:</strong>{' '}
-														{JSON.stringify(canabaisRecreational).replace(
-															/(^")|("$)/g,
-															''
-														)}
-													</p>
-												</div>
 											</CardBody>
 										</Card>
 									)}

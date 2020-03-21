@@ -120,7 +120,10 @@ const GraphRender = (props) => {
 										gridLines: {
 												drawBorder: false,
 												display: false
-										}
+										},
+										ticks: {
+                			beginAtZero: true
+            				}
 									}
 								]
 							}
@@ -128,6 +131,8 @@ const GraphRender = (props) => {
 					/>
 				</div>
 			)}
+				<hr />
+			 Toggle to change temperature Units
 			 <label class="switch">
 				<input type="checkbox" />
 				<span class="slider round" onClick={() => toggleChart()}></span>
