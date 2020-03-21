@@ -6,9 +6,7 @@ import GraphRender from './GraphRender';
 
 const WeatherGraph = (props) => {
 	const {
-		destinationCity = '',
-		destinationLat = '',
-		destinationLng = ''
+		destinationCity = ''
 	} = props;
 
 	const [monthlyWeather, setMonthlyWeather] = useState('');
