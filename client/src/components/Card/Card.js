@@ -2,15 +2,23 @@ import * as React from 'react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Card as RBCard } from 'react-bootstrap';
+import logo from '../Navbar/logo.png';
 import './Card.css';
 
 const InfoCard = (props) => {
 	return (
-		<div className="popup">
-			<div className="popup_inner">
-				<span onClick={() => props.toggle()}>&times;</span>
-				<p>{props.info}</p>
-			</div>
+		<div class = "popup">
+			<RBCard className="popup_inner">
+				<RBCard.Header className="iHeader">
+					<button onClick={() => props.toggle()} class="iClose"/>
+				</RBCard.Header>
+				<RBCard.Text class="iText">{props.info}</RBCard.Text>
+				<RBCard.Footer className="iFooter">
+					<img src={logo}
+						 width="22"
+						 height="22"/>
+				</RBCard.Footer>
+			</RBCard>
 		</div>
 	   );
 };
@@ -63,7 +71,8 @@ Card.propTypes = {
 	footer: PropTypes.string,
 	title: PropTypes.string,
 	subtitle: PropTypes.string,
+	info: PropTypes.string,
 	classExtra: PropTypes.string
 };
 
-export { Card, CardBody, Divider };
+export { Card, CardBody, Divider};

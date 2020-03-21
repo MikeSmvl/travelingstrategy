@@ -57,10 +57,51 @@
 	color: #FF1C00;
 }
 
+.iHeader{
+	background-color: rgb(255,255,255);
+	font-size: 10px;
+	height: 27px;
+	padding-top: 3px;
+	color: rgb(134, 134, 146);
+	padding-right:5px;
+	padding-left: 5px;
+}
+
+.iText{
+	padding-right:7px;
+	padding-left: 7px;
+}
+
+.iFooter{
+	background-color: rgb(255,255,255);
+	font-size: 10px;
+	height: 30px;
+	padding-top: 3px;
+	text-align: right;
+	color: rgb(134, 134, 146);
+}
 
 
 .iImage{
 	background: url('../../miscImages/infoGrey.png');
+	background-size: 23px 23px;
+	border: none;
+	outline: none;
+	height: 23px;
+	width: 23px;
+}
+
+.iImage:hover {
+	background: url('../../miscImages/infoOrange.png');
+	background-size: 23px 23px;
+	border: none;
+	outline: none;
+	height: 23px;
+	width: 23px;
+}
+
+.iClose{
+	background: url('../../miscImages/closeGrey.png');
 	background-size: 20px 20px;
 	border: none;
 	outline: none;
@@ -68,8 +109,8 @@
 	width: 20px;
 }
 
-.iImage:hover {
-	background: url('../../miscImages/infoOrange.png');
+.iClose:hover {
+	background: url('../../miscImages/closeOrange.png');
 	background-size: 20px 20px;
 	border: none;
 	outline: none;
@@ -78,23 +119,21 @@
 }
 
 .popup {
+	font-family: 'Open Sans', sans-serif;
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
 	margin: auto;
 	background-color: rgba(157, 134, 128, 0.50);
   }
+
   .popup_inner {
 	position: absolute;
+	text-align: left;
 	left: 25%;
 	right: 30%;
 	top: 5%;
-	margin: auto;
-	background: white;
+	background:rgba(255, 255, 255, 1); ;
   }
 
 
