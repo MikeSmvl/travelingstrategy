@@ -88,10 +88,12 @@ body, html {
 #modal-info{
     max-width: 45% !important;
     margin-left: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
 }
 
 #modal-favorites{
     margin-left: 35%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
 }
 
 .modal-like-button{
@@ -118,10 +120,22 @@ body, html {
     --button-primary-color-hover: #ea5940 !important;
     --button-primary-color-active: #cfdee9 !important;
     --button-primary-border: none !important;
-    --button-secondary-color: #e787b4 !important;
+    --button-secondary-color: #f7d2c7 !important;
     --button-secondary-color-dark: #000000 !important;
     --button-secondary-color-light: #000000 !important;
     --button-secondary-color-hover: #e787b4 !important;
     --button-secondary-color-active: #cfdee9 !important;
     --button-secondary-border: 1px solid #000000 !important;
+    --button-default-height: 51px !important;
+    --button-default-font-size: 14px !important;
+    --button-default-border-radius: 8px !important;
+    --button-horizontal-padding: 20px !important;
+    --button-raise-level: 4px !important;
+}
+#eventcard{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
+}
+
+#cardbody{
+    background-image: linear-gradient(#f7d2a94f, #d491bc7a);
 }

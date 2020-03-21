@@ -187,9 +187,9 @@ const EventsCard = (props) => {
 
 	const EventCard = () => {
 		return (
-			<Card className="card" border="dark">
+			<Card className="card" id="eventcard" border="dark">
 				<Card.Img variant="top" src={eventImg} style={{ height: '21em' }} />
-				<div className="card-body">
+				<div className="card-body" id="cardbody">
 					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
 					<p className="date">{getDateText(startDate)}</p>
 					<h2 className="card-title">{title}</h2>
@@ -197,7 +197,7 @@ const EventsCard = (props) => {
 					>Find out more</AwesomeButton>
 					{ !isLiked && (
 						<AwesomeButton type="secondary" size="small" onPress={handleLike} style={{float: 'right'}}
-						>Likes</AwesomeButton>
+						><img src={require('../../eventsImages/heart.png')} style={{height:'3em'}} /></AwesomeButton>
 					)}
 				</div>
 			</Card>
