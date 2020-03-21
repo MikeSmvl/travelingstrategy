@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { bool } from 'prop-types';
 import { Bar } from 'react-chartjs-2';
+import './toggle.css'
+import { CardBody } from '../../Card/Card';
 
 const GraphRender = (props) => {
 	const {
 		monthlyWeather = ''
 	} = props;
 
-	const data = {
+	const dataCelcius = {
 		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
 		datasets: [
 			{
@@ -31,7 +33,13 @@ const GraphRender = (props) => {
 					monthlyWeather.novembre,
 					monthlyWeather.decembre
 				]
-			},
+			}
+		]
+	};
+
+	const dataFarenheit = {
+		labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'Septembre', 'Octobre', 'Novembre', 'Decembre'],
+		datasets: [
 			{
 				label: '°F',
 				backgroundColor: 'rgba(233,30,90,0.4)',
@@ -58,34 +66,73 @@ const GraphRender = (props) => {
 		]
 	};
 
-	//geconvert celcius to farenheit
+	//state set to true for celcius data when rendering the graoh
+	const [isCelcius, setIsCelcius] = useState(true);
+
+	//toggle between celcius and farenheit
+	function toggleChart() {
+		const changeState = !isCelcius;
+		setIsCelcius(changeState)
+	}
+
+	//convert celcius to farenheit
 	function convertToFarenheit(month) {
 		const farenheit = Math.round((month * 9/5) + 32);
 		return farenheit;
 	}
 
 	return (
-		<div>
-			<Bar
-				data={data}
-				width={200}
-				height={250}
-				options={{
-					maintainAspectRatio: false,
-					responsive: true,
-					scales: {
-						yAxes: [
-							{
-								gridLines: {
-										drawBorder: false,
-                    display: false
-								}
+		<CardBody>
+			{!isCelcius ? (
+				<div>
+					<Bar
+						data={dataFarenheit}
+						width={200}
+						height={200}
+						options={{
+							maintainAspectRatio: false,
+							responsive: true,
+							scales: {
+								yAxes: [
+									{
+										gridLines: {
+												drawBorder: false,
+												display: false
+										}
+									}
+								]
 							}
-						]
-    			}
-				}}
-			/>
-		</div>
+						}}
+					/>
+				</div>
+			) : (
+				<div>
+					<Bar
+						data={dataCelcius}
+						width={200}
+						height={200}
+						options={{
+							maintainAspectRatio: false,
+							responsive: true,
+							scales: {
+								yAxes: [
+									{
+										gridLines: {
+												drawBorder: false,
+												display: false
+										}
+									}
+								]
+							}
+						}}
+					/>
+				</div>
+			)}
+			 <label class="switch">
+				<input type="checkbox" />
+				<span class="slider round" onClick={() => toggleChart()}></span>
+			</label> 
+		</CardBody>
 	);
 };
 
