@@ -4,10 +4,8 @@ import './EventsCard.css';
 import PropTypes from 'prop-types';
 import {
 	AwesomeButton
-  } from 'react-awesome-button';
-import "react-awesome-button/dist/styles.css";
-
-
+} from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 
 
 const EventsCard = (props) => {
@@ -131,8 +129,13 @@ const EventsCard = (props) => {
 					<div className="card-body">
 						{ !isLiked && (
 							<div className="modal-like-button">
-								<AwesomeButton type="secondary" size="small" centered onPress={handleLike}
-								>Likes</AwesomeButton>
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									centered
+									onPress={handleLike}
+								>Likes
+								</AwesomeButton>
 							</div>
 						)}
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
@@ -193,11 +196,20 @@ const EventsCard = (props) => {
 					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
 					<p className="date">{getDateText(startDate)}</p>
 					<h2 className="card-title">{title}</h2>
-					<AwesomeButton type="secondary" size="medium" onPress={() => setModal(true)}
-					>Find out more</AwesomeButton>
+					<AwesomeButton
+						type="secondary"
+						size="medium"
+						onPress={() => setModal(true)}
+					>Find out more
+					</AwesomeButton>
 					{ !isLiked && (
-						<AwesomeButton type="secondary" size="small" onPress={handleLike} style={{float: 'right'}}
-						><img src={require('../../eventsImages/heart.png')} style={{height:'3em'}} /></AwesomeButton>
+						<AwesomeButton
+							type="secondary"
+							size="small"
+							onPress={handleLike}
+							style={{ float: 'right' }}
+						><img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+						</AwesomeButton>
 					)}
 				</div>
 			</Card>

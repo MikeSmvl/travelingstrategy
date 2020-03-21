@@ -214,7 +214,6 @@ function Events({
 		}
 	};
 
-	
 
 	return (
 		<div id="events-section">
@@ -229,42 +228,42 @@ function Events({
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory("likes")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
 								{getButtonContent('Likes')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="conferences" onClick={() => setCategory("conferences")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="conferences" onClick={() => setCategory('conferences')}>
 								{getButtonContent('Conferences')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="expos" onClick={() => setCategory("expos")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="expos" onClick={() => setCategory('expos')}>
 								{getButtonContent('Expos')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="concerts" onClick={() => setCategory("concerts")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="concerts" onClick={() => setCategory('concerts')}>
 								{getButtonContent('Concerts')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="festivals" onClick={() => setCategory("festivals")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="festivals" onClick={() => setCategory('festivals')}>
 								{getButtonContent('Festivals')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="performing-arts" onClick={() => setCategory("performing-arts")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="performing-arts" onClick={() => setCategory('performing-arts')}>
 								{getButtonContent('Performing-arts')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="sports" onClick={() => setCategory("sports")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="sports" onClick={() => setCategory('sports')}>
 								{getButtonContent('Sports')}
 							</Button>
 						</div>
 						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="community" onClick={() => setCategory("community")}>
+							<Button variant="outline-primary" style={{ width: '100%' }} value="community" onClick={() => setCategory('community')}>
 								{getButtonContent('Community')}
 							</Button>
 						</div>
