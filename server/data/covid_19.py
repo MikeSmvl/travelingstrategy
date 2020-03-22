@@ -14,7 +14,7 @@ LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 DB = Database(sqlite_db)
 
 # Create table if it does not exist
-DB.add_table('covid19', country='text primary key', totalcases='text', newcases='text', totaldeaths='text', newdeaths='text', totalrecovered='text', activecases='text', seriouscritical='text')
+DB.add_table('covid19', country='text primary key', totalcases='integer', newcases='integer', totaldeaths='integer', newdeaths='integer', totalrecovered='integer', activecases='integer', seriouscritical='integer')
 
 LOGGER.info(f'Retrieving information from following link: {covid19_url}')
 
@@ -28,8 +28,8 @@ r = get(covid19_url, headers=header)
 # Scrape Worldometers data endpoint with Pandas
 data_table = pd.read_html(r.text, index_col=0)
 data_frame = data_table[0]
-data_frame.fillna('-', inplace=True)
-# data_frame.applymap(str)
+data_frame.fillna(0, inplace=True)
+data_frame = data_frame.astype(str)
 
 # Parse data and add to database
 for iso in iso_list:
@@ -37,37 +37,35 @@ for iso in iso_list:
         LOGGER.info(f'Beginning currency parsing for country: {iso_dict[iso]}')
 
         # Get total cases
-        total_cases = str(data_frame.loc[iso_dict[iso], 'TotalCases'])
+        total_cases = int(float(data_frame.loc[iso_dict[iso], 'TotalCases'].replace(',', '')))
         LOGGER.info(f'Parsing returned following total cases: {total_cases}')
 
         # Get new cases
-        new_cases = str(data_frame.loc[iso_dict[iso], 'NewCases'])
+        new_cases = int(float(data_frame.loc[iso_dict[iso], 'NewCases'].replace(',', '')))
         LOGGER.info(f'Parsing returned following new cases: {new_cases}')
 
         # Get total deaths
-        total_deaths = str(data_frame.loc[iso_dict[iso], 'TotalDeaths'])
+        total_deaths = int(float(data_frame.loc[iso_dict[iso], 'TotalDeaths'].replace(',', '')))
         LOGGER.info(f'Parsing returned following total deaths: {total_deaths}')
 
         # Get new deaths
-        new_deaths = str(data_frame.loc[iso_dict[iso], 'NewDeaths'])
+        new_deaths = int(float(data_frame.loc[iso_dict[iso], 'NewDeaths'].replace(',', '')))
         LOGGER.info(f'Parsing returned following new deaths: {new_deaths}')
 
         # Get total recovered
-        total_recovered = str(data_frame.loc[iso_dict[iso], 'TotalRecovered'])
+        total_recovered = int(float(data_frame.loc[iso_dict[iso], 'TotalRecovered'].replace(',', '')))
         LOGGER.info(f'Parsing returned following total recovered: {total_recovered}')
 
         # Get active cases
-        active_cases = str(data_frame.loc[iso_dict[iso], 'ActiveCases'])
+        active_cases = int(float(data_frame.loc[iso_dict[iso], 'ActiveCases'].replace(',', '')))
         LOGGER.info(f'Parsing returned following active cases: {active_cases}')
 
         # Get serious critical
-        serious_critical = str(data_frame.loc[iso_dict[iso], 'Serious,Critical'])
+        serious_critical = int(float(data_frame.loc[iso_dict[iso], 'Serious,Critical'].replace(',', '')))
         LOGGER.info(f'Parsing returned following total recovered: {serious_critical}')
 
         LOGGER.info('Inserting data into database.')
-        DB.insert_or_update('covid19', iso, total_cases, new_cases, total_deaths, new_deaths, total_recovered, active_cases, serious_critical)
+        DB.insert_or_update('covid19', iso, str(total_cases), str(new_cases), str(total_deaths), str(new_deaths), str(total_recovered), str(active_cases), str(serious_critical))
 
     except Exception as error_msg:
         LOGGER.error(f'Could not parse data for {iso} because of the following error: {error_msg}')
-        # exit()
-        # pass
