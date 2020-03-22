@@ -19,6 +19,7 @@ const {imagesTable,imagesForTag,imagesForRequestId} = require('./images.js')
 const {phrasesTranslation, phrasesTranslationCountry} = require('./phrases')
 const {getLanguageIso} = require('./languageIso')
 const eventsForRequest = require('./events')
+const { covidStats, covidCountryStats, covidAllStats } = require('./covidStats')
 
 const logger = require('../logger/logger.js')
 
@@ -57,7 +58,10 @@ var queryType = new graphql.GraphQLObjectType({
         phrasesTranslation,
         getLanguageIso,
         phrasesTranslationCountry,
-        eventsForRequest
+        eventsForRequest,
+        covidStats,
+        covidCountryStats,
+        covidAllStats
     }
 });
 
