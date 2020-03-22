@@ -10,6 +10,7 @@ const DayCard = (props) => {
 		degreeType =''
 	} = props;
 	const newDate = new Date(weekday.time * 1000);
+	console.log("bbbbbbbbbbbbb"+weekday.icon)
 	const data = setSkycon(weekday.icon);
 	const fahrenheit = Math.round(weekday.temperatureHigh);
 	const celsius = Math.round((fahrenheit - 32) * 5/9)
@@ -18,7 +19,7 @@ const DayCard = (props) => {
 		<div className="col-sm-6">
 			<div className="card d-flex justify-content-center">
 				<h2 className="card-title d-flex justify-content-center">{moment(newDate).format('dddd')}</h2>
-				<p className="text-muted d-flex justify-content-center">{moment(newDate).format('MMMM Do, h:mm a')}</p>
+				<p className="text-muted d-flex justify-content-center">{moment(newDate).format('MMMM Do')}</p>
 				<div className="card-body">
 					<i className="d-flex justify-content-center">
 						<ReactAnimatedWeather

@@ -7,16 +7,15 @@ const weather = {
   icon4: 'PARTLY_CLOUDY_NIGHT',
   icon5: 'CLOUDY',
   icon6: 'RAIN',
-  icon7: 'DRIZZLE',
-  icon8: 'SLEET',
-  icon9: 'SNOW',
-  icon10: 'WIND',
-  icon11: 'FOG',
+  icon7: 'SLEET',
+  icon8: 'SNOW',
+  icon9: 'WIND',
+  icon10: 'FOG',
   color1: 'goldenrod',
   color2: 'blue',
   color3: 'gray',
   color4: 'black',
-  color5: 'white',
+  color5: 'silver',
   animate: true
 };
 
@@ -26,6 +25,7 @@ const data = {
 }
 
 function setSkycon(icon) {
+  console.log("aaaaaaaaaaaaaa"+icon)
   //fetch the appropraite icon repective to the city
   switch(icon){
     case 'clear-day':
@@ -52,15 +52,15 @@ function setSkycon(icon) {
       data.color= weather.color3
       break;
     case 'drizzle':
-      data.icon= weather.icon7
-      data.color= weather.color2
+      data.icon= weather.icon6
+      data.color= weather.color3
       break;
     case 'sleet':
       data.icon= weather.icon8
       data.color= weather.color3
       break;
     case 'snow':
-      data.icon= weather.icon9
+      data.icon= weather.icon8
       data.color= weather.color5
       break;
     case 'wind':
