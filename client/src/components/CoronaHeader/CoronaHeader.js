@@ -43,7 +43,7 @@ function CoronaHeader() {
 
 	const handleScroll = () => {
 		window.scrollTo({
-			top: 0,
+			top: 1000,
 			behavior: 'smooth'
 		});
 	};
