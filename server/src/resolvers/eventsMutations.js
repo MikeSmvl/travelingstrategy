@@ -3,7 +3,7 @@ const graphql = require('graphql');
 const database = require("../database/database");
 const logger = require('../logger/logger.js')
 const db = new database().db;
-
+const { eventBotInfo } = require('./eventBot/eventBot');
 
 
 var addEvents = {
@@ -35,6 +35,8 @@ var addEvents = {
           type: new graphql.GraphQLNonNull(graphql.GraphQLString)},
     },
     resolve: function (source, args) {
+        eventBotInfo(args.request_id, args.event_category, args.description,
+          args.title,args.labels,args.address,args.place_type,args.name_of_place)
         return new Promise((resolve, reject) => {
             query = `INSERT INTO chosen_events VALUES("${args.request_id}","${args.event_category}",
                "${args.description}","${args.duration}","${args.start_date}","${args.end_date}",
