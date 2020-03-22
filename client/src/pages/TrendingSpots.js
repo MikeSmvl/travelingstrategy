@@ -42,7 +42,7 @@ function TrendingSpots({
 
 	return (
 		<>
-		{addTrendingSpots(trendingSpots)}
+			{addTrendingSpots(trendingSpots)}
 		</>
 	);
 }
