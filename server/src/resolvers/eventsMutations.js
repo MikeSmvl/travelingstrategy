@@ -53,6 +53,30 @@ var addEvents = {
     }
 }
 
+var removeEvent = {
+     type: graphql.GraphQLList(Event),
+     args: {
+      request_id: {
+           type: new graphql.GraphQLNonNull(graphql.GraphQLString)},
+       title: {
+            type: new graphql.GraphQLNonNull(graphql.GraphQLString)},
+     },
+     resolve: function (source, args) {
+         return new Promise((resolve, reject) => {
+             query = `DELETE FROM chosen_events WHERE request_id="${args.request_id}" AND title="${args.title}";`
+             logger.info("Trying to query "+query)
+             db.run(query, function(err, rows) {
+                 if(err){
+                     logger.error(err)
+                     reject(err);
+                 }
+                 logger.info(query+" successfully queried")
+                 resolve(rows);
+             });
+         });
+     }
+ }
 
-module.exports = addEvents
+
+module.exports = {addEvents,removeEvent};
 

@@ -58,6 +58,10 @@ const EventsCard = (props) => {
 		setLikedModal(true);
 	};
 
+	const handleDelete = () => {
+		console.log("delete")
+	};
+
 	/**
      * Dates are transformed to English format
      */
@@ -202,15 +206,24 @@ const EventsCard = (props) => {
 						onPress={() => setModal(true)}
 					>Find out more
 					</AwesomeButton>
-					{ !isLiked && (
-						<AwesomeButton
-							type="secondary"
-							size="small"
-							onPress={handleLike}
-							style={{ float: 'right' }}
-						><img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
-						</AwesomeButton>
-					)}
+					{ !isLiked 
+						? <AwesomeButton
+								type="secondary"
+								size="small"
+								onPress={handleLike}
+								style={{ float: 'right' }}
+							>
+								<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+							</AwesomeButton>
+						: <AwesomeButton
+								type="secondary"
+								size="small"
+								onPress={handleDelete}
+								style={{ float: 'right' }}
+							>
+								<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+							</AwesomeButton>
+					}
 				</div>
 			</Card>
 		);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Row } from 'react-bootstrap/';
+import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
 import '../App.css';
 import Unsplash, { toJson } from 'unsplash-js';
@@ -36,8 +37,24 @@ function Events({
 	const [navbarClass, setNavbarClass] = useState('sidebar sidebar--expanded');
 	const [mainContentClass, setMainContentClass] = useState('main-content main-content--expanded');
 	const [images, setImages] = useState([]);
+	const [redirect, setRedirect] = useState(false);
+	const [email, setEmail] = useState('');
+
 
 	useEffect(() => {
+		async function getToken() {
+			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, { credentials: 'include' })
+				.then((res) => res.json())
+				.then((res) => {
+					res.email
+                && res.email !== null
+                && setEmail(res.email);
+				})
+				.catch((error) => {
+					// if status code 401...
+					setRedirect(true);
+				});
+		}
 		// Api for getting different images for different categories
 		async function getImages() {
 			let array = [];
@@ -179,6 +196,7 @@ function Events({
 		fetchEvents();
 		setEventsToDisplay();
 		setImagesForCategory();
+		getToken();
 	},
 	[
 		category,
@@ -213,6 +231,10 @@ function Events({
 			setToggled(true);
 		}
 	};
+
+	if (redirect) {
+		return <Redirect to="/" />;
+	}
 
 
 	return (
