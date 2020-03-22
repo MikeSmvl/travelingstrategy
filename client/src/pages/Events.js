@@ -178,8 +178,10 @@ function Events({
 				.then((res) => res.json())
 				.then((res) => {
 					res.data.eventsForRequest
-                    && res.data.eventsForRequest.length !== 0
-                    && setSavedEvents(res.data.eventsForRequest);
+					&& res.data.eventsForRequest.length !== 0
+					&& setSavedEvents(res.data.eventsForRequest);
+					console.log("saved:",savedEvents)
+					console.log("events:", res.data.eventsForRequest)
 				});
 		}
 
@@ -215,9 +217,13 @@ function Events({
 		sportsCalled,
 		communityCalled,
 		latitude,
-		longitude
+		longitude,
+		email,
+		// savedEvents
 
 	]);
+
+	console.log("Events")
 
 
 	const expandNavBar = (event) => {
@@ -232,9 +238,9 @@ function Events({
 		}
 	};
 
-	if (redirect) {
-		return <Redirect to="/" />;
-	}
+	// if (redirect) {
+	// 	return <Redirect to="/" />;
+	// }
 
 
 	return (
@@ -294,7 +300,7 @@ function Events({
 				<section className={mainContentClass} style={{ marginTop: '4%' }}>
 					<div className="app-card-list" id="app-card-list">
 						{category === 'likes'
-							? addMyEvents(savedEvents)
+							? addMyEvents(savedEvents, requestId)
 							: addApiEvents(eventsForCategories, requestId, images)}
 					</div>
 
