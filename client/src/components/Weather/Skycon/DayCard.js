@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
 import moment from 'moment';
 import { setSkycon } from '../../../utils/weatherIcon';
+import './DayCard.css';
 
 
 const DayCard = (props) => {
@@ -18,7 +19,7 @@ const DayCard = (props) => {
 	return (
 		<div className="col-sm-6">
 			<div className="card d-flex justify-content-center">
-				<h2 className="card-title d-flex justify-content-center">{moment(newDate).format('dddd')}</h2>
+				<h2 className="day">{moment(newDate).format('dddd')}</h2>
 				<p className="text-muted d-flex justify-content-center">{moment(newDate).format('MMMM Do')}</p>
 				<div className="card-body">
 					<i className="d-flex justify-content-center">
