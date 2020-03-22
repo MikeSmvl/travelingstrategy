@@ -659,6 +659,24 @@ describe("Test for add-subscriber mutation", () => {
   );
 });
 
+describe("Test for delete event mutation", () => {
+  test("Should be a valid mutation", () => {
+      const mutation = `
+        mutation removeEvent($request_id: String!, $title: String!) {
+          removeEvent(request_id: $request_id, title: $title) {
+            request_id
+            title
+          }
+        }
+      `;
+      tester.test(true, mutation, {
+        request_id: "0",
+        title: "Spa"
+      });
+    }
+  );
+});
+
 // describe("Test to validate a user with an existing email cannot be created", () => {
 //   test("Should be an invalid mutation", () => {
 //       const mutation = `

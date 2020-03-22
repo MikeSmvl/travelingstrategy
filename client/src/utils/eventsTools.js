@@ -8,7 +8,7 @@ import {Row, Col} from 'react-bootstrap/';
  * 
  * These are basically the events for this request in the db
  */
-function addMyEvents(myEvents){
+function addMyEvents(myEvents,requestId){
     const events = [];
 	myEvents.forEach(event =>{
 		const eventCategory = event.event_category;
@@ -34,6 +34,7 @@ function addMyEvents(myEvents){
                 duration={duration}
                 isLiked={true}
                 eventImg={eventImg}
+                requestId={requestId}
             ></EventsCard>
 		);
 	});

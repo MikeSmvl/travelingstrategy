@@ -22,6 +22,7 @@ const EventsCard = (props) => {
 		duration = '0',
 		eventImg = '',
 		isLiked = true,
+		requestId = '',
 		eventInfo
 	} = props;
 
@@ -53,9 +54,37 @@ const EventsCard = (props) => {
 		});
 	}
 
+	async function removeEvent() {
+		console.log('here')
+		console.log(`mutation{
+			removeEvent(request_id:"${requestId}",title:"${title}")
+			{   request_id
+				title
+			}
+		}`)
+		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/graphql' },
+			body: `mutation{
+                    removeEvent(request_id:"${requestId}",title:"${title}")
+					{   request_id
+						title
+					}
+				}`
+		}).then((res) => res.json())
+		.then((res) => {
+			console.log(res)
+		}).catch(error => console.error(error));
+	}
+
 	const handleLike = () => {
 		addEvent();
 		setLikedModal(true);
+	};
+
+	const handleDelete = () => {
+		removeEvent();
+		console.log("deleted")
 	};
 
 	/**
@@ -202,15 +231,24 @@ const EventsCard = (props) => {
 						onPress={() => setModal(true)}
 					>Find out more
 					</AwesomeButton>
-					{ !isLiked && (
-						<AwesomeButton
-							type="secondary"
-							size="small"
-							onPress={handleLike}
-							style={{ float: 'right' }}
-						><img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
-						</AwesomeButton>
-					)}
+					{ !isLiked 
+						? <AwesomeButton
+								type="secondary"
+								size="small"
+								onPress={handleLike}
+								style={{ float: 'right' }}
+							>
+								<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+							</AwesomeButton>
+						: <AwesomeButton
+								type="secondary"
+								size="small"
+								onPress={handleDelete}
+								style={{ float: 'right' }}
+							>
+								<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+							</AwesomeButton>
+					}
 				</div>
 			</Card>
 		);
@@ -236,6 +274,7 @@ EventsCard.propTypes = {
 	nameOfPlace: PropTypes.string,
 	duration: PropTypes.string,
 	isLiked: PropTypes.bool,
+	requestId: PropTypes.string,
 	eventInfo: PropTypes.instanceOf(Array)
 };
 
