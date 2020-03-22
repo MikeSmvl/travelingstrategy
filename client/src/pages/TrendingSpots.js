@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Row, Col } from 'react-bootstrap/';
-import '../App.css';
+import './TrendingSpots.css';
 import { addTrendingSpots } from '../utils/parsingTools';
 
 
@@ -41,24 +41,9 @@ function TrendingSpots({
 	}, [city, requestId]);
 
 	return (
-		<div>
-			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
-					<Row className="justify-content-center">
-						<Col
-							style={{
-								backgroundColor: 'rgb(255, 255, 255)',
-								borderRadius: '20px'
-							}}
-							lg={8}
-						>
-							{addTrendingSpots(trendingSpots)}
-						</Col>
-					</Row>
-				</Row>
-				<footer id="footer" />
-			</div>
-		</div>
+		<>
+		{addTrendingSpots(trendingSpots)}
+		</>
 	);
 }
 

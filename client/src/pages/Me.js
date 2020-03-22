@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap/';
 import { addChosenCities } from '../utils/parsingTools';
 
-
-import '../App.css';
-
+import './Me.css';
 
 function Me() {
 	const [redirect, setRedirect] = useState(false);
@@ -63,24 +60,9 @@ function Me() {
 
 
 	return (
-		<div>
-			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
-					<Row className="justify-content-center">
-						<Col
-							style={{
-								backgroundColor: 'rgb(255, 255, 255)',
-								borderRadius: '20px'
-							}}
-							lg={8}
-						>
-							{addChosenCities(cities)}
-						</Col>
-					</Row>
-				</Row>
-				<footer id="footer" />
-			</div>
-		</div>
+		<>
+			{addChosenCities(cities)}
+		</>
 	);
 }
 

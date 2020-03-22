@@ -74,12 +74,6 @@ function addChosenCities(arrayOfCities){
 				to={`/user_selection?request_id=${request_id}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
 			>
 			<Row
-				style={{
-					backgroundColor: 'rgb(247,	247,	247)',
-					padding: '0.5em',
-					borderRadius: '0px'
-				}}
-				className="justify-content-center"
 			>
 			<Card
 				style={{
@@ -106,7 +100,6 @@ function addChosenCities(arrayOfCities){
 
 function addTrendingSpots(arrayOfImages){
 	const items = [];
-	// console.log(arrayOfImages)
 	arrayOfImages.forEach(image =>{
 		//const city_in_url = citySubscription.search_term.toLowerCase().replace(' ', ''); // triming the city to match the tag
 		const image_url = image.image_link;
