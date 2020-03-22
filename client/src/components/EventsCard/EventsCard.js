@@ -125,7 +125,7 @@ const EventsCard = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<img alt="Modal pic" variant="top" src={eventImg} className="more-info-img" />
+					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="more-info-img" />
 					<div className="card-body">
 						{ !isLiked && (
 							<div className="modal-like-button">
@@ -191,7 +191,7 @@ const EventsCard = (props) => {
 	const EventCard = () => {
 		return (
 			<Card className="card" id="eventcard" border="dark">
-				<Card.Img variant="top" src={eventImg} style={{ height: '21em' }} />
+				<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
 				<div className="card-body" id="cardbody">
 					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
 					<p className="date">{getDateText(startDate)}</p>
