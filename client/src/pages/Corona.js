@@ -87,6 +87,7 @@ function Corona() {
 		data = tableData.filter((row) => {
 			return row.country.toLowerCase().includes(search.toLowerCase());
 		});
+		document.getElementsByClassName('rt-tbody')[0].scrollTop = 0;
 	}
 
 	return (
