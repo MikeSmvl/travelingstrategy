@@ -28,6 +28,11 @@ const EventsCard = (props) => {
 		eventInfo
 	} = props;
 
+	/**
+	 * This method uses arrays because some of the information are 
+	 * not passed as props. The array is the result from calling the
+	 * event api 
+	 */
 	async function addEvent() {
 		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',
@@ -66,7 +71,7 @@ const EventsCard = (props) => {
 						title
 					}
 				}`
-		})
+		});
 	}
 
 	const handleLike = () => {
@@ -78,6 +83,12 @@ const EventsCard = (props) => {
 		removeEvent();
 		setRemoved(true);
 		setRemovedModal(true);
+	};
+
+
+	const handleFavoriteModals = () => {
+		setLikedModal(false);
+		setRemovedModal(false);
 	};
 
 	/**
@@ -133,6 +144,9 @@ const EventsCard = (props) => {
 	};
 
 
+	/**
+	 * This modal shows all the information regarding an event
+	 */
 	const InfoModal = () => {
 		return (
 			<Modal
@@ -149,8 +163,8 @@ const EventsCard = (props) => {
 				<Modal.Body>
 					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="more-info-img" />
 					<div className="card-body">
-						{ !isLiked && (
-							<div className="modal-like-button">
+						{ !isLiked
+							?(<div className="modal-like-button">
 								<AwesomeButton
 									type="secondary"
 									size="small"
@@ -158,8 +172,18 @@ const EventsCard = (props) => {
 									onPress={handleLike}
 								>Likes
 								</AwesomeButton>
-							</div>
-						)}
+							</div>)
+							:(<div className="modal-like-button">
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									centered
+									onPress={handleDelete}
+								>
+									<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+								</AwesomeButton>
+							</div>)
+						}
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
 						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
 						{address !== '' && (
@@ -188,11 +212,9 @@ const EventsCard = (props) => {
 		);
 	};
 
-	const handleFavoriteModals = () =>{
-		setLikedModal(false);
-		setRemovedModal(false);
-	}
-
+	/**
+	 * This modal is notification for when an event is liked or removed
+	 */
 	const LikedModal = () => {
 		return (
 			<Modal
@@ -204,59 +226,67 @@ const EventsCard = (props) => {
 				<Modal.Header closeButton>
 					<Modal.Title id="example-modal-sizes-title-lg">
 						{likedModal
-						? <h2>Added To your Favorites !!</h2>
-						:<h2>Removed from your favorites
-							<span role="img" aria-label="sad">😭</span>
-						 </h2>
-						}
+							? <h2>Added To your Favorites !!</h2>
+							: (
+								<h2>Removed from your favorites
+									<span role="img" aria-label="sad">😭</span>
+								</h2>
+							)}
 					</Modal.Title>
 				</Modal.Header>
-				<ModalBody style={{textAlign:'center'}}>
+				<ModalBody style={{ textAlign: 'center' }}>
 					{likedModal
-					? <img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
-					:<img alt="Alert" src={require('../../eventsImages/sad-monkey.gif')} />
-					}
+						? <img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
+						: <img alt="Alert" src={require('../../eventsImages/sad-monkey.gif')} />}
 				</ModalBody>
 			</Modal>
 
 		);
 	};
 
+	/**
+	 * This is the main component. It's the cards displayed on the main Event page
+	 */
 	const EventCard = () => {
 		return (
-			(!removed &&
-			<Card className="card" id="eventcard" border="dark">
-				<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
-				<div className="card-body" id="cardbody">
-					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
-					<p className="date">{getDateText(startDate)}</p>
-					<h2 className="card-title">{title}</h2>
-					<AwesomeButton
-						type="secondary"
-						size="medium"
-						onPress={() => setModal(true)}
-					>Find out more
-					</AwesomeButton>
-					{ !isLiked 
-						? <AwesomeButton
-								type="secondary"
-								size="small"
-								onPress={handleLike}
-								style={{ float: 'right' }}
-							>
-								<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
-							</AwesomeButton>
-						: <AwesomeButton
-								type="secondary"
-								size="small"
-								onPress={handleDelete}
-								style={{ float: 'right' }}
-							>
-								<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
-							</AwesomeButton>
-					}
-				</div>
-			</Card>)
+			(!removed
+			&& (
+				<Card className="card" id="eventcard" border="dark">
+					<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
+					<div className="card-body" id="cardbody">
+						<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
+						<p className="date">{getDateText(startDate)}</p>
+						<h2 className="card-title">{title}</h2>
+						<AwesomeButton
+							type="secondary"
+							size="medium"
+							onPress={() => setModal(true)}
+						>Find out more
+						</AwesomeButton>
+						{ !isLiked
+							? (
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									onPress={handleLike}
+									style={{ float: 'right' }}
+								>
+									<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+								</AwesomeButton>
+							)
+							: (
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									onPress={handleDelete}
+									style={{ float: 'right' }}
+								>
+									<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+								</AwesomeButton>
+							)}
+					</div>
+				</Card>
+			))
 		);
 	};
 

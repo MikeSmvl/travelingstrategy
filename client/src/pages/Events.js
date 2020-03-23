@@ -216,7 +216,7 @@ function Events({
 		communityCalled,
 		latitude,
 		longitude,
-		email,
+		email
 
 	]);
 
