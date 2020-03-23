@@ -101,7 +101,7 @@ function Country({
 
 		async function fetchData() {
 			setIsLoading(true);
-			await fetch(process.env.REACT_APP_BACKEND, {
+			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
