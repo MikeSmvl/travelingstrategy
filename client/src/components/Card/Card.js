@@ -75,4 +75,4 @@ Card.propTypes = {
 	classExtra: PropTypes.string
 };
 
-export { Card, CardBody, Divider};
+export { Card, CardBody, Divider, InfoCard};

@@ -1,9 +1,29 @@
 import * as React from 'react';
+import {useState} from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col } from 'react-bootstrap/';
+import { Row, Col, Card} from 'react-bootstrap/';
 import './Header.css';
+import logo from '../Navbar/logo.png';
 import Button from 'react-bootstrap/Button';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
+
+const WhyCard = (props) => {
+	return (
+		<div class = "why">
+			<Card className="why_inner">
+				<Card.Header className="iHeader">
+					Why do you want to Stay Informed?
+				</Card.Header>
+				<Card.Text class="iText">{props.info}</Card.Text>
+				<Card.Footer className="iFooter">
+					<img src={logo}
+						 width="22"
+						 height="22"/>
+				</Card.Footer>
+			</Card>
+		</div>
+	   );
+};
 
 const Header = (props) => {
 	const {
@@ -19,6 +39,10 @@ const Header = (props) => {
 		...rest
 	} = props;
 	const bg = require(`./country_videos/${countryIso}.mp4`);
+	const [why, setWhy] = useState(false);
+	const toggleWhy = () => {
+		setWhy(!why);
+	};
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
@@ -38,7 +62,11 @@ const Header = (props) => {
 							{time}
 						</div>
 						<div className="text-center">
-							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+							<div>
+								<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+								<button onMouseOver={toggleWhy} onMouseOut={toggleWhy} className="iWhy" type="button"/>
+								{why ? <WhyCard toggle={toggleWhy} info="send a remainder before your trip" /> : null}
+							</div>
 							<SubscriptionModal
 								show={show}
 								handleShow={handleShow}
@@ -52,6 +80,7 @@ const Header = (props) => {
 				</Col>
 			</Row>
 		</div>
+
 	);
 };
 
@@ -68,4 +97,4 @@ Header.propTypes = {
 };
 
 
-export default Header;
+export  {Header, WhyCard};
