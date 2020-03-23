@@ -157,19 +157,19 @@ function Events({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-                        eventsForRequest(request_id:"5"){
+                        eventsForRequest(request_id:"${requestId}"){
                             request_id,
                             event_category,
-                              description,
-                              duration,
-                              start_date,
-                              end_date,
-                              title,
-                              labels,
-                              address,
-                              place_type,
-							  name_of_place,
-							  image
+							description,
+							duration,
+							start_date,
+							end_date,
+							title,
+							labels,
+							address,
+							place_type,
+							name_of_place,
+							image
                             }
                     }
                     `
@@ -236,6 +236,7 @@ function Events({
 		return <Redirect to="/" />;
 	}
 
+	console.log(category);
 
 	return (
 		<div id="events-section">

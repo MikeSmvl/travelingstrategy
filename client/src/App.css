@@ -287,3 +287,8 @@ main {
 }
 
 
+.buttonSpeaker{
+  height: 35px;
+  width: 33px;
+  border: none;
+}

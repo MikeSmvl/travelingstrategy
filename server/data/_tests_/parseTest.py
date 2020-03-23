@@ -297,8 +297,8 @@ class parseTest(unittest.TestCase):
         wiki_visa = wiki_visa_ob.visa_parser_table()
         quit_driver(driver)
         self.assertFalse("", wiki_visa)
-   
-    
+
+
     # Test for vacines
     def tests_get_url_of_countries_vaccines(self):
         # tests get url
