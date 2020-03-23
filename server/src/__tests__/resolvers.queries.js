@@ -620,6 +620,73 @@ it("Querying events retrieved for a request_id", () =>{
     }
 }`;
 
+
+tester.test(true, query)
+tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.error != undefined){
+        logger.error(__filename +result.errors[0].message)
+      }
+      else{
+        logger.info(__filename +"There is no error in the query parameters")
+      }
+    })
+    .catch(err => logger.error(__filename +" "+err))
+});
+it("Querying events retrieved for a city", () =>{
+const query =`
+{
+  city_average_monthly_weather(city:"montreal"){
+    city,
+    january,
+    february,
+    march,
+    april,
+    may,
+    june,
+    july,
+    august,
+    septembre,
+    octobre,
+    novembre,
+    decembre,
+  }
+}`;
+
+
+tester.test(true, query)
+tester.graphql(query, undefined, undefined, { isLocal: false })
+    .then(result => {
+      if(result.error != undefined){
+        logger.error(__filename +result.errors[0].message)
+      }
+      else{
+        logger.info(__filename +"There is no error in the query parameters")
+      }
+    })
+    .catch(err => logger.error(__filename +" "+err))
+});
+it("Querying events retrieved for a city", () =>{
+const query =`
+{
+  monthly_weather_table{
+    city,
+    january,
+    february,
+    march,
+    april,
+    may,
+    june,
+    july,
+    august,
+    septembre,
+    octobre,
+    novembre,
+    decembre,
+  }
+}`;
+
+
   tester.test(true, query)
   tester.graphql(query, undefined, undefined, { isLocal: false })
       .then(result => {
@@ -698,25 +765,5 @@ describe("Test for add-subscriber mutation", () => {
     }
   );
 });
-
-
-// describe("Test to validate a user with an existing email cannot be created", () => {
-//   test("Should be an invalid mutation", () => {
-//       const mutation = `
-//         mutation addUser($email: String!, $password: String!) {
-//           addUser(email: $email, password: $password) {
-//               email
-//               departure_date
-//           }
-//         }
-//       `;
-//       tester.test(false, mutation, {
-//         email: "test@test.com",
-//         password: "123"
-//       });
-//     }
-//   );
-// });
-
 
 

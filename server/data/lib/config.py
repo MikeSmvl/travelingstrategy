@@ -1,3 +1,4 @@
+
 # Database
 sqlite_db = 'countries.sqlite'
 
@@ -82,5 +83,7 @@ canabais_url = "https://en.wikipedia.org/wiki/Legality_of_cannabis"
 cocaine_url =  "https://en.wikipedia.org/wiki/Legal_status_of_cocaine"
 methaphetamine_url = "https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine"
 
+#Weather
+wiki_visa_temperature = "https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature"
 # Covid 19
 covid19_url = "https://www.worldometers.info/coronavirus/?fbclid=IwAR0DA1x4jo784QAUFcblVIhHTBLLPBdmAP-fJeU16v4aFeW0RdifaRIojhw#countries"

@@ -292,3 +292,8 @@ main {
   width: 33px;
   border: none;
 }
+
+.map-darksky{
+  height:500px;
+  width: 100%;;
+}
