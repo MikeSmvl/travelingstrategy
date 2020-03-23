@@ -1,0 +1,149 @@
+/* Designer credit: https://dribbble.com/shots/1978243-Latest-News */
+body, html {
+    overflow-x: hidden;
+}
+.app-header {
+    display: block;
+    padding: 30px;
+}
+.app-title {
+    display: inline-block;
+    width: 100%;
+    margin: 80px 0 0 0;
+    float: left;
+    position: relative;
+    color: #fff;
+}
+@media (min-width: 768px) {
+    .app-title {
+        width: 20%;
+        margin: 280px 0 0 0;
+   }
+}
+.app-title h1 {
+    font-size: 52px;
+    margin: 0;
+}
+.app-title p {
+    font-weight: 200;
+    opacity: 0.5;
+}
+.app-title-content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+@media (min-width: 768px) {
+    .app-title-content {
+        width: auto;
+        position: absolute;
+        text-align: left;
+   }
+}
+.app-card-list {
+    display: inline-block;
+    width: 100%;
+    float: right;
+    margin: 0;
+    min-height: 75vh;
+    white-space: normal;
+    overflow-x: scroll;
+    margin-top: -70px;
+}
+.app-card-list::-webkit-scrollbar {
+    display: none;
+}
+@media (min-width: 768px) {
+    .app-card-list {
+        width: 100%;
+        white-space: nowrap;
+        margin-top: 0;
+   }
+}
+.app-card-list .card {
+    margin: 60px 30px;
+    display: inline-block;
+    width: 40%;
+}
+
+.app-card-list .card .card-body {
+    white-space: normal;
+}
+.designer-link {
+    display: inline-block;
+    padding-top: 40px;
+}
+
+.card-title{
+    text-align: center;
+    margin-bottom: 15%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#modal-info{
+    max-width: 45% !important;
+    margin-left: 30%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
+}
+
+#modal-favorites{
+    margin-left: 35%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
+}
+
+#modal-notification{
+    margin-left: 35%;
+}
+
+.modal-like-button{
+    text-align: center;
+    margin-bottom: 3%;
+}
+
+.more-info-img{
+    max-width: 100%;
+}
+
+.card-category{
+    text-align: center;
+}
+
+.date{
+    font-style: italic;
+}
+
+.aws-btn {
+    --button-primary-color: #ea5940 !important;
+    --button-primary-color-dark: #000000 !important;
+    --button-primary-color-light: #000000 !important;
+    --button-primary-color-hover: #ea5940 !important;
+    --button-primary-color-active: #cfdee9 !important;
+    --button-primary-border: none !important;
+    --button-secondary-color: #f7d2c7 !important;
+    --button-secondary-color-dark: #00000000  !important;
+    --button-secondary-color-light: #000000 !important;
+    --button-secondary-color-hover: #e787b4 !important;
+    --button-secondary-color-active: #cfdee9 !important;
+    --button-secondary-border: 1px solid #000000 !important;
+    --button-default-height: 51px !important;
+    --button-default-font-size: 14px !important;
+    --button-default-border-radius: 8px !important;
+    --button-horizontal-padding: 20px !important;
+    --button-raise-level: 4px !important;
+}
+#eventcard{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
+}
+
+#cardbody{
+    background-image: linear-gradient(#f7d2a926, #d491bc24);
+}
+
+#image_with_shadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.06), 0 6px 20px 0 rgba(0, 0, 0, 0.43);
+}
