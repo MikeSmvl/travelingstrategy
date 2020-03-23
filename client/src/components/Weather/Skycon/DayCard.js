@@ -17,7 +17,7 @@ const DayCard = (props) => {
 	const weekdayShort = moment(newDate);
 	return (
 		<div>
-			<strong><p className="day" style={{fontSize:8}}>{moment.weekdaysShort(weekdayShort)}</p></strong>
+			<strong><p className="day" style={{fontSize:18}}>{moment.weekdaysShort(weekdayShort)}</p></strong>
 					<i className="d-flex justify-content-center">
 						<ReactAnimatedWeather
 							icon={data.icon}
@@ -27,7 +27,6 @@ const DayCard = (props) => {
 						/>
 					</i><p />
 					<p className="d-flex justify-content-center">{degreeType === "celsius" ? celsius + "°C" : fahrenheit + "°F"}</p>
-					{/* <p className="d-flex justify-content-center text-center">{weekday.summary}</p> */}
 		</div>
 	);
 };

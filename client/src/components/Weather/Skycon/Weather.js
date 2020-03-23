@@ -29,9 +29,8 @@ const Weather = (props) => {
 	}, []);
 
 	return (
-		<Card header = "5 Day Forecast">
-
-         <CardBody>
+<Card>
+  <CardBody>
 		<div className="flexbox-container2">
 			<DayCard
 			    degreeType ={degreeType}
@@ -59,7 +58,8 @@ const Weather = (props) => {
 				 degree = {degreeType}
 			 	 updateDegree ={setDegreeType} />
 		</div>
-		</CardBody></Card>
+	</CardBody>
+	</Card>
 	);
 };
 

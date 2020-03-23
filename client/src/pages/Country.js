@@ -517,14 +517,6 @@ function Country({
 									<br />
 								</Col>
 							</Row>
-							{/* <Row className="justify-content-between">
-								<Col sm={5} style={{ padding: '20px' }}>
-									<Weather
-										lat={destinationLat}
-										lng={destinationLng}
-									/>
-								</Col>
-							</Row> */}
 							<br />
 							<Card
 								header="Weather Map"

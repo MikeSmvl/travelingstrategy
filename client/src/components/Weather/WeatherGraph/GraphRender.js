@@ -88,10 +88,15 @@ const GraphRender = (props) => {
           <Bar
             data={dataFarenheit}
             width={200}
-            height={200}
+            height={300}
             options={{
               maintainAspectRatio: false,
               responsive: true,
+              title: {
+                fontSize: 18,
+                display: true,
+                text: 'Average Monthly Temperature',
+              },
               scales: {
                 yAxes: [
                   {
@@ -113,10 +118,15 @@ const GraphRender = (props) => {
           <Bar
             data={dataCelcius}
             width={200}
-            height={200}
+            height={300}
             options={{
               maintainAspectRatio: false,
               responsive: true,
+              title: {
+                fontSize: 18,
+                display: true,
+                text: 'Average Monthly Temperature',
+              },
               scales: {
                 yAxes: [
                   {
@@ -134,13 +144,15 @@ const GraphRender = (props) => {
           />
         </div>
       )}
-        <hr />
+        <br />
+        <br />
         Toggle to switch degree units
         <Switch
             className= "temperature-switch"
             onClick={() => toggleChart()}
             color = "#"
             />
+        <hr />
     </CardBody>
   );
 };

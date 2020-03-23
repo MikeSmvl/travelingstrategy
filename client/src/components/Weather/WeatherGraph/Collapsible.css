@@ -1,0 +1,10 @@
+.Collapsible:hover{
+  cursor: default;
+}
+
+.header-collapse{
+  padding-Left:'17px';
+  font-size:18px;
+  text-align: center;
+  font-weight: bold;
+}

@@ -4,6 +4,8 @@ import { Row } from 'react-bootstrap/';
 import { Card, CardBody } from '../../Card/Card';
 import GraphRender from './GraphRender';
 import Weather from '../Skycon/Weather'
+import Collapsible from 'react-collapsible';
+import './Collapsible.css'
 
 const WeatherGraph = (props) => {
 	const {
@@ -63,7 +65,7 @@ const WeatherGraph = (props) => {
 
 	return (
 		<Card
-			header="Average Monthly Temperature"
+			header="Weather Information"
 			footer={(
 				<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
 				</Row>
@@ -79,16 +81,22 @@ const WeatherGraph = (props) => {
 				) : (
 					<div
 						className="scrolling-card"
-						style={{ maxHeight: '400px', overflow: 'scroll' }}
+						style={{ maxHeight: '500px', overflow: 'scroll' }}
 					>
 						<GraphRender monthlyWeather={monthlyWeather} />
 					</div>
 				)}
-				<div className="daily">
-					<Weather
-					lat={destinationLatitude}
-					lng={destinationLongitude}
-					/>
+				<div>
+					<Collapsible trigger="See more"
+                       triggerWhenOpen='See less'
+                       triggerStyle={{color:'blue', paddingLeft:'17px'}}>
+						<br />
+						<p className="header-collapse">5 Day Forecast</p>
+						<Weather
+						lat={destinationLatitude}
+						lng={destinationLongitude}
+						/>
+					</Collapsible>
 				</div>
 			</CardBody>
 		</Card>
