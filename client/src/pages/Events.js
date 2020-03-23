@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Nav } from 'react-bootstrap/';
+import { Button, Row } from 'react-bootstrap/';
+import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
-import { Card, CardBody } from '../components/Card/Card';
 import '../App.css';
-import { addMyEvents, addApiEvents } from '../utils/eventsTools';
+import Unsplash, { toJson } from 'unsplash-js';
+import { addMyEvents, addApiEvents, getButtonContent } from '../utils/eventsTools';
 
-
+const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
 const phqEvents = client.events;
 
@@ -15,7 +16,7 @@ function Events({
 	latitude,
 	longitude
 }) {
-	const [category, setCategory] = useState('');
+	const [category, setCategory] = useState('likes');
 	const [savedEvents, setSavedEvents] = useState([]);
 	const [eventsForCategories, setEventsForCategories] = useState([]);
 	const [conferences, setConferences] = useState([]);
@@ -32,13 +33,39 @@ function Events({
 	const [performingArtsCalled, setPerformingArtsCalled] = useState(false);
 	const [sportsCalled, setSportsCalled] = useState(false);
 	const [communityCalled, setCommunityCalled] = useState(false);
+	const [toggled, setToggled] = useState(true);
+	const [navbarClass, setNavbarClass] = useState('sidebar sidebar--expanded');
+	const [mainContentClass, setMainContentClass] = useState('main-content main-content--expanded');
+	const [images, setImages] = useState([]);
+	const [redirect, setRedirect] = useState(false);
+	const [email, setEmail] = useState('');
 
-
-	const categoryChosen = (event) => {
-		setCategory(event.target.value);
-	};
 
 	useEffect(() => {
+		async function getToken() {
+			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, { credentials: 'include' })
+				.then((res) => res.json())
+				.then((res) => {
+					res.email
+                && res.email !== null
+                && setEmail(res.email);
+				})
+				.catch((error) => {
+					// if status code 401...
+					setRedirect(true);
+				});
+		}
+		// Api for getting different images for different categories
+		async function getImages() {
+			let array = [];
+			if (category !== 'likes') {
+				array = await unsplash.search.photos(category, 1, 100, { orientation: 'landscape' })
+					.then(toJson);
+				return array.results;
+			}
+			return array;
+		}
+
 		// Basic event search using category as parameter. By default, it will return the first ten events.
 		async function searchByCategory() {
 			const withinParam = `${latitude},${longitude}`;
@@ -46,6 +73,7 @@ function Events({
 				'location_around.origin': withinParam,
 				category
 			});
+
 			return searchResults.result.results;
 		}
 		/**
@@ -129,18 +157,19 @@ function Events({
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					query: `{
-                        eventsForRequest(request_id:"5"){
+                        eventsForRequest(request_id:"${requestId}"){
                             request_id,
                             event_category,
-                              description,
-                              duration,
-                              start_date,
-                              end_date,
-                              title,
-                              labels,
-                              address,
-                              place_type,
-                              name_of_place
+							description,
+							duration,
+							start_date,
+							end_date,
+							title,
+							labels,
+							address,
+							place_type,
+							name_of_place,
+							image
                             }
                     }
                     `
@@ -149,8 +178,8 @@ function Events({
 				.then((res) => res.json())
 				.then((res) => {
 					res.data.eventsForRequest
-                    && res.data.eventsForRequest.length !== 0
-                    && setSavedEvents(res.data.eventsForRequest);
+					&& res.data.eventsForRequest.length !== 0
+					&& setSavedEvents(res.data.eventsForRequest);
 				});
 		}
 
@@ -159,8 +188,15 @@ function Events({
 			setEventsForCategories(eventsByCategory);
 		}
 
+		async function setImagesForCategory() {
+			const imagesArray = await getImages();
+			setImages(imagesArray);
+		}
+
 		fetchEvents();
 		setEventsToDisplay();
+		setImagesForCategory();
+		getToken();
 	},
 	[
 		category,
@@ -179,77 +215,92 @@ function Events({
 		sportsCalled,
 		communityCalled,
 		latitude,
-		longitude
+		longitude,
+		email
 
 	]);
 
+	const expandNavBar = (event) => {
+		if (toggled) {
+			setNavbarClass('sidebar');
+			setMainContentClass('main-content');
+			setToggled(false);
+		} else {
+			setNavbarClass('sidebar sidebar--expanded');
+			setMainContentClass('main-content main-content--expanded');
+			setToggled(true);
+		}
+	};
+
+	if (redirect) {
+		return <Redirect to="/" />;
+	}
+
+	console.log(category);
 
 	return (
-		<div>
-			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '100px' }}>
-					<Col
-						style={{
-							backgroundColor: 'rgb(255, 255, 255)',
-							borderRadius: '20px'
-						}}
-						lg={8}
-					>
-						<Row
-							style={{
-								backgroundColor: 'rgb(247,	247,	247)',
-								padding: '0.5em',
-								borderRadius: '0px'
-							}}
-							className="justify-content-center sticky"
-						>
-							<Nav variant="pills" className="flex-row">
-								<Nav.Item>
-									<Button variant="outline-primary" value="conferences" onClick={categoryChosen}>Conferences</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="expos" onClick={categoryChosen}>Expos</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="concerts" onClick={categoryChosen}>Concerts</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="festivals" onClick={categoryChosen}>Festivals</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="performing-arts" onClick={categoryChosen}>Performing-arts</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="sports" onClick={categoryChosen}>Sports</Button>
-								</Nav.Item>
-								<Nav.Item>
-									<Button variant="outline-primary" value="community" onClick={categoryChosen}>Community</Button>
-								</Nav.Item>
-							</Nav>
-						</Row>
-						<div className="justify-content-center">
-							<div id="My_Events" style={{ padding: '40px 25px 25px 25px' }}>
-								<div>
-									<ul>
-										{addApiEvents(eventsForCategories, requestId)}
-									</ul>
-									<ul>
-										<Card
-											header="Favorite Events"
-											style={{ maxHeight: '400px', overflow: 'scroll', padding: '40px 25px 25px 25px', textAlign: 'center' }}
-										>
-											<CardBody>
-												{addMyEvents(savedEvents)}
-											</CardBody>
-										</Card>
-									</ul>
-								</div>
-							</div>
+		<div id="events-section">
+			<Row>
+				<div className={navbarClass}>
+					<span className="shape" />
+					<span className="shape" />
+					<div className="categories-btn">
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={expandNavBar}>
+								{getButtonContent('Hamburger')}
+							</Button>
 						</div>
-					</Col>
-				</Row>
-				<footer id="footer" />
-			</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
+								{getButtonContent('Likes')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="conferences" onClick={() => setCategory('conferences')}>
+								{getButtonContent('Conferences')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="expos" onClick={() => setCategory('expos')}>
+								{getButtonContent('Expos')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="concerts" onClick={() => setCategory('concerts')}>
+								{getButtonContent('Concerts')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="festivals" onClick={() => setCategory('festivals')}>
+								{getButtonContent('Festivals')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="performing-arts" onClick={() => setCategory('performing-arts')}>
+								{getButtonContent('Performing-arts')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="sports" onClick={() => setCategory('sports')}>
+								{getButtonContent('Sports')}
+							</Button>
+						</div>
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="community" onClick={() => setCategory('community')}>
+								{getButtonContent('Community')}
+							</Button>
+						</div>
+					</div>
+				</div>
+				<section className={mainContentClass} style={{ marginTop: '4%' }}>
+					<div className="app-card-list" id="app-card-list">
+						{category === 'likes'
+							? addMyEvents(savedEvents, requestId)
+							: addApiEvents(eventsForCategories, requestId, images)}
+					</div>
+
+				</section>
+			</Row>
 		</div>
 	);
 }

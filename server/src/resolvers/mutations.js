@@ -2,7 +2,7 @@ const { GraphQLObjectType} = require('graphql');
 const { addUser } = require('./user')
 // const {addCountryToCountry, deleteCountryToCountry} = require('./countryMutations')
 const addSubscriber = require('./add-subscriber')
-const addEvents = require('./eventsMutations')
+const {addEvents} = require('./eventsMutations')
 const logger = require('../logger/logger.js')
 
 logger.info(__filename +"Mutating with GraphQL")

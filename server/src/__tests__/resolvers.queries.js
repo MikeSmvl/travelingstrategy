@@ -767,27 +767,3 @@ describe("Test for add-subscriber mutation", () => {
 });
 
 
-
-
-
-
-// describe("Test to validate a user with an existing email cannot be created", () => {
-//   test("Should be an invalid mutation", () => {
-//       const mutation = `
-//         mutation addUser($email: String!, $password: String!) {
-//           addUser(email: $email, password: $password) {
-//               email
-//               departure_date
-//           }
-//         }
-//       `;
-//       tester.test(false, mutation, {
-//         email: "test@test.com",
-//         password: "123"
-//       });
-//     }
-//   );
-// });
-
-
-
