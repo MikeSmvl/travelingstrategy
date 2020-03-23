@@ -527,7 +527,7 @@ function Country({
 								)}
 							>
 								<CardBody>
-									<iframe title = "darksky" className="map-darksky" src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},11`} />
+									<iframe title= "darksky" className= "map-darksky" src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},11`} />
 								</CardBody>
 							</Card>
 							<hr />
