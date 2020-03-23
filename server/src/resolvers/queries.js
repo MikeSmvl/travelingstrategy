@@ -20,6 +20,7 @@ const {phrasesTranslation, phrasesTranslationCountry} = require('./phrases')
 const {getLanguageIso} = require('./languageIso')
 const eventsForRequest = require('./events')
 const {city_average_monthly_weather, monthly_weather_table} = require('./monthlyWeather')
+const { covidStats, covidCountryStats, covidAllStats } = require('./covidStats')
 
 const logger = require('../logger/logger.js')
 
@@ -60,7 +61,11 @@ var queryType = new graphql.GraphQLObjectType({
         monthly_weather_table,
         phrasesTranslation,
         getLanguageIso,
-        phrasesTranslationCountry
+        phrasesTranslationCountry,
+        eventsForRequest,
+        covidStats,
+        covidCountryStats,
+        covidAllStats
     }
 });
 
