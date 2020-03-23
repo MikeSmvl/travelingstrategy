@@ -11,7 +11,6 @@ const DayCard = (props) => {
 		degreeType =''
 	} = props;
 	const newDate = new Date(weekday.time * 1000);
-	console.log("bbbbbbbbbbbbb"+weekday.icon)
 	const data = setSkycon(weekday.icon);
 	const fahrenheit = Math.round(weekday.temperatureHigh);
 	const celsius = Math.round((fahrenheit - 32) * 5/9)

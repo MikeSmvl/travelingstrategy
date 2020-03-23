@@ -19,7 +19,7 @@ const Weather = (props) => {
 		async function fetchData() {
 			// asynchronously load contents of the url
 			// return a Promise that resolves when res is loaded
-			await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/0bd6aca8cf0481c6aed071562937a466/${lat},${lng}`)
+			await fetch(`https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/fa0db9aaeccf007d75ec13d7f40b337c/${lat},${lng}`)
 				.then((response) => response.json()) // call this function when res is loaded
 			// return a Promise with result of above function
 				.then((response) => { setResponseObj(response.daily.data); });
