@@ -77,6 +77,8 @@ const WeatherGraph = (props) => {
 						<span style={{ color: '#FF1C00' }}>Note: </span>
                We don&apos;t have any info on the average monthly temperature for
 						{destinationCity}. Try <a href="#" onClick={redirect}>Googling</a> instead
+						<br />
+						<hr />
 					</div>
 				) : (
 					<div
@@ -89,7 +91,7 @@ const WeatherGraph = (props) => {
 				<div>
 					<Collapsible trigger="See more"
                        triggerWhenOpen='See less'
-                       triggerStyle={{color:'blue', paddingLeft:'17px'}}>
+                       triggerStyle={{color:'blue', paddingLeft:'10px'}}>
 						<br />
 						<p className="header-collapse">5 Day Forecast</p>
 						<Weather
