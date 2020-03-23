@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap/';
+import Collapsible from 'react-collapsible';
 import { Card, CardBody } from '../../Card/Card';
 import GraphRender from './GraphRender';
-import Weather from '../Skycon/Weather'
-import Collapsible from 'react-collapsible';
-import './Collapsible.css'
+import Weather from '../Skycon/Weather';
+import './Collapsible.css';
 
 const WeatherGraph = (props) => {
 	const {
@@ -76,7 +76,7 @@ const WeatherGraph = (props) => {
 					<div>
 						<span style={{ color: '#FF1C00' }}>Note: </span>
                We don&apos;t have any info on the average monthly temperature for
-						{destinationCity}. Try <a href="#" onClick={redirect}>Googling</a> instead
+						{destinationCity}. Try <button type="button" href="#" onClick={redirect}>Googling</button> instead
 						<br />
 						<hr />
 					</div>
@@ -89,14 +89,16 @@ const WeatherGraph = (props) => {
 					</div>
 				)}
 				<div>
-					<Collapsible trigger="See more"
-                       triggerWhenOpen='See less'
-                       triggerStyle={{color:'blue', paddingLeft:'10px'}}>
+					<Collapsible
+						trigger="See more"
+						triggerWhenOpen="See less"
+						triggerStyle={{ color: 'blue', paddingLeft: '10px' }}
+					>
 						<br />
 						<p className="header-collapse">5 Day Forecast</p>
 						<Weather
-						lat={destinationLatitude}
-						lng={destinationLongitude}
+							lat={destinationLatitude}
+							lng={destinationLongitude}
 						/>
 					</Collapsible>
 				</div>
@@ -107,9 +109,7 @@ const WeatherGraph = (props) => {
 };
 
 WeatherGraph.propTypes = {
-	destinationCity: PropTypes.string,
-	lat: PropTypes.string,
-	lng: PropTypes.string
+	destinationCity: PropTypes.string
 };
 
 export default WeatherGraph;
