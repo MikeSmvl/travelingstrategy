@@ -24,7 +24,6 @@ import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
 import Weather from '../components/Weather/Skycon/Weather';
 import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
-import DegreeToggle from '../components/Weather/Skycon/DegreeToggle';
 import textToSpeech from '../utils/text-to-speech';
 
 
@@ -74,6 +73,9 @@ function Country({
 	const [phrases, setPhrases] = useState([]);
 	const [phraseIso, setPhraseIso] = useState('');
 	const [phraseLanguage, setPhraseLanguage] = useState('');
+
+	//for the moment being have daily forecast turned off
+	const [showWeather, setShowWeather] = useState(false);
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -450,7 +452,7 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
-									<WeatherGraph destinationCity={destinationCity} destinationLat={destinationLat} destinationLng={destinationLat} />
+									<WeatherGraph destinationCity={destinationCity}/>
 									<br />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
@@ -516,13 +518,20 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
+									<br />
+									{showWeather && (
+											<Weather
+											lat={destinationLat}
+											lng={destinationLng}
+											/>
+									)}
 								</Col>
 							</Row>
 							<br />
 							<Card
 								header="Weather Map"
 								footer={(
-									<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+									<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
 									</Row>
 								)}
 							>

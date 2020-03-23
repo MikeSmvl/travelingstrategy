@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
 import moment from 'moment';
 import './DayCard.css';

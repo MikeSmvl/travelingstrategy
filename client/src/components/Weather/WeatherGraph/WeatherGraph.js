@@ -1,21 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap/';
-import Collapsible from 'react-collapsible';
 import { Card, CardBody } from '../../Card/Card';
 import GraphRender from './GraphRender';
-import Weather from '../Skycon/Weather';
-import './Collapsible.css';
 
 const WeatherGraph = (props) => {
 	const {
-		destinationCity = '',
-		destinationLat = '',
-		destinationLng = ''
+		destinationCity = ''
 	} = props;
-
-	const destinationLatitude = destinationLat;
-	const destinationLongitude = destinationLng;
 
 	const [monthlyWeather, setMonthlyWeather] = useState('');
 
@@ -65,9 +57,9 @@ const WeatherGraph = (props) => {
 
 	return (
 		<Card
-			header="Weather Information"
+			header="Average Monthly Temperature"
 			footer={(
-				<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
+				<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
 				</Row>
 			)}
 		>
@@ -77,8 +69,6 @@ const WeatherGraph = (props) => {
 						<span style={{ color: '#FF1C00' }}>Note: </span>
                We don&apos;t have any info on the average monthly temperature for
 						{destinationCity}. Try <a href="#" onClick={redirect}>Googling</a> instead
-						<br />
-						<hr />
 					</div>
 				) : (
 					<div
@@ -88,20 +78,6 @@ const WeatherGraph = (props) => {
 						<GraphRender monthlyWeather={monthlyWeather} />
 					</div>
 				)}
-				<div>
-					<Collapsible
-						trigger="See more"
-						triggerWhenOpen="See less"
-						triggerStyle={{ color: 'blue', paddingLeft: '10px' }}
-					>
-						<br />
-						<p className="header-collapse">5 Day Forecast</p>
-						<Weather
-							lat={destinationLatitude}
-							lng={destinationLongitude}
-						/>
-					</Collapsible>
-				</div>
 			</CardBody>
 		</Card>
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DayCard from './DayCard';
-import { Card, CardBody, Divider } from '../../Card/Card'
+import { Row} from 'react-bootstrap/';
+import { Card, CardBody} from '../../Card/Card'
 import './Weather.css';
 import DegreeToggle from './DegreeToggle';
 
@@ -29,7 +30,11 @@ const Weather = (props) => {
 	}, []);
 
 	return (
-		<Card className = "test" header = "5 Day Forecast">
+		<Card className = "test" header = "5 Day Forecast"
+					footer={(
+					<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
+					</Row>
+			)}>
 
            <CardBody>
 		     <div className="flexbox-container2">

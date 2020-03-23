@@ -93,11 +93,6 @@ const GraphRender = (props) => {
 						options={{
 							maintainAspectRatio: false,
 							responsive: true,
-							title: {
-								fontSize: 18,
-								display: true,
-								text: 'Average Monthly Temperature'
-							},
 							scales: {
 								yAxes: [
 									{
@@ -123,11 +118,6 @@ const GraphRender = (props) => {
 						options={{
 							maintainAspectRatio: false,
 							responsive: true,
-							title: {
-								fontSize: 18,
-								display: true,
-								text: 'Average Monthly Temperature'
-							},
 							scales: {
 								yAxes: [
 									{
@@ -146,14 +136,12 @@ const GraphRender = (props) => {
 				</div>
 			)}
 			<br />
-			<br />
         Toggle to switch degree units
 			<Switch
 				className="temperature-switch"
 				onClick={() => toggleChart()}
 				color="#"
 			/>
-			<hr />
 		</CardBody>
 	);
 };
