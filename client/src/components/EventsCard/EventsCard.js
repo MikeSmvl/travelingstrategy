@@ -62,15 +62,18 @@ const EventsCard = (props) => {
 	}
 
 	async function removeEvent() {
-		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
+		let body = {
+			requestId:requestId,
+			title:title
+		}
+		await fetch(`${process.env.REACT_APP_BACKEND}deleteEvent`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/graphql' },
-			body: `mutation{
-                    removeEvent(request_id:"${requestId}",title:"${title}")
-					{   request_id
-						title
-					}
-				}`
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body)
+		}).then((res) => res.json())
+		.then((res) => {
+			console.log(res)
 		});
 	}
 
