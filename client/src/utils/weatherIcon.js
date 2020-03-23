@@ -63,11 +63,11 @@ function setSkycon(icon) {
       data.color= weather.color5
       break;
     case 'wind':
-      data.icon= weather.icon10
+      data.icon= weather.icon9
       data.color= weather.color3
       break;
     case 'fog':
-      data.icon= weather.icon11
+      data.icon= weather.icon10
       data.color= weather.color3
       break;
     }

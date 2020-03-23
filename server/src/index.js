@@ -22,7 +22,7 @@ const schema = new graphql.GraphQLSchema({
 const cors = require("cors");
 app.use(cors({
     credentials: true,
-    origin: originEnv
+    origin: "http://localhost:3000"
 })) // Use this after the variable declaration
 app.use(cookieParser());
 

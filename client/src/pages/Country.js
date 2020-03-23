@@ -24,6 +24,7 @@ import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
 import Weather from '../components/Weather/Skycon/Weather';
 import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
+import DegreeToggle from '../components/Weather/Skycon/DegreeToggle';
 import textToSpeech from '../utils/text-to-speech';
 
 
@@ -100,7 +101,7 @@ function Country({
 
 		async function fetchData() {
 			setIsLoading(true);
-			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
+			await fetch(process.env.REACT_APP_BACKEND, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
