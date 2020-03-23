@@ -250,6 +250,12 @@ function Events({
 								{getButtonContent('Hamburger')}
 							</Button>
 						</div>
+
+						<div className="choice-btn">
+							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" >
+								{getButtonContent('Email Favorites')}
+							</Button>
+						</div>
 						<div className="choice-btn">
 							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
 								{getButtonContent('Likes')}
