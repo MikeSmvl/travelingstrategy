@@ -75,6 +75,23 @@ app.post('/deleteEvent', withAuth, async function(req, res) {
     }
 });
 
+app.post('/emailEvents', withAuth, async function(req, res) {
+    // console.log(req.body)
+    const requestId = req.body[0].request_id
+    const email = req.email;
+
+    // Being allowed to deleted and being allowed to send an email is the same requirement
+    const sendingEmailAllowed = await deleteAllowed(email,requestId);
+
+    if(sendingEmailAllowed.email === email){
+        // res.status(200).json(removeEvent(requestId,eventTitle))
+        console.log(req.body)
+    }
+    else{
+        res.status(401)
+    }
+});
+
 app.listen(4000, () => {
     console.log("🚀 GraphQL server running at http://localhost:4000/graphql.");
 });
