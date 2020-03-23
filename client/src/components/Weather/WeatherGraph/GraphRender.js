@@ -135,7 +135,7 @@ const GraphRender = (props) => {
         </div>
       )}
         <hr />
-        Toggle to switch degree units 
+        Toggle to switch degree units
         <Switch
             className= "temperature-switch"
             onClick={() => toggleChart()}

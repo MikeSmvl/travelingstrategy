@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import DayCard from './DayCard';
+import { Card, CardBody, Divider } from '../../Card/Card'
 import './Weather.css';
 import DegreeToggle from './DegreeToggle';
 
@@ -14,7 +15,6 @@ const Weather = (props) => {
 		lng
 	} = props;
 
-
 	useEffect(() => {
 		async function fetchData() {
 			// asynchronously load contents of the url
@@ -27,13 +27,16 @@ const Weather = (props) => {
 
 		fetchData();
 	}, []);
-   
+
 	return (
 		<div>
-		<div className="flexbox-container">
-		<DegreeToggle
-		degree = {degreeType}
-			 updateDegree ={setDegreeType} />
+		<div >
+			<p><b>Full forecast
+			</b>			<DegreeToggle
+				 className="flexbox-container"
+				 degree = {degreeType}
+			 	 updateDegree ={setDegreeType} /></p>
+			<hr />
 		</div>
 
 		<div className="flexbox-container2">

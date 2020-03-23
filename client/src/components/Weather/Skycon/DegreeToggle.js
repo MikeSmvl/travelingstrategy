@@ -24,7 +24,7 @@ const DegreeToggle = (props) => {
         checked ={degree === 'celsius'}
         onClick={()=>updateDegree('celsius')}
         />
-        <label className="form-check-label" for="celsius">Celsius</label>
+        <label className="form-check-label" for="celsius">°C</label>
       </div>
       <div className="form-check form-check-inline">
         <Radio
@@ -36,7 +36,7 @@ const DegreeToggle = (props) => {
         checked ={degree === 'farenheit'}
         onClick={()=>updateDegree('farenheit')}
         />
-        <label className="form-check-label" for="farenheit">Farenheit</label>
+        <label className="form-check-label" for="farenheit">°F</label>
       </div>
     </React.Fragment>
   )

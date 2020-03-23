@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import ReactAnimatedWeather from 'react-animated-weather';
 import moment from 'moment';
-import { setSkycon } from '../../../utils/weatherIcon';
 import './DayCard.css';
+import { setSkycon } from '../../../utils/weatherIcon';;
 
 
 const DayCard = (props) => {
@@ -14,13 +14,10 @@ const DayCard = (props) => {
 	const data = setSkycon(weekday.icon);
 	const fahrenheit = Math.round(weekday.temperatureHigh);
 	const celsius = Math.round((fahrenheit - 32) * 5/9)
-
+	const weekdayShort = moment(newDate);
 	return (
-		<div className="col-sm-6">
-			<div className="card d-flex justify-content-center">
-				<h2 className="day">{moment(newDate).format('dddd')}</h2>
-				<p className="text-muted d-flex justify-content-center">{moment(newDate).format('MMMM Do')}</p>
-				<div className="card-body">
+		<div>
+			<strong><p className="day" style={{fontSize:8}}>{moment.weekdaysShort(weekdayShort)}</p></strong>
 					<i className="d-flex justify-content-center">
 						<ReactAnimatedWeather
 							icon={data.icon}
@@ -29,10 +26,8 @@ const DayCard = (props) => {
 							animate
 						/>
 					</i><p />
-					<h3 className="d-flex justify-content-center">{degreeType === "celsius" ? celsius + "°C" : fahrenheit + "°F"}</h3>
-					<p className="d-flex justify-content-center text-center">{weekday.summary}</p>
-				</div>
-			</div>
+					<p className="d-flex justify-content-center">{degreeType === "celsius" ? celsius + "°C" : fahrenheit + "°F"}</p>
+					{/* <p className="d-flex justify-content-center text-center">{weekday.summary}</p> */}
 		</div>
 	);
 };

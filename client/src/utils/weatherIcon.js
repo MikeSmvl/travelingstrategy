@@ -25,7 +25,6 @@ const data = {
 }
 
 function setSkycon(icon) {
-  console.log("aaaaaaaaaaaaaa"+icon)
   //fetch the appropraite icon repective to the city
   switch(icon){
     case 'clear-day':

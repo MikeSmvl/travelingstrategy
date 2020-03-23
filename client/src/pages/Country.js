@@ -449,7 +449,7 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
-									<WeatherGraph destinationCity={destinationCity} />
+									<WeatherGraph destinationCity={destinationCity} destinationLat={destinationLat} destinationLng={destinationLat} />
 									<br />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
@@ -517,14 +517,14 @@ function Country({
 									<br />
 								</Col>
 							</Row>
-							<Row className="justify-content-between">
+							{/* <Row className="justify-content-between">
 								<Col sm={5} style={{ padding: '20px' }}>
 									<Weather
 										lat={destinationLat}
 										lng={destinationLng}
 									/>
 								</Col>
-							</Row>
+							</Row> */}
 							<br />
 							<Card
 								header="Weather Map"

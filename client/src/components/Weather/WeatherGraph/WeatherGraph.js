@@ -3,11 +3,17 @@ import PropTypes from 'prop-types';
 import { Row } from 'react-bootstrap/';
 import { Card, CardBody } from '../../Card/Card';
 import GraphRender from './GraphRender';
+import Weather from '../Skycon/Weather'
 
 const WeatherGraph = (props) => {
 	const {
-		destinationCity = ''
+		destinationCity = '',
+		destinationLat = '',
+		destinationLng = ''
 	} = props;
+
+	const destinationLatitude = destinationLat;
+	const destinationLongitude = destinationLng;
 
 	const [monthlyWeather, setMonthlyWeather] = useState('');
 
@@ -78,6 +84,12 @@ const WeatherGraph = (props) => {
 						<GraphRender monthlyWeather={monthlyWeather} />
 					</div>
 				)}
+				<div className="daily">
+					<Weather
+					lat={destinationLatitude}
+					lng={destinationLongitude}
+					/>
+				</div>
 			</CardBody>
 		</Card>
 
@@ -85,7 +97,9 @@ const WeatherGraph = (props) => {
 };
 
 WeatherGraph.propTypes = {
-	destinationCity: PropTypes.string
+	destinationCity: PropTypes.string,
+	lat: PropTypes.string,
+	lng: PropTypes.string
 };
 
 export default WeatherGraph;
