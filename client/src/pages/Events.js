@@ -180,8 +180,6 @@ function Events({
 					res.data.eventsForRequest
 					&& res.data.eventsForRequest.length !== 0
 					&& setSavedEvents(res.data.eventsForRequest);
-					console.log("saved:",savedEvents)
-					console.log("events:", res.data.eventsForRequest)
 				});
 		}
 
@@ -219,12 +217,8 @@ function Events({
 		latitude,
 		longitude,
 		email,
-		// savedEvents
 
 	]);
-
-	console.log("Events")
-
 
 	const expandNavBar = (event) => {
 		if (toggled) {
@@ -238,9 +232,9 @@ function Events({
 		}
 	};
 
-	// if (redirect) {
-	// 	return <Redirect to="/" />;
-	// }
+	if (redirect) {
+		return <Redirect to="/" />;
+	}
 
 
 	return (

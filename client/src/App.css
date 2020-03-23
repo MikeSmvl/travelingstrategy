@@ -118,7 +118,7 @@ main {
 }
 .sidebar {
   width: 290px;
-  background-image: linear-gradient(#fcbd78, #ff65c3);
+  background-image: linear-gradient(#fcbd784f, #ff65c33b);
   background-size: 200%;
   background-position: 0 100%;
   position: fixed;
@@ -282,9 +282,7 @@ main {
 }
 
 #events-section {
-  /* The image used */
-  background-color: #fef9e7;
-  background-image: linear-gradient(#fcbd784f, #ff65c37a);
+  background-image: linear-gradient(#fcbd7821, #ff65c333);
 
 }
 

@@ -11,6 +11,8 @@ import 'react-awesome-button/dist/styles.css';
 const EventsCard = (props) => {
 	const [modal, setModal] = useState(false);
 	const [likedModal, setLikedModal] = useState(false);
+	const [removed, setRemoved] = useState(false);
+	const [removedModal, setRemovedModal] = useState(false);
 	const {
 		eventCategory = '',
 		description = '',
@@ -55,13 +57,6 @@ const EventsCard = (props) => {
 	}
 
 	async function removeEvent() {
-		console.log('here')
-		console.log(`mutation{
-			removeEvent(request_id:"${requestId}",title:"${title}")
-			{   request_id
-				title
-			}
-		}`)
 		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/graphql' },
@@ -71,10 +66,7 @@ const EventsCard = (props) => {
 						title
 					}
 				}`
-		}).then((res) => res.json())
-		.then((res) => {
-			console.log(res)
-		}).catch(error => console.error(error));
+		})
 	}
 
 	const handleLike = () => {
@@ -84,7 +76,8 @@ const EventsCard = (props) => {
 
 	const handleDelete = () => {
 		removeEvent();
-		console.log("deleted")
+		setRemoved(true);
+		setRemovedModal(true);
 	};
 
 	/**
@@ -195,22 +188,34 @@ const EventsCard = (props) => {
 		);
 	};
 
+	const handleFavoriteModals = () =>{
+		setLikedModal(false);
+		setRemovedModal(false);
+	}
+
 	const LikedModal = () => {
 		return (
 			<Modal
-				show={likedModal}
-				onHide={() => setLikedModal(false)}
+				show={likedModal || removedModal}
+				onHide={handleFavoriteModals}
 				centered
-				id="modal-favorites"
-
+				id="modal-notification"
 			>
 				<Modal.Header closeButton>
 					<Modal.Title id="example-modal-sizes-title-lg">
-						<h2>Added To your Favorites !!</h2>
+						{likedModal
+						? <h2>Added To your Favorites !!</h2>
+						:<h2>Removed from your favorites
+							<span role="img" aria-label="sad">😭</span>
+						 </h2>
+						}
 					</Modal.Title>
 				</Modal.Header>
-				<ModalBody>
-					<img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
+				<ModalBody style={{textAlign:'center'}}>
+					{likedModal
+					? <img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
+					:<img alt="Alert" src={require('../../eventsImages/sad-monkey.gif')} />
+					}
 				</ModalBody>
 			</Modal>
 
@@ -219,6 +224,7 @@ const EventsCard = (props) => {
 
 	const EventCard = () => {
 		return (
+			(!removed &&
 			<Card className="card" id="eventcard" border="dark">
 				<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
 				<div className="card-body" id="cardbody">
@@ -250,7 +256,7 @@ const EventsCard = (props) => {
 							</AwesomeButton>
 					}
 				</div>
-			</Card>
+			</Card>)
 		);
 	};
 
