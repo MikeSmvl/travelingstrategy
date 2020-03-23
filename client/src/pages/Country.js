@@ -74,7 +74,7 @@ function Country({
 	const [phraseIso, setPhraseIso] = useState('');
 	const [phraseLanguage, setPhraseLanguage] = useState('');
 
-	//for the moment being have daily forecast turned off
+	// for the moment being have daily forecast turned off
 	const [showWeather, setShowWeather] = useState(false);
 
 	useEffect(() => {
@@ -452,7 +452,7 @@ function Country({
 										</CardBody>
 									</Card>
 									<br />
-									<WeatherGraph destinationCity={destinationCity}/>
+									<WeatherGraph destinationCity={destinationCity} />
 									<br />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
@@ -520,10 +520,10 @@ function Country({
 									<br />
 									<br />
 									{showWeather && (
-											<Weather
+										<Weather
 											lat={destinationLat}
 											lng={destinationLng}
-											/>
+										/>
 									)}
 								</Col>
 							</Row>
