@@ -29,9 +29,9 @@ const EventsCard = (props) => {
 	} = props;
 
 	/**
-	 * This method uses arrays because some of the information are 
+	 * This method uses arrays because some of the information are
 	 * not passed as props. The array is the result from calling the
-	 * event api 
+	 * event api
 	 */
 	async function addEvent() {
 		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
@@ -62,16 +62,16 @@ const EventsCard = (props) => {
 	}
 
 	async function removeEvent() {
-		let body = {
-			requestId:requestId,
-			title:title
-		}
+		const body = {
+			requestId,
+			title
+		};
 		await fetch(`${process.env.REACT_APP_BACKEND}deleteEvent`, {
 			method: 'POST',
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body)
-		})
+		});
 	}
 
 	const handleLike = () => {
@@ -164,26 +164,29 @@ const EventsCard = (props) => {
 					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="more-info-img" />
 					<div className="card-body">
 						{ !isLiked
-							?(<div className="modal-like-button">
-								<AwesomeButton
-									type="secondary"
-									size="small"
-									centered
-									onPress={handleLike}
-								>Likes
-								</AwesomeButton>
-							</div>)
-							:(<div className="modal-like-button">
-								<AwesomeButton
-									type="secondary"
-									size="small"
-									centered
-									onPress={handleDelete}
-								>
-									<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
-								</AwesomeButton>
-							</div>)
-						}
+							? (
+								<div className="modal-like-button">
+									<AwesomeButton
+										type="secondary"
+										size="small"
+										centered
+										onPress={handleLike}
+									>Likes
+									</AwesomeButton>
+								</div>
+							)
+							: (
+								<div className="modal-like-button">
+									<AwesomeButton
+										type="secondary"
+										size="small"
+										centered
+										onPress={handleDelete}
+									>
+										<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+									</AwesomeButton>
+								</div>
+							)}
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
 						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
 						{address !== '' && (
