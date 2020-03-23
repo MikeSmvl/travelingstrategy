@@ -29,16 +29,9 @@ const Weather = (props) => {
 	}, []);
 
 	return (
-		<div>
-		<div >
-			<p><b>Full forecast
-			</b>			<DegreeToggle
-				 className="flexbox-container"
-				 degree = {degreeType}
-			 	 updateDegree ={setDegreeType} /></p>
-			<hr />
-		</div>
+		<Card header = "5 Day Forecast">
 
+         <CardBody>
 		<div className="flexbox-container2">
 			<DayCard
 			    degreeType ={degreeType}
@@ -61,7 +54,12 @@ const Weather = (props) => {
 				weekday={responseObj[5]}
 			/>
 		</div>
+		<div className="flexbox-container">
+		<DegreeToggle
+				 degree = {degreeType}
+			 	 updateDegree ={setDegreeType} />
 		</div>
+		</CardBody></Card>
 	);
 };
 
