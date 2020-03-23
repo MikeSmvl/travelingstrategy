@@ -3,12 +3,6 @@ const graphql = require('graphql');
 const database = require("../database/database");
 const logger = require('../logger/logger.js')
 const db = new database().db;
-const fetch = require('node-fetch');
-const jwt = require('jsonwebtoken');
-const { secretEnv } = require('../config')
-const secret = secretEnv;
-
-
 
 var addEvents = {
     type: graphql.GraphQLList(Event),

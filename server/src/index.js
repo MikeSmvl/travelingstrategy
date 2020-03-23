@@ -26,7 +26,6 @@ app.use(cors({
     origin: originEnv
 })) // Use this after the variable declaration
 app.use(cookieParser());
-app.use(express.json()) 
 
 const redis = new Redis();
 
@@ -42,18 +41,7 @@ app.get('/checkToken', withAuth, function(req, res) {
     res.json({email: req.email});
 });
 
-app.post('/deleteEvent', withAuth, async function(req, res) {
-    const requestId = req.body.requestId;
-    const eventTitle = req.body.title;
-    const email = req.email;
-    const userCanDelete = await deleteAllowed(email,requestId);
-    if(userCanDelete.email === email){
-        res.status(200).json(removeEvent(requestId,eventTitle))
-    }
-    else{
-        res.status(401)
-    }
-});
+
 
 app.get('/confirm/:id', async function(req, res) {
     const { id } = req.params;
@@ -71,6 +59,21 @@ app.get('/logout', function(req, res){
     res.clearCookie('token');
     res.send('ok');
  });
+
+app.use(express.json());
+
+app.post('/deleteEvent', withAuth, async function(req, res) {
+    const requestId = req.body.requestId;
+    const eventTitle = req.body.title;
+    const email = req.email;
+    const userCanDelete = await deleteAllowed(email,requestId);
+    if(userCanDelete.email === email){
+        res.status(200).json(removeEvent(requestId,eventTitle))
+    }
+    else{
+        res.status(401)
+    }
+});
 
 app.listen(4000, () => {
     console.log("🚀 GraphQL server running at http://localhost:4000/graphql.");
