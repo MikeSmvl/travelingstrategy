@@ -146,5 +146,12 @@ function getRandomImageForCategory(images,imagesUsed){
 }
 
 
+function emailEvents(events){
+    var requestBody = JSON.stringify(events)
+    console.log(requestBody[0])
 
-export {addMyEvents,addApiEvents,getButtonContent};
+
+}
+
+
+export {addMyEvents,addApiEvents,getButtonContent,emailEvents};
