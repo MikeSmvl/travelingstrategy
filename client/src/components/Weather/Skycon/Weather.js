@@ -27,7 +27,7 @@ const Weather = (props) => {
 		}
 
 		fetchData();
-	}, []);
+	}, [lat, lng]);
 
 	return (
 		<Card className = "test" header = "5 Day Forecast"
