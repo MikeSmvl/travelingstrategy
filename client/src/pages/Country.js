@@ -75,7 +75,7 @@ function Country({
 	const [phraseLanguage, setPhraseLanguage] = useState('');
 
 	// for the moment being have daily forecast turned off
-	const [showWeather, setShowWeather] = useState(false);
+	const [showWeather] = useState(false);
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {

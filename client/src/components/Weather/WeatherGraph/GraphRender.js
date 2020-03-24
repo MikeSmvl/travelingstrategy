@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes, { bool } from 'prop-types';
 import { Bar } from 'react-chartjs-2';
 import Switch from '@material-ui/core/Switch';
 import { CardBody } from '../../Card/Card';

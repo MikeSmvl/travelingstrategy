@@ -1,4 +1,4 @@
-import * as React from 'react';
+
 
 const weather = {
   icon1: 'CLEAR_DAY',

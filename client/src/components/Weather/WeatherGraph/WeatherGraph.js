@@ -52,7 +52,7 @@ const WeatherGraph = (props) => {
 	// this link will redirect to google with the data for temperature for the respective city
 	function redirect() {
 		const searchText = `average monthly temperature for ${destinationCity}`;
-		const win1 = window.open(`${'//google.com/search?q='}${searchText}`, '_blank');
+		window.open(`${'//google.com/search?q='}${searchText}`, '_blank');
 	}
 
 	return (
