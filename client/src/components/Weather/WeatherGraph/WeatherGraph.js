@@ -48,18 +48,12 @@ const WeatherGraph = (props) => {
 		destinationCity
 	]);
 
-	// if we dont have data for monthly temperature, we will have a link
-	// this link will redirect to google with the data for temperature for the respective city
-	function redirect() {
-		const searchText = `average monthly temperature for ${destinationCity}`;
-		window.open(`${'//google.com/search?q='}${searchText}`, '_blank');
-	}
 
 	return (
 		<Card
 			header="Average Monthly Temperature"
 			footer={(
-				<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
+				<Row className="justify-content-center"><a href="en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
 				</Row>
 			)}
 		>
@@ -68,7 +62,7 @@ const WeatherGraph = (props) => {
 					<div>
 						<span style={{ color: '#FF1C00' }}>Note: </span>
                We don&apos;t have any info on the average monthly temperature for
-						{destinationCity}. Try <a href="#" onClick={redirect}>Googling</a> instead
+						{destinationCity}. Try <a href={`//google.com/search?q=average monthly temperature for ${destinationCity}`}>Googling</a> instead
 					</div>
 				) : (
 					<div
