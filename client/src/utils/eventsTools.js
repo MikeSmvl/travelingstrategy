@@ -148,7 +148,6 @@ function getRandomImageForCategory(images,imagesUsed){
 
 async function emailEvents(events){
     var requestBody = JSON.stringify(events)
-    console.log(requestBody)
     await fetch(`${process.env.REACT_APP_BACKEND}emailEvents`, {
         method: 'POST',
         credentials: 'include',

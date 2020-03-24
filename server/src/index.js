@@ -8,6 +8,7 @@ const path = require('path')
 const { verifyUser } = require('./resolvers/user')
 const { originEnv, graphiqlEnv } = require('./config')
 const {deleteAllowed, removeEvent} = require('./resolvers/eventsMutations')
+const {emailEvents} = require('./resolvers/emailEvents/emailEvents')
 
 const app = express();
 app.use('/confirm' , express.static(path.join(__dirname, 'endpoints')));
@@ -78,6 +79,7 @@ app.post('/deleteEvent', withAuth, async function(req, res) {
 app.post('/emailEvents', withAuth, async function(req, res) {
     // console.log(req.body)
     const requestId = req.body[0].request_id
+    const events = req.body
     const email = req.email;
 
     // Being allowed to deleted and being allowed to send an email is the same requirement
@@ -85,7 +87,7 @@ app.post('/emailEvents', withAuth, async function(req, res) {
 
     if(sendingEmailAllowed.email === email){
         // res.status(200).json(removeEvent(requestId,eventTitle))
-        console.log(req.body)
+        emailEvents(email, events)
     }
     else{
         res.status(401)
