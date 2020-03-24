@@ -87,7 +87,7 @@ app.post('/emailEvents', withAuth, async function(req, res) {
 
     if(sendingEmailAllowed.email === email){
         // res.status(200).json(removeEvent(requestId,eventTitle))
-        emailEvents(email, events)
+        res.status(200).json(emailEvents(email, events));
     }
     else{
         res.status(401)
