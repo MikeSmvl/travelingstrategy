@@ -22,3 +22,9 @@ a {
 .dropdown-item.active, .dropdown-item:active {
 	background-color: #ff6e61 !important;
 }
+
+#visit-profile {
+	transform: rotate(-20deg);
+	margin-top:10px;
+}
+

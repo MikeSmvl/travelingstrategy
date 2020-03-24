@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Navbar as RBNavbar, Dropdown } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom'
+import { Navbar as RBNavbar, Dropdown, Col, Row } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
 import LoginForm from '../LoginForm/LoginForm';
+import visit_profile from './visit-profile.png'
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [logOut, setLogOut] = useState(false);
+	const location = useLocation();
 
 	useEffect(() => {
 		async function getToken() {
@@ -29,6 +32,13 @@ const Navbar = (props) => {
 			exit();
 			setLogOut(true);
 		}
+
+
+		if(document.getElementById('visit-profile')){
+			const timer = setTimeout(() =>  document.getElementById('visit-profile').style.display = "none", 7000);
+			return () => clearTimeout(timer);
+		}
+
 	}, [authenticated, logOut]);
 
 	const {
@@ -59,16 +69,26 @@ const Navbar = (props) => {
 				<RBNavbar.Collapse className="justify-content-end">
 					{authenticated
 						? (
-							<Dropdown>
-								<Dropdown.Toggle drop="left" variant="outline-primary" id="dropdown-basic">
-									<div className="fa fa-user" />
-								</Dropdown.Toggle>
+							<Row>
+								<Col>
+									<img
+										alt=""
+										id="visit-profile"
+										src={visit_profile}
+										width="70"
+										height="70"
+							/></Col>
+								<Dropdown>
+									<Dropdown.Toggle drop="left" variant="outline-primary" id="dropdown-basic">
+										<div className="fa fa-user" />
+									</Dropdown.Toggle>
 
-								<Dropdown.Menu alignRight>
-									<Dropdown.Item href="/me">Profile</Dropdown.Item>
-									<Dropdown.Item onClick={() => setLogOut(true)}>Sign Out</Dropdown.Item>
-								</Dropdown.Menu>
-							</Dropdown>
+									<Dropdown.Menu alignRight>
+										<Dropdown.Item href="/me">Profile</Dropdown.Item>
+										<Dropdown.Item onClick={() => setLogOut(true)}>Sign Out</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							</Row>
 						)
 						: (
 							<RBNavbar.Text>
