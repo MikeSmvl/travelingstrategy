@@ -890,3 +890,231 @@ Array [
   </button>,
 ]
 `;
+
+exports[`Storyshots Toast Basic Toast 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      className="fade toast TSToast "
+      role="alert"
+    >
+      <div
+        className="toast-header"
+      >
+        <strong
+          className="mr-auto "
+        >
+            
+          Toast Title
+        </strong>
+        <button
+          className="close ml-2 mb-1"
+          data-dismiss="toast"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            className="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        className="toast-body"
+      >
+        Body of Toast
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Toast Set props 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      className="fade toast TSToast "
+      role="alert"
+    >
+      <div
+        className="toast-header"
+      >
+        <strong
+          className="mr-auto "
+        >
+            
+          Title
+        </strong>
+        <button
+          className="close ml-2 mb-1"
+          data-dismiss="toast"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            className="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        className="toast-body"
+      >
+        Toast Body
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Toast Toast of type "alert" 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      className="fade toast TSToast alertToast"
+      role="alert"
+    >
+      <div
+        className="toast-header"
+      >
+        <strong
+          className="mr-auto "
+        >
+            
+          Toast Title
+        </strong>
+        <button
+          className="close ml-2 mb-1"
+          data-dismiss="toast"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            className="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        className="toast-body"
+      >
+        Body of Toast
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;

@@ -11,6 +11,8 @@ import 'react-awesome-button/dist/styles.css';
 const EventsCard = (props) => {
 	const [modal, setModal] = useState(false);
 	const [likedModal, setLikedModal] = useState(false);
+	const [removed, setRemoved] = useState(false);
+	const [removedModal, setRemovedModal] = useState(false);
 	const {
 		eventCategory = '',
 		description = '',
@@ -22,9 +24,15 @@ const EventsCard = (props) => {
 		duration = '0',
 		eventImg = '',
 		isLiked = true,
+		requestId = '',
 		eventInfo
 	} = props;
 
+	/**
+	 * This method uses arrays because some of the information are
+	 * not passed as props. The array is the result from calling the
+	 * event api
+	 */
 	async function addEvent() {
 		await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 			method: 'POST',
@@ -53,9 +61,34 @@ const EventsCard = (props) => {
 		});
 	}
 
+	async function removeEvent() {
+		const body = {
+			requestId,
+			title
+		};
+		await fetch(`${process.env.REACT_APP_BACKEND}deleteEvent`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body)
+		});
+	}
+
 	const handleLike = () => {
 		addEvent();
 		setLikedModal(true);
+	};
+
+	const handleDelete = () => {
+		removeEvent();
+		setRemoved(true);
+		setRemovedModal(true);
+	};
+
+
+	const handleFavoriteModals = () => {
+		setLikedModal(false);
+		setRemovedModal(false);
 	};
 
 	/**
@@ -111,6 +144,9 @@ const EventsCard = (props) => {
 	};
 
 
+	/**
+	 * This modal shows all the information regarding an event
+	 */
 	const InfoModal = () => {
 		return (
 			<Modal
@@ -127,17 +163,30 @@ const EventsCard = (props) => {
 				<Modal.Body>
 					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="more-info-img" />
 					<div className="card-body">
-						{ !isLiked && (
-							<div className="modal-like-button">
-								<AwesomeButton
-									type="secondary"
-									size="small"
-									centered
-									onPress={handleLike}
-								>Likes
-								</AwesomeButton>
-							</div>
-						)}
+						{ !isLiked
+							? (
+								<div className="modal-like-button">
+									<AwesomeButton
+										type="secondary"
+										size="small"
+										centered
+										onPress={handleLike}
+									>Likes
+									</AwesomeButton>
+								</div>
+							)
+							: (
+								<div className="modal-like-button">
+									<AwesomeButton
+										type="secondary"
+										size="small"
+										centered
+										onPress={handleDelete}
+									>
+										<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+									</AwesomeButton>
+								</div>
+							)}
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
 						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
 						{address !== '' && (
@@ -166,53 +215,81 @@ const EventsCard = (props) => {
 		);
 	};
 
+	/**
+	 * This modal is notification for when an event is liked or removed
+	 */
 	const LikedModal = () => {
 		return (
 			<Modal
-				show={likedModal}
-				onHide={() => setLikedModal(false)}
+				show={likedModal || removedModal}
+				onHide={handleFavoriteModals}
 				centered
-				id="modal-favorites"
-
+				id="modal-notification"
 			>
 				<Modal.Header closeButton>
 					<Modal.Title id="example-modal-sizes-title-lg">
-						<h2>Added To your Favorites !!</h2>
+						{likedModal
+							? <h2>Added To your Favorites !!</h2>
+							: (
+								<h2>Removed from your favorites
+									<span role="img" aria-label="sad">😭</span>
+								</h2>
+							)}
 					</Modal.Title>
 				</Modal.Header>
-				<ModalBody>
-					<img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
+				<ModalBody style={{ textAlign: 'center' }}>
+					{likedModal
+						? <img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
+						: <img alt="Alert" src={require('../../eventsImages/sad-monkey.gif')} />}
 				</ModalBody>
 			</Modal>
 
 		);
 	};
 
+	/**
+	 * This is the main component. It's the cards displayed on the main Event page
+	 */
 	const EventCard = () => {
 		return (
-			<Card className="card" id="eventcard" border="dark">
-				<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
-				<div className="card-body" id="cardbody">
-					<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
-					<p className="date">{getDateText(startDate)}</p>
-					<h2 className="card-title">{title}</h2>
-					<AwesomeButton
-						type="secondary"
-						size="medium"
-						onPress={() => setModal(true)}
-					>Find out more
-					</AwesomeButton>
-					{ !isLiked && (
+			(!removed
+			&& (
+				<Card className="card" id="eventcard" border="dark">
+					<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
+					<div className="card-body" id="cardbody">
+						<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
+						<p className="date">{getDateText(startDate)}</p>
+						<h2 className="card-title">{title}</h2>
 						<AwesomeButton
 							type="secondary"
-							size="small"
-							onPress={handleLike}
-							style={{ float: 'right' }}
-						><img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+							size="medium"
+							onPress={() => setModal(true)}
+						>Find out more
 						</AwesomeButton>
-					)}
-				</div>
-			</Card>
+						{ !isLiked
+							? (
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									onPress={handleLike}
+									style={{ float: 'right' }}
+								>
+									<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+								</AwesomeButton>
+							)
+							: (
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									onPress={handleDelete}
+									style={{ float: 'right' }}
+								>
+									<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+								</AwesomeButton>
+							)}
+					</div>
+				</Card>
+			))
 		);
 	};
 
@@ -236,6 +313,7 @@ EventsCard.propTypes = {
 	nameOfPlace: PropTypes.string,
 	duration: PropTypes.string,
 	isLiked: PropTypes.bool,
+	requestId: PropTypes.string,
 	eventInfo: PropTypes.instanceOf(Array)
 };
 

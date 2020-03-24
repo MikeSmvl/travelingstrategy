@@ -2,6 +2,8 @@ import unittest
 import os
 import sys
 from time import sleep
+import pandas as pd
+from requests import get
 
 # Get relative path to the data folder
 data_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -9,7 +11,7 @@ data_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(data_dir)
 from helper_class.api_helper import ApiHelper
 from helper_class.url_helper import UrlHelper
-from lib.config import currency_api_link, united_nations_api_link, emergency_url
+from lib.config import currency_api_link, united_nations_api_link, emergency_url, covid19_url, iso_dict
 
 class TestApiHelper(unittest.TestCase):
 
@@ -64,6 +66,35 @@ class TestApiHelper(unittest.TestCase):
             code = api.get_code()
 
             self.assertEqual(str(code), '<Response [200]>')
+        except Exception as error_msg:
+            self.fail(f"Api link raised the following exception: {error_msg}")
+
+    def test_covid19_api(self):
+        """
+        Test that uses one of our API links which has Covid-19 Statistics to make sure it returns a valid HTML code.
+        The expected response code is 200 as the endpoint should be up.
+        It further tries to get the total cases of a specific country that should be greater than 0 and tests the return.
+        """
+        try:
+            api = ApiHelper(covid19_url)
+            code = api.get_code()
+
+            self.assertEqual(str(code), '<Response [200]>')
+
+            iso = 'CA' # Test specific country (Canada)
+
+            # Pretend to be a browser to avoid HTTP 403
+            header = {
+            "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+            "X-Requested-With": "XMLHttpRequest"
+            }
+            r = get(covid19_url, headers=header)
+
+            data_table = pd.read_html(r.text, index_col=0)
+            data_frame = data_table[0]
+            country_total_cases = int(data_frame.loc[iso_dict[iso], 'TotalCases'])
+
+            self.assertTrue(country_total_cases > 0)
         except Exception as error_msg:
             self.fail(f"Api link raised the following exception: {error_msg}")
 
