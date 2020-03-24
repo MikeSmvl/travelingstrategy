@@ -42,6 +42,7 @@ function setSkycon(icon) {
     case 'partly-cloudy-night':
       data.icon= weather.icon4
       data.color= weather.color3
+      break;
     case 'cloudy':
       data.icon= weather.icon5
       data.color= weather.color3
@@ -69,6 +70,10 @@ function setSkycon(icon) {
     case 'fog':
       data.icon= weather.icon10
       data.color= weather.color3
+      break;
+    default:
+      data.icon= weather.icon1
+      data.color= weather.color1
       break;
     }
 
