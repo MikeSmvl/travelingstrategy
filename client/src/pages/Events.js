@@ -237,8 +237,6 @@ function Events({
 		return <Redirect to="/" />;
 	}
 
-	console.log(category);
-
 	return (
 		<div id="events-section">
 			<Row>

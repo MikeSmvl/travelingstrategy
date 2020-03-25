@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Card, Modal, ModalBody } from 'react-bootstrap';
 import './EventsCard.css';
+import IntelBot from './IntelBot/IntelBot';
 import PropTypes from 'prop-types';
 import {
 	AwesomeButton
@@ -13,6 +14,7 @@ const EventsCard = (props) => {
 	const [likedModal, setLikedModal] = useState(false);
 	const [removed, setRemoved] = useState(false);
 	const [removedModal, setRemovedModal] = useState(false);
+	const [showBot, setShowBot] = useState(false);
 	const {
 		eventCategory = '',
 		description = '',
@@ -76,11 +78,13 @@ const EventsCard = (props) => {
 
 	const handleLike = () => {
 		addEvent();
+		setModal(false)
 		setLikedModal(true);
 	};
 
 	const handleDelete = () => {
 		removeEvent();
+		setModal(false)
 		setRemoved(true);
 		setRemovedModal(true);
 	};
@@ -90,6 +94,12 @@ const EventsCard = (props) => {
 		setLikedModal(false);
 		setRemovedModal(false);
 	};
+
+	const handleCloseBot = () => setShowBot(false);
+	const handleShowBot = () => {
+		setModal(false)
+		setShowBot(true);
+	}
 
 	/**
      * Dates are transformed to English format
@@ -191,6 +201,7 @@ const EventsCard = (props) => {
 									<AwesomeButton
 										type="secondary"
 										size="small"
+										onPress={handleShowBot}
 										centered
 										// onPress={handleDelete}
 									>
@@ -308,6 +319,7 @@ const EventsCard = (props) => {
 			<EventCard />
 			<InfoModal />
 			<LikedModal />
+			<IntelBot show={showBot} handleClose={handleCloseBot} />
 		</>
 	);
 };
