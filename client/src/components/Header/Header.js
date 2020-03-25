@@ -4,21 +4,21 @@ import PropTypes from 'prop-types';
 import { Row, Col, Card} from 'react-bootstrap/';
 import './Header.css';
 import logo from '../Navbar/logo.png';
+import LoginForm from '../LoginForm/LoginForm';
 import Button from 'react-bootstrap/Button';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
 const WhyCard = (props) => {
 	return (
 		<div class = "why">
-			<Card className="why_inner">
-				<Card.Header className="iHeader">
-					Why do you want to Stay Informed?
-				</Card.Header>
-				<Card.Text class="iText">{props.info}</Card.Text>
-				<Card.Footer className="iFooter">
+			<Card className="why_inner" onMouseLeave={props.toggle}>
+				<Card.Header className="iHeader">{props.header}</Card.Header>
+				<Card.Text>{props.info}</Card.Text>
+				<Card.Footer>
 					<img src={logo}
-						 width="22"
-						 height="22"/>
+						 width="22px"
+						 height="22px"
+						 align="right"/>
 				</Card.Footer>
 			</Card>
 		</div>
@@ -43,6 +43,7 @@ const Header = (props) => {
 	const toggleWhy = () => {
 		setWhy(!why);
 	};
+	const info = "By staying informed you can:\n "
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
@@ -64,8 +65,16 @@ const Header = (props) => {
 						<div className="text-center">
 							<div>
 								<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
-								<button onMouseOver={toggleWhy} onMouseOut={toggleWhy} className="iWhy" type="button"/>
-								{why ? <WhyCard toggle={toggleWhy} info="send a remainder before your trip" /> : null}
+								<button onMouseOver={toggleWhy} className="iWhy" type="button"/>
+								{why ? <WhyCard toggle={toggleWhy} header="Why Staying Informed?" info={
+											<span>
+												<br/>
+												<ol>
+													<li>Receive an email reminder filled with the instagram top trending images for fun ideas.</li>
+													<li>See events that are occuring in your travel destination - If you have an account.</li>
+												</ol>
+											</span>}>
+										</WhyCard> : null}
 							</div>
 							<SubscriptionModal
 								show={show}
