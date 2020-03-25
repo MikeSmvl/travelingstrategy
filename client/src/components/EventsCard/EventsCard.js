@@ -187,6 +187,16 @@ const EventsCard = (props) => {
 									</AwesomeButton>
 								</div>
 							)}
+							<div className="modal-like-button">
+									<AwesomeButton
+										type="secondary"
+										size="small"
+										centered
+										// onPress={handleDelete}
+									>
+										<img alt="like button" src={require('../../eventsImages/smart.png')} style={{ height: '3em' }} />
+									</AwesomeButton>
+								</div>
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
 						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
 						{address !== '' && (

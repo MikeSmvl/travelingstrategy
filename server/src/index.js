@@ -75,6 +75,11 @@ app.post('/deleteEvent', withAuth, async function(req, res) {
     }
 });
 
+app.post('/intelInfo', withAuth, async function(req, res) {
+    const body = req.body
+    console.log("body")
+});
+
 app.listen(4000, () => {
     console.log("🚀 GraphQL server running at http://localhost:4000/graphql.");
 });
