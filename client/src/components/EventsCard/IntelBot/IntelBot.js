@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Card, Modal, ModalBody } from 'react-bootstrap';
+import React from 'react';
+import { Modal, ModalBody } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const IntelBot = (props) => {
@@ -19,6 +19,13 @@ const IntelBot = (props) => {
             eventInfo
         }
         console.log(body)
+
+		await fetch(`${process.env.REACT_APP_BACKEND}intelInfo`, {
+			method: 'POST',
+			credentials: 'include',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(body)
+		});
 	}
 
     return(

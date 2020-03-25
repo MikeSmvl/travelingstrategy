@@ -8,6 +8,7 @@ const path = require('path')
 const { verifyUser } = require('./resolvers/user')
 const { originEnv, graphiqlEnv } = require('./config')
 const {deleteAllowed, removeEvent} = require('./resolvers/eventsMutations')
+const { eventBotInfo } = require('./resolvers/eventBot/eventBot')
 
 const app = express();
 app.use('/confirm' , express.static(path.join(__dirname, 'endpoints')));
@@ -76,8 +77,8 @@ app.post('/deleteEvent', withAuth, async function(req, res) {
 });
 
 app.post('/intelInfo', withAuth, async function(req, res) {
-    const body = req.body
-    console.log("body")
+    const eventInfo = req.body.eventInfo
+    console.log("response:", eventBotInfo(eventInfo))
 });
 
 app.listen(4000, () => {
