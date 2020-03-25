@@ -95,7 +95,10 @@ const EventsCard = (props) => {
 		setRemovedModal(false);
 	};
 
-	const handleCloseBot = () => setShowBot(false);
+	const handleCloseBot = () => {
+		setModal(true);
+		setShowBot(false);
+	}
 	const handleShowBot = () => {
 		setModal(false)
 		setShowBot(true);
@@ -319,7 +322,15 @@ const EventsCard = (props) => {
 			<EventCard />
 			<InfoModal />
 			<LikedModal />
-			<IntelBot show={showBot} handleClose={handleCloseBot} />
+			<IntelBot
+				show={showBot}
+				handleClose={handleCloseBot}
+				eventCategory = {eventCategory}
+				description = {description}
+				title = {title}
+				address = {address}
+				nameOfPlace = {nameOfPlace}
+			/>
 		</>
 	);
 };

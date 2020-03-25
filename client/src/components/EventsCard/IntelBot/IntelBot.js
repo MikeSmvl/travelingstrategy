@@ -5,8 +5,21 @@ import PropTypes from 'prop-types';
 const IntelBot = (props) => {
     const {
         show = '',
-        handleClose = ''
-	} = props;
+        handleClose = '',
+        eventCategory = '',
+        description = '',
+        title = '',
+        address = '',
+        nameOfPlace = ''
+    } = props;
+    
+    async function getBotInfo(){
+        const eventInfo = eventCategory+" "+description+" "+title+" "+address+" "+nameOfPlace;
+        const body = {
+            eventInfo
+        }
+        console.log(body)
+	}
 
     return(
             <Modal
@@ -19,7 +32,7 @@ const IntelBot = (props) => {
 					    <h2>Scratch my head to find out what I know about this event</h2>
 					</Modal.Title>
 				</Modal.Header>
-				<ModalBody style={{ textAlign: 'center' }}>
+				<ModalBody style={{ textAlign: 'center' }} onClick={getBotInfo}>
 						<img alt="Alert" src={require('../../../eventsImages/smart-monkey.gif')} />
 				</ModalBody>
 			</Modal>
@@ -27,7 +40,12 @@ const IntelBot = (props) => {
 }
 
 IntelBot.propTypes = {
-	show: PropTypes.bool
+    show: PropTypes.bool,
+	eventCategory: PropTypes.string,
+	description: PropTypes.string,
+	title: PropTypes.string,
+	address: PropTypes.string,
+	nameOfPlace: PropTypes.string,
 };
 
 export default IntelBot;
