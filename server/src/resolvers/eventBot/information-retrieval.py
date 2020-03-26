@@ -54,12 +54,41 @@ def getDBpediaLink(dbpediaLinks,wikiLink):
 
     return dbpediaLinks
 
+def getLabel(dbpediaLink):
+    sparql.setQuery("""
+        SELECT ?property ?hasValue ?isValueOf
+            WHERE {{
+             {{<{}> ?property ?hasValue }}
+             UNION
+             {{ ?isValueOf ?property <{}> }}
+        }}
+    """.format(dbpediaLink,dbpediaLink))
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    for result in results["results"]["bindings"]:
+        print("==========================================================")
+        try:
+            print("predicate: ",result["property"]["value"]," object: ",result["hasValue"]["value"])
+        except KeyError:
+            print("predicate: ",result["property"]["value"]," object: ",result["isValueOf"]["value"])
+        # print("predicate: ",result["property"]["value"]," value",)
+
+        print(result)
+
+
 if __name__ == "__main__":
-    print("eventInfo",eventInfo)
-    print("==============")
-    wikipediaLinks = getWikipediaLinks(eventInfo)
-    dbpediaLinks = []
-    for link in wikipediaLinks:
-        dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
+    # print("eventInfo",eventInfo)
+    # print("==============")
+    # wikipediaLinks = getWikipediaLinks(eventInfo)
+    # dbpediaLinks = []
+    # for link in wikipediaLinks:
+    #     dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
+
+    # print(dbpediaLinks)
+    dbpediaLinks = ['http://dbpedia.org/resource/Arbitration', 'http://dbpedia.org/resource/United_States', 'http://dbpedia.org/resource/New_York_City', 'http://dbpedia.org/resource/Broadway_theatre', 'http://dbpedia.org/resource/Hot_Topic', 'http://dbpedia.org/resource/New_York_Law_School', 'http://dbpedia.org/resource/Dispute_resolution', 'http://dbpedia.org/resource/Wine']
 
     print(dbpediaLinks)
+    getLabel("http://dbpedia.org/resource/Arbitration")
+    # for link in dbpediaLinks:
+    #     getLabel(link)
