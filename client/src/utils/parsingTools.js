@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Row} from 'react-bootstrap/';
 import { Card, CardBody} from '../components/Card/Card';
+import Frame from '../components/Frame/Frame';
 import { Link } from 'react-router-dom';
 
 
@@ -98,59 +99,4 @@ function addChosenCities(arrayOfCities){
 
 }
 
-function addTrendingSpots(arrayOfImages){
-	const items = [];
-	arrayOfImages.forEach(image =>{
-		//const city_in_url = citySubscription.search_term.toLowerCase().replace(' ', ''); // triming the city to match the tag
-		const image_url = image.image_link;
-		const geolocation = image.geolocation;
-		const caption = image.caption;
-		items.push(
-			<Row
-				style={{
-					backgroundColor: 'rgb(247,	247,	247)',
-					borderRadius: '0px',
-					paddingBottom:'500%'
-				}}
-				className="justify-content-center"
-			>
-			<Card
-				style={{
-					width: '385px',
-					height: '255px'
-				}}
-			>
-				<CardBody
-					style={{
-						padding: '0px',
-						height: '100%'
-				}}
-				>
-						{/* style={{backgroundImage: `url(${image_url})`}}> */}
-						<img
-						src={image_url}
-						alt="Logo"
-						width='100%'
-						height='100%'/>
-						<div>
-							<b>Geo-location: </b>{geolocation}
-							<br></br>
-							<br></br>
-							{caption}
-						</div>
-				</CardBody>
-			</Card>
-			</Row>
-		);
-	});
-	return (
-		<div>
-			{items}
-		</div>
-	);
-
-}
-
-
-
-export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa, addChosenCities,addTrendingSpots };
+export { removeQuotes, languages, flagSrc, getRate, getOtherTrafficSide,formatingVisa, addChosenCities };
