@@ -21,11 +21,25 @@ def getWikipediaLinks(textToAnnotate):
 
     wikipediaLinks = list(dict.fromkeys(wikipediaLinks)) #Removing duplicates
     wikipediaLinks = list(filter(None, wikipediaLinks)) #Removing empty strings
-    print(wikipediaLinks)
 
-def getDBpediaLink(wikiLink):
+    return wikipediaLinks
+
+# This method will be used when spotlight is on
+# def getDBpediaLinkSpotlight:
+    # # api-endpoint
+    # prefix = "http://api.dbpedia-spotlight.org/en/lookup?text="
+    # URL = prefix+eventInfo
+
+    # headers = {'accept': 'application/json'}
+    # print(URL)
+    # response = requests.get(url = URL, headers = headers)
+
+    # print("response code: ",response.status_code)
+    # print(response.json())
+
+
+def getDBpediaLink(dbpediaLinks,wikiLink):
     sparql.setQuery("""
-        PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         SELECT ?dbpediaLink
         WHERE {{
             <{}> foaf:primaryTopic ?dbpediaLink .
@@ -36,28 +50,16 @@ def getDBpediaLink(wikiLink):
     results = sparql.query().convert()
 
     for result in results["results"]["bindings"]:
-        print("dbpediaLink: ",result["dbpediaLink"]["value"])
-        # print('%s: %s' % (result["label"]["xml:lang"], result["label"]["value"]))
+        dbpediaLinks.append(result["dbpediaLink"]["value"])
 
-# print("eventInfo",eventInfo)
-# print("==============")
-# getWikipediaLinks(eventInfo)
-getDBpediaLink("http://en.wikipedia.org/wiki/Broadway_theatre")
-# for entity in response.entities():
-#     print (entity.wikipedia_link)
+    return dbpediaLinks
 
-# eventInfo = "Real Madrid"
-# # eventInfo = sys.argv[1]
-# # api-endpoint
-# prefix = "http://api.dbpedia-spotlight.org/en/lookup?text="
-# URL = prefix+eventInfo
+if __name__ == "__main__":
+    print("eventInfo",eventInfo)
+    print("==============")
+    wikipediaLinks = getWikipediaLinks(eventInfo)
+    dbpediaLinks = []
+    for link in wikipediaLinks:
+        dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
 
-# headers = {'accept': 'application/json'}
-# print(URL)
-# response = requests.get(url = URL, headers = headers)
-
-# print("response code: ",response.status_code)
-# print(response.json())
-
-
-# print("python",eventInfo)
+    print(dbpediaLinks)
