@@ -21,7 +21,8 @@ function eventBotInfo(eventInfo) {
     process.stdout.on('data', function(data) {
         // console.log("javascript",data.toString());
         var dataToString = data.toString()
-        console.log("python result:", dataToString)
+        console.log("=========== Python Results==========")
+        console.log(dataToString)
     })
 
     process.on('exit', (code) => {
