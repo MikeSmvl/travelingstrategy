@@ -19,7 +19,9 @@ function eventBotInfo(eventInfo) {
     // Takes stdout data from script which executed
     // with arguments and send this data to res object
     process.stdout.on('data', function(data) {
-        console.log("javascript",data.toString());
+        // console.log("javascript",data.toString());
+        var dataToString = data.toString()
+        console.log("python result:", dataToString)
     })
 
     process.on('exit', (code) => {
