@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { Row, Col, Card} from 'react-bootstrap/';
 import './Header.css';
 import logo from '../Navbar/logo.png';
-import LoginForm from '../LoginForm/LoginForm';
 import Button from 'react-bootstrap/Button';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 

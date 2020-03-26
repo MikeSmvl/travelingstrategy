@@ -24,7 +24,20 @@ a {
 }
 
 #visit-profile {
+	position: fixed;
+	right:5%;
 	transform: rotate(-20deg);
 	margin-top:10px;
+}
+
+.whyLoggin{
+	background: url('../../miscImages/infoWhy.png');
+	background-repeat: no-repeat;
+	background-size: 23px 23px;
+	background-position-y: 40%;
+	border: none;
+	outline: none;
+	height: 46px;
+	width: 23px;
 }
 

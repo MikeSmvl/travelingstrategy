@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom'
 import { Navbar as RBNavbar, Dropdown, Col, Row } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
+import WhyCard from '../WhyCard/WhyCard'
 import LoginForm from '../LoginForm/LoginForm';
 import visit_profile from './visit-profile.png'
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [logOut, setLogOut] = useState(false);
-	const location = useLocation();
+	const [why, setWhy] = useState(false);
+	const toggleWhy = () => {
+		setWhy(!why);
+	};
 
 	useEffect(() => {
 		async function getToken() {
@@ -91,9 +94,22 @@ const Navbar = (props) => {
 							</Row>
 						)
 						: (
-							<RBNavbar.Text>
-								<LoginForm />
-							</RBNavbar.Text>
+							<Row>
+								<RBNavbar.Text><button onMouseOver={toggleWhy}
+													onMouseLeave={toggleWhy}
+													className="whyLoggin"/>
+									{why ?
+										<WhyCard toggle={toggleWhy}
+												header="Why register"
+												info="you should">
+										</WhyCard> : null}
+								</RBNavbar.Text>
+								<Col>
+									<RBNavbar.Text>
+										<LoginForm />
+									</RBNavbar.Text>
+								</Col>
+							</Row>
 						)}
 				</RBNavbar.Collapse>
 			</RBNavbar>
