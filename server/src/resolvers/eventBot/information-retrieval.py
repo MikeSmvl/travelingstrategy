@@ -54,7 +54,7 @@ def getDBpediaLink(dbpediaLinks,wikiLink):
 
     return dbpediaLinks
 
-def getLabel(dbpediaLink):
+def describe(dbpediaLink):
     sparql.setQuery("""
         SELECT ?property ?hasValue ?isValueOf
             WHERE {{
@@ -76,6 +76,53 @@ def getLabel(dbpediaLink):
 
         print(result)
 
+def getImage(dbpediaLink):
+    sparql.setQuery("""
+        SELECT ?value
+            WHERE {{
+             <{}> foaf:depiction ?value
+        }}
+    """.format(dbpediaLink))
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    for result in results["results"]["bindings"]:
+        print("==========================================================")
+        print("Image: ",result["value"]["value"])
+
+def getLabel(dbpediaLink):
+    sparql.setQuery("""
+        SELECT ?value
+            WHERE {{
+             <{}> rdfs:label ?value.
+             FILTER (LANG(?value) = 'en') . 
+        }}
+
+    """.format(dbpediaLink))
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    for result in results["results"]["bindings"]:
+        print("==========================================================")
+        print("Label: ",result["value"]["value"])
+
+def getComment(dbpediaLink):
+    sparql.setQuery("""
+        SELECT ?value
+            WHERE {{
+             <{}> rdfs:comment ?value.
+             FILTER (LANG(?value) = 'en') . 
+        }}
+
+    """.format(dbpediaLink))
+    sparql.setReturnFormat(JSON)
+    results = sparql.query().convert()
+
+    for result in results["results"]["bindings"]:
+        print("==========================================================")
+        print("Comment: ",result["value"]["value"])
+
+
 
 if __name__ == "__main__":
     # print("eventInfo",eventInfo)
@@ -89,6 +136,8 @@ if __name__ == "__main__":
     dbpediaLinks = ['http://dbpedia.org/resource/Arbitration', 'http://dbpedia.org/resource/United_States', 'http://dbpedia.org/resource/New_York_City', 'http://dbpedia.org/resource/Broadway_theatre', 'http://dbpedia.org/resource/Hot_Topic', 'http://dbpedia.org/resource/New_York_Law_School', 'http://dbpedia.org/resource/Dispute_resolution', 'http://dbpedia.org/resource/Wine']
 
     print(dbpediaLinks)
+    getImage("http://dbpedia.org/resource/Arbitration")
     getLabel("http://dbpedia.org/resource/Arbitration")
+    getComment("http://dbpedia.org/resource/Arbitration")
     # for link in dbpediaLinks:
     #     getLabel(link)
