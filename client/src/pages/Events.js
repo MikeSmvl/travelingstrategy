@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
 import '../App.css';
 import Unsplash, { toJson } from 'unsplash-js';
-import { addMyEvents, addApiEvents, getButtonContent,emailEvents } from '../utils/eventsTools';
+import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -249,12 +249,14 @@ function Events({
 								{getButtonContent('Hamburger')}
 							</Button>
 						</div>
-						{ category === "likes" &&
-						(<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => emailEvents(savedEvents)} >
-								{getButtonContent('Email Favorites')}
-							</Button>
-						</div>)}
+						{ category === 'likes'
+						&& (
+							<div className="choice-btn">
+								<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => emailEvents(savedEvents)}>
+									{getButtonContent('Email Favorites')}
+								</Button>
+							</div>
+						)}
 						<div className="choice-btn">
 							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
 								{getButtonContent('Likes')}
