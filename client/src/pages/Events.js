@@ -256,7 +256,7 @@ function Events({
 						
 						<div className="choice-btn">
 							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
-								{getButtonContent('Favorites')}
+								{getButtonContent('Favourites')}
 							</Button>
 						</div>
 						<div className="choice-btn">
@@ -300,8 +300,15 @@ function Events({
 					<div className="app-card-list" id="app-card-list">
 					{ category === 'likes'
 						&& (
-							<OverlayTrigger overlay={<Popover id="popover-positioned-bottom">Receive an email of your favorite events </Popover>}>
-								<div className="email-btn" 
+							<OverlayTrigger
+								overlay={
+									<Popover
+										id="popover-positioned-bottom">
+											Receive an email of your favourite events
+									</Popover>
+									}
+							>
+								<div className="email-btn"
 										style={{ float: 'right' }}>
 									<AwesomeButton
 										type="secondary"
@@ -309,11 +316,10 @@ function Events({
 										value="likes"
 										onPress={() => emailEvents(savedEvents)}
 									>
-										<img alt="Icon" src={require(`../eventsImages/Email Favorites.png`)} style={{height:'2em'}}></img>
+										<img alt="Icon" src={require(`../eventsImages/Email Favourites.png`)} style={{height:'2em'}}></img>
 									</AwesomeButton>
 								</div>
 							</OverlayTrigger>
-							
 						)}
 						{category === 'likes'
 							? addMyEvents(savedEvents, requestId)
