@@ -301,8 +301,7 @@ main {
   width: 100%;;
 }
 
-.toast{
-  color: green;
+.events-toast{
   align-items: center;
   top: 12px;
   margin: 0 auto;

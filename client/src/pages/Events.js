@@ -297,15 +297,15 @@ function Events({
 						</div>
 					</div>
 				</div>
-					<Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
-						<Toast.Header>
-							<strong className="mr-auto" style={{color:'green'}}>Success!</strong>
-							<small>Just now</small>
-						</Toast.Header>
-						<Toast.Body>An email with your favourited events has been emailed to you!</Toast.Body>
-					</Toast>
+				<Toast className="events-toast" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+					<Toast.Header>
+						<strong className="mr-auto" style={{color:'green'}}>Success!</strong>
+						<small>Just now</small>
+					</Toast.Header>
+					<Toast.Body>An email with your favourited events has been emailed to you!</Toast.Body>
+				</Toast>
 				<section className={mainContentClass} style={{ marginTop: '4%' }}>
-					<div className="app-card-list" id="app-card-list">
+					<div>
 					{ category === 'likes'
 						&& (
 							<OverlayTrigger
@@ -329,11 +329,14 @@ function Events({
 								</div>
 							</OverlayTrigger>
 						)}
+					</div>
+				</section>
+				<section className={mainContentClass}>
+					<div className="app-card-list" id="app-card-list">
 						{category === 'likes'
 							? addMyEvents(savedEvents, requestId)
 							: addApiEvents(eventsForCategories, requestId, images)}
 					</div>
-
 				</section>
 			</Row>
 		</div>
