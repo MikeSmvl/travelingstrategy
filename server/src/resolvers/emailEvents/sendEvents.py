@@ -2,15 +2,21 @@ from email_construction import Email_events_html
 import yagmail
 import sys, json
 
-#pass email arguments and events that belong to the respective accounts
-recipientEmail = sys.argv[1] 
+recipientEmail = sys.argv[1] #Replace this by your email to until you're done working
 list_of_events = json.loads(sys.argv[2])
 
-#intialize the email object and pass list of events
-#replace new lines with empty brackets, without it the email is generated with new lines
-email_construction = Email_events_html(list_of_events)
-emailHtml = email_construction.get_email().replace("\n", "")
+#function constructs email dynamically with the number of events in the user's interest list
+def getEventsContent(list_of_events):
+
+  email_html = Email_events_html()
+
+  for events in list_of_events:
+    email_html.add_events(events)
+  return email_html.get_email().replace("\n", "")
+
+#piece all the elements of the email together
+email_construction = getEventsContent(list_of_events)
 
 
 yag = yagmail.SMTP('noreply.travelingstrategy@gmail.com', 'Soen490!@#')
-yag.send(recipientEmail, 'TravelingStrategy', emailHtml)
+yag.send(recipientEmail, 'TravelingStrategy', email_construction)

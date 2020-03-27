@@ -92,21 +92,10 @@ email_table_two = """
   															<tr>
   																<td height="24"></td>
   															</tr>
-  															<tr>
-  																<td valign="top" width="48%" align="center"><img src={image} alt="events" width="350" height="200" style="display:block; padding:15px 25px; background-color:#DAE1E9; color:#ffffff; border-radius:3px; text-decoration:none;" /></td>
-  															</tr>
-  															<tr>
-  																<td height="24"></td>
-  															</tr>
-  															<tr>
-  																<td align="center"><span style="color:#48545d;font-size:20px;line-height:18px;font-weight:bold">{title}</span></td>
-  															</tr>
-  															<tr>
-  																<td height="24"></td>
-  															</tr>
-  															<tr>
-  																<td align="center"><p style="color:#667885; font-size:12px; line-height:17px; font-style:italic;">{description}</p></td>
-  															</tr>
+
+"""
+
+email_table_three = """
   															<tr>
   																<td height="24"></td>
   															</tr>
@@ -115,9 +104,6 @@ email_table_two = """
   															</tr>
   														</tbody>
   													</table>
-"""
-
-email_table_three = """
 													<table id="promo" width="100%" cellpadding="0" cellspacing="0" border="0">
 														<tbody>
 															<tr>
