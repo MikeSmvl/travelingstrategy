@@ -5,6 +5,8 @@ import Client from 'predicthq';
 import '../App.css';
 import Unsplash, { toJson } from 'unsplash-js';
 import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
+import {AwesomeButton} from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -249,17 +251,10 @@ function Events({
 								{getButtonContent('Hamburger')}
 							</Button>
 						</div>
-						{ category === 'likes'
-						&& (
-							<div className="choice-btn">
-								<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => emailEvents(savedEvents)}>
-									{getButtonContent('Email Favorites')}
-								</Button>
-							</div>
-						)}
+						
 						<div className="choice-btn">
 							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
-								{getButtonContent('Likes')}
+								{getButtonContent('Favorites')}
 							</Button>
 						</div>
 						<div className="choice-btn">
@@ -301,6 +296,20 @@ function Events({
 				</div>
 				<section className={mainContentClass} style={{ marginTop: '4%' }}>
 					<div className="app-card-list" id="app-card-list">
+					{ category === 'likes'
+						&& (
+							<div className="email-btn" >
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									value="likes"
+									style={{ float: 'right' }}
+									onPress={() => emailEvents(savedEvents)}
+								>
+									<img alt="Icon" src={require(`../eventsImages/Email Favorites.png`)} style={{height:'2em'}}></img>
+								</AwesomeButton>
+							</div>
+						)}
 						{category === 'likes'
 							? addMyEvents(savedEvents, requestId)
 							: addApiEvents(eventsForCategories, requestId, images)}
