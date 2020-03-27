@@ -1,6 +1,11 @@
 from email_construction import Email_events_html
 import yagmail
 import sys, json
+import base64
+# import keyring.backend
+# from keyrings.alt.file import PlaintextKeyring
+
+# keyring.set_keyring(PlaintextKeyring())
 
 recipientEmail = sys.argv[1] #Replace this by your email to until you're done working
 list_of_events = json.loads(sys.argv[2])
@@ -17,6 +22,6 @@ def getEventsContent(list_of_events):
 #piece all the elements of the email together
 email_construction = getEventsContent(list_of_events)
 
-
-yag = yagmail.SMTP('noreply.travelingstrategy@gmail.com', 'Soen490!@#')
+print(base64.b64decode("U29lbjQ5MCFAIw==").decode("utf-8"))
+yag = yagmail.SMTP('noreply.travelingstrategy@gmail.com', base64.b64decode("U29lbjQ5MCFAIw==").decode("utf-8"))
 yag.send(recipientEmail, 'TravelingStrategy', email_construction)
