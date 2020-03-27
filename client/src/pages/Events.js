@@ -304,7 +304,7 @@ function Events({
 					</Toast.Header>
 					<Toast.Body>An email with your favourited events has been emailed to you!</Toast.Body>
 				</Toast>
-				<section className={mainContentClass} style={{ marginTop: '4%' }}>
+				<section className={mainContentClass}>
 					<div>
 					{ category === 'likes'
 						&& (
@@ -330,8 +330,6 @@ function Events({
 							</OverlayTrigger>
 						)}
 					</div>
-				</section>
-				<section className={mainContentClass}>
 					<div className="app-card-list" id="app-card-list">
 						{category === 'likes'
 							? addMyEvents(savedEvents, requestId)
