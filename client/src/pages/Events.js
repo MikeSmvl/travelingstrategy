@@ -4,12 +4,12 @@ import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
 import '../App.css';
 import Unsplash, { toJson } from 'unsplash-js';
-import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
-import {AwesomeButton} from 'react-awesome-button';
+import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Toast from 'react-bootstrap/Toast'
+import Toast from 'react-bootstrap/Toast';
+import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -299,32 +299,35 @@ function Events({
 				</div>
 				<Toast className="events-toast" onClose={() => setShow(false)} show={show} delay={3000} autohide>
 					<Toast.Header>
-						<strong className="mr-auto" style={{color:'green'}}>Success!</strong>
+						<strong className="mr-auto" style={{ color: 'green' }}>Success!</strong>
 						<small>Just now</small>
 					</Toast.Header>
 					<Toast.Body>An email with your favourited events has been emailed to you!</Toast.Body>
 				</Toast>
 				<section className={mainContentClass}>
 					<div>
-					{ category === 'likes'
+						{ category === 'likes'
 						&& (
 							<OverlayTrigger
-								overlay={
+								overlay={(
 									<Popover
-										id="popover-positioned-bottom">
+										id="popover-positioned-bottom"
+									>
 											Receive an email of your favourite events
 									</Popover>
-									}
+								)}
 							>
-								<div className="email-btn"
-										style={{ float: 'right' }}>
+								<div
+									className="email-btn"
+									style={{ float: 'right' }}
+								>
 									<AwesomeButton
 										type="secondary"
 										size="small"
 										value="likes"
-										onPress={() => {emailEvents(savedEvents); setShow(true)}}
+										onPress={() => { emailEvents(savedEvents); setShow(true); }}
 									>
-										<img alt="Icon" src={require(`../eventsImages/Email Favourites.png`)} style={{height:'2em'}}></img>
+										<img alt="Icon" src={require('../eventsImages/Email Favourites.png')} style={{ height: '2em' }} />
 									</AwesomeButton>
 								</div>
 							</OverlayTrigger>
