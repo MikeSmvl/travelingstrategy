@@ -9,6 +9,7 @@ import {AwesomeButton} from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 import Popover from 'react-bootstrap/Popover';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Toast from 'react-bootstrap/Toast'
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -43,6 +44,7 @@ function Events({
 	const [images, setImages] = useState([]);
 	const [redirect, setRedirect] = useState(false);
 	const [email, setEmail] = useState('');
+	const [show, setShow] = useState(false);
 
 
 	useEffect(() => {
@@ -253,7 +255,6 @@ function Events({
 								{getButtonContent('Hamburger')}
 							</Button>
 						</div>
-						
 						<div className="choice-btn">
 							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
 								{getButtonContent('Favourites')}
@@ -296,6 +297,13 @@ function Events({
 						</div>
 					</div>
 				</div>
+					<Toast onClose={() => setShow(false)} show={show} delay={3000} autohide>
+						<Toast.Header>
+							<strong className="mr-auto" style={{color:'green'}}>Success!</strong>
+							<small>Just now</small>
+						</Toast.Header>
+						<Toast.Body>An email with your favourited events has been emailed to you!</Toast.Body>
+					</Toast>
 				<section className={mainContentClass} style={{ marginTop: '4%' }}>
 					<div className="app-card-list" id="app-card-list">
 					{ category === 'likes'
@@ -314,7 +322,7 @@ function Events({
 										type="secondary"
 										size="small"
 										value="likes"
-										onPress={() => emailEvents(savedEvents)}
+										onPress={() => {emailEvents(savedEvents); setShow(true)}}
 									>
 										<img alt="Icon" src={require(`../eventsImages/Email Favourites.png`)} style={{height:'2em'}}></img>
 									</AwesomeButton>

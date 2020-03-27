@@ -290,7 +290,6 @@ main {
 
 }
 
-
 .buttonSpeaker{
   height: 35px;
   width: 33px;
@@ -300,4 +299,12 @@ main {
 .map-darksky{
   height:500px;
   width: 100%;;
+}
+
+.toast{
+  color: green;
+  align-items: center;
+  top: 12px;
+  margin: 0 auto;
+  left: 50%;
 }

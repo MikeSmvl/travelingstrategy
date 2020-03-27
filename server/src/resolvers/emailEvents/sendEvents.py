@@ -14,7 +14,7 @@ def getEventsContent(list_of_events):
 
 
 keyring.set_keyring(PlaintextKeyring())
-recipientEmail = sys.argv[1] #Replace this by your email to until you're done working
+recipientEmail = 'steffan_v@hotmail.com' #Replace this by your email to until you're done working
 list_of_events = json.loads(sys.argv[2])
 
 #piece all the elements of the email together
