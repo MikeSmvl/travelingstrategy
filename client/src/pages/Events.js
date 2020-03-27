@@ -7,6 +7,8 @@ import Unsplash, { toJson } from 'unsplash-js';
 import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
 import {AwesomeButton} from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
+import Popover from 'react-bootstrap/Popover';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -298,17 +300,20 @@ function Events({
 					<div className="app-card-list" id="app-card-list">
 					{ category === 'likes'
 						&& (
-							<div className="email-btn" >
-								<AwesomeButton
-									type="secondary"
-									size="small"
-									value="likes"
-									style={{ float: 'right' }}
-									onPress={() => emailEvents(savedEvents)}
-								>
-									<img alt="Icon" src={require(`../eventsImages/Email Favorites.png`)} style={{height:'2em'}}></img>
-								</AwesomeButton>
-							</div>
+							<OverlayTrigger overlay={<Popover id="popover-positioned-bottom">Receive an email of your favorite events </Popover>}>
+								<div className="email-btn" 
+										style={{ float: 'right' }}>
+									<AwesomeButton
+										type="secondary"
+										size="small"
+										value="likes"
+										onPress={() => emailEvents(savedEvents)}
+									>
+										<img alt="Icon" src={require(`../eventsImages/Email Favorites.png`)} style={{height:'2em'}}></img>
+									</AwesomeButton>
+								</div>
+							</OverlayTrigger>
+							
 						)}
 						{category === 'likes'
 							? addMyEvents(savedEvents, requestId)
