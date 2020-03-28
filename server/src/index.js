@@ -78,7 +78,7 @@ app.post('/deleteEvent', withAuth, async function(req, res) {
 
 app.post('/intelInfo', withAuth, async function(req, res) {
     const eventInfo = req.body.eventInfo
-    console.log("response:", eventBotInfo(eventInfo))
+    res.status(200).json(await eventBotInfo(eventInfo))
 });
 
 app.listen(4000, () => {

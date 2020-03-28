@@ -1,5 +1,5 @@
 
-import sys
+import sys,json
 # import requests
 
 import textrazor # We are using text razor until dbpedia is back up
@@ -72,7 +72,6 @@ def describe(dbpediaLink):
             print("predicate: ",result["property"]["value"]," object: ",result["hasValue"]["value"])
         except KeyError:
             print("predicate: ",result["property"]["value"]," object: ",result["isValueOf"]["value"])
-        # print("predicate: ",result["property"]["value"]," value",)
 
         print(result)
 
@@ -87,8 +86,6 @@ def getImage(dbpediaLink):
     results = sparql.query().convert()
 
     for result in results["results"]["bindings"]:
-        # print("==========================================================")
-        # print("Image: ",result["value"]["value"])
         return result["value"]["value"]
 
 def getLabel(dbpediaLink):
@@ -113,7 +110,7 @@ def getComment(dbpediaLink):
         SELECT ?value
             WHERE {{
              <{}> rdfs:comment ?value.
-             FILTER (LANG(?value) = 'en') . 
+             FILTER (LANG(?value) = 'en') .
         }}
 
     """.format(dbpediaLink))
@@ -121,8 +118,6 @@ def getComment(dbpediaLink):
     results = sparql.query().convert()
 
     for result in results["results"]["bindings"]:
-        # print("==========================================================")
-        # print("Comment: ",result["value"]["value"])
         return result["value"]["value"]
 
 def getWikiLinks(dbpediaLink):
@@ -137,9 +132,12 @@ def getWikiLinks(dbpediaLink):
     results = sparql.query().convert()
 
     for result in results["results"]["bindings"]:
-        # print("==========================================================")
-        # print("WikiLinks: ",result["value"]["value"])
         return result["value"]["value"]
+
+def removeQuotes(string):
+    if(string != None):
+        return string.replace("\"","'")
+    return ''
 
 
 
@@ -153,22 +151,14 @@ if __name__ == "__main__":
 
     # print(dbpediaLinks)
     dbpediaLinks = ['http://dbpedia.org/resource/Arbitration', 'http://dbpedia.org/resource/United_States', 'http://dbpedia.org/resource/New_York_City', 'http://dbpedia.org/resource/Broadway_theatre', 'http://dbpedia.org/resource/Hot_Topic', 'http://dbpedia.org/resource/New_York_Law_School', 'http://dbpedia.org/resource/Dispute_resolution', 'http://dbpedia.org/resource/Wine']
-
-    print(dbpediaLinks)
-    eventsDataList = []
+    eventsDataList = "["
     for link in dbpediaLinks:
-        image = getImage(link)
-        label = getLabel(link)
-        comment = getComment(link)
-        wikipediaLink = getWikiLinks(link)
-        eventData = {
-            "image":image,
-            "label":label,
-            "comment":comment,
-            "wikipediaLink":wikipediaLink
-        }
-        eventsDataList.append(eventData)
-
-    print(eventsDataList)
-    # for link in dbpediaLinks:
-    #     getLabel(link)
+        image = removeQuotes(getImage(link))
+        label = removeQuotes(getLabel(link))
+        comment = removeQuotes(getComment(link))
+        wikipediaLink = removeQuotes(getWikiLinks(link))
+        eventData = "{{\"label\":\"{}\",\"image\":\"{}\",\"comment\":\"{}\",\"wikipediaLink\":\"{}\"}},".format(label,image,comment,wikipediaLink)
+        # print("label:\
+        eventsDataList = eventsDataList+eventData
+    eventsDataList = eventsDataList[:len(eventsDataList)-1]+"]"
+    print((eventsDataList))

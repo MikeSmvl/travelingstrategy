@@ -25,7 +25,11 @@ const IntelBot = (props) => {
 			credentials: 'include',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(body)
-		});
+		})
+		.then((res) => res.json())
+		.then((res) => {
+			console.log(res)
+		})
 	}
 
     return(

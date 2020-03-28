@@ -2,7 +2,7 @@ var path = require('path');
 
 var pythonScriptPath = path.join(__dirname, 'information-retrieval.py');
 
-function eventBotInfo(eventInfo) {
+async function eventBotInfo(eventInfo) {
 
     // Use child_process.spawn method from
     // child_process module and assign it
@@ -13,23 +13,24 @@ function eventBotInfo(eventInfo) {
     // 1. python3
     // 2. list containing Path of the script (./send-email.py)
     //    and arguments for the script (link)
-
     var process = spawn('python3', [pythonScriptPath, eventInfo]);
-
-    // Takes stdout data from script which executed
-    // with arguments and send this data to res object
-    process.stdout.on('data', function(data) {
-        // console.log("javascript",data.toString());
-        var dataToString = data.toString()
-        console.log("=========== Python Results==========")
-        console.log(dataToString)
-    })
+    var results = await getPythonResult(process)
 
     process.on('exit', (code) => {
         console.log(`Child exited with code ${code}`);
     });
 
-    return "hhehehe"
+    return JSON.parse(results)
+}
+
+function getPythonResult(process){
+    return new Promise((resolve, reject) => {
+        // Takes stdout data from script which executed
+        // with arguments and send this data to res object
+        process.stdout.on('data', function(data) {
+            resolve(data.toString())
+        })
+    })
 }
 
 module.exports = { eventBotInfo }
