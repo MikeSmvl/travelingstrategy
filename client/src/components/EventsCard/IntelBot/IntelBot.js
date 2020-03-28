@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { Modal, ModalBody } from 'react-bootstrap';
 import PropTypes from 'prop-types';
+import {getBotKnowledge } from '../../../utils/eventsTools';
 
 const IntelBotResult = (props) => {
 	const {
         show = '',
-        handleClose = '',
-    } = props;
+		handleClose = '',
+		knowledge = '',
+	} = props;
+
+	console.log(knowledge)
 	return(
 		<Modal
 			show={show}
@@ -19,14 +23,14 @@ const IntelBotResult = (props) => {
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
-					Hello
+					{getBotKnowledge(knowledge)}
 			</ModalBody>
 		</Modal>
 	)
 }
 const IntelBot = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [botKnowledge, setBotKnowledge] = useState([]);
 
     const {
         show = '',
@@ -36,8 +40,8 @@ const IntelBot = (props) => {
         title = '',
         address = '',
         nameOfPlace = ''
-    } = props;
-    
+	} = props;
+
     async function getBotInfo(){
 		setIsLoading(true);
         const eventInfo = eventCategory+" "+description+" "+title+" "+address+" "+nameOfPlace;
@@ -53,14 +57,13 @@ const IntelBot = (props) => {
 		})
 		.then((res) => res.json())
 		.then((res) => {
-			console.log(res)
-			setIsLoading(false)
-			setIsLoaded(true)
+			setIsLoading(false);
+			setBotKnowledge(res);
 		})
 	}
 
     return(
-			<>{!isLoaded
+			<>{botKnowledge.length === 0
 				?
 				<Modal
 					show={show}
@@ -75,17 +78,20 @@ const IntelBot = (props) => {
 							}
 						</Modal.Title>
 					</Modal.Header>
-					<ModalBody style={{ textAlign: 'center' }} onClick={getBotInfo}>
-							{!isLoading
-							? <img alt="Alert" src={require('../../../eventsImages/smart-monkey.gif')} />
-							: <img alt="Alert" src={require('../../../eventsImages/thinky-monkey.gif')} />
-						}
+					{!isLoading
+					?<ModalBody style={{ textAlign: 'center' }} onClick={getBotInfo}>
+						<img alt="Alert" src={require('../../../eventsImages/smart-monkey.gif')} />
 					</ModalBody>
+					: <ModalBody style={{ textAlign: 'center' }}>
+						<img alt="Alert" src={require('../../../eventsImages/thinky-monkey.gif')} />
+					</ModalBody>
+					}
 				</Modal>
 				:
 				<IntelBotResult
 					show={show}
-					onHide={handleClose}
+					handleClose={handleClose}
+					knowledge={botKnowledge}
 				/>
 			}
 			</>

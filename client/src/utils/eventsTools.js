@@ -118,6 +118,33 @@ function getButtonContent(category){
     )
 }
 
+function getBotKnowledge(knowledgeArray){
+    const items = [];
+
+    knowledgeArray.forEach(knowledge =>{
+        var label = knowledge.label;
+        var image = knowledge.image;
+        var comment = knowledge.comment;
+        var wikipedia = knowledge.wikipediaLink;
+
+        items.push(
+            <div>
+            <div>Label: {label}</div>
+            <img src={image} className="more-info-img"></img>
+            <div>Comment: {comment}</div>
+            <div>Wikipedia: {wikipedia}</div>
+            <hr className="cardDivider" />
+            </div>
+        )
+    });
+
+    return (
+        <div>
+            {items}
+        </div>
+    );
+}
+
 /**
  * There might be multiple labels for an event that's
  * why we need to loop through the array of labels
@@ -147,4 +174,4 @@ function getRandomImageForCategory(images,imagesUsed){
 
 
 
-export {addMyEvents,addApiEvents,getButtonContent};
+export {addMyEvents,addApiEvents,getButtonContent,getBotKnowledge};
