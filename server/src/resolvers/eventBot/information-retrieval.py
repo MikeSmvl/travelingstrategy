@@ -7,8 +7,8 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 
 textrazor.api_key = "a13914c08e80484e93ccfa9017c8e479ad15bb500039021f34b5bdcb"
 sparql = SPARQLWrapper("http://dbpedia.org/sparql")
-# eventInfo = sys.argv[1]
-eventInfo = "eventInfo conferences A return of this perennial favorite, featuring renowned arbitrators discussing the hottest topics in commercial dispute resolution.  A Co-Presentation with the American Arbitration AssociationDate: April 16, 2020Time: 5:30 p.m. – 6:50 p.m.(wine and cheese reception to follow)Location: Events CenterRegistration Required, Free Admission 1.5 credit in Professional Practice (NY transitional and nontransitional)NYLS CLE Financial Aid Policy Cutting-Edge Topics in Commercial Arbitration 185 West Broadway New York, NY 10013 United States of America New York Law School"
+eventInfo = sys.argv[1]
+# eventInfo = "eventInfo conferences A return of this perennial favorite, featuring renowned arbitrators discussing the hottest topics in commercial dispute resolution.  A Co-Presentation with the American Arbitration AssociationDate: April 16, 2020Time: 5:30 p.m. – 6:50 p.m.(wine and cheese reception to follow)Location: Events CenterRegistration Required, Free Admission 1.5 credit in Professional Practice (NY transitional and nontransitional)NYLS CLE Financial Aid Policy Cutting-Edge Topics in Commercial Arbitration 185 West Broadway New York, NY 10013 United States of America New York Law School"
 
 # This method annotates the event info to find wikipedia link
 # We're finding wikipedia links because textrazor doesn't have dbpedia links
@@ -136,7 +136,7 @@ def getWikiLinks(dbpediaLink):
 
 def removeQuotes(string):
     if(string != None):
-        return string.replace("\"","'")
+        return string.replace("\"","'").replace('\n', ' ').replace('\r', '')
     return ''
 
 
@@ -144,13 +144,13 @@ def removeQuotes(string):
 if __name__ == "__main__":
     # print("eventInfo",eventInfo)
     # print("==============")
-    # wikipediaLinks = getWikipediaLinks(eventInfo)
-    # dbpediaLinks = []
-    # for link in wikipediaLinks:
-    #     dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
+    wikipediaLinks = getWikipediaLinks(eventInfo)
+    dbpediaLinks = []
+    for link in wikipediaLinks:
+        dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
 
     # print(dbpediaLinks)
-    dbpediaLinks = ['http://dbpedia.org/resource/Arbitration', 'http://dbpedia.org/resource/United_States', 'http://dbpedia.org/resource/New_York_City', 'http://dbpedia.org/resource/Broadway_theatre', 'http://dbpedia.org/resource/Hot_Topic', 'http://dbpedia.org/resource/New_York_Law_School', 'http://dbpedia.org/resource/Dispute_resolution', 'http://dbpedia.org/resource/Wine']
+    # dbpediaLinks = ['http://dbpedia.org/resource/Arbitration', 'http://dbpedia.org/resource/United_States', 'http://dbpedia.org/resource/New_York_City', 'http://dbpedia.org/resource/Broadway_theatre', 'http://dbpedia.org/resource/Hot_Topic', 'http://dbpedia.org/resource/New_York_Law_School', 'http://dbpedia.org/resource/Dispute_resolution', 'http://dbpedia.org/resource/Wine']
     eventsDataList = "["
     for link in dbpediaLinks:
         image = removeQuotes(getImage(link))

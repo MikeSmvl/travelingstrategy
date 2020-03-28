@@ -28,6 +28,7 @@ function getPythonResult(process){
         // Takes stdout data from script which executed
         // with arguments and send this data to res object
         process.stdout.on('data', function(data) {
+            console.log(data.toString())
             resolve(data.toString())
         })
     })
