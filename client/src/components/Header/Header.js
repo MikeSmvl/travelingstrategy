@@ -1,10 +1,9 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap/';
+import Button from 'react-bootstrap/Button';
 import WhyCard from '../WhyCard/WhyCard';
 import './Header.css';
-import Button from 'react-bootstrap/Button';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
 
