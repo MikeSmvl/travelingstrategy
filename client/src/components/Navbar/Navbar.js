@@ -5,7 +5,7 @@ import logo from './logo.png';
 import './Navbar.css';
 import WhyCard from '../WhyCard/WhyCard';
 import LoginForm from '../LoginForm/LoginForm';
-import visit_profile from './visit-profile.png';
+import visitProfile from './visit-profile.png';
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
@@ -37,10 +37,11 @@ const Navbar = (props) => {
 		}
 
 
-		if (document.getElementById('visit-profile')) {
-			const timer = setTimeout(() => document.getElementById('visit-profile').style.display = 'none', 7000);
+		if (document.getElementById('visitProfile')) {
+			const timer = setTimeout(() => document.getElementById('visitProfile').style.display = 'none', 7000);
 			return () => clearTimeout(timer);
 		}
+
 	}, [authenticated, logOut]);
 
 	const {
@@ -75,8 +76,8 @@ const Navbar = (props) => {
 								<Col>
 									<img
 										alt=""
-										id="visit-profile"
-										src={visit_profile}
+										id="visitProfile"
+										src={visitProfile}
 										width="70"
 										height="70"
 									/>
@@ -95,31 +96,31 @@ const Navbar = (props) => {
 						)
 						: (
 							<Row>
-								<RBNavbar.Text class="text-center"><button
-									type="button"
-									onMouseOver={toggleWhy}
-									onMouseLeave={toggleWhy}
-									className="whyLoggin"
-								/>
+								<RBNavbar.Text class="text-center">
+									<button
+										type="button"
+										onMouseOver={toggleWhy}
+										onFocus=""
+										onMouseLeave={toggleWhy}
+										className="whyLoggin"
+									/>
 									{why
-									? (
-										<WhyCard
-											toggle={toggleWhy}
-											addClass="whyPosition"
-											header="Why Register?"
-											info={(
-												<span>
-													<br />
-													<ol>
-														<li>You will have a profile page with more informations about your travel destination.</li>
-														<li>See events that are occuring in your travel destination.</li>
-														<li>Personalized images based on your travel destinations.</li>
-													</ol>
-												</span>
-											)}
-										>
-
-										>
+										? (
+											<WhyCard
+												toggle={toggleWhy}
+												addClass="whyPosition"
+												header="Why Register?"
+												info={(
+													<span>
+														<br />
+														<ol>
+															<li>You will have a profile page with more informations about your travel destination.</li>
+															<li>See events that are occuring in your travel destination.</li>
+															<li>Personalized images based on your travel destinations.</li>
+														</ol>
+													</span>
+												)}
+											>
 										</WhyCard>
 									) : null}
 								</RBNavbar.Text>

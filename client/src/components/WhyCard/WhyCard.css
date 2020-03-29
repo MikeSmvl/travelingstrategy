@@ -1,13 +1,18 @@
 .why {
 	font-family: 'Open Sans', sans-serif;
 	position: fixed;
-	width: 100%;
-	height: 100%;
-	margin: auto;
+
  }
 
 .why_inner {
 	position: fixed;
+	width:350px;
+}
+
+.cardBody{
 	text-align: left;
-	width:400px;
+	padding-top:none;
+	padding-bottom:none;
+	margin-left:10px;
+	padding-right:2px;
 }
