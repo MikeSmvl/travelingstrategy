@@ -95,13 +95,24 @@ const Navbar = (props) => {
 						)
 						: (
 							<Row>
-								<RBNavbar.Text><button onMouseOver={toggleWhy}
+								<RBNavbar.Text class="text-center"><button onMouseOver={toggleWhy}
 													onMouseLeave={toggleWhy}
 													className="whyLoggin"/>
 									{why ?
 										<WhyCard toggle={toggleWhy}
-												header="Why register"
-												info="you should">
+												addClass="whyPosition"
+												header="Why Register?"
+												info={
+													<span>
+														<br/>
+														<ol>
+															<li>You will have a profile page with more informations about your travel destination.</li>
+															<li>See events that are occuring in your travel destination.</li>
+															<li>Personalized images based on your travel destinations.</li>
+														</ol>
+													</span>}>
+
+										>
 										</WhyCard> : null}
 								</RBNavbar.Text>
 								<Col>

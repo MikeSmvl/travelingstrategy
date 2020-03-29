@@ -41,3 +41,9 @@ a {
 	width: 23px;
 }
 
+.whyPosition {
+	top:9%;
+	left:70%;
+	background:linear-gradient(315deg, #fef9e7 0%, #e6ffff 54%);
+}
+

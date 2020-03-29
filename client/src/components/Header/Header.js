@@ -2,27 +2,12 @@ import * as React from 'react';
 import {useState} from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col, Card} from 'react-bootstrap/';
+import WhyCard from '../WhyCard/WhyCard';
 import './Header.css';
 import logo from '../Navbar/logo.png';
 import Button from 'react-bootstrap/Button';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
-const WhyCard = (props) => {
-	return (
-		<div class = "why">
-			<Card className="why_inner" onMouseLeave={props.toggle}>
-				<Card.Header className="iHeader">{props.header}</Card.Header>
-				<Card.Text>{props.info}</Card.Text>
-				<Card.Footer>
-					<img src={logo}
-						 width="22px"
-						 height="22px"
-						 align="right"/>
-				</Card.Footer>
-			</Card>
-		</div>
-	   );
-};
 
 const Header = (props) => {
 	const {
@@ -63,16 +48,19 @@ const Header = (props) => {
 						</div>
 						<div className="text-center">
 							<div>
-								<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+								<Button variant="outline-primary" className="subscribe" onClick={handleShow} onMouseLeave={toggleWhy}>Stay Informed</Button>
 								<button onMouseOver={toggleWhy} className="iWhy" type="button"/>
-								{why ? <WhyCard toggle={toggleWhy} header="Why Staying Informed?" info={
-											<span>
-												<br/>
-												<ol>
-													<li>Receive an email reminder filled with the instagram top trending images for fun ideas.</li>
-													<li>See events that are occuring in your travel destination - If you have an account.</li>
-												</ol>
-											</span>}>
+								{why ? <WhyCard addClass="whyCard"
+												toggle={toggleWhy}
+												header="Why Staying Informed?"
+												info={
+													<span>
+														<br/>
+														<ol>
+															<li>Receive an email reminder filled with the instagram top trending images for fun ideas.</li>
+															<li>See events that are occuring in your travel destination - If you have an account.</li>
+														</ol>
+													</span>}>
 										</WhyCard> : null}
 							</div>
 							<SubscriptionModal

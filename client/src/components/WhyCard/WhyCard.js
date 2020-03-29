@@ -7,7 +7,7 @@ import logo from '../Navbar/logo.png';
 const WhyCard = (props) => {
 	return (
 		<div class = "why">
-			<Card className="why_inner" onMouseLeave={props.toggle}>
+			<Card className ={`why_inner ${props.addClass}`} onMouseLeave={props.toggle}>
 				<Card.Header className="iHeader">{props.header}</Card.Header>
 				<Card.Text>{props.info}</Card.Text>
 				<Card.Footer>
