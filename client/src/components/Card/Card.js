@@ -11,7 +11,9 @@ const InfoCard = (props) => {
 				<RBCard.Header className="iHeader">
 					<button type="button" onClick={() => props.toggle()} className="iClose" />
 				</RBCard.Header>
-				<RBCard.Text class="iText">{props.info}</RBCard.Text>
+				<RBCard.Text class="iText">
+					{props.info}
+				</RBCard.Text>
 				<RBCard.Footer className="iFooter">
 					<img
 						alt="error"

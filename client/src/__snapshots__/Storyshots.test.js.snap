@@ -311,6 +311,7 @@ Array [
               className="whyLoggin"
               onMouseLeave={[Function]}
               onMouseOver={[Function]}
+              type="button"
             />
           </span>
           <div
@@ -407,6 +408,7 @@ Array [
               className="whyLoggin"
               onMouseLeave={[Function]}
               onMouseOver={[Function]}
+              type="button"
             />
           </span>
           <div

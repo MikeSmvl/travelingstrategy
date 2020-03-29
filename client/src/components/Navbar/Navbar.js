@@ -41,7 +41,6 @@ const Navbar = (props) => {
 			const timer = setTimeout(() => document.getElementById('visitProfile').style.display = 'none', 7000);
 			return () => clearTimeout(timer);
 		}
-
 	}, [authenticated, logOut]);
 
 	const {
@@ -120,9 +119,8 @@ const Navbar = (props) => {
 														</ol>
 													</span>
 												)}
-											>
-										</WhyCard>
-									) : null}
+											/>
+										) : null}
 								</RBNavbar.Text>
 								<Col>
 									<RBNavbar.Text>

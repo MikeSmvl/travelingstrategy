@@ -39,7 +39,7 @@ const Footer = (props) => {
 				<Col sm={4} style={{ padding: '40px 40px 25px 25px' }}>
 					<h4>About Us</h4>
 					<p> This website was designed by Concordia students for the capstone project.
-							We wish you a happy vacation and a wonderful trip.
+						We wish you a happy vacation and a wonderful trip.
 					</p>
 
 				</Col>

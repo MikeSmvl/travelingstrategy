@@ -18,7 +18,7 @@ stories
 		<Toast
 			title="Toast Title"
 		>
-      Body of Toast
+			Body of Toast
 		</Toast>
 	))
 	.add('Toast of type "alert"', () => (
@@ -26,7 +26,7 @@ stories
 			type="alert"
 			title="Toast Title"
 		>
-      Body of Toast
+			Body of Toast
 		</Toast>
 	))
 	.add('Set props', () => {
