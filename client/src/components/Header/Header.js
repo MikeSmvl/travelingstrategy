@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {useState} from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col, Card} from 'react-bootstrap/';
+import { Row, Col} from 'react-bootstrap/';
 import WhyCard from '../WhyCard/WhyCard';
 import './Header.css';
-import logo from '../Navbar/logo.png';
 import Button from 'react-bootstrap/Button';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
@@ -27,7 +26,7 @@ const Header = (props) => {
 	const toggleWhy = () => {
 		setWhy(!why);
 	};
-	const info = "By staying informed you can:\n "
+
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
