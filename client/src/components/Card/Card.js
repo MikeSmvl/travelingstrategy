@@ -9,7 +9,7 @@ const InfoCard = (props) => {
 		<div className="popup">
 			<RBCard className="popup_inner">
 				<RBCard.Header className="iHeader">
-					<button onClick={() => props.toggle()} className="iClose" />
+					<button type="button" onClick={() => props.toggle()} className="iClose" />
 				</RBCard.Header>
 				<RBCard.Text class="iText">{props.info}</RBCard.Text>
 				<RBCard.Footer className="iFooter">

@@ -96,6 +96,7 @@ const Navbar = (props) => {
 						: (
 							<Row>
 								<RBNavbar.Text class="text-center"><button
+									type="button"
 									onMouseOver={toggleWhy}
 									onMouseLeave={toggleWhy}
 									className="whyLoggin"
