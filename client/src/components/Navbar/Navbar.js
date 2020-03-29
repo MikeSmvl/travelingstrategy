@@ -35,12 +35,6 @@ const Navbar = (props) => {
 			exit();
 			setLogOut(true);
 		}
-
-
-		if (document.getElementById('visitProfile')) {
-			const timer = setTimeout(() => document.getElementById('visitProfile').style.display = 'none', 7000);
-			return () => clearTimeout(timer);
-		}
 	}, [authenticated, logOut]);
 
 	const {
