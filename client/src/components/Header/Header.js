@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {useState} from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Row, Col} from 'react-bootstrap/';
+import { Row, Col } from 'react-bootstrap/';
 import WhyCard from '../WhyCard/WhyCard';
 import './Header.css';
 import Button from 'react-bootstrap/Button';
@@ -48,19 +48,23 @@ const Header = (props) => {
 						<div className="text-center">
 							<div>
 								<Button variant="outline-primary" className="subscribe" onClick={handleShow} onMouseLeave={toggleWhy}>Stay Informed</Button>
-								<button onMouseOver={toggleWhy} className="iWhy" type="button"/>
-								{why ? <WhyCard addClass="whyCard"
-												toggle={toggleWhy}
-												header="Why Staying Informed?"
-												info={
-													<span>
-														<br/>
-														<ol>
-															<li>Receive an email reminder filled with the instagram top trending images for fun ideas.</li>
-															<li>See events that are occuring in your travel destination - If you have an account.</li>
-														</ol>
-													</span>}>
-										</WhyCard> : null}
+								<button onMouseOver={toggleWhy} className="iWhy" type="button" />
+								{why ? (
+									<WhyCard
+										addClass="whyCard"
+										toggle={toggleWhy}
+										header="Why Staying Informed?"
+										info={(
+											<span>
+												<br />
+												<ol>
+													<li>Receive an email reminder filled with the instagram top trending images for fun ideas.</li>
+													<li>See events that are occuring in your travel destination - If you have an account.</li>
+												</ol>
+											</span>
+										)}
+									/>
+								) : null}
 							</div>
 							<SubscriptionModal
 								show={show}
@@ -92,4 +96,4 @@ Header.propTypes = {
 };
 
 
-export  {Header, WhyCard};
+export { Header, WhyCard };

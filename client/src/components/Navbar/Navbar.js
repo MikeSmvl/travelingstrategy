@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Navbar as RBNavbar, Dropdown, Col, Row } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
-import WhyCard from '../WhyCard/WhyCard'
+import WhyCard from '../WhyCard/WhyCard';
 import LoginForm from '../LoginForm/LoginForm';
-import visit_profile from './visit-profile.png'
+import visit_profile from './visit-profile.png';
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
@@ -37,11 +37,10 @@ const Navbar = (props) => {
 		}
 
 
-		if(document.getElementById('visit-profile')){
-			const timer = setTimeout(() =>  document.getElementById('visit-profile').style.display = "none", 7000);
+		if (document.getElementById('visit-profile')) {
+			const timer = setTimeout(() => document.getElementById('visit-profile').style.display = 'none', 7000);
 			return () => clearTimeout(timer);
 		}
-
 	}, [authenticated, logOut]);
 
 	const {
@@ -80,7 +79,8 @@ const Navbar = (props) => {
 										src={visit_profile}
 										width="70"
 										height="70"
-							/></Col>
+									/>
+								</Col>
 								<Dropdown>
 									<Dropdown.Toggle drop="left" variant="outline-primary" id="dropdown-basic">
 										<div className="fa fa-user" />
@@ -95,25 +95,32 @@ const Navbar = (props) => {
 						)
 						: (
 							<Row>
-								<RBNavbar.Text class="text-center"><button onMouseOver={toggleWhy}
-													onMouseLeave={toggleWhy}
-													className="whyLoggin"/>
-									{why ?
-										<WhyCard toggle={toggleWhy}
-												addClass="whyPosition"
-												header="Why Register?"
-												info={
-													<span>
-														<br/>
-														<ol>
-															<li>You will have a profile page with more informations about your travel destination.</li>
-															<li>See events that are occuring in your travel destination.</li>
-															<li>Personalized images based on your travel destinations.</li>
-														</ol>
-													</span>}>
+								<RBNavbar.Text class="text-center"><button
+									onMouseOver={toggleWhy}
+									onMouseLeave={toggleWhy}
+									className="whyLoggin"
+								/>
+									{why
+									? (
+										<WhyCard
+											toggle={toggleWhy}
+											addClass="whyPosition"
+											header="Why Register?"
+											info={(
+												<span>
+													<br />
+													<ol>
+														<li>You will have a profile page with more informations about your travel destination.</li>
+														<li>See events that are occuring in your travel destination.</li>
+														<li>Personalized images based on your travel destinations.</li>
+													</ol>
+												</span>
+											)}
+										>
 
 										>
-										</WhyCard> : null}
+										</WhyCard>
+									) : null}
 								</RBNavbar.Text>
 								<Col>
 									<RBNavbar.Text>

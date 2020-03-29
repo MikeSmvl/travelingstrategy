@@ -7,16 +7,18 @@ import './Card.css';
 
 const InfoCard = (props) => {
 	return (
-		<div class = "popup">
+		<div className="popup">
 			<RBCard className="popup_inner">
 				<RBCard.Header className="iHeader">
-					<button onClick={() => props.toggle()} class="iClose"/>
+					<button onClick={() => props.toggle()} className="iClose" />
 				</RBCard.Header>
 				<RBCard.Text class="iText">{props.info}</RBCard.Text>
 				<RBCard.Footer className="iFooter">
-					<img src={logo}
+					<img
+						src={logo}
 						 width="22"
-						 height="22"/>
+						 height="22"
+					/>
 				</RBCard.Footer>
 			</RBCard>
 		</div>
@@ -33,7 +35,7 @@ const Card = (props) => {
 		<RBCard {...rest} className="TSCard">
 			{header && (
 				<RBCard.Header className="cardHeader">{header}
-					{info && <button onClick={infoWindow} className="iImage" type="button"/>}
+					{info && <button onClick={infoWindow} className="iImage" type="button" />}
 				</RBCard.Header>
 			)}
 			{children}
@@ -75,4 +77,4 @@ Card.propTypes = {
 	classExtra: PropTypes.string
 };
 
-export { Card, CardBody, Divider, InfoCard};
+export { Card, CardBody, Divider, InfoCard };
