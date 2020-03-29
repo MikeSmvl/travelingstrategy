@@ -12,6 +12,7 @@ const WhyCard = (props) => {
 				<Card.Text>{props.info}</Card.Text>
 				<Card.Footer>
 					<img
+						alt="error"
 						src={logo}
 						 width="22px"
 						 height="22px"

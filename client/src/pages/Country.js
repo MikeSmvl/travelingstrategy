@@ -22,6 +22,8 @@ import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
 import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
+import Weather from '../components/Weather/Skycon/Weather';
+import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
 import textToSpeech from '../utils/text-to-speech';
 
 
@@ -72,6 +74,8 @@ function Country({
 	const [phraseIso, setPhraseIso] = useState('');
 	const [phraseLanguage, setPhraseLanguage] = useState('');
 
+	// for the moment being have daily forecast turned off
+	const [showWeather] = useState(false);
 
 	useEffect(() => {
 		async function fetchRate(originCode, destinationCode) {
@@ -296,6 +300,7 @@ function Country({
 				});
 		}
 
+
 		fetchData();
 	}, [
 		originCountry,
@@ -392,7 +397,7 @@ function Country({
 												</div>
 											) : (
 												<span>
-													{embassyInfo.type === 'embassy' && (
+													{embassyInfo.type === '2' && (
 														<strong>
 															Embassy of{' '}
 															<span style={{ color: '#FF1C00' }}>
@@ -449,6 +454,9 @@ function Country({
 											)}
 										</CardBody>
 									</Card>
+									<br />
+									<WeatherGraph destinationCity={destinationCity} />
+									<br />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
@@ -512,8 +520,28 @@ function Country({
 											</div>
 										</CardBody>
 									</Card>
+									<br />
+									<br />
+									{showWeather && (
+										<Weather
+											lat={destinationLat}
+											lng={destinationLng}
+										/>
+									)}
 								</Col>
 							</Row>
+							<br />
+							<Card
+								header="Weather Map"
+								footer={(
+									<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
+									</Row>
+								)}
+							>
+								<CardBody>
+									<iframe title="darksky" className="map-darksky" src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},11`} />
+								</CardBody>
+							</Card>
 							<hr />
 							<div id="Financials">
 								<Row className="justify-content-center">

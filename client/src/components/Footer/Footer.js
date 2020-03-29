@@ -1,11 +1,14 @@
 import * as React from 'react';
 import { Row, Col } from 'react-bootstrap/';
 import './Footer.css';
-import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
+import {
+	AwesomeButton
+} from 'react-awesome-button';
 import logo from './logo.png';
 import emaillogo from './mail.gif';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
+import 'react-awesome-button/dist/styles.css';
 
 const Footer = (props) => {
 	const {
@@ -55,7 +58,12 @@ const Footer = (props) => {
 				</Col>
 				<Col className="aligncol" sm="auto" style={{ padding: '40px 25px 25px 25px' }}>
 					<h4>Subscribe for more info</h4>
-					<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+					<AwesomeButton
+						type="primary"
+						size="medium"
+						onPress={handleShow}
+					>Stay Informed
+					</AwesomeButton>
 					<SubscriptionModal
 						show={show}
 						handleShow={handleShow}

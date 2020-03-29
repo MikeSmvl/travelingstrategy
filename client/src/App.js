@@ -13,6 +13,7 @@ import Me from './pages/Me';
 import UserSelection from './pages/UserSelection';
 import TrendingSpots from './pages/TrendingSpots';
 import Events from './pages/Events';
+import Corona from './pages/Corona';
 
 // A custom hook that builds on useLocation to parse
 // the query string for you.
@@ -54,7 +55,7 @@ function Application() {
 						city={query.get('city')}
 						latitude={query.get('latitude')}
 						longitude={query.get('longitude')}
-					 />
+					/>
 				</Route>
 				<Route path="/trending_spots">
 					<TrendingSpots
@@ -62,15 +63,17 @@ function Application() {
 						city={query.get('city')}
 						latitude={query.get('latitude')}
 						longitude={query.get('longitude')}
-
-					 />
+					/>
 				</Route>
 				<Route path="/events">
 					<Events
 						requestId={query.get('request_id')}
 						latitude={query.get('latitude')}
 						longitude={query.get('longitude')}
-					 />
+					/>
+				</Route>
+				<Route path="/covid19">
+					<Corona />
 				</Route>
 				<Route>
 					<Redirect to="/" />;

@@ -13,7 +13,8 @@ const Event = new graphql.GraphQLObjectType({
     labels: { type: graphql.GraphQLString },
     address: { type: graphql.GraphQLString },
     place_type: { type: graphql.GraphQLString },
-    name_of_place: { type: graphql.GraphQLString }
+    name_of_place: { type: graphql.GraphQLString },
+    image:{ type: graphql.GraphQLString }
     }
 });
 

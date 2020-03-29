@@ -19,6 +19,8 @@ const {imagesTable,imagesForTag,imagesForRequestId} = require('./images.js')
 const {phrasesTranslation, phrasesTranslationCountry} = require('./phrases')
 const {getLanguageIso} = require('./languageIso')
 const eventsForRequest = require('./events')
+const {city_average_monthly_weather, monthly_weather_table} = require('./monthlyWeather')
+const { covidStats, covidCountryStats, covidAllStats } = require('./covidStats')
 
 const logger = require('../logger/logger.js')
 
@@ -54,10 +56,16 @@ var queryType = new graphql.GraphQLObjectType({
         imagesTable,
         imagesForTag,
         imagesForRequestId,
+        eventsForRequest,
+        city_average_monthly_weather,
+        monthly_weather_table,
         phrasesTranslation,
         getLanguageIso,
         phrasesTranslationCountry,
-        eventsForRequest
+        eventsForRequest,
+        covidStats,
+        covidCountryStats,
+        covidAllStats
     }
 });
 

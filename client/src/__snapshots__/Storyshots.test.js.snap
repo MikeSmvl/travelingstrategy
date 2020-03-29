@@ -19,15 +19,17 @@ Array [
         className="cardHeader card-header"
       >
         Header
+        <button
+          className="iImage"
+          onClick={[Function]}
+          type="button"
+        />
       </div>
-      <hr
-        className="cardDivider"
-      />
       <div
         className="TScardBody  card-body"
       >
-
-
+        
+        
         <span
           className="card-text"
         >
@@ -82,19 +84,19 @@ Array [
       subtitle=""
       title=""
     >
-
+      
       <div
         className="TScardBody  card-body"
       >
-
-
+        
+        
         <span
           className="card-text"
         >
-
+          
         </span>
       </div>
-
+      
     </div>
   </div>,
   <button
@@ -162,7 +164,7 @@ Array [
         className="countryCardFooter card-footer"
       >
         <div>
-
+          
         </div>
       </div>
     </div>
@@ -216,7 +218,7 @@ Array [
         <div
           className="countryCardTitle"
         >
-
+          
         </div>
       </div>
       <div
@@ -225,226 +227,14 @@ Array [
         <p
           className="card-text"
         >
-
+          
         </p>
       </div>
       <div
         className="countryCardFooter card-footer"
       >
         <div>
-
-        </div>
-      </div>
-    </div>
-  </div>,
-  <button
-    className="info__show-button"
-    onClick={[Function]}
-    style={
-      Object {
-        "background": "#027ac5",
-        "border": "none",
-        "borderRadius": "0 0 0 5px",
-        "color": "#fff",
-        "cursor": "pointer",
-        "display": "block",
-        "fontFamily": "sans-serif",
-        "fontSize": "12px",
-        "padding": "5px 15px",
-        "position": "fixed",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    type="button"
-  >
-    Show Info
-  </button>,
-]
-`;
-
-exports[`Storyshots Header Base usage 1`] = `
-Array [
-  <div
-    style={
-      Object {
-        "position": "relative",
-        "zIndex": 0,
-      }
-    }
-  >
-    <div
-      className="AppHeaderWrapper"
-    >
-      <div
-        className="justify-content-center row"
-      >
-        <div
-          className="col-lg-8"
-          style={
-            Object {
-              "border": "5px solid white",
-              "borderRadius": "20px 20px 0 0",
-            }
-          }
-        >
-          <div
-            className="AppHeader"
-            style={
-              Object {
-                "height": "420px",
-              }
-            }
-            subtitle="France"
-          >
-            <div
-              className="overlay"
-            />
-            <video
-              autoPlay={true}
-              className="videoHeader"
-              loop={true}
-              muted={true}
-            >
-              <source
-                src="FR.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <div
-              className="country"
-            >
-              Paris
-            </div>
-            <div
-              className="city"
-            >
-              TimeZone
-            </div>
-            <div
-              className="time"
-            >
-              TimeDifference
-            </div>
-            <div
-              className="text-center"
-            >
-              <button
-                className="subscribe btn btn-outline-primary"
-                disabled={false}
-                onClick=""
-                type="button"
-              >
-                Stay Informed
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>,
-  <button
-    className="info__show-button"
-    onClick={[Function]}
-    style={
-      Object {
-        "background": "#027ac5",
-        "border": "none",
-        "borderRadius": "0 0 0 5px",
-        "color": "#fff",
-        "cursor": "pointer",
-        "display": "block",
-        "fontFamily": "sans-serif",
-        "fontSize": "12px",
-        "padding": "5px 15px",
-        "position": "fixed",
-        "right": 0,
-        "top": 0,
-      }
-    }
-    type="button"
-  >
-    Show Info
-  </button>,
-]
-`;
-
-exports[`Storyshots Header Set props 1`] = `
-Array [
-  <div
-    style={
-      Object {
-        "position": "relative",
-        "zIndex": 0,
-      }
-    }
-  >
-    <div
-      className="AppHeaderWrapper"
-    >
-      <div
-        className="justify-content-center row"
-      >
-        <div
-          className="col-lg-8"
-          style={
-            Object {
-              "border": "5px solid white",
-              "borderRadius": "20px 20px 0 0",
-            }
-          }
-        >
-          <div
-            className="AppHeader"
-            style={
-              Object {
-                "height": "420px",
-              }
-            }
-            subtitle="France"
-          >
-            <div
-              className="overlay"
-            />
-            <video
-              autoPlay={true}
-              className="videoHeader"
-              loop={true}
-              muted={true}
-            >
-              <source
-                src="FR.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <div
-              className="country"
-            >
-              Paris
-            </div>
-            <div
-              className="city"
-            >
-              TimeZone
-            </div>
-            <div
-              className="time"
-            >
-              TimeDifference
-            </div>
-            <div
-              className="text-center"
-            >
-              <button
-                className="subscribe btn btn-outline-primary"
-                disabled={false}
-                onClick=""
-                type="button"
-              >
-                Stay Informed
-              </button>
-            </div>
-          </div>
+          
         </div>
       </div>
     </div>
@@ -510,20 +300,38 @@ Array [
         aria-expanded={null}
         className="justify-content-end navbar-collapse collapse"
       >
-        <span
-          className="navbar-text"
+        <div
+          className="row"
         >
-          <button
-            className="btn btn-outline-primary"
-            disabled={false}
-            onClick={[Function]}
-            type="button"
+          <span
+            class="text-center"
+            className="navbar-text"
           >
-            <strong>
-              Login
-            </strong>
-          </button>
-        </span>
+            <button
+              className="whyLoggin"
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+            />
+          </span>
+          <div
+            className="col"
+          >
+            <span
+              className="navbar-text"
+            >
+              <button
+                className="btn btn-outline-primary"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <strong>
+                  Login
+                </strong>
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     </nav>
   </div>,
@@ -588,20 +396,38 @@ Array [
         aria-expanded={null}
         className="justify-content-end navbar-collapse collapse"
       >
-        <span
-          className="navbar-text"
+        <div
+          className="row"
         >
-          <button
-            className="btn btn-outline-primary"
-            disabled={false}
-            onClick={[Function]}
-            type="button"
+          <span
+            class="text-center"
+            className="navbar-text"
           >
-            <strong>
-              Login
-            </strong>
-          </button>
-        </span>
+            <button
+              className="whyLoggin"
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+            />
+          </span>
+          <div
+            className="col"
+          >
+            <span
+              className="navbar-text"
+            >
+              <button
+                className="btn btn-outline-primary"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <strong>
+                  Login
+                </strong>
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     </nav>
   </div>,
@@ -862,7 +688,235 @@ Array [
     <div
       className="subtitle"
     >
+      
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
 
+exports[`Storyshots Toast Basic Toast 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      className="fade toast TSToast "
+      role="alert"
+    >
+      <div
+        className="toast-header"
+      >
+        <strong
+          className="mr-auto "
+        >
+            
+          Toast Title
+        </strong>
+        <button
+          className="close ml-2 mb-1"
+          data-dismiss="toast"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            className="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        className="toast-body"
+      >
+        Body of Toast
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Toast Set props 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      className="fade toast TSToast "
+      role="alert"
+    >
+      <div
+        className="toast-header"
+      >
+        <strong
+          className="mr-auto "
+        >
+            
+          Title
+        </strong>
+        <button
+          className="close ml-2 mb-1"
+          data-dismiss="toast"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            className="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        className="toast-body"
+      >
+        Toast Body
+      </div>
+    </div>
+  </div>,
+  <button
+    className="info__show-button"
+    onClick={[Function]}
+    style={
+      Object {
+        "background": "#027ac5",
+        "border": "none",
+        "borderRadius": "0 0 0 5px",
+        "color": "#fff",
+        "cursor": "pointer",
+        "display": "block",
+        "fontFamily": "sans-serif",
+        "fontSize": "12px",
+        "padding": "5px 15px",
+        "position": "fixed",
+        "right": 0,
+        "top": 0,
+      }
+    }
+    type="button"
+  >
+    Show Info
+  </button>,
+]
+`;
+
+exports[`Storyshots Toast Toast of type "alert" 1`] = `
+Array [
+  <div
+    style={
+      Object {
+        "position": "relative",
+        "zIndex": 0,
+      }
+    }
+  >
+    <div
+      aria-atomic="true"
+      aria-live="assertive"
+      className="fade toast TSToast alertToast"
+      role="alert"
+    >
+      <div
+        className="toast-header"
+      >
+        <strong
+          className="mr-auto "
+        >
+            
+          Toast Title
+        </strong>
+        <button
+          className="close ml-2 mb-1"
+          data-dismiss="toast"
+          onClick={[Function]}
+          type="button"
+        >
+          <span
+            aria-hidden="true"
+          >
+            ×
+          </span>
+          <span
+            className="sr-only"
+          >
+            Close
+          </span>
+        </button>
+      </div>
+      <div
+        className="toast-body"
+      >
+        Body of Toast
+      </div>
     </div>
   </div>,
   <button

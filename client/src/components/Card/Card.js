@@ -15,6 +15,7 @@ const InfoCard = (props) => {
 				<RBCard.Text class="iText">{props.info}</RBCard.Text>
 				<RBCard.Footer className="iFooter">
 					<img
+						alt="error"
 						src={logo}
 						 width="22"
 						 height="22"
