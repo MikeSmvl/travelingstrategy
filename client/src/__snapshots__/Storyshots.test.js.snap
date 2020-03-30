@@ -339,6 +339,11 @@ Array [
               >
                 Stay Informed
               </button>
+              <button
+                className="iWhy"
+                onMouseOver={[Function]}
+                type="button"
+              />
             </div>
           </div>
         </div>
@@ -445,6 +450,11 @@ Array [
               >
                 Stay Informed
               </button>
+              <button
+                className="iWhy"
+                onMouseOver={[Function]}
+                type="button"
+              />
             </div>
           </div>
         </div>
