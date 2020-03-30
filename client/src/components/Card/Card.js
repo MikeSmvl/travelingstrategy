@@ -5,14 +5,15 @@ import logo from '../Navbar/logo.png';
 import './Card.css';
 
 const InfoCard = (props) => {
+	const { toggle = '', info = '' } = props;
 	return (
 		<div className="popup">
 			<RBCard className="popup_inner">
 				<RBCard.Header className="iHeader">
-					<button type="button" onClick={() => props.toggle()} className="iClose" />
+					<button type="button" onClick={() => toggle()} className="iClose" />
 				</RBCard.Header>
 				<RBCard.Text class="iText">
-					{props.info}
+					{info}
 				</RBCard.Text>
 				<RBCard.Footer className="iFooter">
 					<img
@@ -77,6 +78,11 @@ Card.propTypes = {
 	subtitle: PropTypes.string,
 	info: PropTypes.string,
 	classExtra: PropTypes.string
+};
+
+InfoCard.propTypes = {
+	info: PropTypes.string,
+	toggle: PropTypes.func
 };
 
 export { Card, CardBody, Divider, InfoCard };

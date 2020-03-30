@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Row, Col, Table, Nav } from 'react-bootstrap/';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
-import { Header } from '../components/Header/Header';
+import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
