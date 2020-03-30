@@ -54,13 +54,13 @@ const Header = (props) => {
 								<WhyCard
 									addClass="whyCard"
 									toggle={toggleWhy}
-									header="Why Staying Informed?"
+									header="Why stay informed?"
 									info={(
 										<span>
 											<br />
 											<ol>
-												<li>Receive an email reminder filled with the instagram top trending images for fun ideas.</li>
-												<li>See events that are occuring in your travel destination - If you have an account.</li>
+												<li>To receive an email reminder filled with Instagram's top trending images for fun activities.</li>
+												<li>To browse through events that are occuring in your travel destination - As long as you have an account.</li>
 											</ol>
 										</span>
 									)}

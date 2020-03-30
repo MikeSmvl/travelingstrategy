@@ -107,9 +107,9 @@ const Navbar = (props) => {
 													<span>
 														<br />
 														<ol>
-															<li>You will have a profile page with more informations about your travel destination.</li>
-															<li>See events that are occuring in your travel destination.</li>
-															<li>Personalized images based on your travel destinations.</li>
+															<li>Get access to you profile page with more information about your travel destination.</li>
+															<li>See events that are occuring in your destination city.</li>
+															<li>Get trending images if you stay informed.</li>
 														</ol>
 													</span>
 												)}
