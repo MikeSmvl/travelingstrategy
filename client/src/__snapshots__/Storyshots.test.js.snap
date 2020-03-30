@@ -341,6 +341,7 @@ Array [
               </button>
               <button
                 className="iWhy"
+                onFocus={[Function]}
                 onMouseOver={[Function]}
                 type="button"
               />
@@ -452,6 +453,7 @@ Array [
               </button>
               <button
                 className="iWhy"
+                onFocus={[Function]}
                 onMouseOver={[Function]}
                 type="button"
               />
