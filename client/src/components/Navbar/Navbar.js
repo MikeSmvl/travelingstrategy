@@ -35,6 +35,9 @@ const Navbar = (props) => {
 			exit();
 			setLogOut(true);
 		}
+		if (document.getElementById('visitProfile')) {
+			setTimeout(() => { document.getElementById('visitProfile').style.display = 'none'; }, 4000);
+		}
 	}, [authenticated, logOut]);
 
 	const {
