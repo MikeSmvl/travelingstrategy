@@ -55,7 +55,7 @@ function Application() {
 						city={query.get('city')}
 						latitude={query.get('latitude')}
 						longitude={query.get('longitude')}
-					 />
+					/>
 				</Route>
 				<Route path="/trending_spots">
 					<TrendingSpots
@@ -63,15 +63,14 @@ function Application() {
 						city={query.get('city')}
 						latitude={query.get('latitude')}
 						longitude={query.get('longitude')}
-
-					 />
+					/>
 				</Route>
 				<Route path="/events">
 					<Events
 						requestId={query.get('request_id')}
 						latitude={query.get('latitude')}
 						longitude={query.get('longitude')}
-					 />
+					/>
 				</Route>
 				<Route path="/covid19">
 					<Corona />

@@ -7,6 +7,7 @@ const Redis = require('ioredis');
 const path = require('path')
 const { verifyUser } = require('./resolvers/user')
 const { originEnv, graphiqlEnv } = require('./config')
+const {deleteAllowed, removeEvent} = require('./resolvers/eventsMutations')
 
 const app = express();
 app.use('/confirm' , express.static(path.join(__dirname, 'endpoints')));
@@ -40,6 +41,8 @@ app.get('/checkToken', withAuth, function(req, res) {
     res.json({email: req.email});
 });
 
+
+
 app.get('/confirm/:id', async function(req, res) {
     const { id } = req.params;
     const userEmail = await redis.get(id);
@@ -57,6 +60,21 @@ app.get('/logout', function(req, res){
     res.send('ok');
  });
 
+app.use(express.json());
+
+app.post('/deleteEvent', withAuth, async function(req, res) {
+    const requestId = req.body.requestId;
+    const eventTitle = req.body.title;
+    const email = req.email;
+    const userCanDelete = await deleteAllowed(email,requestId);
+    if(userCanDelete.email === email){
+        res.status(200).json(removeEvent(requestId,eventTitle))
+    }
+    else{
+        res.status(401)
+    }
+});
+
 app.listen(4000, () => {
-    console.log("🚀 GraphQL server running at http://localhost:4000.");
+    console.log("🚀 GraphQL server running at http://localhost:4000/graphql.");
 });
