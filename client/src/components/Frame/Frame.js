@@ -10,7 +10,7 @@ const Frame = (props) => {
 				<div className="frame">
 					<div className="frameHeader">
 						<div className="profilePic">
-							<img alt="" src="https://nappstarrocks.com/wp-content/uploads/2017/09/Instagram-circle-icon-1.png" />
+							<img alt="" src="https://cdn.icon-icons.com/icons2/1211/PNG/512/1491579602-yumminkysocialmedia36_83067.png" />
 						</div>
 						<div className="picInfo">
 							<div className="infoTitle">{username}</div>

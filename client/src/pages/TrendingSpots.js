@@ -8,8 +8,10 @@ function TrendingSpots({requestId, city, latitude, longitude}) {
 	let week = [];
 
 	for (let i = 1; i <= 7; i++) {
-		let first = (curr.getDate()) - curr.getDay() + i;
-		let day = new Date(curr.setDate(first)-604800000).toISOString().slice(0, 10);
+		let first = curr.getDate() - curr.getDay() + i;
+		let day = new Date(curr.setDate(first) - 604800000)
+			.toISOString()
+			.slice(0, 10);
 		week.push(day);
 	}
 	console.log('week', week);
@@ -46,8 +48,8 @@ function TrendingSpots({requestId, city, latitude, longitude}) {
 	}, [city, requestId]);
 
 	return (
-		<div className="wrapper">
-			<div style={{ textAlign: 'center', marginTop: '4%', fontWeight: '550', fontSize: '60px' }}>	Trending Spots in Bali</div>
+		<div className='wrapper'>
+			<div className='mainTitle'> Trending Spots in Bali</div>
 			<div
 				style={{
 					position: 'relative',
@@ -78,8 +80,11 @@ function TrendingSpots({requestId, city, latitude, longitude}) {
 						);
 					}
 				})}
-				<div className='gridarea'>Daydream. We'll do the rest.</div>
-				<div className="date">2020/03/28</div>
+				<div className='quote'>Daydream. We'll do the rest.</div>
+				<div>
+					<div className='date'>2020/03/28</div>
+					<div className='weekOf'>Week of </div>
+				</div>
 			</div>
 		</div>
 	);

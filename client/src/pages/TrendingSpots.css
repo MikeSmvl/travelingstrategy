@@ -1,12 +1,24 @@
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Prata&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Suranna&display=swap');
 
 body {
   position: absolute;
   background-color: #fee8d8;
   height: 100%;
-  font-family: 'Playfair Display', serif;
+  /* font-family: 'Playfair Display', serif; */
+  /* font-family: 'Prata', serif; */
+  /* font-family: 'Suranna', serif; */
   color: #707378;
+}
+
+.mainTitle {
+  font-family: 'Prata', serif;
+  text-align: center;
+  margin-top: 4%;
+  font-weight: 550;
+  font-size: 58px;
 }
 
 .wrapper {
@@ -14,7 +26,8 @@ body {
   height: 100%;
 }
 
-.gridarea {
+.quote {
+  font-family: 'Playfair Display', serif;
   grid-area: 2 / 1 / 3 / 3;
   font-size: 33px;
   font-weight: 550;
@@ -24,8 +37,15 @@ body {
 .date {
   font-size: 18px;
   font-weight: 550;
-  margin-top: -40px;
+  margin-top: -30px;
   font-family: 'Lato', sans-serif;
   letter-spacing: 12px;
-  font-weight: 600;
+}
+
+.weekOf {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 550;
+  margin-top: -55px;
+  font-family: 'Playfair Display', serif;
 }
