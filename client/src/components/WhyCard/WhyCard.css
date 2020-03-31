@@ -1,0 +1,18 @@
+.why {
+	font-family: 'Open Sans', sans-serif;
+	position: fixed;
+
+ }
+
+.why_inner {
+	position: fixed;
+	width:350px;
+}
+
+.cardBody{
+	text-align: left;
+	padding-top:none;
+	padding-bottom:none;
+	margin-left:10px;
+	padding-right:2px;
+}
