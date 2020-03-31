@@ -1,12 +1,13 @@
 .why {
 	font-family: 'Open Sans', sans-serif;
 	position: fixed;
-
+	z-index: 3;
  }
 
 .why_inner {
 	position: fixed;
 	width:350px;
+	z-index: 3;
 }
 
 .cardBody{
