@@ -313,7 +313,7 @@ function Events({
 									<Popover
 										id="popover-positioned-bottom"
 									>
-											Receive an email of your favourite events
+										Receive an email of your favourite events
 									</Popover>
 								)}
 							>
