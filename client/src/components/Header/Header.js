@@ -60,7 +60,7 @@ const Header = (props) => {
 										<span>
 											<br />
 											<ol>
-												<li>To receive an email reminder filled with Instagram's top trending images for fun activities.</li>
+												<li>To receive an email reminder filled with Instagram&#39;s top trending images for fun activities.</li>
 												<li>To browse through events that are occuring in your travel destination - As long as you have an account.</li>
 											</ol>
 										</span>
