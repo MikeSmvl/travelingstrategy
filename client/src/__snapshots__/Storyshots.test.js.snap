@@ -19,10 +19,12 @@ Array [
         className="cardHeader card-header"
       >
         Header
+        <button
+          className="iImage"
+          onClick={[Function]}
+          type="button"
+        />
       </div>
-      <hr
-        className="cardDivider"
-      />
       <div
         className="TScardBody  card-body"
       >
@@ -53,7 +55,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -109,7 +111,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -179,7 +181,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -249,7 +251,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -337,6 +339,13 @@ Array [
               >
                 Stay Informed
               </button>
+              <button
+                className="iWhy"
+                onFocus={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
+                type="button"
+              />
             </div>
           </div>
         </div>
@@ -355,7 +364,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -443,6 +452,13 @@ Array [
               >
                 Stay Informed
               </button>
+              <button
+                className="iWhy"
+                onFocus={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
+                type="button"
+              />
             </div>
           </div>
         </div>
@@ -461,7 +477,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -510,20 +526,40 @@ Array [
         aria-expanded={null}
         className="justify-content-end navbar-collapse collapse"
       >
-        <span
-          className="navbar-text"
+        <div
+          className="row"
         >
-          <button
-            className="btn btn-outline-primary"
-            disabled={false}
-            onClick={[Function]}
-            type="button"
+          <span
+            class="text-center"
+            className="navbar-text"
           >
-            <strong>
-              Login
-            </strong>
-          </button>
-        </span>
+            <button
+              className="whyLoggin"
+              onFocus=""
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              type="button"
+            />
+          </span>
+          <div
+            className="col"
+          >
+            <span
+              className="navbar-text"
+            >
+              <button
+                className="btn btn-outline-primary"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <strong>
+                  Login
+                </strong>
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     </nav>
   </div>,
@@ -539,7 +575,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -588,20 +624,40 @@ Array [
         aria-expanded={null}
         className="justify-content-end navbar-collapse collapse"
       >
-        <span
-          className="navbar-text"
+        <div
+          className="row"
         >
-          <button
-            className="btn btn-outline-primary"
-            disabled={false}
-            onClick={[Function]}
-            type="button"
+          <span
+            class="text-center"
+            className="navbar-text"
           >
-            <strong>
-              Login
-            </strong>
-          </button>
-        </span>
+            <button
+              className="whyLoggin"
+              onFocus=""
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              type="button"
+            />
+          </span>
+          <div
+            className="col"
+          >
+            <span
+              className="navbar-text"
+            >
+              <button
+                className="btn btn-outline-primary"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <strong>
+                  Login
+                </strong>
+              </button>
+            </span>
+          </div>
+        </div>
       </div>
     </nav>
   </div>,
@@ -617,7 +673,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -703,7 +759,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -789,7 +845,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -835,7 +891,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -877,7 +933,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -953,7 +1009,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -1029,7 +1085,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,
@@ -1105,7 +1161,7 @@ Array [
         "cursor": "pointer",
         "display": "block",
         "fontFamily": "sans-serif",
-        "fontSize": "12px",
+        "fontSize": 12,
         "padding": "5px 15px",
         "position": "fixed",
         "right": 0,

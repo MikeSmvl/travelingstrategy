@@ -15,8 +15,7 @@ stories.addDecorator(withA11y);
 
 stories
 	.add('Base usage', () => (
-		<Card title="Title" subtitle="Subtitle" header="Header" footer="Footer">
-			<Divider />
+		<Card title="Title" subtitle="Subtitle" header="Header" info="Info about this card in detail" footer="Footer">
 			<CardBody>This is the body</CardBody>
 		</Card>
 	))
@@ -26,10 +25,11 @@ stories
 		const subtitle = text('Subtitle') || '';
 		const body = text('Body content') || '';
 		const footer = text('Footer') || '';
+		const info = text('Info about this card in detail') || '';
 		const divider = boolean('Divider?');
 
 		return (
-			<Card title={title} subtitle={subtitle} header={header} footer={footer}>
+			<Card title={title} subtitle={subtitle} header={header} info={info} footer={footer}>
 				{divider && <Divider />}
 				<CardBody>{body}</CardBody>
 			</Card>

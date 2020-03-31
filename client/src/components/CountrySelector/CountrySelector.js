@@ -97,7 +97,7 @@ const CountrySelector = (props) => {
 								to={`/country?originCountry=${originCountry}&destinationCountry=${destinationCountry}&originCity=${originCity}&destinationCity=${destinationCity}&originLat=${originLat}&originLng=${originLng}&destinationLat=${destinationLat}&destinationLng=${destinationLng}`}
 							>
 								<Button variant="outline-primary" type="submit">
-                  Travel
+									Travel
 								</Button>
 							</Link>
 						) : (
