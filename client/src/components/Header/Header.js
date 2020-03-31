@@ -47,6 +47,7 @@ const Header = (props) => {
 							<button
 								onMouseOver={toggleWhy}
 								onFocus={toggleWhy}
+								onMouseLeave={toggleWhy}
 								className="iWhy"
 								type="button"
 							/>
