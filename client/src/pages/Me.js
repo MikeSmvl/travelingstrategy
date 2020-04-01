@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
-import { addChosenCities } from '../utils/parsingTools';
+import { Redirect, Link } from 'react-router-dom';
+import { CitiesCard, CityImage } from '../components/CitiesCard/CitiesCard';
 
 import './Me.css';
 
@@ -11,12 +11,12 @@ function Me() {
 
 	useEffect(() => {
 		async function getToken() {
-			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, { credentials: 'include' })
+			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, {
+				credentials: 'include'
+			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.email
-                && res.email !== null
-                && setEmail(res.email);
+					res.email && res.email !== null && setEmail(res.email);
 				})
 				.catch((error) => {
 					// if status code 401...
@@ -45,8 +45,8 @@ function Me() {
 				.then((res) => res.json())
 				.then((res) => {
 					res.data.userSubscriptions
-					&& res.data.userSubscriptions.length !== 0
-					&& setCities(res.data.userSubscriptions);
+						&& res.data.userSubscriptions.length !== 0
+						&& setCities(res.data.userSubscriptions);
 				});
 		}
 
@@ -58,11 +58,26 @@ function Me() {
 		return <Redirect to="/" />;
 	}
 
-
 	return (
-		<>
-			{addChosenCities(cities)}
-		</>
+		<div style={{ display: 'flex', justifyContent: 'center', marginTop: '12%' }}>
+			{cities.map((citySubscription, idx) => {
+				const requestId = citySubscription.request_id;
+				const cityName = citySubscription.search_term;
+				const { latitude } = citySubscription;
+				const { longitude } = citySubscription;
+
+				return (
+					<Link
+						key={idx}
+						to={`/user_selection?request_id=${requestId}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
+					>
+						<CitiesCard>
+							<CityImage key={idx} cityName={cityName.toLowerCase()} />
+						</CitiesCard>
+					</Link>
+				);
+			})}
+		</div>
 	);
 }
 
