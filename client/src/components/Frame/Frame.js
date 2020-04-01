@@ -17,7 +17,7 @@ const Frame = (props) => {
 							<div className="infoSubtitle">{geolocation}</div>
 						</div>
 					</div>
-					<img alt="" src={img} />
+					<img alt="" className="mainImg" src={img} />
 					<div className="frameCaption">
 						<img
 							alt=""

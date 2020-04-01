@@ -13,15 +13,16 @@
 }
 /* Photo */
 .frame {
-	width: 100%;
+	width: 200px;
 	object-fit: cover;
 	left: 0;
   top: 0;
 	position: relative;
 	overflow: hidden;
 }
-.frame img {
-	width: 100%;
+.frame .mainImg {
+	width: 200px;
+	height: 250px !important;
 	object-fit: cover;
 	left: 0;
   top: 0;
