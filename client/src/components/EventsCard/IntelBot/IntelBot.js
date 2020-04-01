@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, ModalBody } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {getBotKnowledge } from '../../../utils/eventsTools';
+import './IntelBot.css';
 
 const IntelBotResult = (props) => {
 	const {
@@ -18,8 +19,9 @@ const IntelBotResult = (props) => {
 			centered
 		>
 			<Modal.Header closeButton>
-				<Modal.Title id="example-modal-sizes-title-lg">
-					Here's What I know
+				<Modal.Title id="example-modal-sizes-title-lg" className="bot">
+					<h2>Here's What I know</h2>
+					<img src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
@@ -71,11 +73,12 @@ const IntelBot = (props) => {
 					centered
 				>
 					<Modal.Header closeButton>
-						<Modal.Title id="example-modal-sizes-title-lg">
+						<Modal.Title id="example-modal-sizes-title-lg" className="bot">
 							{!isLoading
 								? <h2>Scratch my head to find out what I know about this event</h2>
 								: <h2>Let me think a moment</h2>
 							}
+							<img src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 						</Modal.Title>
 					</Modal.Header>
 					{!isLoading
