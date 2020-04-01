@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Button, Row } from 'react-bootstrap/';
 import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
-import '../App.css';
 import Unsplash, { toJson } from 'unsplash-js';
 import { addMyEvents, addApiEvents, getButtonContent } from '../utils/eventsTools';
+import '../Events.css';
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
 const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
@@ -236,6 +236,7 @@ function Events({
 	if (redirect) {
 		return <Redirect to="/" />;
 	}
+
 
 	return (
 		<div id="events-section">

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import EventsCard from '../components/EventsCard/EventsCard';
 import {Row, Col} from 'react-bootstrap/';
+import Carousel from 'react-bootstrap/Carousel';
 
 
 
@@ -118,32 +119,6 @@ function getButtonContent(category){
     )
 }
 
-function getBotKnowledge(knowledgeArray){
-    const items = [];
-
-    knowledgeArray.forEach(knowledge =>{
-        var label = knowledge.label;
-        var image = knowledge.image;
-        var comment = knowledge.comment;
-        var wikipedia = knowledge.wikipediaLink;
-
-        items.push(
-            <div>
-            <div>Label: {label}</div>
-            <img src={image} className="more-info-img"></img>
-            <div>Comment: {comment}</div>
-            <div>Wikipedia: {wikipedia}</div>
-            <hr className="cardDivider" />
-            </div>
-        )
-    });
-
-    return (
-        <div>
-            {items}
-        </div>
-    );
-}
 
 /**
  * There might be multiple labels for an event that's
@@ -174,4 +149,4 @@ function getRandomImageForCategory(images,imagesUsed){
 
 
 
-export {addMyEvents,addApiEvents,getButtonContent,getBotKnowledge};
+export {addMyEvents,addApiEvents,getButtonContent};

@@ -63,7 +63,7 @@
 .app-card-list .card {
     margin: 60px 30px;
     display: inline-block;
-    width: 40%;
+    width: 23em;
 }
 
 .app-card-list .card .card-body {
@@ -75,10 +75,12 @@
 }
 
 .card-title{
+    height: 1.3em;
     text-align: center;
     margin-bottom: 15%;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-size: 1.3em;
     white-space: nowrap;
 }
 
@@ -138,9 +140,9 @@
 }
 
 #cardbody{
-    background-image: linear-gradient(#f7d2a926, #d491bc24);
+    background-color: #f1eded40;
 }
 
 #image_with_shadow{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.06), 0 6px 20px 0 rgba(0, 0, 0, 0.43);
+    border: 10px solid #f1eded40;
 }

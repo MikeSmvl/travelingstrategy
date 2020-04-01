@@ -26,8 +26,9 @@ const IntelBotResult = (props) => {
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
-					<BotSlider></BotSlider>
-					{getBotKnowledge(knowledge)}
+					<BotSlider
+						knowledge={knowledge}
+					></BotSlider>
 			</ModalBody>
 		</Modal>
 	)
