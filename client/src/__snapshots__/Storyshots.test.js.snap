@@ -141,9 +141,9 @@ Array [
       >
         <div
           className="imgContainer zoom-on-hover"
-          onClick={[Function]}
         >
           <img
+            alt=""
             src=""
           />
           <div
@@ -154,9 +154,9 @@ Array [
         </div>
         <div
           className="imgContainer zoom-on-hover"
-          onClick={[Function]}
         >
           <img
+            alt=""
             src=""
           />
           <div
@@ -167,9 +167,9 @@ Array [
         </div>
         <div
           className="imgContainer zoom-on-hover"
-          onClick={[Function]}
         >
           <img
+            alt=""
             src=""
           />
           <div
@@ -180,9 +180,9 @@ Array [
         </div>
         <div
           className="imgContainer zoom-on-hover"
-          onClick={[Function]}
         >
           <img
+            alt=""
             src=""
           />
           <div
@@ -193,9 +193,9 @@ Array [
         </div>
         <div
           className="imgContainer zoom-on-hover"
-          onClick={[Function]}
         >
           <img
+            alt=""
             src=""
           />
           <div
@@ -206,9 +206,9 @@ Array [
         </div>
         <div
           className="imgContainer zoom-on-hover"
-          onClick={[Function]}
         >
           <img
+            alt=""
             src=""
           />
           <div
