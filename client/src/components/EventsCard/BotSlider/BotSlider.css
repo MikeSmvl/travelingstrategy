@@ -1,0 +1,112 @@
+.content {
+    overflow: hidden;
+  }
+  
+  .content-image{
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .content .content-overlay {
+    background: rgba(0,0,0,0.7);
+    position: absolute;
+    height: 99%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+  }
+  
+  .content:hover .content-overlay{
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .content-details {
+    position: absolute;
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+  }
+  
+  .content:hover .content-details{
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+  }
+  
+  .content-details h3{
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    margin-bottom: 5em;
+    text-transform: uppercase;
+  }
+  
+  .fadeIn-bottom{
+    top: 90%;
+  }
+
+  .button {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    overflow: hidden;
+    display: block;
+  }
+  .button span {
+    transition: all 0.6s ease;
+    overflow: hidden;
+    font-size: 62px;
+    font-weight: 800;
+    font-family: sans-serif;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0px;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .button span::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: -50px;
+    left: -60px;
+    width: 90px;
+    height: 90px;
+    background: #ea4c89;
+    z-index: -1;
+    box-shadow: 0px 0px 120px #ea4c89, 0px 0px 120px #ea4c89, 0px 0px 120px #ee9b83, 0px 0px 120px #ee9b83,0px 0px 120px #ee9b83;
+    /* background-image:  linear-gradient(90deg, #ea4c89); */
+    transition: all 0.3s ease;
+    transform: rotate(-45deg);
+  }
+  .button span:hover::after {
+    box-shadow: 40px -20px 0px #ea4c89, 41px -20px 8px rgba(0, 0, 0, 0.3), 80px 20px 0px #ea4c89, 81px 20px 8px rgba(0, 0, 0, 0.3), 120px 60px 0px #ee9b83, 121px 60px 8px rgba(0, 0, 0, 0.3), 160px 100px 0px #ee9b83, 161px 100px 8px rgba(0, 0, 0, 0.3), 200px 120px 0px #ee9b83;
+  }
+  .button span:hover {
+    box-shadow: 4px 34px 24px rgba(0, 0, 0, 0.3);
+  }

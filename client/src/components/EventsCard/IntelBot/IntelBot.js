@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, ModalBody } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import {getBotKnowledge } from '../../../utils/eventsTools';
+import BotSlider from '../BotSlider/BotSlider'
 import './IntelBot.css';
 
 const IntelBotResult = (props) => {
@@ -25,6 +26,7 @@ const IntelBotResult = (props) => {
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
+					<BotSlider></BotSlider>
 					{getBotKnowledge(knowledge)}
 			</ModalBody>
 		</Modal>
