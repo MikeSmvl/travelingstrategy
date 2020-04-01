@@ -68,5 +68,33 @@
 
 .text-center{
 	position: relative;
-	z-index: 1;
+	z-index: 4;
+}
+
+.iCard {
+	font-family: 'Open Sans', sans-serif;
+}
+
+.iHeader {
+	color: rgb(134, 134, 146);
+	padding-left:10px;
+	padding-top:7px;
+	font-size: large;
+	height: 45px;
+	background: inherit;
+}
+
+.iWhy{
+	background: url('../../miscImages/infoWhy.png');
+	background-size: 23px 23px;
+	border: none;
+	outline: none;
+	height: 23px;
+	width: 23px;
+}
+
+.whyCard{
+	top:10%;
+	right:17.5%;
+	background:linear-gradient(315deg, #fef9e7 0%, #e6ffff 74%);
 }

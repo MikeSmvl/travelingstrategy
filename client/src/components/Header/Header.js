@@ -1,8 +1,9 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import { Row, Col } from 'react-bootstrap/';
-import './Header.css';
 import Button from 'react-bootstrap/Button';
+import WhyCard from '../WhyCard/WhyCard';
+import './Header.css';
 import SubscriptionModal from '../SubscriptionModal/SubscriptionModal';
 
 const Header = (props) => {
@@ -19,6 +20,10 @@ const Header = (props) => {
 		...rest
 	} = props;
 	const bg = require(`./country_videos/${countryIso}.mp4`);
+	const [why, setWhy] = React.useState(false);
+	const toggleWhy = () => {
+		setWhy(!why);
+	};
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
@@ -39,6 +44,30 @@ const Header = (props) => {
 						</div>
 						<div className="text-center">
 							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
+							<button
+								onMouseOver={toggleWhy}
+								onFocus={toggleWhy}
+								onMouseLeave={toggleWhy}
+								className="iWhy"
+								type="button"
+							/>
+							{why ? (
+								<WhyCard
+									addClass="whyCard"
+									toggle={toggleWhy}
+									header="Why stay informed?"
+									info={(
+										<span>
+											<br />
+											<ol>
+												<li>To receive an email reminder filled with Instagram&#39;s top trending images for fun activities.</li>
+												<li>To browse through events that are occuring in your travel destination - As long as you have an account.</li>
+											</ol>
+										</span>
+									)}
+								/>
+							)
+								: null }
 							<SubscriptionModal
 								show={show}
 								handleShow={handleShow}

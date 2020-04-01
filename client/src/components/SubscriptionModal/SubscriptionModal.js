@@ -71,10 +71,10 @@ const SubscriptionModal = (props) => {
 					</Modal.Body>
 					<Modal.Footer>
 						<Button variant="light" onClick={handleClose}>
-                    Maybe Later
+							Maybe Later
 						</Button>
 						<Button variant="outline-primary" type="submit">
-                    Join Us
+							Join Us
 						</Button>
 					</Modal.Footer>
 				</Form>
@@ -85,11 +85,11 @@ const SubscriptionModal = (props) => {
 						onConfirm={handleClose}
 						customButtons={(
 							<Button variant="outline-primary" onClick={handleClose}>
-                            Sweet!
+								Sweet!
 							</Button>
 						)}
 					>
-                    You will receive an email!
+						You will receive an email!
 					</SweetAlert>
 				)}
 			</Modal>

@@ -55,7 +55,7 @@
   position: -webkit-sticky; /* Safari */
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 2;
 }
 
 hr {
@@ -96,6 +96,10 @@ hr {
 
 .choice-btn{
   margin-top: 5%;
+}
+
+.email-btn{
+  margin-top: 1%;
 }
 
 
@@ -286,7 +290,6 @@ main {
 
 }
 
-
 .buttonSpeaker{
   height: 35px;
   width: 33px;
@@ -296,4 +299,11 @@ main {
 .map-darksky{
   height:500px;
   width: 100%;;
+}
+
+.events-toast{
+  align-items: center;
+  top: 12px;
+  margin: 0 auto;
+  left: 50%;
 }
