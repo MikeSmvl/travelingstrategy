@@ -14,8 +14,8 @@ body {
 .mainTitle {
 	font-family: 'Prata', serif;
 	text-align: center;
-  margin-top: 4%;
-  margin-bottom: 1%;
+	margin-top: 4%;
+	margin-bottom: 1%;
 	font-weight: 550;
 	font-size: 58px;
 }
@@ -37,8 +37,8 @@ body {
 	font-weight: 600;
 	margin-top: -30px;
 	font-family: 'Lato', sans-serif;
-  letter-spacing: 12px;
-  text-align: center;
+	letter-spacing: 12px;
+	text-align: center;
 }
 
 .weekOf {
@@ -63,24 +63,31 @@ body {
 @media screen and (max-width: 500px) {
 	.CSSgrid {
 		display: block;
-  }
-  .quote {
-    margin: 0;
-  }
-  .weekDate {
-    padding-top: 30px;
-    margin: 0;
-    text-align: center;
-  }
-  .instaPhoto {
-    padding: 20px;
-  }
+	}
+	.quote {
+		margin: 0;
+		text-align: center;
+		font-size: 25px;
+	}
+	.weekOf {
+		padding-bottom: 50px;
+	}
+	.weekDate {
+		padding-top: 30px;
+		margin: 0;
+		text-align: center;
+	}
+	.instaPhoto {
+		padding: 20px;
+		justify-content: center;
+		display: flex;
+	}
 }
 
 @media screen and (min-width: 1600px) {
 	.mainTitle {
-    margin-top: 7%;
-    margin-bottom: 3%;
-    font-size: 65px;
-  }
+		margin-top: 7%;
+		margin-bottom: 3%;
+		font-size: 65px;
+	}
 }
