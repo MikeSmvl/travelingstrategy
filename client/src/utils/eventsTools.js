@@ -1,9 +1,6 @@
 import * as React from 'react';
 import EventsCard from '../components/EventsCard/EventsCard';
 import {Row, Col} from 'react-bootstrap/';
-import Carousel from 'react-bootstrap/Carousel';
-
-
 
 /**
  * 

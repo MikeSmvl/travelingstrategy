@@ -7,7 +7,7 @@
   .event-body {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to top right, #ff6e618f, #eb999275);
+    background-image: linear-gradient(315deg, #fef9e7 0%, #fddac5 74%);
   }
   
   main {
@@ -182,7 +182,8 @@
       left: -100px;
    }
   }
-  
-  #events-section {
-    /* background-image: linear-gradient(to top right, #ff6e618f, #eb999275); */
+
+  .popover-context{
+    background: linear-gradient(315deg, #fef9e7 0%, #e6ffff 74%);
+    text-align: center;
   }

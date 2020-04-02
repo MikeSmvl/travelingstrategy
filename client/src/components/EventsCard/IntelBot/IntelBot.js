@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, ModalBody } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import {getBotKnowledge } from '../../../utils/eventsTools';
 import BotSlider from '../BotSlider/BotSlider'
 import './IntelBot.css';
 
@@ -22,7 +21,7 @@ const IntelBotResult = (props) => {
 			<Modal.Header closeButton>
 				<Modal.Title id="example-modal-sizes-title-lg" className="bot">
 					<h2>Here's What I know</h2>
-					<img src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
+					<img alt="monkey icon" src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
@@ -81,15 +80,15 @@ const IntelBot = (props) => {
 								? <h2>Scratch my head to find out what I know about this event</h2>
 								: <h2>Let me think a moment</h2>
 							}
-							<img src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
+							<img alt="monkey logo" src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 						</Modal.Title>
 					</Modal.Header>
 					{!isLoading
 					?<ModalBody style={{ textAlign: 'center' }} onClick={getBotInfo}>
-						<img alt="Alert" src={require('../../../eventsImages/smart-monkey.gif')} />
+						<img alt="smart monkey" src={require('../../../eventsImages/smart-monkey.gif')} />
 					</ModalBody>
 					: <ModalBody style={{ textAlign: 'center' }}>
-						<img alt="Alert" src={require('../../../eventsImages/thinky-monkey.gif')} />
+						<img alt="thinking monkey" src={require('../../../eventsImages/thinky-monkey.gif')} />
 					</ModalBody>
 					}
 				</Modal>

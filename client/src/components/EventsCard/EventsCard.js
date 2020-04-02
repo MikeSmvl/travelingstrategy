@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, Modal, ModalBody } from 'react-bootstrap';
+import { Card, Modal, ModalBody,Popover, OverlayTrigger} from 'react-bootstrap';
 import './EventsCard.css';
 import IntelBot from './IntelBot/IntelBot';
 import PropTypes from 'prop-types';
@@ -198,17 +198,28 @@ const EventsCard = (props) => {
 									</AwesomeButton>
 								</div>
 							)}
-							<div className="modal-like-button">
+							<OverlayTrigger
+								overlay={(
+									<Popover
+										id="popover-positioned-bottom"
+										className="popover-context"
+									>
+										Learn more about the key points of this event
+									</Popover>
+								)}
+							>
+								<div className="modal-like-button">
 									<AwesomeButton
 										type="secondary"
 										size="small"
 										onPress={handleShowBot}
 										centered
-										// onPress={handleDelete}
 									>
 										<img alt="like button" src={require('../../eventsImages/smart.png')} style={{ height: '3em' }} />
 									</AwesomeButton>
 								</div>
+							</OverlayTrigger>
+							
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
 						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
 						{address !== '' && (
