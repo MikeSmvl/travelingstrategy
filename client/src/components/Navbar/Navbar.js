@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Navbar as RBNavbar, Dropdown } from 'react-bootstrap';
+import { Navbar as RBNavbar, Dropdown, Col, Row } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
+import WhyCard from '../WhyCard/WhyCard';
 import LoginForm from '../LoginForm/LoginForm';
+import visitProfile from './visit-profile.png';
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [logOut, setLogOut] = useState(false);
+	const [why, setWhy] = useState(false);
+	const toggleWhy = () => {
+		setWhy(!why);
+	};
 
 	useEffect(() => {
 		async function getToken() {
@@ -28,6 +34,9 @@ const Navbar = (props) => {
 		if (logOut) {
 			exit();
 			setLogOut(true);
+		}
+		if (document.getElementById('visitProfile')) {
+			setTimeout(() => { document.getElementById('visitProfile').style.display = 'none'; }, 4000);
 		}
 	}, [authenticated, logOut]);
 
@@ -59,21 +68,63 @@ const Navbar = (props) => {
 				<RBNavbar.Collapse className="justify-content-end">
 					{authenticated
 						? (
-							<Dropdown>
-								<Dropdown.Toggle drop="left" variant="outline-primary" id="dropdown-basic">
-									<div className="fa fa-user" />
-								</Dropdown.Toggle>
+							<Row>
+								<Col>
+									<img
+										alt=""
+										id="visitProfile"
+										src={visitProfile}
+										width="70"
+										height="70"
+									/>
+								</Col>
+								<Dropdown>
+									<Dropdown.Toggle drop="left" variant="outline-primary" id="dropdown-basic">
+										<div className="fa fa-user" />
+									</Dropdown.Toggle>
 
-								<Dropdown.Menu alignRight>
-									<Dropdown.Item href="/me">Profile</Dropdown.Item>
-									<Dropdown.Item onClick={() => setLogOut(true)}>Sign Out</Dropdown.Item>
-								</Dropdown.Menu>
-							</Dropdown>
+									<Dropdown.Menu alignRight>
+										<Dropdown.Item href="/me">Profile</Dropdown.Item>
+										<Dropdown.Item onClick={() => setLogOut(true)}>Sign Out</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
+							</Row>
 						)
 						: (
-							<RBNavbar.Text>
-								<LoginForm />
-							</RBNavbar.Text>
+							<Row>
+								<RBNavbar.Text className="text-center">
+									<button
+										type="button"
+										onMouseOver={toggleWhy}
+										onFocus={() => null}
+										onMouseLeave={toggleWhy}
+										className="whyLoggin"
+									/>
+									{why
+										? (
+											<WhyCard
+												toggle={toggleWhy}
+												addClass="whyPosition"
+												header="Why Register?"
+												info={(
+													<span>
+														<br />
+														<ol>
+															<li>Get access to you profile page with more information about your travel destination.</li>
+															<li>See events that are occuring in your destination city.</li>
+															<li>Get trending images if you stay informed.</li>
+														</ol>
+													</span>
+												)}
+											/>
+										) : null}
+								</RBNavbar.Text>
+								<Col>
+									<RBNavbar.Text>
+										<LoginForm />
+									</RBNavbar.Text>
+								</Col>
+							</Row>
 						)}
 				</RBNavbar.Collapse>
 			</RBNavbar>

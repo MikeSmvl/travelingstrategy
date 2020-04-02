@@ -3,9 +3,7 @@ import { Card, Modal, ModalBody } from 'react-bootstrap';
 import './EventsCard.css';
 import IntelBot from './IntelBot/IntelBot';
 import PropTypes from 'prop-types';
-import {
-	AwesomeButton
-} from 'react-awesome-button';
+import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 
 

@@ -1,16 +1,14 @@
 import React, { useEffect, useState } from 'react';
+import { Row } from 'react-bootstrap/';
 import DayCard from './DayCard';
-import { Row} from 'react-bootstrap/';
-import { Card, CardBody} from '../../Card/Card'
+import { Card, CardBody } from '../../Card/Card';
 import './Weather.css';
 import DegreeToggle from './DegreeToggle';
 
 
-
-
 const Weather = (props) => {
 	const [responseObj, setResponseObj] = useState('Not Available Yet');
-	const [degreeType, setDegreeType] = useState('celsius')
+	const [degreeType, setDegreeType] = useState('celsius');
 	const {
 		lat,
 		lng
@@ -30,41 +28,45 @@ const Weather = (props) => {
 	}, [lat, lng]);
 
 	return (
-		<Card className = "test" header = "5 Day Forecast"
-					footer={(
-					<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
-					</Row>
-			)}>
+		<Card
+			className="test"
+			header="5 Day Forecast"
+			footer={(
+				<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
+				</Row>
+			)}
+		>
 
-           <CardBody>
-		     <div className="flexbox-container2">
-			   <DayCard
-			      degreeType ={degreeType}
-				  weekday={responseObj[1]}
-			   />
-			   <DayCard
-			      degreeType ={degreeType}
-				  weekday={responseObj[2]}
-			   />
-			   <DayCard
-			      degreeType ={degreeType}
-				  weekday={responseObj[3]}
-			   />
-			   <DayCard
-			     degreeType ={degreeType}
-				  weekday={responseObj[4]}
-			   />
-			   <DayCard
-			      degreeType ={degreeType}
-				  weekday={responseObj[5]}
-			   />
-		     </div>
-		     <div className="flexbox-container">
-		       <DegreeToggle
-				 degree = {degreeType}
-			 	 updateDegree ={setDegreeType} />
-	    	 </div>
-		   </CardBody>
+			<CardBody>
+				<div className="flexbox-container2">
+					<DayCard
+						degreeType={degreeType}
+						weekday={responseObj[1]}
+					/>
+					<DayCard
+						degreeType={degreeType}
+						weekday={responseObj[2]}
+					/>
+					<DayCard
+						degreeType={degreeType}
+						weekday={responseObj[3]}
+					/>
+					<DayCard
+						degreeType={degreeType}
+						weekday={responseObj[4]}
+					/>
+					<DayCard
+						degreeType={degreeType}
+						weekday={responseObj[5]}
+					/>
+				</div>
+				<div className="flexbox-container">
+					<DegreeToggle
+						degree={degreeType}
+						updateDegree={setDegreeType}
+					/>
+				</div>
+			</CardBody>
 		</Card>
 	);
 };

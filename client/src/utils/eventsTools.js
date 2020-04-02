@@ -148,5 +148,16 @@ function getRandomImageForCategory(images,imagesUsed){
 }
 
 
+async function emailEvents(events){
+    var requestBody = JSON.stringify(events)
+    await fetch(`${process.env.REACT_APP_BACKEND}emailEvents`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/json' },
+        body: requestBody
+    });
 
-export {addMyEvents,addApiEvents,getButtonContent};
+}
+
+
+export {addMyEvents,addApiEvents,getButtonContent,emailEvents};

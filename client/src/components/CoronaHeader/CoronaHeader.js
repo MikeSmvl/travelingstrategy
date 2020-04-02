@@ -99,7 +99,7 @@ function CoronaHeader() {
 									</Col>
 								</Row>
 								<p style={{ marginTop: '30px', marginBottom: '-30px' }}>
-                  Last Updated: 1 hour ago
+									Last Updated: 1 hour ago
 								</p>
 							</div>
 						</Col>
