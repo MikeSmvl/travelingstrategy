@@ -11,7 +11,6 @@ const IntelBotResult = (props) => {
 		knowledge = '',
 	} = props;
 
-	console.log(knowledge)
 	return(
 		<Modal
 			show={show}
@@ -25,9 +24,12 @@ const IntelBotResult = (props) => {
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
-					<BotSlider
-						knowledge={knowledge}
-					></BotSlider>
+				{knowledge.length != 0
+					?	<BotSlider
+							knowledge={knowledge}
+						></BotSlider>
+					:	<p>I did not find anything. Try another event</p>
+				}
 			</ModalBody>
 		</Modal>
 	)
@@ -35,6 +37,7 @@ const IntelBotResult = (props) => {
 const IntelBot = (props) => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [botKnowledge, setBotKnowledge] = useState([]);
+	const [botCalled, setBotCalled] = useState(false);
 
     const {
         show = '',
@@ -63,11 +66,12 @@ const IntelBot = (props) => {
 		.then((res) => {
 			setIsLoading(false);
 			setBotKnowledge(res);
+			setBotCalled(true)
 		})
 	}
 
     return(
-			<>{botKnowledge.length === 0
+			<>{botCalled === false
 				?
 				<Modal
 					show={show}
