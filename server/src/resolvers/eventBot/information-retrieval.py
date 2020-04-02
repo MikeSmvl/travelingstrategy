@@ -142,23 +142,20 @@ def removeQuotes(string):
 
 
 if __name__ == "__main__":
-    # print("eventInfo",eventInfo)
-    # print("==============")
     wikipediaLinks = getWikipediaLinks(eventInfo)
     dbpediaLinks = []
     for link in wikipediaLinks:
         dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
 
-    # print(dbpediaLinks)
-    # dbpediaLinks = ['http://dbpedia.org/resource/Arbitration', 'http://dbpedia.org/resource/United_States', 'http://dbpedia.org/resource/New_York_City', 'http://dbpedia.org/resource/Broadway_theatre', 'http://dbpedia.org/resource/Hot_Topic', 'http://dbpedia.org/resource/New_York_Law_School', 'http://dbpedia.org/resource/Dispute_resolution', 'http://dbpedia.org/resource/Wine']
-    eventsDataList = "["
-    for link in dbpediaLinks:
-        image = removeQuotes(getImage(link))
-        label = removeQuotes(getLabel(link))
-        comment = removeQuotes(getComment(link))
-        wikipediaLink = removeQuotes(getWikiLinks(link))
-        eventData = "{{\"label\":\"{}\",\"image\":\"{}\",\"comment\":\"{}\",\"wikipediaLink\":\"{}\"}},".format(label,image,comment,wikipediaLink)
-        # print("label:\
-        eventsDataList = eventsDataList+eventData
-    eventsDataList = eventsDataList[:len(eventsDataList)-1]+"]"
+    eventsDataList = "[]"
+    if(len(dbpediaLinks) > 0):
+        eventsDataList = "["
+        for link in dbpediaLinks:
+            image = removeQuotes(getImage(link))
+            label = removeQuotes(getLabel(link))
+            comment = removeQuotes(getComment(link))
+            wikipediaLink = removeQuotes(getWikiLinks(link))
+            eventData = "{{\"label\":\"{}\",\"image\":\"{}\",\"comment\":\"{}\",\"wikipediaLink\":\"{}\"}},".format(label,image,comment,wikipediaLink)
+            eventsDataList = eventsDataList+eventData
+        eventsDataList = eventsDataList[:len(eventsDataList)-1]+"]"
     print((eventsDataList))
