@@ -19,7 +19,7 @@ body {
 
 .citiesCardWrapper {
   transform: scale(1);
-  margin-top: 15%;
+  margin-top: 20%;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -38,7 +38,7 @@ body {
 .timbreImage {
   position: fixed;
   transform: scale(0.3);
-  margin-left: 45%;
+  margin-left: 50%;
   margin-top: -26%;
 }
 
