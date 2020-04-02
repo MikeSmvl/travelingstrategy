@@ -236,7 +236,7 @@ function Events({
 	if (redirect) {
 		return <Redirect to="/" />;
 	}
-
+	document.body.classList.add('event-body');
 
 	return (
 		<div id="events-section">
