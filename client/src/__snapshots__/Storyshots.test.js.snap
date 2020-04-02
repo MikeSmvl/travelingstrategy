@@ -861,12 +861,11 @@ Array [
           className="row"
         >
           <span
-            class="text-center"
-            className="navbar-text"
+            className="text-center navbar-text"
           >
             <button
               className="whyLoggin"
-              onFocus=""
+              onFocus={[Function]}
               onMouseLeave={[Function]}
               onMouseOver={[Function]}
               type="button"
@@ -959,12 +958,11 @@ Array [
           className="row"
         >
           <span
-            class="text-center"
-            className="navbar-text"
+            className="text-center navbar-text"
           >
             <button
               className="whyLoggin"
-              onFocus=""
+              onFocus={[Function]}
               onMouseLeave={[Function]}
               onMouseOver={[Function]}
               type="button"

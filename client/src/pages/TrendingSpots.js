@@ -31,7 +31,6 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 					res.data.imagesForRequestId
 						&& res.data.imagesForRequestId.length !== 0
 						&& setTrendingSpots(res.data.imagesForRequestId);
-					console.log(requestId);
 					setTaggedCity(res.data.imagesForRequestId[0].tag);
 					setWeekDate(res.data.imagesForRequestId[0].date_retrieved);
 				});
@@ -50,7 +49,7 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 					const { caption } = image;
 					if (idx < 7) {
 						return (
-							<div className="instaPhoto">
+							<div key={idx} className="instaPhoto">
 								<Frame
 									username={caption}
 									geolocation={geolocation}
@@ -60,6 +59,7 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 							</div>
 						);
 					}
+					return '';
 				})}
 				<div className="quote">Daydream. We&apos;ll do the rest.</div>
 				<div>

@@ -24,15 +24,16 @@ const CityImage = (props) => {
 				)}/images/`
 			)
 				.then((response) => response.json())
-				.then((data) => setSrc(data.photos[0].image.mobile));
+				.then((data) => setSrc(data.photos[0].image.mobile))
+				.catch((error) => setSrc(
+					'https://images.pexels.com/photos/373893/pexels-photo-373893.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
+				));
 		}
 		fetchImage();
-	}, []);
+	}, [cityName]);
 
 	return (
-		<div
-			className="imgContainer zoom-on-hover"
-		>
+		<div className="imgContainer zoom-on-hover">
 			<img alt="" src={imgSrc} />
 			<div className="imgOverlay">{cityName}</div>
 		</div>
