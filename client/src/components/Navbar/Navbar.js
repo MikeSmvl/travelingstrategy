@@ -96,7 +96,7 @@ const Navbar = (props) => {
 									<button
 										type="button"
 										onMouseOver={toggleWhy}
-										onFocus="{() => null}"
+										onFocus={() => null}
 										onMouseLeave={toggleWhy}
 										className="whyLoggin"
 									/>
