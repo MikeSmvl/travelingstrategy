@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col } from 'react-bootstrap/';
-import '../App.css';
-import { addTrendingSpots } from '../utils/parsingTools';
+import './TrendingSpots.css';
+import Frame from '../components/Frame/Frame';
 
-
-function TrendingSpots({
-	requestId,
-	city,
-	latitude,
-	longitude
-}) {
+function TrendingSpots({ requestId, city, latitude, longitude }) {
 	const [trendingSpots, setTrendingSpots] = useState([]);
+	const [taggedCity, setTaggedCity] = useState('');
+	const [weekDate, setWeekDate] = useState('');
+
 	useEffect(() => {
 		async function fetchData() {
 			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
@@ -20,10 +16,11 @@ function TrendingSpots({
 					query: `{
 						imagesForRequestId(request_id:"${requestId}"){
 							image_id,
-                            image_link,
-                            geolocation,
-                            caption,
-							tag
+              image_link,
+              geolocation,
+              caption,
+							tag,
+							date_retrieved
 						}
 					}
 					`
@@ -32,8 +29,10 @@ function TrendingSpots({
 				.then((res) => res.json())
 				.then((res) => {
 					res.data.imagesForRequestId
-					&& res.data.imagesForRequestId.length !== 0
-					&& setTrendingSpots(res.data.imagesForRequestId);
+						&& res.data.imagesForRequestId.length !== 0
+						&& setTrendingSpots(res.data.imagesForRequestId);
+					setTaggedCity(res.data.imagesForRequestId[0].tag);
+					setWeekDate(res.data.imagesForRequestId[0].date_retrieved);
 				});
 		}
 
@@ -41,22 +40,32 @@ function TrendingSpots({
 	}, [city, requestId]);
 
 	return (
-		<div>
-			<div className="parallax">
-				<Row className="justify-content-center" style={{ paddingTop: '300px' }}>
-					<Row className="justify-content-center">
-						<Col
-							style={{
-								backgroundColor: 'rgb(255, 255, 255)',
-								borderRadius: '20px'
-							}}
-							lg={8}
-						>
-							{addTrendingSpots(trendingSpots)}
-						</Col>
-					</Row>
-				</Row>
-				<footer id="footer" />
+		<div className="wrapper">
+			<div className="mainTitle"> Trending Spots in {taggedCity}</div>
+			<div className="CSSgrid">
+				{trendingSpots.map((image, idx) => {
+					const imageUrl = image.image_link;
+					const { geolocation } = image;
+					const { caption } = image;
+					if (idx < 7) {
+						return (
+							<div key={idx} className="instaPhoto">
+								<Frame
+									username={caption}
+									geolocation={geolocation}
+									img={imageUrl}
+									style={{ width: '30px' }}
+								/>
+							</div>
+						);
+					}
+					return '';
+				})}
+				<div className="quote">Daydream. We&apos;ll do the rest.</div>
+				<div>
+					<div className="weekDate">{weekDate.replace('/', '-')}</div>
+					<div className="weekOf">Week of </div>
+				</div>
 			</div>
 		</div>
 	);

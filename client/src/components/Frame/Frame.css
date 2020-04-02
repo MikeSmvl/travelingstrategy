@@ -1,0 +1,98 @@
+
+.zoom-on-hover {
+	transition: all 0.5s ease-in-out;
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+}
+.zoom-on-hover:hover {
+	-moz-transform: scale(1.02);
+	-webkit-transform: scale(1.02);
+	-o-transform: scale(1.02);
+	-ms-transform: scale(1.02);
+	transform: scale(1.02);
+}
+/* Photo */
+.frame {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	left: 0;
+  top: 0;
+	position: relative;
+	overflow: hidden;
+}
+.frame img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	left: 0;
+  top: 0;
+	position: relative;
+	display: block;
+	height: auto;
+}
+
+/* Caption */
+.frameCaption {
+	color: black;
+	background: white;
+	margin: 0;
+	height: 18px;
+	width: 100%;
+}
+.frameCaption img {
+	height: 18px;
+	width: 18px;
+	padding: 4px;
+}
+
+.frameHeader {
+	display: flex;
+	flex-direction: row;
+	flex-shrink: 0;
+	color: black;
+	background: white;
+	margin: 0;
+	padding: 8px 20px 8px 8px;
+	align-items: center;
+	height: 25px;
+	width: 100%;
+}
+
+.frameHeader .profilePic {
+	align-self: center;
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
+.profilePic img {
+	align-self: center;
+	display: block;
+	height: 16px;
+	width: 16px;
+}
+
+.frameHeader .picInfo {
+	width: 150px;
+	margin-left: 6px;
+	align-items: flex-start;
+	display: flex;
+	flex-grow: 1;
+	flex-shrink: 1;
+	flex-direction: column;
+}
+
+.frameHeader .picInfo .infoTitle {
+	font-size: 7px;
+	line-height: 9px;
+	font-weight: 600;
+}
+
+.frameHeader .picInfo .infoSubtitle {
+	line-height: 7px;
+	font-size: 6px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

@@ -8,7 +8,8 @@ const Image = new graphql.GraphQLObjectType({
       geolocation: { type: graphql.GraphQLString },
       caption: { type: graphql.GraphQLString },
       tag: { type: graphql.GraphQLString },
-      request_id: { type: graphql.GraphQLString }
+      request_id: { type: graphql.GraphQLString },
+      date_retrieved: { type: graphql.GraphQLString }
     }
 });
 

@@ -33,7 +33,7 @@ def get_image_info(driver, u):
     soup = BeautifulSoup(driver.page_source, 'lxml')
 
     geoloc = soup.find('a',{'class':'O4GlU'})
-    caption = soup.find('div', {'class':'C4VMK'})
+    caption = soup.find('a', {'class':'sqdOP yWX7d _8A5w5 ZIAjV'})
     img = soup.find('img', {'class':'FFVAD'})
 
     image_info = {}
@@ -104,3 +104,4 @@ def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
             geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")
 
+find_a_post("madrid", 1)
