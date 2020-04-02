@@ -41,6 +41,7 @@
    }
 }
 .app-card-list {
+    margin-top: -0.5em;
     display: inline-block;
     width: 100%;
     float: right;
@@ -55,9 +56,9 @@
 }
 @media (min-width: 768px) {
     .app-card-list {
+        margin-top: -2.5em;
         width: 100%;
         white-space: nowrap;
-        margin-top: 0;
    }
 }
 .app-card-list .card {
