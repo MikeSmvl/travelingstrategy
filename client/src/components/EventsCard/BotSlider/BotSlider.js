@@ -18,14 +18,14 @@ const getBotKnowledge = (knowledgeArray) => {
                         <img className="content-image" src={image} alt="slide-img" />
                         <div className="content-details fadeIn-bottom">
                             <h3>{label}</h3>
-                            <div className="text">
+                            <div className="bot-text">
                                 <p>{comment}</p>
                             </div>
                         </div>
 				</div>
                 <Carousel.Caption>
                     <a href={`//${wikipedia}`}>
-                        <h3>Find out more on wikipedia</h3>
+                        <h3 className="wiki-text">Find out more on wikipedia</h3>
                         <p />
                     </a>
                 </Carousel.Caption>
@@ -42,14 +42,12 @@ const BotSlider = (props) => {
 	} = props;
 
 	const [index, setIndex] = useState(0);
-	const [direction, setDirection] = useState(null);
 	const handleSelect = (selectedIndex, e) => {
 		setIndex(selectedIndex);
-		setDirection(e.direction);
 	};
 
 	return (
-		<Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
+		<Carousel activeIndex={index} onSelect={handleSelect}>
             {getBotKnowledge(knowledge)}
 		</Carousel>
 	);

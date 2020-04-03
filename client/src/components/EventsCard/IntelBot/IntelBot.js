@@ -24,7 +24,7 @@ const IntelBotResult = (props) => {
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody style={{ textAlign: 'center' }}>
-				{knowledge.length != 0
+				{knowledge.length !== 0
 					?	<BotSlider
 							knowledge={knowledge}
 						></BotSlider>
