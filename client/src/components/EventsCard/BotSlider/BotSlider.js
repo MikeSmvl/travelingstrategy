@@ -17,9 +17,9 @@ const getBotKnowledge = (knowledgeArray) => {
 				    <div className="content-overlay" />
                         <img className="content-image" src={image} alt="slide-img" />
                         <div className="content-details fadeIn-bottom">
-                            <div className="button">
-                                <span>{label}</span>
-                                <span>{comment}</span>
+                            <h3>{label}</h3>
+                            <div className="text">
+                                <p>{comment}</p>
                             </div>
                         </div>
 				</div>
