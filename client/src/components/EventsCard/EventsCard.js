@@ -339,6 +339,7 @@ const EventsCard = (props) => {
 				title = {title}
 				address = {address}
 				nameOfPlace = {nameOfPlace}
+				eventImg = {eventImg}
 			/>
 		</>
 	);
@@ -356,6 +357,7 @@ EventsCard.propTypes = {
 	duration: PropTypes.string,
 	isLiked: PropTypes.bool,
 	requestId: PropTypes.string,
+	eventImg: PropTypes.string,
 	eventInfo: PropTypes.instanceOf(Array)
 };
 
