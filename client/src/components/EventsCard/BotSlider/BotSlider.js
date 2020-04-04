@@ -3,6 +3,13 @@ import PropTypes from 'prop-types';
 import Carousel from 'react-bootstrap/Carousel';
 import './BotSlider.css';
 
+
+/**
+ *  we are going to display the knowledge that the bot retrieved for us
+ *
+ * If no image was obtained, we are going to display the vens card image as default image
+ */
+
 const getBotKnowledge = (knowledgeArray, eventImg) => {
     const items = [];
     knowledgeArray.forEach(knowledge =>{
