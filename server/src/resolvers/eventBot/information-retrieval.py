@@ -1,6 +1,6 @@
 
 import sys,json
-# import requests
+import requests
 
 import textrazor # We are using text razor until dbpedia is back up
 from SPARQLWrapper import SPARQLWrapper, JSON
@@ -24,20 +24,6 @@ def getWikipediaLinks(textToAnnotate):
 
     return wikipediaLinks
 
-# This method will be used when spotlight is on
-# def getDBpediaLinkSpotlight:
-    # # api-endpoint
-    # prefix = "http://api.dbpedia-spotlight.org/en/lookup?text="
-    # URL = prefix+eventInfo
-
-    # headers = {'accept': 'application/json'}
-    # print(URL)
-    # response = requests.get(url = URL, headers = headers)
-
-    # print("response code: ",response.status_code)
-    # print(response.json())
-
-
 def getDBpediaLink(dbpediaLinks,wikiLink):
     sparql.setQuery("""
         SELECT ?dbpediaLink
@@ -53,6 +39,25 @@ def getDBpediaLink(dbpediaLinks,wikiLink):
         dbpediaLinks.append(result["dbpediaLink"]["value"])
 
     return dbpediaLinks
+
+# This method will be used when spotlight is on
+def getDBpediaLinkSpotlight(text):
+    dpbediaLinks = []
+    if(eventInfo.replace(" ","") != ""):
+        # api-endpoint
+        prefix = "https://api.dbpedia-spotlight.org/en/annotate?text="
+        URL = prefix+text+"&confidence=0.31"
+        headers = {'accept': 'application/json'}
+        response = requests.get(url = URL, headers = headers).json()
+
+        if 'Resources' in response:
+            resources = response.get('Resources')
+            # print(resources)
+            for resource in resources:
+                dpbediaLinks.append(resource['@URI'])
+
+            dpbediaLinks = list(dict.fromkeys(dpbediaLinks)) #Removing duplicates
+    return dpbediaLinks
 
 def describe(dbpediaLink):
     sparql.setQuery("""
@@ -142,10 +147,18 @@ def removeQuotes(string):
 
 
 if __name__ == "__main__":
-    wikipediaLinks = getWikipediaLinks(eventInfo)
+    #We are using dpbedia-spotlight to annotate our events info and get
+    #dbpedia entities
+    #In case it fails, we use textrazor which returns us wikipedia links
+    #from the wikipedia links we can get the dbpedia entities
+
     dbpediaLinks = []
-    for link in wikipediaLinks:
-        dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
+    try:
+        dbpediaLinks = getDBpediaLinkSpotlight(eventInfo)
+    except:
+        wikipediaLinks = getWikipediaLinks(eventInfo)
+        for link in wikipediaLinks:
+            dbpediaLinks = getDBpediaLink(dbpediaLinks,link)
 
     eventsDataList = "[]"
     if(len(dbpediaLinks) > 0):

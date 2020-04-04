@@ -182,7 +182,8 @@ const EventsCard = (props) => {
 										size="small"
 										centered
 										onPress={handleLike}
-									>Likes
+									>
+										<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
 									</AwesomeButton>
 								</div>
 							)
