@@ -24,8 +24,8 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
                     <div className="content">
                         <div className="content-overlay" />
                             { image===""
-                                ? <img className="content-image" src={eventImg} alt="slide-img"/>
-                                : <img className="content-image" src={imageToDisplay} onError={() => {setImageToDisplay(eventImg)}} alt="slide-img"/>
+                                ? <img className="knowledge-image" src={eventImg} alt="slide-img"/>
+                                : <img className="knowledge-image" src={imageToDisplay} onError={() => {setImageToDisplay(eventImg)}} alt="slide-img"/>
                             }
                             <div className="content-details fadeIn-bottom">
                                 <h3>{label}</h3>

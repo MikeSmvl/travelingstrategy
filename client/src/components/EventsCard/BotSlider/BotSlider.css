@@ -2,9 +2,10 @@
     overflow: hidden;
   }
 
-  .content-image{
+  .knowledge-image{
     overflow: hidden;
     height: 35em !important;
+    width: 100%;
   }
 
   .content .content-overlay {
