@@ -49,7 +49,7 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
 
 const BotSlider = (props) => {
 	const {
-        knowledge,
+        knowledge =["test"],
         eventImg
 	} = props;
 
