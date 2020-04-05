@@ -21,7 +21,6 @@ const IntelBotResult = (props) => {
 			<Modal.Header closeButton>
 				<Modal.Title id="example-modal-sizes-title-lg" className="bot">
 					<h2>Here's What I know</h2>
-					<img alt="monkey icon" src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 				</Modal.Title>
 			</Modal.Header>
 			<ModalBody className="bot-modal">
@@ -85,9 +84,8 @@ const IntelBot = (props) => {
 						<Modal.Title id="example-modal-sizes-title-lg" className="bot">
 							{!isLoading
 								? <h2>Scratch my head to find out what I know about this event</h2>
-								: <h2>Let me think a moment</h2>
+								: <h2>Let me think a moment (I'll need a minute please)</h2>
 							}
-							<img alt="monkey logo" src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 						</Modal.Title>
 					</Modal.Header>
 					{!isLoading
