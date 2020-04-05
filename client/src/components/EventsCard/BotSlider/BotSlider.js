@@ -17,6 +17,7 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
         var image = knowledge.image;
         var comment = knowledge.comment;
         var wikipedia = knowledge.wikipediaLink;
+        const [imageToDisplay, setImageToDisplay] = useState(image);
 
             items.push(
                 <Carousel.Item>
@@ -24,7 +25,7 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
                         <div className="content-overlay" />
                             { image===""
                                 ? <img className="content-image" src={eventImg} alt="slide-img"/>
-                                : <img className="content-image" src={image} alt="slide-img"/>
+                                : <img className="content-image" src={imageToDisplay} onError={() => {setImageToDisplay(eventImg)}} alt="slide-img"/>
                             }
                             <div className="content-details fadeIn-bottom">
                                 <h3>{label}</h3>

@@ -47,8 +47,8 @@ const IntelBot = (props) => {
         description = '',
         title = '',
         address = '',
-				nameOfPlace = '',
-				eventImg = ''
+		nameOfPlace = '',
+		eventImg = ''
 	} = props;
 
     async function getBotInfo(){
