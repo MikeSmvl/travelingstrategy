@@ -23,7 +23,7 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
                 <Carousel.Item>
                     <div className="content">
                         <div className="content-overlay" />
-                            <img className="content-image" src={eventImg} alt="slide-img" />
+                            <img className="content-image" src={eventImg} alt="slide-img"/>
                             <div className="content-details fadeIn-bottom">
                                 <h3>{label}</h3>
                                 <div className="bot-text">
@@ -40,26 +40,30 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
                 </Carousel.Item>
             )
         }
-        items.push(
-            <Carousel.Item>
-                <div className="content">
-                    <div className="content-overlay" />
-                        <img className="content-image" src={image} alt="slide-img" />
-                        <div className="content-details fadeIn-bottom">
-                            <h3>{label}</h3>
-                            <div className="bot-text">
-                                <p>{comment}</p>
+
+        else {
+            items.push(
+                <Carousel.Item>
+                    <div className="content">
+                        <div className="content-overlay" />
+                            <img className="content-image" src={image} alt="slide-img"/>
+                            <div className="content-details fadeIn-bottom">
+                                <h3>{label}</h3>
+                                <div className="bot-text">
+                                    <p>{comment}</p>
+                                </div>
                             </div>
-                        </div>
-                </div>
-                <Carousel.Caption>
-                    <a href={`//${wikipedia}`}>
-                        <h3 className="wiki-text">Find out more on wikipedia</h3>
-                        <p />
-                    </a>
-                </Carousel.Caption>
-            </Carousel.Item>
-        )
+                    </div>
+                    <Carousel.Caption>
+                        <a href={`//${wikipedia}`}>
+                            <h3 className="wiki-text">Find out more on wikipedia</h3>
+                            <p />
+                        </a>
+                    </Carousel.Caption>
+                </Carousel.Item>
+            )
+        }
+
     });
 
     return (items);

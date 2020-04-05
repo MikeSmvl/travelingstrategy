@@ -17,6 +17,7 @@ const IntelBotResult = (props) => {
 			show={show}
 			onHide={handleClose}
 			centered
+			className='bot-modal'
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="example-modal-sizes-title-lg" className="bot">

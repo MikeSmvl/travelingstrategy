@@ -172,7 +172,7 @@ const EventsCard = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="more-info-img" />
+					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="responsive-more-info" />
 					<div className="card-body">
 						{ !isLiked
 							? (
