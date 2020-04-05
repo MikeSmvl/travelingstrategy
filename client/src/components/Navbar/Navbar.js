@@ -106,17 +106,15 @@ const Navbar = (props) => {
 												toggle={toggleWhy}
 												addClass="whyPosition"
 												header="Why Register?"
-												info={(
-													<span>
-														<br />
-														<ol>
-															<li>Get access to you profile page with more information about your travel destination.</li>
-															<li>See events that are occuring in your destination city.</li>
-															<li>Get trending images if you stay informed.</li>
-														</ol>
-													</span>
-												)}
-											/>
+											><span>
+													<br />
+													<ol>
+														<li>Get access to you profile page with more information about your travel destination.</li>
+														<li>See events that are occuring in your destination city.</li>
+														<li>Get trending images if you stay informed.</li>
+													</ol>
+												</span>
+											</WhyCard>
 										) : null}
 								</RBNavbar.Text>
 								<Col>

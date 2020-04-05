@@ -6,12 +6,12 @@ import logo from '../Navbar/logo.png';
 
 
 const WhyCard = (props) => {
-	const { addClass = '', toggle = '', header = '', info = '' } = props;
+	const { addClass = '', toggle = '', header = '' } = props;
 	return (
 		<div className="why">
 			<Card className={`why_inner ${addClass}`} onMouseLeave={toggle}>
 				<Card.Header className="iHeader">{header}</Card.Header>
-				<Card.Body className="cardBody">{info}</Card.Body>
+				<Card.Body className="cardBody">{props.children}</Card.Body>
 				<Card.Footer>
 					<img
 						alt="error"
@@ -29,7 +29,6 @@ const WhyCard = (props) => {
 WhyCard.propTypes = {
 	addClass: PropTypes.string,
 	header: PropTypes.string,
-	info: PropTypes.string,
 	toggle: PropTypes.func
 };
 
