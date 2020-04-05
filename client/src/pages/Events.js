@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Row, Popover, OverlayTrigger, Toast} from 'react-bootstrap/';
+import { Button, Row, Popover, OverlayTrigger, Toast } from 'react-bootstrap/';
 import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
 import Unsplash, { toJson } from 'unsplash-js';

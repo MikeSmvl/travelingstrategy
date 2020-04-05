@@ -9,6 +9,7 @@ const IntelBotResult = (props) => {
         show = '',
 		handleClose = '',
 		knowledge = '',
+		eventImg =''
 	} = props;
 
 	return(
@@ -16,6 +17,7 @@ const IntelBotResult = (props) => {
 			show={show}
 			onHide={handleClose}
 			centered
+			className='bot-modal'
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="example-modal-sizes-title-lg" className="bot">
@@ -27,6 +29,7 @@ const IntelBotResult = (props) => {
 				{knowledge.length !== 0
 					?	<BotSlider
 							knowledge={knowledge}
+							eventImg={eventImg}
 						></BotSlider>
 					:	<p>I did not find anything. Try another event</p>
 				}
@@ -46,12 +49,13 @@ const IntelBot = (props) => {
         description = '',
         title = '',
         address = '',
-        nameOfPlace = ''
+				nameOfPlace = '',
+				eventImg = ''
 	} = props;
 
     async function getBotInfo(){
 		setIsLoading(true);
-        const eventInfo = eventCategory+" "+description+" "+title+" "+address+" "+nameOfPlace;
+        const eventInfo = eventCategory+" "+description+" "+title+" "+address+" "+nameOfPlace+" "+eventImg;
         const body = {
             eventInfo
         }
@@ -101,6 +105,7 @@ const IntelBot = (props) => {
 					show={show}
 					handleClose={handleClose}
 					knowledge={botKnowledge}
+					eventImg={eventImg}
 				/>
 			}
 			</>
@@ -108,12 +113,13 @@ const IntelBot = (props) => {
 }
 
 IntelBot.propTypes = {
-    show: PropTypes.bool,
+  show: PropTypes.bool,
 	eventCategory: PropTypes.string,
 	description: PropTypes.string,
 	title: PropTypes.string,
 	address: PropTypes.string,
 	nameOfPlace: PropTypes.string,
+	eventImg: PropTypes.string
 };
 
 export default IntelBot;
