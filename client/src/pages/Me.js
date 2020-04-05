@@ -65,23 +65,23 @@ function Me() {
 			<div className="currentDate">{currentDate.replace('/', '-')}</div>
 			<div className="meTitle">My Places</div>
 			<div className="citiesCardWrapper">
-				{cities.map((citySubscription, idx) => {
-					const requestId = citySubscription.request_id;
-					const cityName = citySubscription.search_term;
-					const { latitude } = citySubscription;
-					const { longitude } = citySubscription;
+				<CitiesCard>
+					{cities.map((citySubscription, idx) => {
+						const requestId = citySubscription.request_id;
+						const cityName = citySubscription.search_term;
+						const { latitude } = citySubscription;
+						const { longitude } = citySubscription;
 
-					return (
-						<Link
-							key={idx}
-							to={`/user_selection?request_id=${requestId}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
-						>
-							<CitiesCard>
+						return (
+							<Link
+								key={idx}
+								to={`/user_selection?request_id=${requestId}&city=${cityName}&latitude=${latitude}&longitude=${longitude}`}
+							>
 								<CityImage key={idx} cityName={cityName.toLowerCase()} />
-							</CitiesCard>
-						</Link>
-					);
-				})}
+							</Link>
+						);
+					})}
+				</CitiesCard>
 			</div>
 			<img className="timbreImage" alt="" src={TStimbre} />
 		</>

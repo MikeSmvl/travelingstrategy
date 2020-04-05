@@ -861,8 +861,7 @@ Array [
           className="row"
         >
           <span
-            class="text-center"
-            className="navbar-text"
+            className="text-center navbar-text"
           >
             <button
               className="whyLoggin"
@@ -959,8 +958,7 @@ Array [
           className="row"
         >
           <span
-            class="text-center"
-            className="navbar-text"
+            className="text-center navbar-text"
           >
             <button
               className="whyLoggin"
