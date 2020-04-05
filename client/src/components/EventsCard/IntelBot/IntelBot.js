@@ -17,7 +17,6 @@ const IntelBotResult = (props) => {
 			show={show}
 			onHide={handleClose}
 			centered
-			className='bot-modal'
 		>
 			<Modal.Header closeButton>
 				<Modal.Title id="example-modal-sizes-title-lg" className="bot">
@@ -25,7 +24,7 @@ const IntelBotResult = (props) => {
 					<img alt="monkey icon" src={require('../../../eventsImages/monkey-icon.png')} className="monkey-icon"></img>
 				</Modal.Title>
 			</Modal.Header>
-			<ModalBody style={{ textAlign: 'center' }}>
+			<ModalBody className="bot-modal">
 				{knowledge.length !== 0
 					?	<BotSlider
 							knowledge={knowledge}

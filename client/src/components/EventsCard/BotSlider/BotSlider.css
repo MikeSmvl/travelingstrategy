@@ -4,6 +4,7 @@
 
   .content-image{
     overflow: hidden;
+    height: 35em !important;
   }
 
   .content .content-overlay {

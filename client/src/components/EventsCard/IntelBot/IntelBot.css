@@ -3,10 +3,8 @@
 }
 
 .bot-modal{
-    max-width: 45% !important;
-    margin-left: 30%;
-    max-height: auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
+    width: 50em;
+    text-align: center;
 }
 
 .monkey-icon{
