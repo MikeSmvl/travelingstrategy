@@ -23,13 +23,16 @@ async function eventBotInfo(eventInfo) {
     return JSON.parse(results)
 }
 
-function getPythonResult(process){
+async function getPythonResult(process){
     return new Promise((resolve, reject) => {
         // Takes stdout data from script which executed
         // with arguments and send this data to res object
         process.stdout.on('data', function(data) {
-            console.log(data.toString())
-            resolve(data.toString())
+            try {
+                resolve(data.toString())
+            } catch(err){
+                reject(err)
+            }
         })
     })
 }
