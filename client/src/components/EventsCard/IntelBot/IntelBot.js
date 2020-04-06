@@ -83,7 +83,7 @@ const IntelBot = (props) => {
 					<Modal.Header closeButton>
 						<Modal.Title id="example-modal-sizes-title-lg" className="bot">
 							{!isLoading
-								? <h2>Scratch my head to find out what I know about this event</h2>
+								? <h2>Click on me to find out what I know about this event</h2>
 								: <h2>Let me think a moment (I'll need a minute please)</h2>
 							}
 						</Modal.Title>
