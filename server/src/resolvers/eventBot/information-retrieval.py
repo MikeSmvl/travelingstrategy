@@ -46,39 +46,17 @@ def getDBpediaLinkSpotlight(text):
     if(eventInfo.replace(" ","") != ""):
         # api-endpoint
         prefix = "https://api.dbpedia-spotlight.org/en/annotate?text="
-        URL = prefix+text+"&confidence=0.31"
+        URL = prefix+text+"&confidence=0.7"
         headers = {'accept': 'application/json'}
         response = requests.get(url = URL, headers = headers).json()
 
         if 'Resources' in response:
             resources = response.get('Resources')
-            # print(resources)
             for resource in resources:
                 dpbediaLinks.append(resource['@URI'])
 
             dpbediaLinks = list(dict.fromkeys(dpbediaLinks)) #Removing duplicates
     return dpbediaLinks
-
-def describe(dbpediaLink):
-    sparql.setQuery("""
-        SELECT ?property ?hasValue ?isValueOf
-            WHERE {{
-             {{<{}> ?property ?hasValue }}
-             UNION
-             {{ ?isValueOf ?property <{}> }}
-        }}
-    """.format(dbpediaLink,dbpediaLink))
-    sparql.setReturnFormat(JSON)
-    results = sparql.query().convert()
-
-    for result in results["results"]["bindings"]:
-        print("==========================================================")
-        try:
-            print("predicate: ",result["property"]["value"]," object: ",result["hasValue"]["value"])
-        except KeyError:
-            print("predicate: ",result["property"]["value"]," object: ",result["isValueOf"]["value"])
-
-        print(result)
 
 def getImage(dbpediaLink):
     sparql.setQuery("""
@@ -106,8 +84,6 @@ def getLabel(dbpediaLink):
     results = sparql.query().convert()
 
     for result in results["results"]["bindings"]:
-        # print("==========================================================")
-        # print("Label: ",result["value"]["value"])
         return result["value"]["value"]
 
 def getComment(dbpediaLink):
