@@ -11,7 +11,7 @@ const WhyCard = (props) => {
 		<div className="why">
 			<Card className={`why_inner ${addClass}`} onMouseLeave={toggle}>
 				<Card.Header className="iHeader">{header}</Card.Header>
-				<Card.Body className="cardBody">{children}</Card.Body>
+				<Card.Body className="cardBody">{props.children}</Card.Body>
 				<Card.Footer>
 					<img
 						alt="error"
