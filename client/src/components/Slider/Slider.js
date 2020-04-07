@@ -17,9 +17,9 @@ const Slider = (props) => {
 	} = props;
 
 	const [index, setIndex] = useState(0);
-  const handleSelect = (selectedIndex, e) => {
-    setIndex(selectedIndex);
-  };
+	const handleSelect = (selectedIndex, e) => {
+		setIndex(selectedIndex);
+	};
 
 	return (
 		<Carousel activeIndex={index} onSelect={handleSelect}>
