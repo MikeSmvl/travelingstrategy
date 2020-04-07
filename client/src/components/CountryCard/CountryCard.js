@@ -7,7 +7,7 @@ const CountryCard = (props) => {
 	const {
 		flagSrc = '',
 		title = '',
-		footer = '',
+		footer,
 		children,
 		...rest
 	} = props;

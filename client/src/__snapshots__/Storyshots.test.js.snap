@@ -286,9 +286,7 @@ Array [
       <div
         className="countryCardFooter card-footer"
       >
-        <div>
-          
-        </div>
+        <div />
       </div>
     </div>
   </div>,
@@ -356,9 +354,7 @@ Array [
       <div
         className="countryCardFooter card-footer"
       >
-        <div>
-          
-        </div>
+        <div />
       </div>
     </div>
   </div>,
@@ -666,17 +662,13 @@ Array [
                 className="subscribe btn btn-outline-primary"
                 disabled={false}
                 onClick=""
-                type="button"
-              >
-                Stay Informed
-              </button>
-              <button
-                className="iWhy"
                 onFocus={[Function]}
                 onMouseLeave={[Function]}
                 onMouseOver={[Function]}
                 type="button"
-              />
+              >
+                Stay Informed
+              </button>
             </div>
           </div>
         </div>
@@ -779,17 +771,13 @@ Array [
                 className="subscribe btn btn-outline-primary"
                 disabled={false}
                 onClick=""
-                type="button"
-              >
-                Stay Informed
-              </button>
-              <button
-                className="iWhy"
                 onFocus={[Function]}
                 onMouseLeave={[Function]}
                 onMouseOver={[Function]}
                 type="button"
-              />
+              >
+                Stay Informed
+              </button>
             </div>
           </div>
         </div>
@@ -860,17 +848,6 @@ Array [
         <div
           className="row"
         >
-          <span
-            className="text-center navbar-text"
-          >
-            <button
-              className="whyLoggin"
-              onFocus={[Function]}
-              onMouseLeave={[Function]}
-              onMouseOver={[Function]}
-              type="button"
-            />
-          </span>
           <div
             className="col"
           >
@@ -881,6 +858,9 @@ Array [
                 className="btn btn-outline-primary"
                 disabled={false}
                 onClick={[Function]}
+                onFocus={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
                 type="button"
               >
                 <strong>
@@ -957,17 +937,6 @@ Array [
         <div
           className="row"
         >
-          <span
-            className="text-center navbar-text"
-          >
-            <button
-              className="whyLoggin"
-              onFocus={[Function]}
-              onMouseLeave={[Function]}
-              onMouseOver={[Function]}
-              type="button"
-            />
-          </span>
           <div
             className="col"
           >
@@ -978,6 +947,9 @@ Array [
                 className="btn btn-outline-primary"
                 disabled={false}
                 onClick={[Function]}
+                onFocus={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
                 type="button"
               >
                 <strong>

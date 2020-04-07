@@ -27,47 +27,54 @@ const Header = (props) => {
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
-				<Col lg={8} style={{ border: '5px solid white', borderRadius: '20px 20px 0 0' }}>
+				<Col
+					lg={8}
+					style={{ border: '5px solid white', borderRadius: '20px 20px 0 0' }}
+				>
 					<div className="AppHeader" {...rest}>
 						<div className="overlay" />
 						<video className="videoHeader" autoPlay muted loop>
 							<source src={bg} type="video/mp4" />
 						</video>
-						<div className="country">
-							{country}
-						</div>
-						<div className="city">
-							{city}
-						</div>
-						<div className="time">
-							{time}
-						</div>
+						<div className="country">{country}</div>
+						<div className="city">{city}</div>
+						<div className="time">{time}</div>
 						<div className="text-center">
-							<Button variant="outline-primary" className="subscribe" onClick={handleShow}>Stay Informed</Button>
-							<button
+							<Button
+								variant="outline-primary"
+								className="subscribe"
+								onClick={handleShow}
 								onMouseOver={toggleWhy}
 								onFocus={toggleWhy}
 								onMouseLeave={toggleWhy}
-								className="iWhy"
-								type="button"
-							/>
+							>
+								Stay Informed
+							</Button>
 							{why ? (
-								<WhyCard
-									addClass="whyCard"
-									toggle={toggleWhy}
-									header="Why stay informed?"
-									info={(
-										<span>
-											<br />
-											<ol>
-												<li>To receive an email reminder filled with Instagram&#39;s top trending images for fun activities.</li>
-												<li>To browse through events that are occuring in your travel destination - As long as you have an account.</li>
-											</ol>
-										</span>
-									)}
-								/>
-							)
-								: null }
+								<Row className="justify-content-center">
+									<Col sm={6}>
+										<WhyCard
+											addClass="whyCard"
+											toggle={toggleWhy}
+											header="Why stay informed?"
+										>
+											<span>
+												<br />
+												<ol>
+													<li>
+														To receive an email reminder filled with Instagram&#39;s
+														top trending images for fun activities.
+													</li>
+													<li>
+														To browse through events that are occuring in your
+														travel destination - As long as you have an account.
+													</li>
+												</ol>
+											</span>
+										</WhyCard>
+									</Col>
+								</Row>
+							) : null}
 							<SubscriptionModal
 								show={show}
 								handleShow={handleShow}
@@ -95,6 +102,5 @@ Header.propTypes = {
 	lng: PropTypes.string,
 	countryIso: PropTypes.string
 };
-
 
 export default Header;

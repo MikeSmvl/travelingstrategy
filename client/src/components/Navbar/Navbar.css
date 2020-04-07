@@ -1,6 +1,6 @@
 .Navbar {
 	background-color: transparent;
-	z-index: 500;
+	z-index: 50;
 }
 .Navbar .title {
 	color: white !important;
@@ -29,21 +29,3 @@ a {
 	transform: rotate(-20deg);
 	margin-top:10px;
 }
-
-.whyLoggin{
-	background: url('../../miscImages/infoWhy.png');
-	background-repeat: no-repeat;
-	background-size: 23px 23px;
-	background-position-y: 40%;
-	border: none;
-	outline: none;
-	height: 46px;
-	width: 23px;
-}
-
-.whyPosition {
-	top:9%;
-	left:70%;
-	background:linear-gradient(315deg, #fef9e7 0%, #e6ffff 54%);
-}
-

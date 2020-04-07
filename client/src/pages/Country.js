@@ -347,7 +347,8 @@ function Country({
 								style={{
 									backgroundColor: 'rgb(247,	247,	247)',
 									padding: '0.5em',
-									borderRadius: '0px'
+									borderRadius: '0px',
+									zIndex: '50'
 								}}
 								className="justify-content-center sticky"
 							>
@@ -835,6 +836,7 @@ function Country({
 															return (
 																<button
 																	type="button"
+																	key={value + index}
 																	className="tablinks"
 																	style={{ color: '#FF1C00' }}
 																	onClick={() => setVaccinCard(value.vaccine_info)}
@@ -847,6 +849,7 @@ function Country({
 														return (
 															<button
 																type="button"
+																key={value + index}
 																className="tablinks"
 																onClick={() => setVaccinCard(value.vaccine_info)}
 															>
@@ -919,7 +922,7 @@ function Country({
 											</Row>
 											<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
 												{phrases.map((value, index) => (
-													<Row>
+													<Row key={value + index}>
 														<Col>
 															{value.phrase.split('%20').join(' ')}
 														</Col>
@@ -938,7 +941,7 @@ function Country({
 																	onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
 																>
 																	<img
-																		src={require('../miscImages/phraseSpeaker.png')}
+																		src={require('../assets/images/phraseSpeaker.png')}
 																		style={{ width: '24px' }}
 																		alt="error loading"
 																	/>
@@ -973,10 +976,10 @@ function Country({
 														&& socketArray.map((item) => (
 															/* eslint-disable */
 															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
-															<Col>
+															<Col key={item}>
 																<img
 																	key={item}
-																	src={require(`../socketImages/${item}.png`)}
+																	src={require(`../assets/images/socketImages/${item}.png`)}
 																	style={{width: '200px'}}
 																	alt=''
 																/>
@@ -1004,7 +1007,7 @@ function Country({
 												{trafficSide !== 'Not available yet' && (
 													<img
 														key={trafficSide}
-														src={require(`../trafficImages/${trafficSide}.png`)}
+														src={require(`../assets/images/trafficImages/${trafficSide}.png`)}
 														style={{
 															width: '200px',
 															marginLeft: 'auto',

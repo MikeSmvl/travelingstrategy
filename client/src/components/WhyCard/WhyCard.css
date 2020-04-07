@@ -1,15 +1,6 @@
 .why {
 	font-family: 'Open Sans', sans-serif;
-	position: fixed;
-	z-index: 3;
  }
-
-.why_inner {
-	position: fixed;
-	width:350px;
-	z-index: 3;
-}
-
 .cardBody{
 	text-align: left;
 	padding-top:none;
@@ -17,4 +8,5 @@
 	margin-left:10px;
 	padding-right:2px;
 	color: rgb(107, 107, 107);
+	z-index:51;
 }
