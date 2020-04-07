@@ -41,6 +41,7 @@
    }
 }
 .app-card-list {
+    margin-top: -0.5em;
     display: inline-block;
     width: 100%;
     float: right;
@@ -55,15 +56,15 @@
 }
 @media (min-width: 768px) {
     .app-card-list {
+        margin-top: -2.5em;
         width: 100%;
         white-space: nowrap;
-        margin-top: 0;
    }
 }
 .app-card-list .card {
     margin: 60px 30px;
     display: inline-block;
-    width: 40%;
+    width: 23em;
 }
 
 .app-card-list .card .card-body {
@@ -75,10 +76,12 @@
 }
 
 .card-title{
+    height: 1.3em;
     text-align: center;
     margin-bottom: 15%;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-size: 1.3em;
     white-space: nowrap;
 }
 
@@ -102,8 +105,10 @@
     margin-bottom: 3%;
 }
 
-.more-info-img{
-    max-width: 100%;
+.responsive-more-info {
+    /* max-width: 100%; */
+    width: 100%;
+    height: auto;
 }
 
 .card-category{
@@ -124,7 +129,7 @@
     --button-secondary-color: #f7d2c7 !important;
     --button-secondary-color-dark: #00000000  !important;
     --button-secondary-color-light: #000000 !important;
-    --button-secondary-color-hover: #e787b4 !important;
+    --button-secondary-color-hover: #ee7267 !important;
     --button-secondary-color-active: #cfdee9 !important;
     --button-secondary-border: 1px solid #000000 !important;
     --button-default-height: 51px !important;
@@ -138,9 +143,9 @@
 }
 
 #cardbody{
-    background-image: linear-gradient(#f7d2a926, #d491bc24);
+    background-color: #f1eded40;
 }
 
 #image_with_shadow{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.06), 0 6px 20px 0 rgba(0, 0, 0, 0.43);
+    border: 10px solid #f1eded40;
 }
