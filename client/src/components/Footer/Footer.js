@@ -17,7 +17,8 @@ const Footer = (props) => {
 		handleClose = '',
 		city = '',
 		lat = '',
-		lng = ''
+		lng = '',
+		email = ''
 	} = props;
 	return (
 		<div style={{ padding: '40px' }}>
@@ -71,6 +72,7 @@ const Footer = (props) => {
 						city={city}
 						lat={lat}
 						lng={lng}
+						emailLogged={email}
 					/>
 				</Col>
 			</Row>

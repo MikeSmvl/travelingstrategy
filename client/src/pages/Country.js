@@ -73,11 +73,22 @@ function Country({
 	const [phrases, setPhrases] = useState([]);
 	const [phraseIso, setPhraseIso] = useState('');
 	const [phraseLanguage, setPhraseLanguage] = useState('');
+	const [email, setEmail] = useState('');
 
 	// for the moment being have daily forecast turned off
 	const [showWeather] = useState(false);
 
 	useEffect(() => {
+		async function getToken() {
+			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, {
+				credentials: 'include'
+			})
+				.then((res) => res.json())
+				.then((res) => {
+					res.email && res.email !== null && setEmail(res.email);
+				});
+		}
+
 		async function fetchRate(originCode, destinationCode) {
 			fetch(
 				`https://api.exchangeratesapi.io/latest?base=${originCode}&symbols=${destinationCode}`
@@ -302,6 +313,7 @@ function Country({
 
 
 		fetchData();
+		getToken();
 	}, [
 		originCountry,
 		destinationCountry,
@@ -334,6 +346,7 @@ function Country({
 						lat={destinationLat}
 						lng={destinationLng}
 						countryIso={destinationCountry}
+						email={email}
 					/>
 					<Row className="justify-content-center">
 						<Col
@@ -1040,6 +1053,7 @@ function Country({
 							city={destinationCity}
 							lat={destinationLat}
 							lng={destinationLng}
+							email={email}
 						/>
 					</footer>
 				</div>
