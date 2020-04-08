@@ -106,7 +106,8 @@ const Navbar = (props) => {
 												toggle={toggleWhy}
 												addClass="whyPosition"
 												header="Why Register?"
-											><span>
+											>
+												<span>
 													<br />
 													<ol>
 														<li>Get access to you profile page with more information about your travel destination.</li>
