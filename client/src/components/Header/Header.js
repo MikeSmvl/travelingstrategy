@@ -16,6 +16,7 @@ const Header = (props) => {
 		handleClose = '',
 		lat = '',
 		lng = '',
+		email = '',
 		countryIso = 'IT',
 		...rest
 	} = props;
@@ -24,6 +25,7 @@ const Header = (props) => {
 	const toggleWhy = () => {
 		setWhy(!why);
 	};
+
 	return (
 		<div className="AppHeaderWrapper">
 			<Row className="justify-content-center">
@@ -82,6 +84,7 @@ const Header = (props) => {
 								city={city}
 								lat={lat}
 								lng={lng}
+								emailLogged={email}
 							/>
 						</div>
 					</div>

@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Card, Modal, ModalBody } from 'react-bootstrap';
+import { Card, Modal, ModalBody, Popover, OverlayTrigger } from 'react-bootstrap';
 import './EventsCard.css';
 import PropTypes from 'prop-types';
 import { AwesomeButton } from 'react-awesome-button';
+import IntelBot from './IntelBot/IntelBot';
 import 'react-awesome-button/dist/styles.css';
 
 
@@ -11,6 +12,7 @@ const EventsCard = (props) => {
 	const [likedModal, setLikedModal] = useState(false);
 	const [removed, setRemoved] = useState(false);
 	const [removedModal, setRemovedModal] = useState(false);
+	const [showBot, setShowBot] = useState(false);
 	const {
 		eventCategory = '',
 		description = '',
@@ -74,24 +76,35 @@ const EventsCard = (props) => {
 
 	const handleLike = () => {
 		addEvent();
+		setModal(false);
 		setLikedModal(true);
 	};
 
 	const handleDelete = () => {
 		removeEvent();
+		setModal(false);
 		setRemoved(true);
 		setRemovedModal(true);
 	};
-
 
 	const handleFavoriteModals = () => {
 		setLikedModal(false);
 		setRemovedModal(false);
 	};
 
+	const handleCloseBot = () => {
+		setModal(true);
+		setShowBot(false);
+	};
+
+	const handleShowBot = () => {
+		setModal(false);
+		setShowBot(true);
+	};
+
 	/**
-     * Dates are transformed to English format
-     */
+	 * Dates are transformed to English format
+	 */
 	const getDateText = (date) => {
 		const dateObject = new Date(date);
 		const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
@@ -159,7 +172,7 @@ const EventsCard = (props) => {
 					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
-					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="more-info-img" />
+					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="responsive-more-info" />
 					<div className="card-body">
 						{ !isLiked
 							? (
@@ -169,7 +182,8 @@ const EventsCard = (props) => {
 										size="small"
 										centered
 										onPress={handleLike}
-									>Likes
+									>
+										<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
 									</AwesomeButton>
 								</div>
 							)
@@ -185,6 +199,28 @@ const EventsCard = (props) => {
 									</AwesomeButton>
 								</div>
 							)}
+						<OverlayTrigger
+							overlay={(
+								<Popover
+									id="popover-positioned-bottom"
+									className="popover-context"
+								>
+									Learn more about the key points of this event
+								</Popover>
+							)}
+						>
+							<div className="modal-like-button">
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									onPress={handleShowBot}
+									centered
+								>
+									<img alt="like button" src={require('../../eventsImages/smart.png')} style={{ height: '3em' }} />
+								</AwesomeButton>
+							</div>
+						</OverlayTrigger>
+
 						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
 						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
 						{address !== '' && (
@@ -296,6 +332,16 @@ const EventsCard = (props) => {
 			<EventCard />
 			<InfoModal />
 			<LikedModal />
+			<IntelBot
+				show={showBot}
+				handleClose={handleCloseBot}
+				eventCategory={eventCategory}
+				description={description}
+				title={title}
+				address={address}
+				nameOfPlace={nameOfPlace}
+				eventImg={eventImg}
+			/>
 		</>
 	);
 };
@@ -312,6 +358,7 @@ EventsCard.propTypes = {
 	duration: PropTypes.string,
 	isLiked: PropTypes.bool,
 	requestId: PropTypes.string,
+	eventImg: PropTypes.string,
 	eventInfo: PropTypes.instanceOf(Array)
 };
 

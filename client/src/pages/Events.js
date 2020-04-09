@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Row } from 'react-bootstrap/';
+import { Button, Row, Popover, OverlayTrigger, Toast } from 'react-bootstrap/';
 import { Redirect } from 'react-router-dom';
 import Client from 'predicthq';
-import '../App.css';
 import Unsplash, { toJson } from 'unsplash-js';
+import './Events.css';
 import { AwesomeButton } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
-import Popover from 'react-bootstrap/Popover';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Toast from 'react-bootstrap/Toast';
 import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
 
 const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
@@ -45,6 +42,7 @@ function Events({
 	const [redirect, setRedirect] = useState(false);
 	const [email, setEmail] = useState('');
 	const [show, setShow] = useState(false);
+	document.body.classList.add('event-body');
 
 
 	useEffect(() => {
@@ -312,6 +310,7 @@ function Events({
 								overlay={(
 									<Popover
 										id="popover-positioned-bottom"
+										className="popover-context"
 									>
 										Receive an email of your favourite events
 									</Popover>

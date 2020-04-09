@@ -9,17 +9,20 @@ import SweetAlert from 'react-bootstrap-sweetalert';
 
 
 const SubscriptionModal = (props) => {
-	const [date, setDate] = useState(new Date());
-	const [email, setEmail] = useState('');
-	const [isEmailValid, setEmailValid] = useState(false);
-	const today = date;
 	const {
 		show = '',
     	handleClose = '',
 		city = '',
 		lat = '',
-		lng = ''
+		lng = '',
+		emailLogged = ''
 	} = props;
+
+	const [date, setDate] = useState(new Date());
+	const [email, setEmail] = useState(emailLogged);
+	const [isEmailValid, setEmailValid] = useState(false);
+	const today = date;
+	let isUserLogged = false;
 
 	const emailChange = (event) => {
     	setEmail(event.target.value);
@@ -50,6 +53,10 @@ const SubscriptionModal = (props) => {
 		setEmailValid(true);
 	};
 
+	if (emailLogged !== '') {
+		isUserLogged = true;
+	}
+
 	return (
 		<>
 			<Modal show={show} onHide={handleClose} centered className="modal-subscription">
@@ -61,7 +68,9 @@ const SubscriptionModal = (props) => {
 					<Modal.Body>
 						<Form.Group controlId="formGroupEmail">
 							<Form.Label>Email address</Form.Label>
-							<Form.Control type="email" placeholder="Enter email" value={email} onChange={emailChange} />
+							{ isUserLogged
+								? <Form.Control type="email" placeholder="Enter Email" value={email} onChange={emailChange} />
+								: <Form.Control type="email" value={email} onChange={emailChange} />}
 							<Form.Control.Feedback>Looks good!</Form.Control.Feedback>
 						</Form.Group>
 						<Form.Group controlId="formGroupPassword">

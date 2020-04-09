@@ -17,14 +17,12 @@ const Slider = (props) => {
 	} = props;
 
 	const [index, setIndex] = useState(0);
-	const [direction, setDirection] = useState(null);
 	const handleSelect = (selectedIndex, e) => {
 		setIndex(selectedIndex);
-		setDirection(e.direction);
 	};
 
 	return (
-		<Carousel activeIndex={index} direction={direction} onSelect={handleSelect}>
+		<Carousel activeIndex={index} onSelect={handleSelect}>
 			<Carousel.Item>
 				<div className="content">
 					<div className="content-overlay" />
