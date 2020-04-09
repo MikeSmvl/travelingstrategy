@@ -183,7 +183,7 @@ const EventsCard = (props) => {
 										centered
 										onPress={handleLike}
 									>
-										<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+										<img alt="like button" src={require('../../assets/images/eventsImages/heart.png')} style={{ height: '3em' }} />
 									</AwesomeButton>
 								</div>
 							)
@@ -216,7 +216,7 @@ const EventsCard = (props) => {
 									onPress={handleShowBot}
 									centered
 								>
-									<img alt="like button" src={require('../../eventsImages/smart.png')} style={{ height: '3em' }} />
+									<img alt="like button" src={require('../../assets/images/eventsImages/smart.png')} style={{ height: '3em' }} />
 								</AwesomeButton>
 							</div>
 						</OverlayTrigger>

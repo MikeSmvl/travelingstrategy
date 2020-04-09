@@ -726,5 +726,9 @@ label {
   padding: 10px;
 	margin-top: 10px;
   background:linear-gradient(315deg, #fef9e7 0%, #e6ffff 54%);
-
+  position: fixed;
+  right: 5%;
+}
+.loginButton {
+  font-weight: bold;
 }

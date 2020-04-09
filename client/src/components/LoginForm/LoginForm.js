@@ -182,12 +182,13 @@ const LoginForm = (props) => {
 				onMouseOver={toggleWhy}
 				onFocus={toggleWhy}
 				onMouseLeave={toggleWhy}
+				className="loginButton"
 			>
-				<strong>Login</strong>
+				Login
 			</Button>
 			{why ? (
-				<Row className="justify-content-center">
-					<Col sm={6}>
+				<Row className="justify-content-center" style={{ position: 'absolute' }}>
+					<Col sm={6} style={{ position: 'absolute' }}>
 						<WhyCard
 							toggle={toggleWhy}
 							addClass="whyPosition"

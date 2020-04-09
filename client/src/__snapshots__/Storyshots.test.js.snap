@@ -855,7 +855,7 @@ Array [
               className="navbar-text"
             >
               <button
-                className="btn btn-outline-primary"
+                className="loginButton btn btn-outline-primary"
                 disabled={false}
                 onClick={[Function]}
                 onFocus={[Function]}
@@ -863,9 +863,7 @@ Array [
                 onMouseOver={[Function]}
                 type="button"
               >
-                <strong>
-                  Login
-                </strong>
+                Login
               </button>
             </span>
           </div>
@@ -944,7 +942,7 @@ Array [
               className="navbar-text"
             >
               <button
-                className="btn btn-outline-primary"
+                className="loginButton btn btn-outline-primary"
                 disabled={false}
                 onClick={[Function]}
                 onFocus={[Function]}
@@ -952,9 +950,7 @@ Array [
                 onMouseOver={[Function]}
                 type="button"
               >
-                <strong>
-                  Login
-                </strong>
+                Login
               </button>
             </span>
           </div>
