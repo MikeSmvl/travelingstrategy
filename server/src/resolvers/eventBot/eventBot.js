@@ -1,6 +1,6 @@
 var path = require('path');
 
-var pythonScriptPath = path.join(__dirname, 'information-retrieval.py');
+var pythonScriptPath = path.join(__dirname, 'informationRetrieval.py');
 
 function eventBotInfo(eventInfo) {
     return new Promise((resolve, reject) => {
