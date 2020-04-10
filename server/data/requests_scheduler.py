@@ -9,7 +9,7 @@ def daily():
 def minute():
     new_request()
 
-schedule.every(1).days.do(daily)
+schedule.every(1).day.at("17:00").do(daily)
 schedule.every(1).minutes.do(minute)
 
 while True:
