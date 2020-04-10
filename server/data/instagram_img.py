@@ -54,10 +54,11 @@ def get_image_info(driver, u):
     return image_info
 
 #finding a post or multiple for one hashtag
-def find_a_post(location, request_id):
+def find_a_post(location, request_id, i=1):
 
     LOGGER.info(f'Starting the parser for the following location: {location}')
     driver = create_driver()
+    location = location.replace(' ','')
 
     url = instagram_url + location + "/"
     try:
@@ -73,7 +74,7 @@ def find_a_post(location, request_id):
 
     for g in garb_all:
         count += 1
-        if count > 1:
+        if count > i:
             break
 
         u = "https://www.instagram.com"+g.get('href')
@@ -82,12 +83,14 @@ def find_a_post(location, request_id):
             LOGGER.success(f'Image info for: {location}')
         except:
             LOGGER.error(f'Could not get the info of the image for: {location}')
+            count -= 1
 
         try:
             save_image("images", image_info,location,str(request_id))
             LOGGER.success(f'Saved Image info for: {location}')
         except:
             LOGGER.error(f'Could not save the info of the image for: {location}')
+            count -= 1
 
     quit_driver(driver)
 
@@ -104,4 +107,4 @@ def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
             geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")
 
-find_a_post("madrid", 1)
+

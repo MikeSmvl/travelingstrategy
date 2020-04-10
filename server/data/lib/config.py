@@ -72,7 +72,7 @@ emergency_url = 'http://chartsbin.com/view/1983'
 
 # Email information
 sender = "travelingstrategy@gmail.com"
-subject = "Test Email"
+subject = "You're travelling soon :) <3 Be ready !"
 password = "buttSmell2020!"
 
 # Instagram
