@@ -44,39 +44,34 @@ const Header = (props) => {
 						<div className="text-center">
 							<Button
 								variant="outline-primary"
-								className="subscribe"
+								className="subscribe iwhy"
 								onClick={handleShow}
 								onMouseOver={toggleWhy}
 								onFocus={toggleWhy}
 								onMouseLeave={toggleWhy}
-							>
-								Stay Informed
+								type="button"
+							>Stay Informed
 							</Button>
-							{why ? (
-								<Row className="justify-content-center">
-									<Col sm={6}>
-										<WhyCard
-											addClass="whyCard"
-											toggle={toggleWhy}
-											header="Why stay informed?"
-										>
-											<span>
-												<br />
-												<ol>
-													<li>
-														To receive an email reminder filled with Instagram&#39;s
-														top trending images for fun activities.
-													</li>
-													<li>
-														To browse through events that are occuring in your
-														travel destination - As long as you have an account.
-													</li>
-												</ol>
-											</span>
-										</WhyCard>
-									</Col>
-								</Row>
-							) : null}
+							{why
+								? (
+									<Row className="justify-content-center">
+										<Col sm={6}>
+											<WhyCard
+												addClass="whyCard"
+												toggle={toggleWhy}
+												header="Why stay informed?"
+											>
+												<span>
+													<br />
+													<ol>
+														<li>To receive an email reminder filled with Instagram&#39;s top trending images for fun activities.</li>
+														<li>To browse through events that are occuring in your travel destination - As long as you have an account.</li>
+													</ol>
+												</span>
+											</WhyCard>
+										</Col>
+									</Row>
+								) : null }
 							<SubscriptionModal
 								show={show}
 								handleShow={handleShow}

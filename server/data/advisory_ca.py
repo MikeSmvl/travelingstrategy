@@ -18,6 +18,7 @@ FLAGS = Flags()
 LEVEL = FLAGS.get_logger_level()
 LOGGER = Logger(level=LEVEL) if LEVEL is not None else Logger()
 
+DB = Database("countries.sqlite")
 #in the file provided h3 is a sign that a new data type starts
 #if the header list is empty then the data is still part of the
 #previous h3
@@ -77,7 +78,7 @@ def get_all_countries():
 #gets the url for each country
 #calls parse_additional_advisory_info and passes url
 def get_additional_advisory_info_url():
-  try:
+
     url = 'https://travel.gc.ca/travelling/advisories'
     #set up the headless chrome driver
     driver = create_driver()
@@ -86,22 +87,17 @@ def get_additional_advisory_info_url():
 
     table = soup.find('table')
     table_body = table.find('tbody')
-    table_rows = table_body.find_all('tr')
-
+    table_rows = table_body.find_all('tr', attrs={'class':'gradeX'})
     additional_advisory = {}
-    for tr in table_rows:
-       cols = tr.find_all('td')
-       href = cols[1].find('a').get('href')
-       print (href)
-       link = "https://travel.gc.ca{}".format(href,sep='')
-       country = link[34:len(link)]
-       country = country.replace('-', ' ')
-       iso = find_iso_of_country(country)
-       print(iso)
-       additional_advisory[iso] = parse_additional_advisory_info(link, driver)
-  finally:
-      quit_driver(driver)
-      return additional_advisory
+    for row in table_rows:
+        cols = row.find_all('td')
+        country = cols[0].text
+        iso = find_iso_of_country(country)
+        advisory = cols[2].text
+        additional_advisory[iso] = {'country_name':country, 'advisory_text':advisory}
+
+    quit_driver(driver)
+    return additional_advisory
 
 #Acquires additional advisory information
 def parse_additional_advisory_info(url, driver):
@@ -140,7 +136,7 @@ def parse_additional_advisory_info(url, driver):
 
 #opens the url to the files of all countries
 #get the requiered data and stores it in a dictionary
-@retry(Exception, tries=4)
+# @retry(Exception, tries=4)
 def advisory_canada(all_countries):
     countries_data = {}
     additional_advisory_info = get_additional_advisory_info_url()
@@ -148,7 +144,7 @@ def advisory_canada(all_countries):
         country_url = "https://data.international.gc.ca/travel-voyage/cta-cap-{}.json".format(key,sep='')
 
         print(country_url)
-        #time.sleep(5)
+        # time.sleep(5)
         with contextlib.closing(urllib.request.urlopen(country_url)) as url:
             country_data = json.loads(url.read().decode())
             country_data = country_data['data']
@@ -158,7 +154,7 @@ def advisory_canada(all_countries):
             print (name, "   ", country_iso,"  ")
             if(country_iso in additional_advisory_info):
               additional_advisory_info[country_iso]
-              advisory_text = country_eng['advisory-text']+ " " + additional_advisory_info[country_iso]
+              advisory_text = additional_advisory_info[country_iso]
             else:
              advisory_text = country_eng['advisory-text']
             entry_exit_html = country_eng.get('entry-exit')
@@ -196,9 +192,12 @@ def save_to_canada():
     db.close_connection()
 
 
-    #saving the data in json file
-    # with open('advisory-ca.json', 'w') as fp:
-    #     json.dump(countries_data, fp)
+def update_advisory():
+    advisory_info = get_additional_advisory_info_url()
+    for iso in advisory_info:
+        iso_info = advisory_info[iso]
+        text = iso_info['advisory_text']
+        DB.update(f"CA" , f"country_iso = '{iso}'" ,f"advisory_text = '{text}'")
+        LOGGER.info(f'Update thed advisory for: {iso}')
 
-#save_to_canada()
-
+update_advisory()

@@ -1,11 +1,19 @@
 .why {
 	font-family: 'Open Sans', sans-serif;
  }
+
+.why_inner {
+	position: fixed;
+	width:355px;
+	z-index: 3;
+}
+
 .cardBody{
 	text-align: left;
 	padding-top:none;
 	padding-bottom:none;
-	margin-left:10px;
+	margin-left:15px;
+	margin-right:5px;
 	padding-right:2px;
 	color: rgb(107, 107, 107);
 }

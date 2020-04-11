@@ -659,16 +659,14 @@ Array [
               className="text-center"
             >
               <button
-                className="subscribe btn btn-outline-primary"
+                className="subscribe iwhy btn btn-outline-primary"
                 disabled={false}
                 onClick=""
                 onFocus={[Function]}
                 onMouseLeave={[Function]}
                 onMouseOver={[Function]}
                 type="button"
-              >
-                Stay Informed
-              </button>
+              />
             </div>
           </div>
         </div>
@@ -768,16 +766,14 @@ Array [
               className="text-center"
             >
               <button
-                className="subscribe btn btn-outline-primary"
+                className="subscribe iwhy btn btn-outline-primary"
                 disabled={false}
                 onClick=""
                 onFocus={[Function]}
                 onMouseLeave={[Function]}
                 onMouseOver={[Function]}
                 type="button"
-              >
-                Stay Informed
-              </button>
+              />
             </div>
           </div>
         </div>
