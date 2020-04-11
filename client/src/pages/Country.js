@@ -79,7 +79,7 @@ function Country({
 	const [email, setEmail] = useState('');
 
 	// for the moment being have daily forecast turned off
-	const [showWeather] = useState(false);
+	const [showWeather] = useState(true);
 
 	useEffect(() => {
 		AOS.init({
