@@ -12,6 +12,7 @@ function Me() {
 	const currentDate = new Date().toISOString().slice(0, 10);
 
 	useEffect(() => {
+		document.body.className = 'meBody';
 		async function getToken() {
 			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, {
 				credentials: 'include'
@@ -61,7 +62,7 @@ function Me() {
 	}
 
 	return (
-		<>
+		<div className="meBody">
 			<div className="currentDate">{currentDate.replace('/', '-')}</div>
 			<div className="meTitle">My Places</div>
 			<div className="citiesCardWrapper">
@@ -84,7 +85,7 @@ function Me() {
 				</CitiesCard>
 			</div>
 			<img className="timbreImage" alt="" src={TStimbre} />
-		</>
+		</div>
 	);
 }
 

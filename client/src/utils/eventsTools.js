@@ -3,7 +3,7 @@ import EventsCard from '../components/EventsCard/EventsCard';
 import {Row, Col} from 'react-bootstrap/';
 
 /**
- * 
+ *
  * These are basically the events for this request in the db
  */
 function addMyEvents(myEvents,requestId){
@@ -21,7 +21,7 @@ function addMyEvents(myEvents,requestId){
 
 		events.push(
 
-            <EventsCard 
+            <EventsCard
                 eventCategory={eventCategory}
                 description={description}
                 startDate={startDate}
@@ -44,7 +44,7 @@ function addMyEvents(myEvents,requestId){
 }
 
 /**
- * 
+ *
  * In this method with use replace(/"/g, "'") to remove all
  *  the occurences of " because it makes the grapqhl query fail
  */
@@ -103,14 +103,14 @@ function getButtonContent(category){
         <Row>
             {category==='Hamburger'
             ? <Col xs={12} md={8} >
-               <img alt="Hamburger" src={require(`../eventsImages/Hamburger-Icon.png`)} style={{height:'3em'}}></img>
+               <img alt="Hamburger" src={require(`../assets/images/eventsImages/Hamburger-Icon.png`)} style={{height:'3em'}}></img>
             </Col>
             :
             <Col xs={12} md={8}>
                {category}
             </Col>}
             <Col xs={6} md={4} style={{textAlign:'end'}}>
-                <img alt="Icon" src={require(`../eventsImages/${category}.png`)} style={{height:'2em'}}></img>
+                <img alt="Icon" src={require(`../assets/images/eventsImages/${category}.png`)} style={{height:'2em'}}></img>
             </Col>
         </Row>
     )

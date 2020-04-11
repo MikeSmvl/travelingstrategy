@@ -3,7 +3,7 @@
   src: url("../fonts/Milea_Demo.woff") format('woff');
 }
 
-body {
+.meBody {
   background-color: #fddac5;
 }
 
@@ -14,7 +14,7 @@ body {
   font-size: 200px;
   position: fixed;
   transform: rotate(-15deg);
-  z-index: -1;
+  z-index: 0;
 }
 
 .citiesCardWrapper {

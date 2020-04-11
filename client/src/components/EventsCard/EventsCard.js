@@ -183,7 +183,7 @@ const EventsCard = (props) => {
 										centered
 										onPress={handleLike}
 									>
-										<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+										<img alt="like button" src={require('../../assets/images/eventsImages/heart.png')} style={{ height: '3em' }} />
 									</AwesomeButton>
 								</div>
 							)
@@ -195,7 +195,7 @@ const EventsCard = (props) => {
 										centered
 										onPress={handleDelete}
 									>
-										<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+										<img alt="like button" src={require('../../assets/images/eventsImages/broken-heart.png')} style={{ height: '3em' }} />
 									</AwesomeButton>
 								</div>
 							)}
@@ -216,7 +216,7 @@ const EventsCard = (props) => {
 									onPress={handleShowBot}
 									centered
 								>
-									<img alt="like button" src={require('../../eventsImages/smart.png')} style={{ height: '3em' }} />
+									<img alt="like button" src={require('../../assets/images/eventsImages/smart.png')} style={{ height: '3em' }} />
 								</AwesomeButton>
 							</div>
 						</OverlayTrigger>
@@ -273,8 +273,8 @@ const EventsCard = (props) => {
 				</Modal.Header>
 				<ModalBody style={{ textAlign: 'center' }}>
 					{likedModal
-						? <img alt="Alert" src={require('../../eventsImages/addedToFavorites.gif')} />
-						: <img alt="Alert" src={require('../../eventsImages/sad-monkey.gif')} />}
+						? <img alt="Alert" src={require('../../assets/images/eventsImages/addedToFavorites.gif')} />
+						: <img alt="Alert" src={require('../../assets/images/eventsImages/sad-monkey.gif')} />}
 				</ModalBody>
 			</Modal>
 
@@ -308,7 +308,7 @@ const EventsCard = (props) => {
 									onPress={handleLike}
 									style={{ float: 'right' }}
 								>
-									<img alt="like button" src={require('../../eventsImages/heart.png')} style={{ height: '3em' }} />
+									<img alt="like button" src={require('../../assets/images/eventsImages/heart.png')} style={{ height: '3em' }} />
 								</AwesomeButton>
 							)
 							: (
@@ -318,7 +318,7 @@ const EventsCard = (props) => {
 									onPress={handleDelete}
 									style={{ float: 'right' }}
 								>
-									<img alt="like button" src={require('../../eventsImages/broken-heart.png')} style={{ height: '3em' }} />
+									<img alt="like button" src={require('../../assets/images/eventsImages/broken-heart.png')} style={{ height: '3em' }} />
 								</AwesomeButton>
 							)}
 					</div>

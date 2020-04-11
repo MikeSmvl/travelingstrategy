@@ -9,7 +9,7 @@ const WhyCard = (props) => {
 	const { addClass = '', toggle = '', header = '', children } = props;
 	return (
 		<div className="why">
-			<Card className={`why_inner ${addClass}`} onMouseLeave={toggle}>
+			<Card className={`${addClass}`} onMouseLeave={toggle}>
 				<Card.Header className="iHeader">{header}</Card.Header>
 				<Card.Body className="cardBody">{children}</Card.Body>
 				<Card.Footer>

@@ -35,7 +35,7 @@ const getBotKnowledge = (knowledgeArray, eventImg) => {
                             </div>
                     </div>
                     <Carousel.Caption>
-                        <a href={`//${wikipedia}`}>
+                        <a href={wikipedia}>
                             <h3 className="wiki-text">Find out more on wikipedia</h3>
                             <p />
                         </a>

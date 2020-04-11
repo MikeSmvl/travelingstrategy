@@ -31,7 +31,7 @@
 }
 .AppHeader .country {
 	text-align: center;
-	padding-top: 10%;
+	padding-top: 120px;
 	color: white;
 	font-size: 40px;
 	font-weight: 750;
@@ -84,17 +84,8 @@
 	background: inherit;
 }
 
-.iWhy{
-	background: url('../../miscImages/infoWhy.png');
-	background-size: 23px 23px;
-	border: none;
-	outline: none;
-	height: 23px;
-	width: 23px;
-}
-
 .whyCard{
-	top:10%;
-	right:17.5%;
+	padding: 10px;
+	margin-top: 10px;
 	background:linear-gradient(315deg, #fef9e7 0%, #e6ffff 74%);
 }

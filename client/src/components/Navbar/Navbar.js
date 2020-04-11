@@ -3,17 +3,12 @@ import PropTypes from 'prop-types';
 import { Navbar as RBNavbar, Dropdown, Col, Row } from 'react-bootstrap';
 import logo from './logo.png';
 import './Navbar.css';
-import WhyCard from '../WhyCard/WhyCard';
 import LoginForm from '../LoginForm/LoginForm';
 import visitProfile from './visit-profile.png';
 
 const Navbar = (props) => {
 	const [authenticated, setAuthenticated] = useState(false);
 	const [logOut, setLogOut] = useState(false);
-	const [why, setWhy] = useState(false);
-	const toggleWhy = () => {
-		setWhy(!why);
-	};
 
 	useEffect(() => {
 		async function getToken() {
@@ -92,32 +87,6 @@ const Navbar = (props) => {
 						)
 						: (
 							<Row>
-								<RBNavbar.Text className="text-center">
-									<button
-										type="button"
-										onMouseOver={toggleWhy}
-										onFocus={() => null}
-										onMouseLeave={toggleWhy}
-										className="whyLoggin"
-									/>
-									{why
-										? (
-											<WhyCard
-												toggle={toggleWhy}
-												addClass="whyPosition"
-												header="Why Register?"
-											>
-												<span>
-													<br />
-													<ol>
-														<li>Get access to you profile page with more information about your travel destination.</li>
-														<li>See events that are occuring in your destination city.</li>
-														<li>Get trending images if you stay informed.</li>
-													</ol>
-												</span>
-											</WhyCard>
-										) : null}
-								</RBNavbar.Text>
 								<Col>
 									<RBNavbar.Text>
 										<LoginForm />

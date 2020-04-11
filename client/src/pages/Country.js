@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Row, Col, Table, Nav } from 'react-bootstrap/';
+import { Row, Col } from 'react-bootstrap/';
+import AOS from 'aos';
 import { Card, CardBody, Divider } from '../components/Card/Card';
-import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
 import { CountryCard } from '../components/CountryCard/CountryCard';
+import CountryNavbar from '../components/CountryNavbar/CountryNavbar';
+import EmbassisesCard from '../components/EmbassiesCard/EmbassiesCard';
+import VisaCard from '../components/VisaCard/VisaCard';
+import DrugsCard from '../components/DrugsCard/DrugsCard';
+import CurrencyCard from '../components/CurrencyCard/CurrencyCard';
+import PricesCard from '../components/PricesCard/PricesCard';
+import AdvisoryCard from '../components/AdvisoryCard/AdvisoryCard';
+import EmergencyCard from '../components/EmergencyCard/EmergencyCard';
+import HealthCard from '../components/HealthCard/HealthCard';
+import VaccinesCard from '../components/VaccinesCard/VaccinesCard';
+import CommonPhrases from '../components/CommonPhrases/CommonPhrases';
 import getCountryName from '../utils/ISOToCountry';
 import getTimeDifference from '../utils/timeDifference';
-import {
-	compareSingle,
-	compareDouble,
-	percentDiffColor
-} from '../utils/healthComparison';
 import {
 	languages,
 	flagSrc,
@@ -20,12 +26,10 @@ import {
 } from '../utils/parsingTools';
 import getCountryName2 from '../utils/ISOToCountry2';
 import '../App.css';
-import { getSourceUrl, getSourceAdvisory } from '../utils/SourceHelper';
 import Footer from '../components/Footer/Footer';
 import Weather from '../components/Weather/Skycon/Weather';
 import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
-import textToSpeech from '../utils/text-to-speech';
-
+import 'aos/dist/aos.css';
 
 function Country({
 	originCountry,
@@ -64,7 +68,6 @@ function Country({
 	const [rate, setRate] = useState('');
 	const [destinationHealth, setDestinationHealth] = useState({});
 	const [originHealth, setOriginHealth] = useState({});
-	const [vaccineCard, setVaccinCard] = useState('');
 	const [embassyInfo, setEmbassy] = useState('');
 	const [emergencyInfo, setEmergency] = useState('');
 	const destCountryName = getCountryName2(destinationCountry);
@@ -76,9 +79,12 @@ function Country({
 	const [email, setEmail] = useState('');
 
 	// for the moment being have daily forecast turned off
-	const [showWeather] = useState(false);
+	const [showWeather] = useState(true);
 
 	useEffect(() => {
+		AOS.init({
+			duration: 2000
+		});
 		async function getToken() {
 			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, {
 				credentials: 'include'
@@ -95,7 +101,7 @@ function Country({
 			)
 				.then((response) => {
 					if (response.status !== 200) {
-						console.log('Exchange Rate API did not return HTTP 200');
+						// console.log('Exchange Rate API did not return HTTP 200');
 						setIsLoading(false);
 						return;
 					}
@@ -107,7 +113,7 @@ function Country({
 					});
 				})
 				.catch((err) => {
-					console.log('Fetch Error :-S', err);
+					// console.log('Fetch Error :-S', err);
 					setIsLoading(false);
 				});
 		}
@@ -332,10 +338,22 @@ function Country({
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	let pronunciation;
+	if (phrases.length !== 0 && phrases[0].pronunciation !== '') {
+		pronunciation =		(
+			<Col span="2">
+				<div style={{ textAlign: 'center' }}>
+					<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
+				</div>
+			</Col>
+		);
+	}
 	return (
 		<div>
 			{!isLoading && (
-				<div className="parallax">
+				<div data-aos="fade-up" className="parallax">
+					<div id="overlay" />
 					<Header
 						country={getCountryName(destinationCountry)}
 						city={destinationCity}
@@ -356,37 +374,13 @@ function Country({
 							}}
 							lg={8}
 						>
-							<Row
-								style={{
-									backgroundColor: 'rgb(247,	247,	247)',
-									padding: '0.5em',
-									borderRadius: '0px'
-								}}
-								className="justify-content-center sticky"
-							>
-								<Nav variant="pills" className="flex-row">
-									<Nav.Item>
-										<Nav.Link href="#Important Basics">
-											Important Basics
-										</Nav.Link>
-									</Nav.Item>
-									<Nav.Item>
-										<Nav.Link href="#Financials">Financials</Nav.Link>
-									</Nav.Item>
-									<Nav.Item>
-										<Nav.Link href="#Safety">Safety</Nav.Link>
-									</Nav.Item>
-									<Nav.Item>
-										<Nav.Link href="#Health">Health</Nav.Link>
-									</Nav.Item>
-									<Nav.Item>
-										<Nav.Link href="#Miscellaneous">Miscellaneous</Nav.Link>
-									</Nav.Item>
-								</Nav>
+							<Row className="justify-content-center sticky">
+								<CountryNavbar />
 							</Row>
 							<Row id="Important Basics" className="justify-content-center">
 								<Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
 									<CountryCard
+										data-aos="fade-right"
 										flagSrc={flagSrc(destinationCountry)}
 										title="Country Flag"
 										footer={<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
@@ -397,141 +391,15 @@ function Country({
 										</CardBody>
 									</CountryCard>
 									<br />
-									<Card
-										header="Embassies and Consulates"
-										info="Here you can find information about embassies"
-										footer={<Row className="justify-content-center"><a href="https://wikidata.org/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
-									>
-										<CardBody>
-											{!embassyInfo ? (
-												<div>
-													Note: We don&apos;t have any info on embassies or
-													consulates in {destCountryName}. Try Googling instead.
-												</div>
-											) : (
-												<span>
-													{embassyInfo.type === '2' && (
-														<strong>
-															Embassy of{' '}
-															<span style={{ color: '#FF1C00' }}>
-																{originCountryName}
-															</span>
-														</strong>
-													)}
-													{embassyInfo.type === 'consulate' && (
-														<strong>
-															Consulate of{' '}
-															<span style={{ color: '#FF1C00' }}>
-																{originCountryName}
-															</span>
-														</strong>
-													)}
-													{embassyInfo.type === 'consulate general' && (
-														<strong>
-															Consulate General of{' '}
-															<span style={{ color: '#FF1C00' }}>
-																{originCountryName}
-															</span>
-														</strong>
-													)}
-													{embassyInfo.type === 'honorary consulate' && (
-														<strong>
-															Honorary Consulate of{' '}
-															<span style={{ color: '#FF1C00' }}>
-																{originCountryName}
-															</span>
-														</strong>
-													)}
-													<div style={{ paddingBottom: '20px' }} />
-													{embassyInfo.city !== '' && (
-														<div style={{ paddingBottom: '5px' }}>
-															City: {embassyInfo.city}
-														</div>
-													)}
-													{embassyInfo.phone !== '' && (
-														<div style={{ paddingBottom: '5px' }}>
-															Phone: {embassyInfo.phone}
-														</div>
-													)}
-													{embassyInfo.email !== '' && (
-														<div style={{ paddingBottom: '5px' }}>
-															Email: {embassyInfo.email}
-														</div>
-													)}
-													{embassyInfo.website !== '' && (
-														<div style={{ paddingBottom: '5px' }}>
-															Website: {embassyInfo.website}
-														</div>
-													)}
-												</span>
-											)}
-										</CardBody>
-									</Card>
+									<EmbassisesCard embassyInfo={embassyInfo} originCountryName={originCountryName} destCountryName={destCountryName} />
 									<br />
 									<WeatherGraph destinationCity={destinationCity} />
 									<br />
 								</Col>
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
-									{!(visaInfo === null || visaInfo === 'Not available yet') && (
-										<Card
-											header="Visa Info"
-											style={{ maxHeight: '400px' }}
-											footer={<Row className="justify-content-center"><a href={getSourceUrl(originCountry)} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
-										>
-											<CardBody>
-												<div
-													style={{ maxHeight: '250px', overflow: 'scroll' }}
-													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
-												/>
-											</CardBody>
-										</Card>
-									)}
+									<VisaCard visaInfo={visaInfo} originCountry={originCountry} formatedVisaInfo={formatedVisaInfo} />
 									<br />
-									<Card
-										header="Drug Laws"
-										  footer={(
-											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/Legality_of_cannabis" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
-												<a href="https://en.wikipedia.org/wiki/Legal_status_of_cocaine" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
-												<a href="https://en.wikipedia.org/wiki/Legal_status_of_methamphetamine" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> M-Reference </a>
-											</Row>
-										)}
-									>
-										<CardBody>
-											<div
-												className="scrolling-card"
-												style={{ maxHeight: '400px', overflow: 'scroll' }}
-											>
-												<p>
-													<strong>Canabais recreational:</strong>{' '}
-													{JSON.stringify(canabaisRecreational).replace(
-														/(^")|("$)/g,
-														''
-													)}
-												</p>
-												<p>
-													<strong>Canabais medical:</strong>{' '}
-													{JSON.stringify(canabaisMedical).replace(
-														/(^")|("$)/g,
-														''
-													)}
-												</p>
-												<p>
-													<strong>Cocaine possession:</strong>{' '}
-													{JSON.stringify(cocainePossession).replace(
-														/(^")|("$)/g,
-														''
-													)}
-												</p>
-												<p>
-													<strong>Methaphetamine possession:</strong>{' '}
-													{JSON.stringify(methaphetaminePossession).replace(
-														/(^")|("$)/g,
-														''
-													)}
-												</p>
-											</div>
-										</CardBody>
-									</Card>
+									<DrugsCard canabaisRecreational={canabaisRecreational} canabaisMedical={canabaisMedical} cocainePossession={cocainePossession} methaphetaminePossession={methaphetaminePossession} />
 									<br />
 									<br />
 									{showWeather && (
@@ -558,114 +426,20 @@ function Country({
 							<div id="Financials">
 								<Row className="justify-content-center">
 									<Col sm={6} style={{ padding: '25px' }}>
-										{!(
-											advisoryInfo === null
-											|| advisoryInfo === 'Not available yet'
-										) && (
-											<Card header="Currency" footer={<Row className="justify-content-center"><a href="https://restcountries.eu/#api-endpoints-currency" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-												<CardBody>
-													<pre style={{ paddingLeft: '44px' }}>
-														<strong>Name:</strong> {currencyInfo.name}
-													</pre>
-													<pre style={{ paddingLeft: '44px' }}>
-														<strong>Code:</strong> {currencyInfo.code}
-													</pre>
-													<pre style={{ paddingLeft: '44px' }}>
-														<strong>Symbol:</strong> {currencyInfo.symbol}
-													</pre>
-													<div
-														style={{
-															display: 'flex',
-															alignItems: 'center',
-															justifyContent: 'center'
-														}}
-													>
-														<RateCalculator
-															destinationRate={rate}
-															originCurrency={originCurrencyInfo.code}
-															destCurrency={currencyInfo.code}
-														/>
-													</div>
-												</CardBody>
-											</Card>
-										)}
+										<CurrencyCard currencyInfo={currencyInfo} rate={rate} originCurrencyInfo={originCurrencyInfo} />
 									</Col>
 								</Row>
 								<Row className="justify-content-center">
 									<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-										<Card header="Prices (in USD)" footer={<Row className="justify-content-center"><a href="https://knoema.com/atlas" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-											<CardBody>
-												<pre style={{ textAlign: 'center' }}>
-													<img
-														src="https://image.flaticon.com/icons/svg/1505/1505581.svg"
-														alt="Fuel"
-														className="replaced-svg"
-														style={{ width: '24px', marginRight: '10px' }}
-													/>
-													<strong>Gasoline:</strong> {financialInfo.gasoline}$ /
-													Gallon
-												</pre>
-												<pre style={{ textAlign: 'center' }}>
-													<img
-														src="https://image.flaticon.com/icons/svg/2372/2372132.svg"
-														alt="Shopping"
-														className="replaced-svg"
-														style={{ width: '24px', marginRight: '10px' }}
-													/>
-													<strong>Groceries:</strong> {financialInfo.groceries}$
-													/ Week
-												</pre>
-												<pre style={{ textAlign: 'center' }}>
-													<img
-														src="https://image.flaticon.com/icons/svg/1352/1352859.svg"
-														alt="House"
-														className="replaced-svg"
-														style={{ width: '24px', marginRight: '10px' }}
-													/>
-													<strong>Rent:</strong> {financialInfo.rent}$ / Day
-												</pre>
-											</CardBody>
-										</Card>
+										<PricesCard financialInfo={financialInfo} currencyInfo={currencyInfo} />
 									</Col>
 								</Row>
 							</div>
 							<hr />
 							<Row id="Safety" className="justify-content-center">
+								<AdvisoryCard originCountry={originCountry} destinationCountry={destinationCountry} advisoryInfo={advisoryInfo} advisoryLink={advisoryLink} />
 								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									{!(
-										advisoryInfo === null
-										|| advisoryInfo === 'Not available yet'
-									) && (
-										<Card
-											className="scrolling-card"
-											header="Advisory"
-											style={{ maxHeight: '400px', overflow: 'scroll' }}
-											footer={<Row className="justify-content-center"><a href={getSourceAdvisory(originCountry, destinationCountry)} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
-										>
-											<CardBody>
-												<img
-													src="https://image.flaticon.com/icons/svg/827/827751.svg"
-													alt="Warning"
-													className="replaced-svg"
-													style={{
-														width: '24px',
-														marginTop: '-5px',
-														marginRight: '10px'
-													}}
-												/>
-												<div
-													style={{ display: 'inline' }}
-													className="scrolling-card"
-													dangerouslySetInnerHTML={{ __html: advisoryInfo }}
-												/>
-												<div dangerouslySetInnerHTML={{ __html: advisoryLink }} />
-											</CardBody>
-										</Card>
-									)}
-								</Col>
-								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									<Card header="Unsafe Areas" 
-										  footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+									<Card data-aos="fade-left" header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<div
 												className="scrolling-card"
@@ -675,335 +449,62 @@ function Country({
 										</CardBody>
 									</Card>
 								</Col>
-								<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-									<Card header="Emergency Contacts" footer={<Row className="justify-content-center"><a href="http://chartsbin.com/view/1983" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-										<CardBody>
-											<pre style={{ textAlign: 'center' }}>
-												<img
-													src="https://image.flaticon.com/icons/svg/1022/1022382.svg"
-													alt="Policeman"
-													className="replaced-svg"
-													style={{ width: '24px', marginRight: '10px' }}
-												/>
-												<strong>Police: </strong>
-												{emergencyInfo.police}
-											</pre>
-											<pre style={{ textAlign: 'center' }}>
-												<img
-													src="https://image.flaticon.com/icons/svg/684/684262.svg"
-													alt="Heart"
-													className="replaced-svg"
-													style={{ width: '24px', marginRight: '10px' }}
-												/>
-												<strong>Ambulance: </strong>
-												{emergencyInfo.ambulance}
-											</pre>
-											<pre style={{ textAlign: 'center' }}>
-												<img
-													src="https://image.flaticon.com/icons/svg/827/827742.svg"
-													alt="Fire Extinguisher"
-													className="replaced-svg"
-													style={{ width: '24px', marginRight: '10px' }}
-												/>
-												<strong>Fire: </strong>
-												{emergencyInfo.fire}
-											</pre>
-										</CardBody>
-									</Card>
+								<Col xs="10" sm="6" style={{ padding: '25px' }}>
+									<EmergencyCard emergencyInfo={emergencyInfo} />
 								</Col>
 							</Row>
 							<hr />
 							<Row id="Health" className="justify-content-center">
 								<Col xs="10" sm="8" style={{ padding: '25px 0 25px 0' }}>
-									<Card header="General Health" footer={<Row className="justify-content-center"><a href={`https://data.un.org/en/iso/${destinationCountry}.html`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-										<CardBody>
-											<Table striped bordered hover>
-												<tbody>
-													<tr>
-														<td>
-															<strong>Homicide Rate</strong>
-														</td>
-														<td>
-															{destinationHealth.homicideRate}{' '}
-															<span
-																style={{
-																	color: percentDiffColor(
-																		String(destinationHealth.homicideRate),
-																		String(originHealth.homicideRate)
-																	)
-																}}
-															>
-																{compareSingle(
-																	String(destinationHealth.homicideRate),
-																	String(originHealth.homicideRate)
-																)}
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<strong>Infant Mortality (Per 1000)</strong>
-														</td>
-														<td>
-															{destinationHealth.infantMortality}{' '}
-															<span
-																style={{
-																	color: percentDiffColor(
-																		String(destinationHealth.infantMortality),
-																		String(originHealth.infantMortality)
-																	)
-																}}
-															>
-																{compareSingle(
-																	String(destinationHealth.infantMortality),
-																	String(originHealth.infantMortality)
-																)}
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<strong>Life Expectancy (f/m, years)</strong>
-														</td>
-														<td>
-															{destinationHealth.lifeExpectancy}{' '}
-															<span style={{ color: 'blue' }}>
-																{compareDouble(
-																	destinationHealth.lifeExpectancy,
-																	originHealth.lifeExpectancy
-																)}
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<strong>Number of physicians (Per 1000)</strong>
-														</td>
-														<td>
-															{destinationHealth.nbOfPhysicians}{' '}
-															<span
-																style={{
-																	color: percentDiffColor(
-																		String(destinationHealth.nbOfPhysicians),
-																		String(originHealth.nbOfPhysicians)
-																	)
-																}}
-															>
-																{compareSingle(
-																	String(destinationHealth.nbOfPhysicians),
-																	String(originHealth.nbOfPhysicians)
-																)}
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<strong>Sanitation (urban/rural, %)</strong>
-														</td>
-														<td>
-															{destinationHealth.sanitation}{' '}
-															<span style={{ color: 'blue' }}>
-																{compareDouble(
-																	destinationHealth.sanitation,
-																	originHealth.sanitation
-																)}
-															</span>
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<strong>Water (urban/rural, %)</strong>
-														</td>
-														<td>
-															{destinationHealth.water}{' '}
-															<span style={{ color: 'blue' }}>
-																{compareDouble(
-																	destinationHealth.water,
-																	originHealth.water
-																)}
-															</span>
-														</td>
-													</tr>
-												</tbody>
-											</Table>
-										</CardBody>
-									</Card>
+									<HealthCard destinationHealth={destinationHealth} originHealth={originHealth} destinationCountry={destinationCountry} />
 								</Col>
 								<Col xs="10" sm="8" style={{ padding: '0 0 25px 0' }}>
 									{!(vaccines === null || vaccines === 'Not available yet') && (
-										<Card header="Vaccines" footer={<Row className="justify-content-center"><a href={`https://wwwnc.cdc.gov/travel/destinations/traveler/none/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-											<CardBody>
-												<Row
-													className="justify-content-center"
-													style={{ padding: '0px 0px' }}
-												>
-													{vaccines.map((value, index) => {
-														if (vaccineCard === '' && index === 0) {
-															setVaccinCard(value.vaccine_info);
-														}
-														if (
-															vaccineCard === value.vaccine_info
-															&& index === 0
-														) {
-															return (
-																<button
-																	type="button"
-																	className="tablinks"
-																	style={{ color: '#FF1C00' }}
-																	onClick={() => setVaccinCard(value.vaccine_info)}
-																>
-																	{value.vaccine_name}
-																</button>
-															);
-														}
-
-														return (
-															<button
-																type="button"
-																className="tablinks"
-																onClick={() => setVaccinCard(value.vaccine_info)}
-															>
-																{value.vaccine_name}
-															</button>
-														);
-													})}
-												</Row>
-
-												<Divider />
-												<br />
-												<Row
-													className="justify-content-center"
-													style={{ padding: '0px 25px' }}
-												>
-													<p
-														dangerouslySetInnerHTML={{ __html: vaccineCard }}
-														style={{ fontSize: `${1}rem` }}
-													/>
-												</Row>
-											</CardBody>
-										</Card>
+										<VaccinesCard vaccines={vaccines} destinationCountry={destinationCountry} />
 									)}
 								</Col>
 							</Row>
 							<hr />
 							<Row id="Culture" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
-									<Row className="justify-content-center">
-
-										<Card
-											header="Phrases"
-											style={{ maxHeight: '500px', overflow: 'scroll' }}
-											footer={(
-												<Row className="justify-content-center">
-													<a
-														href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
-														target="_blank"
-														rel="noopener noreferrer"
-													>
-														<i className="fa fa-globe" /> Reference
-													</a>
-												</Row>
-											)}
-										>
-
-											<Row>
-												<Col span="2">
-													<div style={{ textAlign: 'left' }}>
-														<b style={{ color: '#FF9A8D' }}>English</b>
-													</div>
-												</Col>
-												<Col span="2">
-													<div style={{ textAlign: 'left' }}>
-														<b style={{ color: '#FF9A8D' }}>{phraseLanguage}</b>
-													</div>
-												</Col>
-												<Col span="2">
-													<div style={{ textAlign: 'left' }}>
-														<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
-													</div>
-												</Col>
-												<hr />
-												<hr />
-												<Col span="2">
-													<div style={{ textAlign: 'right' }}>
-														<b style={{ color: '#FF9A8D' }}>Play</b>
-													</div>
-												</Col>
-											</Row>
-											<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
-												{phrases.map((value, index) => (
-													<Row>
-														<Col>
-															{value.phrase.split('%20').join(' ')}
-														</Col>
-														<Col>
-															{value.translated_phrase}
-														</Col>
-														<Col>
-															{value.pronunciation}
-														</Col>
-
-														<Col>
-															<div style={{ textAlign: 'right' }}>
-																<button
-																	type="button"
-																	className="buttonSpeaker"
-																	onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
-																>
-																	<img
-																		src={require('../miscImages/phraseSpeaker.png')}
-																		style={{ width: '24px' }}
-																		alt="error loading"
-																	/>
-																</button>
-															</div>
-														</Col>
-
-													</Row>
-												))}
-												{ (phrases.length === 0) && (<span>TBD</span>)}
-											</span>
-										</Card>
-									</Row>
+									<CommonPhrases originCity={originCity} phrases={phrases} phraseLanguage={phraseLanguage} phraseIso={phraseIso} pronunciation={pronunciation} />
 								</Col>
 							</Row>
 							<hr />
 							<Row id="Miscellaneous" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
-									<Row className="justify-content-center">
-										<Card header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-											<CardBody>
-												<p>
-													{getCountryName(destinationCountry)} uses{' '}
-													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
-													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
-													electrical sockets. Plugs are of{' '}
-													<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
-												</p>
-												<Divider />
-												<Row className="justify-content-center">
-													{socketType !== 'Not available yet'
+									<Card data-aos="fade-down" header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										<CardBody>
+											<p>
+												{getCountryName(destinationCountry)} uses{' '}
+												<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+												<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+												electrical sockets. Plugs are of{' '}
+												<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+											</p>
+											<Divider />
+											<Row className="justify-content-center">
+												{socketType !== 'Not available yet'
 														&& socketArray.map((item) => (
 															/* eslint-disable */
 															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
-															<Col>
+															<Col key={item}>
 																<img
 																	key={item}
-																	src={require(`../socketImages/${item}.png`)}
-																	style={{width: '200px'}}
+																	src={require(`../assets/images/socketImages/${item}.png`)}
+																	style={{width: '200px', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
 																	alt=''
 																/>
 															</Col>
 															/* eslint-enable */
 														))}
-												</Row>
-											</CardBody>
-										</Card>
-									</Row>
+											</Row>
+										</CardBody>
+									</Card>
 								</Col>
 								<Col xs="10" sm="10" style={{ padding: '0px 0px 50px 0px' }}>
 									<Row className="justify-content-center">
-										<Card header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										<Card data-aos="fade-up" header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												{trafficSide !== 'Not available yet' && (
 													<p>
@@ -1017,7 +518,7 @@ function Country({
 												{trafficSide !== 'Not available yet' && (
 													<img
 														key={trafficSide}
-														src={require(`../trafficImages/${trafficSide}.png`)}
+														src={require(`../assets/images/trafficImages/${trafficSide}.png`)}
 														style={{
 															width: '200px',
 															marginLeft: 'auto',

@@ -29,7 +29,7 @@ const InfoCard = (props) => {
 };
 
 const Card = (props) => {
-	const { header = '', footer = '', info = '', children, ...rest } = props;
+	const { header = '', footer, info = '', children, ...rest } = props;
 	const [showInfo, setShowInfo] = useState(false);
 	const infoWindow = () => {
 		setShowInfo(!showInfo);
@@ -73,7 +73,6 @@ const Divider = () => {
 
 Card.propTypes = {
 	header: PropTypes.string,
-	footer: PropTypes.string,
 	title: PropTypes.string,
 	subtitle: PropTypes.string,
 	info: PropTypes.string,

@@ -90,10 +90,10 @@ const IntelBot = (props) => {
 					</Modal.Header>
 					{!isLoading
 					?<ModalBody style={{ textAlign: 'center' }} onClick={getBotInfo}>
-						<img alt="smart monkey" src={require('../../../eventsImages/smart-monkey.gif')} />
+						<img alt="smart monkey" src={require('../../../assets/images/eventsImages/smart-monkey.gif')} />
 					</ModalBody>
 					: <ModalBody style={{ textAlign: 'center' }}>
-						<img alt="thinking monkey" src={require('../../../eventsImages/thinky-monkey.gif')} />
+						<img alt="thinking monkey" src={require('../../../assets/images/eventsImages/thinky-monkey.gif')} />
 					</ModalBody>
 					}
 				</Modal>

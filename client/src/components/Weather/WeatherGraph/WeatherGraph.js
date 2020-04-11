@@ -51,6 +51,7 @@ const WeatherGraph = (props) => {
 
 	return (
 		<Card
+			data-aos="fade-right"
 			header="Average Monthly Temperature"
 			footer={(
 				<Row className="justify-content-center"><a href="en.wikipedia.org/wiki/List_of_cities_by_average_temperature" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
@@ -61,8 +62,7 @@ const WeatherGraph = (props) => {
 				{!monthlyWeather ? (
 					<div>
 						<span style={{ color: '#FF1C00' }}>Note: </span>
-               We don&apos;t have any info on the average monthly temperature for
-						{destinationCity}. Try <a href={`//google.com/search?q=average monthly temperature for ${destinationCity}`}>Googling</a> instead
+               We don&apos;t have any info on the average monthly temperature for {destinationCity}. Try <a href={`//google.com/search?q=average monthly temperature for ${destinationCity}`}>Googling</a> instead
 					</div>
 				) : (
 					<div

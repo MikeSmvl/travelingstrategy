@@ -326,7 +326,7 @@ function Events({
 										value="likes"
 										onPress={() => { emailEvents(savedEvents); setShow(true); }}
 									>
-										<img alt="Icon" src={require('../eventsImages/Email Favourites.png')} style={{ height: '2em' }} />
+										<img alt="Icon" src={require('../assets/images/eventsImages/Email Favourites.png')} style={{ height: '2em' }} />
 									</AwesomeButton>
 								</div>
 							</OverlayTrigger>

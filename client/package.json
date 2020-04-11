@@ -26,6 +26,7 @@
     "@storybook/addons": "^5.2.5",
     "@storybook/react": "^5.2.5",
     "@storybook/theming": "^5.2.5",
+    "aos": "^2.3.4",
     "bootstrap": "^4.3.1",
     "chart.js": "^2.9.3",
     "enzyme": "^3.10.0",

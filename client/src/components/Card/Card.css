@@ -83,7 +83,7 @@
 
 
 .iImage{
-	background: url('../../miscImages/infoGrey.png');
+	background: url('../../assets/images/infoGrey.png');
 	background-size: 23px 23px;
 	border: none;
 	outline: none;
@@ -92,7 +92,7 @@
 }
 
 .iImage:hover {
-	background: url('../../miscImages/infoOrange.png');
+	background: url('../../assets/images/infoOrange.png');
 	background-size: 23px 23px;
 	border: none;
 	outline: none;
@@ -101,7 +101,7 @@
 }
 
 .iClose{
-	background: url('../../miscImages/closeGrey.png');
+	background: url('../../assets/images/closeGrey.png');
 	background-size: 20px 20px;
 	border: none;
 	outline: none;
@@ -110,7 +110,7 @@
 }
 
 .iClose:hover {
-	background: url('../../miscImages/closeOrange.png');
+	background: url('../../assets/images/closeOrange.png');
 	background-size: 20px 20px;
 	border: none;
 	outline: none;
