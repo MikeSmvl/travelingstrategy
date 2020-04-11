@@ -666,7 +666,9 @@ Array [
                 onMouseLeave={[Function]}
                 onMouseOver={[Function]}
                 type="button"
-              />
+              >
+                Stay Informed
+              </button>
             </div>
           </div>
         </div>
@@ -773,7 +775,9 @@ Array [
                 onMouseLeave={[Function]}
                 onMouseOver={[Function]}
                 type="button"
-              />
+              >
+                Stay Informed
+              </button>
             </div>
           </div>
         </div>
