@@ -8,7 +8,7 @@ const languages = object => {
 		if (object[key] !== '') {
 			items.push(
 				<div key={key} style={{paddingBottom: '5px'}}>
-					{title}: {JSON.stringify(object[key]).replace(/(^")|("$)/g, '')}
+					<strong>{title}:</strong> {JSON.stringify(object[key]).replace(/(^")|("$)/g, '')}
 				</div>
 			);
 		}

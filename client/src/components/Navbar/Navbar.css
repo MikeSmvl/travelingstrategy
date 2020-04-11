@@ -1,6 +1,7 @@
 .Navbar {
 	background-color: transparent;
-	z-index: 50;
+	z-index: 2;
+	position: absolute;
 }
 .Navbar .title {
 	color: white !important;
