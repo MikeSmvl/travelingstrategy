@@ -53,12 +53,13 @@ const Header = (props) => {
 								className="iWhy"
 								type="button"
 							/>
-							{why ? (
-								<WhyCard
-									addClass="whyCard"
-									toggle={toggleWhy}
-									header="Why stay informed?"
-									info={(
+							{why
+								? (
+									<WhyCard
+										addClass="whyCard"
+										toggle={toggleWhy}
+										header="Why stay informed?"
+									>
 										<span>
 											<br />
 											<ol>
@@ -66,10 +67,9 @@ const Header = (props) => {
 												<li>To browse through events that are occuring in your travel destination - As long as you have an account.</li>
 											</ol>
 										</span>
-									)}
-								/>
-							)
-								: null }
+									</WhyCard>
+
+								) : null }
 							<SubscriptionModal
 								show={show}
 								handleShow={handleShow}

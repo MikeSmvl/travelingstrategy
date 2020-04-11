@@ -198,6 +198,6 @@ def update_advisory():
         iso_info = advisory_info[iso]
         text = iso_info['advisory_text']
         DB.update(f"CA" , f"country_iso = '{iso}'" ,f"advisory_text = '{text}'")
-        LOGGER.error(f'Could not update the advisory for: {iso}')
+        LOGGER.info(f'Update thed advisory for: {iso}')
 
-# update_advisory()
+update_advisory()
