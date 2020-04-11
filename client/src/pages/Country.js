@@ -474,14 +474,13 @@ function Country({
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
 										<Card
-											className="scrolling-card"
 											header="Visa Info"
-											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											style={{ maxHeight: '400px' }}
 											footer={<Row className="justify-content-center"><a href={getSourceUrl(originCountry)} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
 										>
-											<CardBody className="scrolling-card">
+											<CardBody>
 												<div
-													className="scrolling-card"
+													style={{ maxHeight: '250px', overflow: 'scroll' }}
 													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 												/>
 											</CardBody>
@@ -665,7 +664,8 @@ function Country({
 									)}
 								</Col>
 								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									<Card header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+									<Card header="Unsafe Areas" 
+										  footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<div
 												className="scrolling-card"
