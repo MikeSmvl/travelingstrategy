@@ -493,14 +493,13 @@ function Country({
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
 										<Card
 											data-aos="fade-left"
-											className="scrolling-card"
 											header="Visa Info"
-											style={{ maxHeight: '400px', overflow: 'scroll' }}
+											style={{ maxHeight: '400px' }}
 											footer={<Row className="justify-content-center"><a href={getSourceUrl(originCountry)} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
 										>
-											<CardBody className="scrolling-card">
+											<CardBody>
 												<div
-													className="scrolling-card"
+													style={{ maxHeight: '250px', overflow: 'scroll' }}
 													dangerouslySetInnerHTML={{ __html: formatedVisaInfo }}
 												/>
 											</CardBody>
