@@ -102,12 +102,16 @@ hr {
   margin-top: 1%;
 }
 
-
-
 .buttonSpeaker{
   height: 35px;
   width: 33px;
   border: none;
+  background-color: white;
+  color: #727273;
+}
+
+.fa-volume-up:hover{
+  color: #4879E0;
 }
 
 .map-darksky{

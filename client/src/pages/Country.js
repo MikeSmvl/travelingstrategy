@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Row, Col, Table, Nav } from 'react-bootstrap/';
+import AOS from 'aos';
 import { Card, CardBody, Divider } from '../components/Card/Card';
 import RateCalculator from '../components/RateCalculator/RateCalculator';
 import Header from '../components/Header/Header';
@@ -25,7 +26,7 @@ import Footer from '../components/Footer/Footer';
 import Weather from '../components/Weather/Skycon/Weather';
 import WeatherGraph from '../components/Weather/WeatherGraph/WeatherGraph';
 import textToSpeech from '../utils/text-to-speech';
-
+import 'aos/dist/aos.css';
 
 function Country({
 	originCountry,
@@ -79,6 +80,9 @@ function Country({
 	const [showWeather] = useState(false);
 
 	useEffect(() => {
+		AOS.init({
+			duration: 2000
+		});
 		async function getToken() {
 			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, {
 				credentials: 'include'
@@ -95,7 +99,7 @@ function Country({
 			)
 				.then((response) => {
 					if (response.status !== 200) {
-						console.log('Exchange Rate API did not return HTTP 200');
+						// console.log('Exchange Rate API did not return HTTP 200');
 						setIsLoading(false);
 						return;
 					}
@@ -107,7 +111,7 @@ function Country({
 					});
 				})
 				.catch((err) => {
-					console.log('Fetch Error :-S', err);
+					// console.log('Fetch Error :-S', err);
 					setIsLoading(false);
 				});
 		}
@@ -332,10 +336,21 @@ function Country({
 	}
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	let pronunciation;
+	if (phrases.length !== 0 && phrases[0].pronunciation !== '') {
+		pronunciation =		(
+			<Col span="2">
+				<div style={{ textAlign: 'center' }}>
+					<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
+				</div>
+			</Col>
+		);
+	}
 	return (
 		<div>
 			{!isLoading && (
-				<div className="parallax">
+				<div data-aos="fade-up" className="parallax">
 					<Header
 						country={getCountryName(destinationCountry)}
 						city={destinationCity}
@@ -388,6 +403,7 @@ function Country({
 							<Row id="Important Basics" className="justify-content-center">
 								<Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
 									<CountryCard
+										data-aos="fade-right"
 										flagSrc={flagSrc(destinationCountry)}
 										title="Country Flag"
 										footer={<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
@@ -399,6 +415,7 @@ function Country({
 									</CountryCard>
 									<br />
 									<Card
+										data-aos="fade-right"
 										header="Embassies and Consulates"
 										info="Here you can find information about embassies"
 										footer={<Row className="justify-content-center"><a href="https://wikidata.org/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
@@ -475,6 +492,7 @@ function Country({
 								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
 									{!(visaInfo === null || visaInfo === 'Not available yet') && (
 										<Card
+											data-aos="fade-left"
 											className="scrolling-card"
 											header="Visa Info"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
@@ -490,6 +508,7 @@ function Country({
 									)}
 									<br />
 									<Card
+										data-aos="fade-left"
 										header="Drug Laws"
 										  footer={(
 											<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/Legality_of_cannabis" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> C-Reference &nbsp;</a>
@@ -564,7 +583,7 @@ function Country({
 											advisoryInfo === null
 											|| advisoryInfo === 'Not available yet'
 										) && (
-											<Card header="Currency" footer={<Row className="justify-content-center"><a href="https://restcountries.eu/#api-endpoints-currency" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+											<Card data-aos="zoom-in" header="Currency" footer={<Row className="justify-content-center"><a href="https://restcountries.eu/#api-endpoints-currency" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 												<CardBody>
 													<pre style={{ paddingLeft: '44px' }}>
 														<strong>Name:</strong> {currencyInfo.name}
@@ -595,7 +614,7 @@ function Country({
 								</Row>
 								<Row className="justify-content-center">
 									<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-										<Card header="Prices (in USD)" footer={<Row className="justify-content-center"><a href="https://knoema.com/atlas" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										<Card data-aos="zoom-in-up" header="Prices" footer={<Row className="justify-content-center"><a href="https://knoema.com/atlas" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												<pre style={{ textAlign: 'center' }}>
 													<img
@@ -604,7 +623,7 @@ function Country({
 														className="replaced-svg"
 														style={{ width: '24px', marginRight: '10px' }}
 													/>
-													<strong>Gasoline:</strong> {financialInfo.gasoline}$ /
+													<strong>Gasoline:</strong> {financialInfo.gasoline}{currencyInfo.symbol} /
 													Gallon
 												</pre>
 												<pre style={{ textAlign: 'center' }}>
@@ -614,8 +633,7 @@ function Country({
 														className="replaced-svg"
 														style={{ width: '24px', marginRight: '10px' }}
 													/>
-													<strong>Groceries:</strong> {financialInfo.groceries}$
-													/ Week
+													<strong>Groceries:</strong> {financialInfo.groceries}{currencyInfo.symbol} / Week
 												</pre>
 												<pre style={{ textAlign: 'center' }}>
 													<img
@@ -624,7 +642,7 @@ function Country({
 														className="replaced-svg"
 														style={{ width: '24px', marginRight: '10px' }}
 													/>
-													<strong>Rent:</strong> {financialInfo.rent}$ / Day
+													<strong>Rent:</strong> {(financialInfo.rent * 30).toFixed(2)}{currencyInfo.symbol} / Month
 												</pre>
 											</CardBody>
 										</Card>
@@ -639,6 +657,7 @@ function Country({
 										|| advisoryInfo === 'Not available yet'
 									) && (
 										<Card
+											data-aos="fade-right"
 											className="scrolling-card"
 											header="Advisory"
 											style={{ maxHeight: '400px', overflow: 'scroll' }}
@@ -666,7 +685,7 @@ function Country({
 									)}
 								</Col>
 								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									<Card header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+									<Card data-aos="fade-left" header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<div
 												className="scrolling-card"
@@ -677,7 +696,7 @@ function Country({
 									</Card>
 								</Col>
 								<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-									<Card header="Emergency Contacts" footer={<Row className="justify-content-center"><a href="http://chartsbin.com/view/1983" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+									<Card data-aos="zoom-in-up" header="Emergency Contacts" footer={<Row className="justify-content-center"><a href="http://chartsbin.com/view/1983" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<pre style={{ textAlign: 'center' }}>
 												<img
@@ -716,7 +735,7 @@ function Country({
 							<hr />
 							<Row id="Health" className="justify-content-center">
 								<Col xs="10" sm="8" style={{ padding: '25px 0 25px 0' }}>
-									<Card header="General Health" footer={<Row className="justify-content-center"><a href={`https://data.un.org/en/iso/${destinationCountry}.html`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+									<Card data-aos="zoom-out-down" header="General Health" footer={<Row className="justify-content-center"><a href={`https://data.un.org/en/iso/${destinationCountry}.html`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 										<CardBody>
 											<Table striped bordered hover>
 												<tbody>
@@ -832,7 +851,7 @@ function Country({
 								</Col>
 								<Col xs="10" sm="8" style={{ padding: '0 0 25px 0' }}>
 									{!(vaccines === null || vaccines === 'Not available yet') && (
-										<Card header="Vaccines" footer={<Row className="justify-content-center"><a href={`https://wwwnc.cdc.gov/travel/destinations/traveler/none/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										<Card data-aos="zoom-out-up" header="Vaccines" footer={<Row className="justify-content-center"><a href={`https://wwwnc.cdc.gov/travel/destinations/traveler/none/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												<Row
 													className="justify-content-center"
@@ -891,101 +910,96 @@ function Country({
 							<hr />
 							<Row id="Culture" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
-									<Row className="justify-content-center">
-
-										<Card
-											header="Phrases"
-											style={{ maxHeight: '500px', overflow: 'scroll' }}
-											footer={(
-												<Row className="justify-content-center">
-													<a
-														href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
-														target="_blank"
-														rel="noopener noreferrer"
-													>
-														<i className="fa fa-globe" /> Reference
-													</a>
-												</Row>
-											)}
-										>
-
-											<Row>
-												<Col span="2">
-													<div style={{ textAlign: 'left' }}>
-														<b style={{ color: '#FF9A8D' }}>English</b>
-													</div>
-												</Col>
-												<Col span="2">
-													<div style={{ textAlign: 'left' }}>
-														<b style={{ color: '#FF9A8D' }}>{phraseLanguage}</b>
-													</div>
-												</Col>
-												<Col span="2">
-													<div style={{ textAlign: 'left' }}>
-														<b style={{ color: '#FF9A8D' }}>Pronunciation</b>
-													</div>
-												</Col>
-												<hr />
-												<hr />
-												<Col span="2">
-													<div style={{ textAlign: 'right' }}>
-														<b style={{ color: '#FF9A8D' }}>Play</b>
-													</div>
-												</Col>
+									<Card
+										data-aos="fade-up"
+										header="Common Phrases"
+										style={{ maxHeight: '500px', overflow: 'scroll' }}
+										footer={(
+											<Row className="justify-content-center">
+												<a
+													href={`https://translate.google.com/?sl=en&tl=${phraseIso}&text=Hi%20I%20am%20from%20${originCity}`}
+													target="_blank"
+													rel="noopener noreferrer"
+												>
+													<i className="fa fa-globe" /> Reference
+												</a>
 											</Row>
-											<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
-												{phrases.map((value, index) => (
-													<Row key={value + index}>
-														<Col>
-															{value.phrase.split('%20').join(' ')}
-														</Col>
-														<Col>
-															{value.translated_phrase}
-														</Col>
-														<Col>
+										)}
+									>
+
+										<Row>
+											<Col>
+												<div style={{ textAlign: 'center' }}>
+													<b style={{ color: '#FF9A8D' }}>English</b>
+												</div>
+											</Col>
+											<Col>
+												<div style={{ textAlign: 'center' }}>
+													<b style={{ color: '#FF9A8D' }}>{phraseLanguage}</b>
+												</div>
+											</Col>
+											{pronunciation}
+											<hr />
+											<hr />
+											<Col sm="1">
+												<div style={{ textAlign: 'center' }}>
+													<b style={{ color: '#FF9A8D' }}>Play</b>
+												</div>
+											</Col>
+										</Row>
+										<span style={{ maxHeight: '400px', overflow: 'scroll' }}>
+											{phrases.map((value, index) => (
+												<Row key={value + index}>
+													<Col style={{ textAlign: 'center' }}>
+														{value.phrase.split('%20').join(' ')}
+													</Col>
+													<Col style={{ textAlign: 'center' }}>
+														{value.translated_phrase}
+													</Col>
+													{(value.pronunciation !== '') && (
+														<Col style={{ textAlign: 'center' }}>
 															{value.pronunciation}
 														</Col>
+													)}
 
-														<Col>
-															<div style={{ textAlign: 'right' }}>
-																<button
-																	type="button"
-																	className="buttonSpeaker"
-																	onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
-																>
-																	<img
-																		src={require('../assets/images/phraseSpeaker.png')}
-																		style={{ width: '24px' }}
-																		alt="error loading"
-																	/>
-																</button>
-															</div>
-														</Col>
+													<Col sm="1">
+														<div style={{ textAlign: 'center' }}>
+															<button
+																type="button"
+																className="buttonSpeaker"
+																onClick={() => textToSpeech(value.translated_phrase, value.language_iso)}
+															>
+																<i
+																	className="fa fa-volume-up"
+																	style={{ width: '24px' }}
+																	alt="error loading"
+																/>
+															</button>
+														</div>
+													</Col>
 
-													</Row>
-												))}
-												{ (phrases.length === 0) && (<span>TBD</span>)}
-											</span>
-										</Card>
-									</Row>
+												</Row>
+											))}
+											{ (phrases.length === 0) && (<span>TBD</span>)}
+										</span>
+									</Card>
 								</Col>
 							</Row>
 							<hr />
 							<Row id="Miscellaneous" className="justify-content-center">
 								<Col xs="10" sm="10" style={{ padding: '25px' }}>
-									<Row className="justify-content-center">
-										<Card header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-											<CardBody>
-												<p>
-													{getCountryName(destinationCountry)} uses{' '}
-													<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
-													<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
-													electrical sockets. Plugs are of{' '}
-													<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
-												</p>
-												<Divider />
-												<Row className="justify-content-center">
-													{socketType !== 'Not available yet'
+									<Card data-aos="fade-down" header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										<CardBody>
+											<p>
+												{getCountryName(destinationCountry)} uses{' '}
+												<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+												<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+												electrical sockets. Plugs are of{' '}
+												<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+											</p>
+											<Divider />
+											<Row className="justify-content-center">
+												{socketType !== 'Not available yet'
 														&& socketArray.map((item) => (
 															/* eslint-disable */
 															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
@@ -993,20 +1007,19 @@ function Country({
 																<img
 																	key={item}
 																	src={require(`../assets/images/socketImages/${item}.png`)}
-																	style={{width: '200px'}}
+																	style={{width: '200px', display: 'block', marginLeft: 'auto', marginRight: 'auto'}}
 																	alt=''
 																/>
 															</Col>
 															/* eslint-enable */
 														))}
-												</Row>
-											</CardBody>
-										</Card>
-									</Row>
+											</Row>
+										</CardBody>
+									</Card>
 								</Col>
 								<Col xs="10" sm="10" style={{ padding: '0px 0px 50px 0px' }}>
 									<Row className="justify-content-center">
-										<Card header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+										<Card data-aos="fade-up" header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
 											<CardBody>
 												{trafficSide !== 'Not available yet' && (
 													<p>

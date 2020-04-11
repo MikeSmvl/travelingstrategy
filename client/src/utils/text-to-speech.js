@@ -8,7 +8,7 @@ function textToSpeech(text,language_iso) {
 	// this will hold an english voice
 	var voice = '';
 	var f = false;
-	console.log(language_iso)
+	// console.log(language_iso)
 	// find voice by language locale "en-US"
 	// if not then select the first voice
 	for(var i=0; i<available_voices.length; i++) {

@@ -63,6 +63,7 @@ const Footer = (props) => {
 						type="primary"
 						size="medium"
 						onPress={handleShow}
+						className="stayInformedBtn"
 					>Stay Informed
 					</AwesomeButton>
 					<SubscriptionModal

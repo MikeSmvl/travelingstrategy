@@ -7,6 +7,7 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 	const [weekDate, setWeekDate] = useState('');
 
 	useEffect(() => {
+		document.body.className = 'trendingBody';
 		async function fetchData() {
 			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
@@ -35,7 +36,7 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 		}
 		fetchData();
 	}, [requestId]);
-	console.log(trendingSpots);
+	// console.log(trendingSpots);
 	return (
 		<div className="wrapper">
 			{Object.keys(trendingSpots).length === 0 ? (
