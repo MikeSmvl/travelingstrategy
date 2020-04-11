@@ -29,7 +29,8 @@ const WhyCard = (props) => {
 WhyCard.propTypes = {
 	addClass: PropTypes.string,
 	header: PropTypes.string,
-	toggle: PropTypes.func
+	toggle: PropTypes.func,
+	children: PropTypes.node
 };
 
 export default WhyCard;
