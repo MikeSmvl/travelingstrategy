@@ -34,7 +34,7 @@ def check_if_selfie(image_path, faces):
     # use pyplot's gca method for the axis system
     img_with_axes = pyplot.gca()
     # get dimensions of original image
-    og_width, og_height = PIL.Image.open('images_to_filter/test2.jpg').size
+    og_width, og_height = PIL.Image.open(image_path).size
     # draw a rectangle for each face based on the coordinates and save the photo in Discarded/
     for face in faces:
         # get dimensions of the face
@@ -49,7 +49,20 @@ def check_if_selfie(image_path, faces):
             return True
     return False
 
+def check_if_group_photo(image_path):
+  faces = search_for_faces(image_path)
+  number_of_faces = len(search_for_faces(image_path))
+  total_width = 0
+  og_width = PIL.Image.open(image_path).size[0]
+  for face in faces:
+    face_width = face['box'][2]
+    total_width += face_width
+  # if there are more than 5 people or if their faces cover half of the picture, then it is a group photo
+  if number_of_faces > 5 or total_width/og_width > 0.5:
+    return True
+  return False
 
-save_img_url('https://instagram.fymy1-2.fna.fbcdn.net/v/t51.2885-15/e35/p1080x1080/91884994_131277001783285_8536432134989860630_n.jpg?_nc_ht=instagram.fymy1-2.fna.fbcdn.net&_nc_cat=101&_nc_ohc=ctzUWQ6BM68AX9i_i8W&oh=c49d5152440d702185d73b572493cb83&oe=5EAB64C7', 'images_to_filter/test2.jpg')
-faces = search_for_faces('images_to_filter/test2.jpg')
-print(check_if_selfie('images_to_filter/test2.jpg', faces))
+save_img_url('https://i.pinimg.com/originals/cf/70/ce/cf70ce32f1981d64ed82875772e33dfa.jpg', 'images_to_filter/test1.jpg')
+faces = search_for_faces('images_to_filter/test1.jpg')
+#print(check_if_selfie('images_to_filter/test3.jpg', faces))
+print(check_if_group_photo('images_to_filter/test1.jpg'))
