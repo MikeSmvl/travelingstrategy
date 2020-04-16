@@ -11,6 +11,7 @@ from helper_class.logger import Logger
 from lib.database import Database
 from lib.config import instagram_url
 import datetime
+from selfie_detection import save_img_url, check_if_selfie, check_if_group_photo
 
 # so were gonna want to get/do
 # 1. the caption C4VMK
@@ -86,8 +87,14 @@ def find_a_post(location, request_id, i=1):
             count -= 1
 
         try:
-            save_image("images", image_info,location,str(request_id))
-            LOGGER.success(f'Saved Image info for: {location}')
+            save_img_url(image_info['image_link'], 'images_to_filter/check.jpg')
+            selfie = check_if_selfie('images_to_filter/check.jpg')
+            group_photo = check_if_group_photo('images_to_filter/check.jpg')
+            if not selfie and not group_photo:
+                save_image("images", image_info,location,str(request_id))
+                LOGGER.success(f'Saved Image info for: {location}')
+            else:
+                LOGGER.error(f'Cannot save. Image was a selfie, it is now in images_to_filter/discared/ ')
         except:
             LOGGER.error(f'Could not save the info of the image for: {location}')
             count -= 1
@@ -107,4 +114,4 @@ def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
             geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")
 
-
+# find_a_post('bali', 1)
