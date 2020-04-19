@@ -14,8 +14,8 @@ def get_last_discarded():
     filenames = []
     for file in os.listdir(path):
         if file.endswith(".jpg"):
-            filenames.append(Path(file).stem)
-    return (int(filenames[0])+1)
+            filenames.append(int(Path(file).stem))
+    return (sorted(filenames)[-1] + 1)
 
 
 # Function to convert url of instagram picture to a jpg file
@@ -59,7 +59,8 @@ def check_if_selfie(image_path):
                                        fill=False, color='purple')
             # add the rectangle to the image with the axes
             img_with_axes.add_patch(face_rectangle)
-            pyplot.savefig(f'images_to_filter/discarded/{get_last_discarded()}.jpg')
+            pyplot.savefig(
+                f'images_to_filter/discarded/{get_last_discarded()}.jpg')
             return True
     return False
 
@@ -76,11 +77,13 @@ def check_if_group_photo(image_path):
         total_width += face_width
     # if there are more than 5 people or if their faces cover half of the picture, then it is a group photo
     if number_of_faces > 4 or total_width/og_width > 0.4:
-        pyplot.savefig(f'images_to_filter/discarded/{get_last_discarded()}.jpg')
+        pyplot.savefig(
+            f'images_to_filter/discarded/{get_last_discarded()}.jpg')
         return True
     return False
+
 
 #save_img_url('https://i.pinimg.com/originals/cf/70/ce/cf70ce32f1981d64ed82875772e33dfa.jpg', 'images_to_filter/test1.jpg')
 #faces = search_for_faces('images_to_filter/test1.jpg')
 #print(check_if_selfie('images_to_filter/test3.jpg', faces))
-#print(check_if_group_photo('images_to_filter/test1.jpg'))
+# print(check_if_group_photo('images_to_filter/test1.jpg'))
