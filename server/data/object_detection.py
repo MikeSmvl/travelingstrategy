@@ -7,7 +7,7 @@ from selfie_detection import get_last_discarded
 
 
 # Function that detects body parts and object and compares their size to an acceptable threshold
-def check_if_object(image_path):
+def check_for_objects(image_path):
     # load image with OpenCV
     image = cv2.imread(image_path)
     total_widths = 0
@@ -34,4 +34,4 @@ def check_if_object(image_path):
     return False
 
 
-check_if_object('images_to_filter/test4.jpg')
+check_for_objects('images_to_filter/test4.jpg')

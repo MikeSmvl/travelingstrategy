@@ -12,6 +12,7 @@ from lib.database import Database
 from lib.config import instagram_url
 import datetime
 from selfie_detection import save_img_url, check_if_selfie, check_if_group_photo
+from object_detection import check_for_objects
 
 # so were gonna want to get/do
 # 1. the caption C4VMK
@@ -90,7 +91,8 @@ def find_a_post(location, request_id, i=1):
             save_img_url(image_info['image_link'], 'images_to_filter/check.jpg')
             selfie = check_if_selfie('images_to_filter/check.jpg')
             group_photo = check_if_group_photo('images_to_filter/check.jpg')
-            if not selfie and not group_photo:
+            objects_too_big = check_for_objects('images_to_filter/check.jpg')
+            if not selfie and not group_photo and not objects_too_big:
                 save_image("images", image_info,location,str(request_id))
                 LOGGER.success(f'Saved Image info for: {location}')
             else:
