@@ -1,5 +1,4 @@
 import urllib.request
-import PIL
 from matplotlib import pyplot
 from matplotlib.patches import Rectangle
 # the algortihm we'll be using for face detection, called "Multi-Task Convoluted Neural Networks"
@@ -48,7 +47,7 @@ def check_if_selfie(image_path):
     # use pyplot's gca method for the axis system
     img_with_axes = pyplot.gca()
     # get dimensions of original image
-    og_width, og_height = PIL.Image.open(image_path).size
+    og_height, og_width, rgb = image.shape
     # draw a rectangle for each face based on the coordinates and save the photo in Discarded/
     for face in faces:
         # get dimensions of the face
@@ -71,7 +70,7 @@ def check_if_group_photo(image_path):
     faces = search_for_faces(image_path)
     number_of_faces = len(search_for_faces(image_path))
     total_width = 0
-    og_width = PIL.Image.open(image_path).size[0]
+    og_height, og_width, rgb = image.shape
     for face in faces:
         face_width = face['box'][2]
         total_width += face_width
