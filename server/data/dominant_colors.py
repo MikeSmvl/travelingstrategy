@@ -47,16 +47,29 @@ def get_dominant_colors(image_path, number_of_colors, show_chart):
         # display colors as pie chart using hex
         pyplot.pie(counts.values(), labels=hex_colors, colors=hex_colors)
         pyplot.show()
-    return rgb_colors
+    return rgb_colors, sorted(counts.values(), reverse = True)
 
 
 # Function that identifies the more similar colors and decides if they are occupying an acceptable amount in the image
-def find_nearest_colors(rgb_colors_list):
+def find_nearest_colors(image_path):
+    rgb_colors_list, values = get_dominant_colors(image_path, 3, False)
     color_1, color_2, color_3 = rgb_colors_list
     lab_1 = convert_color(sRGBColor(color_1[0], color_1[1], color_1[2]), LabColor)
     lab_2 = convert_color(sRGBColor(color_2[0], color_2[1], color_2[2]), LabColor)
     lab_3 = convert_color(sRGBColor(color_3[0], color_3[1], color_3[2]), LabColor)
-    print(delta_e_cie2000(lab_1, lab_2))
+    if values[0]+values[1]/240000 >= 0.59:
+      if delta_e_cie2000(lab_1, lab_2) < 23:
+        print(delta_e_cie2000(lab_1, lab_2))
+        return True
+    if values[0]+values[2]/240000 >= 0.59:
+      if delta_e_cie2000(lab_1, lab_3) < 23:
+        print(delta_e_cie2000(lab_1, lab_3))
+        return True
+    if values[1]+values[2]/240000 >= 0.59:
+      if delta_e_cie2000(lab_2, lab_3) < 23:
+        print(delta_e_cie2000(lab_2, lab_3))
+        return True
+    return False
 
-#print(get_dominant_colors('images_to_filter/test9.png', 3, True))
-print(find_nearest_colors(get_dominant_colors('images_to_filter/test8.png', 3, True)))
+#print(get_dominant_colors('images_to_filter/test8.png', 3, True))
+print(find_nearest_colors('images_to_filter/test9.png'))
