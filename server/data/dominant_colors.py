@@ -4,7 +4,11 @@ from matplotlib import pyplot
 import numpy as np
 from cv2 import cv2
 from collections import Counter
+from colormath.color_objects import sRGBColor, LabColor
+from colormath.color_conversions import convert_color
+from colormath.color_diff import delta_e_cie2000
 from skimage.color import rgb2lab, deltaE_cie76
+
 import os
 
 
@@ -46,4 +50,13 @@ def get_dominant_colors(image_path, number_of_colors, show_chart):
     return rgb_colors
 
 
-print(get_dominant_colors('images_to_filter/test9.png', 5, True))
+# Function that identifies the more similar colors and decides if they are occupying an acceptable amount in the image
+def find_nearest_colors(rgb_colors_list):
+    color_1, color_2, color_3 = rgb_colors_list
+    lab_1 = convert_color(sRGBColor(color_1[0], color_1[1], color_1[2]), LabColor)
+    lab_2 = convert_color(sRGBColor(color_2[0], color_2[1], color_2[2]), LabColor)
+    lab_3 = convert_color(sRGBColor(color_3[0], color_3[1], color_3[2]), LabColor)
+    print(delta_e_cie2000(lab_1, lab_2))
+
+#print(get_dominant_colors('images_to_filter/test9.png', 3, True))
+print(find_nearest_colors(get_dominant_colors('images_to_filter/test8.png', 3, True)))
