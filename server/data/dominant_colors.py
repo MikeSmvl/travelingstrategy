@@ -64,15 +64,16 @@ def find_nearest_colors(image_path):
     # if their delta e cie2000 value is below 23, it strongly indicates that the 2 colors are very similar to eachother
     if values[0]+values[1]/240000 >= 0.59:
       if delta_e_cie2000(lab_1, lab_2) < 23:
+        print(delta_e_cie2000(lab_1, lab_2), values[0]+values[1]/240000)
         return True
     if values[0]+values[2]/240000 >= 0.59:
       if delta_e_cie2000(lab_1, lab_3) < 23:
+        print(delta_e_cie2000(lab_1, lab_3), values[0]+values[2]/240000)
         return True
     if values[1]+values[2]/240000 >= 0.59:
       if delta_e_cie2000(lab_2, lab_3) < 23:
+        print(delta_e_cie2000(lab_2, lab_3), values[1]+values[2]/240000)
         return True
-    if values[0] >=0.59 or values[1] >=0.59 or values[2] >=0.59:
-      return True
     return False
 
 #print(get_dominant_colors('images_to_filter/test8.png', 3, True))

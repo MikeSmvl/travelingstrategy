@@ -28,8 +28,6 @@ def check_for_objects(image_path):
             output_image = cv2.cvtColor(
                 draw_bbox(image, coordinates, item, confidence), cv2.COLOR_BGR2RGB)
             pyplot.imshow(output_image)
-            pyplot.savefig(
-                f'images_to_filter/discarded/{get_last_discarded()}.jpg')
             return True
     return False
 

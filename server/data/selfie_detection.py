@@ -58,8 +58,6 @@ def check_if_selfie(image_path):
                                        fill=False, color='purple')
             # add the rectangle to the image with the axes
             img_with_axes.add_patch(face_rectangle)
-            pyplot.savefig(
-                f'images_to_filter/discarded/{get_last_discarded()}.jpg')
             return True
     return False
 
