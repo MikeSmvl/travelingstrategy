@@ -118,4 +118,4 @@ def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
             geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")
 
-# find_a_post('bali', 1)
+find_a_post('bali', 1)

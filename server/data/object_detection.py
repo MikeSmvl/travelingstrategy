@@ -34,4 +34,4 @@ def check_for_objects(image_path):
     return False
 
 
-check_for_objects('images_to_filter/test7.png')
+#check_for_objects('images_to_filter/test7.png')
