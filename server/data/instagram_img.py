@@ -13,6 +13,7 @@ from lib.config import instagram_url
 import datetime
 from selfie_detection import save_img_url, check_if_selfie, check_if_group_photo
 from object_detection import check_for_objects
+from dominant_colors import find_nearest_colors
 
 # so were gonna want to get/do
 # 1. the caption C4VMK
@@ -92,7 +93,8 @@ def find_a_post(location, request_id, i=1):
             selfie = check_if_selfie('images_to_filter/check.jpg')
             group_photo = check_if_group_photo('images_to_filter/check.jpg')
             objects_too_big = check_for_objects('images_to_filter/check.jpg')
-            if not selfie and not group_photo and not objects_too_big:
+            too_much_similar_colors = find_nearest_colors('images_to_filter/check.jpg')
+            if not selfie and not group_photo and not objects_too_big and not too_much_similar_colors:
                 save_image("images", image_info,location,str(request_id))
                 LOGGER.success(f'Saved Image info for: {location}')
             else:

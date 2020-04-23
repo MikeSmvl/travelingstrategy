@@ -52,11 +52,16 @@ def get_dominant_colors(image_path, number_of_colors, show_chart):
 
 # Function that identifies the more similar colors and decides if they are occupying an acceptable amount in the image
 def find_nearest_colors(image_path):
+    # save rgb colors and their value on the pie chart on 240,000
     rgb_colors_list, values = get_dominant_colors(image_path, 3, False)
     color_1, color_2, color_3 = rgb_colors_list
+    # since delta e cie2000 uses Lab color space, we convert from RGB to Lab color space
     lab_1 = convert_color(sRGBColor(color_1[0], color_1[1], color_1[2]), LabColor)
     lab_2 = convert_color(sRGBColor(color_2[0], color_2[1], color_2[2]), LabColor)
     lab_3 = convert_color(sRGBColor(color_3[0], color_3[1], color_3[2]), LabColor)
+    # do some checks on the size of the fraction 2 colors out of 3 occupy and their delta e cie2000 metric
+    # if they occupy more than 59% of the pie chart, it means they occupy that much of the picture as well
+    # if their delta e cie2000 value is below 23, it strongly indicates that the 2 colors are very similar to eachother
     if values[0]+values[1]/240000 >= 0.59:
       if delta_e_cie2000(lab_1, lab_2) < 23:
         print(delta_e_cie2000(lab_1, lab_2))
@@ -69,6 +74,8 @@ def find_nearest_colors(image_path):
       if delta_e_cie2000(lab_2, lab_3) < 23:
         print(delta_e_cie2000(lab_2, lab_3))
         return True
+    if values[0] >=0.59 or values[1] >=0.59 or values[2] >=0.59:
+      return True
     return False
 
 #print(get_dominant_colors('images_to_filter/test8.png', 3, True))
