@@ -76,7 +76,6 @@ def find_a_post(location, request_id, i=1):
         exit
 
     count = 0
-
     for g in garb_all:
         count += 1
         if count > i:
@@ -99,11 +98,12 @@ def find_a_post(location, request_id, i=1):
             if not selfie and not group_photo and not objects_too_big and not too_much_similar_colors:
                 save_image("images", image_info,location,str(request_id))
                 LOGGER.success(f'Saved Image info for: {location}')
+                return True
             else:
-                print(selfie, group_photo, objects_too_big, too_much_similar_colors)
                 failed_img = Image.open('images_to_filter/check.jpg')
                 failed_img.save(f'images_to_filter/discarded/{get_last_discarded()}.jpg')
                 LOGGER.error(f'Cannot save image. It is now in images_to_filter/discared/ ')
+                count -= 1
         except:
             LOGGER.error(f'Could not save the info of the image for: {location}')
             count -= 1
@@ -123,4 +123,4 @@ def create_table(tableName):
     DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
             geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")
 
-find_a_post('madrid', 1)
+find_a_post('bali', 1, 1)
