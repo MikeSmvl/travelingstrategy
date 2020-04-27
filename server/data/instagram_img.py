@@ -31,15 +31,16 @@ DB = Database("countries.sqlite")
 NOW = datetime.datetime.now()
 DATE = NOW.strftime("%Y-%m-%d")
 
-#getting inforamtion for one image
+
+# getting inforamtion for one image
 def get_image_info(driver, u):
 
     driver.get(u)
     soup = BeautifulSoup(driver.page_source, 'lxml')
 
-    geoloc = soup.find('a',{'class':'O4GlU'})
-    caption = soup.find('a', {'class':'sqdOP yWX7d _8A5w5 ZIAjV'})
-    img = soup.find('img', {'class':'FFVAD'})
+    geoloc = soup.find('a', {'class': 'O4GlU'})
+    caption = soup.find('a', {'class': 'sqdOP yWX7d _8A5w5 ZIAjV'})
+    img = soup.find('img', {'class': 'FFVAD'})
 
     image_info = {}
 
@@ -58,21 +59,23 @@ def get_image_info(driver, u):
 
     return image_info
 
-#finding a post or multiple for one hashtag
+
+# finding a post or multiple for one hashtag
 def find_a_post(location, request_id, i=1):
 
     LOGGER.info(f'Starting the parser for the following location: {location}')
     driver = create_driver()
-    location = location.replace(' ','')
+    location = location.replace(' ', '')
 
     url = instagram_url + location + "/"
     try:
         LOGGER.info(f'Retreiving the link to the image page for: {location}')
         driver.get(url)
         soup = BeautifulSoup(driver.page_source, 'lxml')
-        garb_all = soup.find_all('a', {'href':regex.compile(r'/p/')})
+        garb_all = soup.find_all('a', {'href': regex.compile(r'/p/')})
     except:
-        LOGGER.error(f'Could not get the link to the image page for: {location}')
+        LOGGER.error(
+            f'Could not get the link to the image page for: {location}')
         exit
 
     count = 0
@@ -83,44 +86,62 @@ def find_a_post(location, request_id, i=1):
 
         u = "https://www.instagram.com"+g.get('href')
         try:
-            image_info = get_image_info(driver,u)
+            image_info = get_image_info(driver, u)
             LOGGER.success(f'Image info for: {location}')
         except:
-            LOGGER.error(f'Could not get the info of the image for: {location}')
+            LOGGER.error(
+                f'Could not get the info of the image for: {location}')
             count -= 1
 
         try:
-            save_img_url(image_info['image_link'], 'images_to_filter/check.jpg')
+            save_img_url(image_info['image_link'],
+                         'images_to_filter/check.jpg')
             selfie = check_if_selfie('images_to_filter/check.jpg')
             group_photo = check_if_group_photo('images_to_filter/check.jpg')
             objects_too_big = check_for_objects('images_to_filter/check.jpg')
-            too_much_similar_colors = find_nearest_colors('images_to_filter/check.jpg')
-            if not selfie and not group_photo and not objects_too_big and not too_much_similar_colors:
-                save_image("images", image_info,location,str(request_id))
+            too_much_similar_colors = find_nearest_colors(
+                'images_to_filter/check.jpg')
+            if not selfie and not group_photo and not objects_too_big and not too_much_similar_colors and not check_if_wrong_geolocation(location, image_info['geolocation']):
+                save_image("images", image_info, location, str(request_id))
                 LOGGER.success(f'Saved Image info for: {location}')
                 return True
             else:
                 failed_img = Image.open('images_to_filter/check.jpg')
-                failed_img.save(f'images_to_filter/discarded/{get_last_discarded()}.jpg')
-                LOGGER.error(f'Cannot save image. It is now in images_to_filter/discared/ ')
+                failed_img.save(
+                    f'images_to_filter/discarded/{get_last_discarded()}.jpg')
+                LOGGER.error(
+                    f'Cannot save image. It is now in images_to_filter/discared/ ')
                 count -= 1
         except:
-            LOGGER.error(f'Could not save the info of the image for: {location}')
+            LOGGER.error(
+                f'Could not save the info of the image for: {location}')
             count -= 1
 
     quit_driver(driver)
 
+
 # saving function
-def save_image(tableName,image_info,tag,request_id ):
+def save_image(tableName, image_info, tag, request_id):
     image_link = image_info['image_link']
     geo_link = image_info['geo_link']
     geolocation = image_info['geolocation']
     caption = image_info['caption']
-    DB.insert(tableName,"null",request_id,image_link, geolocation, geo_link,caption,tag, DATE)
+    DB.insert(tableName, "null", request_id, image_link,
+              geolocation, geo_link, caption, tag, DATE)
 
-#creating the table
+
+# creating the table
 def create_table(tableName):
-    DB.add_table(tableName,image_id="INTEGER PRIMARY KEY AUTOINCREMENT",request_id='request_id',image_link="text",
-            geolocation="text",geo_link="text",caption="text" , tag="text",date_retrieved="text")
+    DB.add_table(tableName, image_id="INTEGER PRIMARY KEY AUTOINCREMENT", request_id='request_id', image_link="text",
+                 geolocation="text", geo_link="text", caption="text", tag="text", date_retrieved="text")
 
-find_a_post('bali', 1, 1)
+
+# function that checks the gelocation in the image matches the actual location from the hashtag
+def check_if_wrong_geolocation(location, geolocation):
+    if ',' in geolocation.lower():
+        if location.lower() not in geolocation.lower():
+            return True
+    return False
+
+
+find_a_post('rome', 1, 1)
