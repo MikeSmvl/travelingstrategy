@@ -1,23 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Row, Popover, OverlayTrigger, Toast } from 'react-bootstrap/';
-import { Redirect } from 'react-router-dom';
+import React, {useState, useEffect} from 'react';
+import {Button, Row, Popover, OverlayTrigger, Toast} from 'react-bootstrap/';
+import {Redirect} from 'react-router-dom';
 import Client from 'predicthq';
-import Unsplash, { toJson } from 'unsplash-js';
+import Unsplash, {toJson} from 'unsplash-js';
 import './Events.css';
-import { AwesomeButton } from 'react-awesome-button';
+import {AwesomeButton} from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
-import { addMyEvents, addApiEvents, getButtonContent, emailEvents } from '../utils/eventsTools';
+import {
+	addMyEvents,
+	addApiEvents,
+	getButtonContent,
+	emailEvents,
+} from '../utils/eventsTools';
 
-const unsplash = new Unsplash({ accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M' });
-const client = new Client({ access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax' });
+const unsplash = new Unsplash({
+	accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M',
+});
+const client = new Client({
+	access_token: '3ezKmlrAYq3QMDt3d-wZh2q-oBVt57U0c_CfJiax',
+});
 const phqEvents = client.events;
 
-
-function Events({
-	requestId,
-	latitude,
-	longitude
-}) {
+function Events({requestId, latitude, longitude}) {
 	const [category, setCategory] = useState('likes');
 	const [savedEvents, setSavedEvents] = useState([]);
 	const [eventsForCategories, setEventsForCategories] = useState([]);
@@ -37,22 +41,23 @@ function Events({
 	const [communityCalled, setCommunityCalled] = useState(false);
 	const [toggled, setToggled] = useState(true);
 	const [navbarClass, setNavbarClass] = useState('sidebar sidebar--expanded');
-	const [mainContentClass, setMainContentClass] = useState('main-content main-content--expanded');
+	const [mainContentClass, setMainContentClass] = useState(
+		'main-content main-content--expanded'
+	);
 	const [images, setImages] = useState([]);
 	const [redirect, setRedirect] = useState(false);
 	const [email, setEmail] = useState('');
 	const [show, setShow] = useState(false);
 	document.body.classList.add('event-body');
 
-
 	useEffect(() => {
 		async function getToken() {
-			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, { credentials: 'include' })
+			await fetch(`${process.env.REACT_APP_BACKEND}checktoken`, {
+				credentials: 'include',
+			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.email
-                && res.email !== null
-                && setEmail(res.email);
+					res.email && res.email !== null && setEmail(res.email);
 				})
 				.catch((error) => {
 					// if status code 401...
@@ -63,7 +68,8 @@ function Events({
 		async function getImages() {
 			let array = [];
 			if (category !== 'likes') {
-				array = await unsplash.search.photos(category, 1, 100, { orientation: 'landscape' })
+				array = await unsplash.search
+					.photos(category, 1, 100, {orientation: 'landscape'})
 					.then(toJson);
 				return array.results;
 			}
@@ -75,15 +81,15 @@ function Events({
 			const withinParam = `${latitude},${longitude}`;
 			const searchResults = await phqEvents.search({
 				'location_around.origin': withinParam,
-				category
+				category,
 			});
 
 			return searchResults.result.results;
 		}
 		/**
-         * This function checks if the events for a category were already requested
-         * in order to provide faster service and limit api calls
-         * */
+		 * This function checks if the events for a category were already requested
+		 * in order to provide faster service and limit api calls
+		 * */
 		async function eventsByCategoryToDispaly() {
 			let arrayOfEvents = [];
 			switch (category) {
@@ -158,7 +164,7 @@ function Events({
 		async function fetchEvents() {
 			await fetch(`${process.env.REACT_APP_BACKEND}graphql`, {
 				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
+				headers: {'Content-Type': 'application/json'},
 				body: JSON.stringify({
 					query: `{
                         eventsForRequest(request_id:"${requestId}"){
@@ -176,14 +182,14 @@ function Events({
 							image
                             }
                     }
-                    `
-				})
+                    `,
+				}),
 			})
 				.then((res) => res.json())
 				.then((res) => {
-					res.data.eventsForRequest
-					&& res.data.eventsForRequest.length !== 0
-					&& setSavedEvents(res.data.eventsForRequest);
+					res.data.eventsForRequest &&
+						res.data.eventsForRequest.length !== 0 &&
+						setSavedEvents(res.data.eventsForRequest);
 				});
 		}
 
@@ -201,8 +207,7 @@ function Events({
 		setEventsToDisplay();
 		setImagesForCategory();
 		getToken();
-	},
-	[
+	}, [
 		category,
 		conferences,
 		expos,
@@ -221,8 +226,7 @@ function Events({
 		latitude,
 		longitude,
 		email,
-		requestId
-
+		requestId,
 	]);
 
 	const expandNavBar = (event) => {
@@ -238,101 +242,146 @@ function Events({
 	};
 
 	if (redirect) {
-		return <Redirect to="/" />;
+		return <Redirect to='/' />;
 	}
 
 	return (
-		<div id="events-section">
+		<div id='events-section'>
 			<Row>
 				<div className={navbarClass}>
-					<span className="shape" />
-					<span className="shape" />
-					<div className="categories-btn">
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={expandNavBar}>
+					<span className='shape' />
+					<span className='shape' />
+					<div className='categories-btn'>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='likes'
+								onClick={expandNavBar}>
 								{getButtonContent('Hamburger')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="likes" onClick={() => setCategory('likes')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='likes'
+								onClick={() => setCategory('likes')}>
 								{getButtonContent('Favourites')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="conferences" onClick={() => setCategory('conferences')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='conferences'
+								onClick={() => setCategory('conferences')}>
 								{getButtonContent('Conferences')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="expos" onClick={() => setCategory('expos')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='expos'
+								onClick={() => setCategory('expos')}>
 								{getButtonContent('Expos')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="concerts" onClick={() => setCategory('concerts')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='concerts'
+								onClick={() => setCategory('concerts')}>
 								{getButtonContent('Concerts')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="festivals" onClick={() => setCategory('festivals')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='festivals'
+								onClick={() => setCategory('festivals')}>
 								{getButtonContent('Festivals')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="performing-arts" onClick={() => setCategory('performing-arts')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='performing-arts'
+								onClick={() => setCategory('performing-arts')}>
 								{getButtonContent('Performing-arts')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="sports" onClick={() => setCategory('sports')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='sports'
+								onClick={() => setCategory('sports')}>
 								{getButtonContent('Sports')}
 							</Button>
 						</div>
-						<div className="choice-btn">
-							<Button variant="outline-primary" style={{ width: '100%' }} value="community" onClick={() => setCategory('community')}>
+						<div className='choice-btn'>
+							<Button
+								variant='outline-primary'
+								style={{width: '100%'}}
+								value='community'
+								onClick={() => setCategory('community')}>
 								{getButtonContent('Community')}
 							</Button>
 						</div>
 					</div>
 				</div>
-				<Toast className="events-toast" onClose={() => setShow(false)} show={show} delay={3000} autohide>
+				<Toast
+					className='events-toast'
+					onClose={() => setShow(false)}
+					show={show}
+					delay={3000}
+					autohide>
 					<Toast.Header>
-						<strong className="mr-auto" style={{ color: 'green' }}>Success!</strong>
+						<strong className='mr-auto' style={{color: 'green'}}>
+							Success!
+						</strong>
 						<small>Just now</small>
 					</Toast.Header>
-					<Toast.Body>An email with your favourited events has been emailed to you!</Toast.Body>
+					<Toast.Body>
+						An email with your favourited events has been emailed to you!
+					</Toast.Body>
 				</Toast>
 				<section className={mainContentClass}>
 					<div>
-						{ category === 'likes'
-						&& (
+						{category === 'likes' && (
 							<OverlayTrigger
-								overlay={(
+								overlay={
 									<Popover
-										id="popover-positioned-bottom"
-										className="popover-context"
-									>
+										id='popover-positioned-bottom'
+										className='popover-context'>
 										Receive an email of your favourite events
 									</Popover>
-								)}
-							>
-								<div
-									className="email-btn"
-									style={{ float: 'right' }}
-								>
+								}>
+								<div className='email-btn' style={{float: 'right'}}>
 									<AwesomeButton
-										type="secondary"
-										size="small"
-										value="likes"
-										onPress={() => { emailEvents(savedEvents); setShow(true); }}
-									>
-										<img alt="Icon" src={require('../assets/images/eventsImages/Email Favourites.png')} style={{ height: '2em' }} />
+										type='secondary'
+										size='small'
+										value='likes'
+										onPress={() => {
+											emailEvents(savedEvents);
+											setShow(true);
+										}}>
+										<img
+											alt='Icon'
+											src={require('../assets/images/eventsImages/Email Favourites.png')}
+											style={{height: '2em'}}
+										/>
 									</AwesomeButton>
 								</div>
 							</OverlayTrigger>
 						)}
 					</div>
-					<div className="app-card-list" id="app-card-list">
+					<div className='app-card-list' id='app-card-list'>
 						{category === 'likes'
 							? addMyEvents(savedEvents, requestId)
 							: addApiEvents(eventsForCategories, requestId, images)}
