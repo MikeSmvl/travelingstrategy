@@ -291,9 +291,9 @@ const EventsCard = (props) => {
 				<Card className="card" id="eventcard" border="dark">
 					<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
 					<div className="card-body" id="cardbody">
-						<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
-						<p className="date">{getDateText(startDate)}</p>
 						<h2 className="card-title">{title}</h2>
+						<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
+						<p className="card-date">{getDateText(startDate)}</p>
 						<AwesomeButton
 							type="secondary"
 							size="medium"
