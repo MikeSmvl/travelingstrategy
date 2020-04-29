@@ -1,31 +1,33 @@
 .footerWrapper {
-    display: grid;
-    grid-template-columns: 1fr 4fr 5fr;
+	display: grid;
+	grid-template-columns: 1fr 4fr 5fr;
 }
 .aboutUs {
-    margin-right: 80px;
-    text-align: justify;
-    text-justify: inter-word;
+	margin-right: 80px;
+	text-align: justify;
+	text-justify: inter-word;
 }
 .aboutUs h4 {
-    font: normal normal normal 20px georgia,palatino,book antiqua,palatino linotype,serif !important;
+	font: normal normal normal 20px georgia, palatino, book antiqua,
+		palatino linotype, serif !important;
 }
 .stayInformedBtn {
-    font: normal normal normal 15px/1.4em georgia,palatino,book antiqua,palatino linotype,serif !important;
+	font: normal normal normal 15px/1.4em georgia, palatino, book antiqua,
+		palatino linotype, serif !important;
 }
 .footerLogo {
-    margin-top: -5px;
-    justify-self: center;
+	margin-top: -5px;
+	justify-self: center;
 }
 .footerLinks {
-    color: #77797B;
-    margin-left:auto;
-    margin-right: 10px;
+	color: #77797b;
+	margin-left: auto;
+	margin-right: 50px;
 }
 .footerLinks p {
-    margin-bottom: 0;
-    margin-top: 10px;
+	margin-bottom: 0;
+	margin-top: 10px;
 }
 .stayInformedBtn {
-    margin-right: 15px !important;
+	margin-right: 15px !important;
 }

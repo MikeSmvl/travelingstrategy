@@ -18,7 +18,7 @@ const Footer = (props) => {
 		email = '',
 	} = props;
 	return (
-		<div className="footerWrapper">
+		<div className='footerWrapper'>
 			<img alt='' src={logo} width='60' height='60' className='footerLogo' />
 			<div className='aboutUs'>
 				<h4>About</h4>
@@ -27,7 +27,7 @@ const Footer = (props) => {
 					project. We wish you a happy vacation and a wonderful trip.
 				</p>
 			</div>
-			<div className="footerLinks">
+			<div className='footerLinks'>
 				<AwesomeButton
 					type='secondary'
 					size='small'
