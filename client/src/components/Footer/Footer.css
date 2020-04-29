@@ -16,13 +16,13 @@
 		palatino linotype, serif !important;
 }
 .footerLogo {
-	margin-top: -5px;
-	justify-self: center;
+    justify-self: right;
+    margin-right: 25px;
 }
 .footerLinks {
 	color: #77797b;
 	margin-left: auto;
-	margin-right: 50px;
+	margin-right: 60px;
 }
 .footerLinks p {
 	margin-bottom: 0;

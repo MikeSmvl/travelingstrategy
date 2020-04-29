@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Row, Col} from 'react-bootstrap/';
 import './Footer.css';
 import PropTypes from 'prop-types';
 import {AwesomeButton} from 'react-awesome-button';

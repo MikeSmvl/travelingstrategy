@@ -83,7 +83,6 @@ app.post('/intelInfo', withAuth, async function(req, res) {
 });
 
 app.post('/emailEvents', withAuth, async function(req, res) {
-    // console.log(req.body)
     const requestId = req.body[0].request_id
     const events = req.body
     const email = req.email;

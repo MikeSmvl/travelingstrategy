@@ -3,8 +3,6 @@ var path = require('path');
 var pythonScriptPath = path.join(__dirname, 'sendEvents.py');
 
 function emailEvents(email, events) {
-    // console.log("email", email)
-    // console.log("events", events)
 
     // Use child_process.spawn method from
     // child_process module and assign it

@@ -182,6 +182,7 @@
   }
 
   .popover-context{
-    background: linear-gradient(315deg, #fef9e7 0%, #e6ffff 74%);
     text-align: center;
+    padding: 5px;
+    background:linear-gradient(315deg, #FDE9DB 10%, #DEE7F3 54%);
   }

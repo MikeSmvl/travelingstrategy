@@ -101,7 +101,6 @@ function Country({
 			)
 				.then((response) => {
 					if (response.status !== 200) {
-						// console.log('Exchange Rate API did not return HTTP 200');
 						setIsLoading(false);
 						return;
 					}
@@ -113,7 +112,6 @@ function Country({
 					});
 				})
 				.catch((err) => {
-					// console.log('Fetch Error :-S', err);
 					setIsLoading(false);
 				});
 		}
