@@ -352,6 +352,8 @@ function Country({
 			{!isLoading && (
 				<div data-aos="fade-up" className="parallax">
 					<div id="overlay" />
+					<Row style={{justifyContent: 'center', paddingTop: '150px'}}>
+					<Col lg={8} style={{border: '1px solid #343a40', borderRadius: '20px'}}>
 					<Header
 						country={getCountryName(destinationCountry)}
 						city={destinationCity}
@@ -368,9 +370,9 @@ function Country({
 						<Col
 							style={{
 								backgroundColor: 'rgb(255, 255, 255)',
-								borderRadius: '20px'
+								borderRadius: '0 0 20px 20px',
+								padding: '0'
 							}}
-							lg={8}
 						>
 							<Row className="justify-content-center sticky">
 								<CountryNavbar />
@@ -543,6 +545,8 @@ function Country({
 								</Col>
 							</Row>
 						</Col>
+					</Row>
+					</Col>
 					</Row>
 					<footer id="footer">
 						<Footer

@@ -11,7 +11,8 @@
 }
 .aboutUs h4 {
 	font: normal normal normal 20px georgia, palatino, book antiqua,
-		palatino linotype, serif !important;
+        palatino linotype, serif !important;
+    color: #343a40;
 }
 .stayInformedBtn {
 	font: normal normal normal 15px/1.4em georgia, palatino, book antiqua,
