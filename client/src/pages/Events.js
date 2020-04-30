@@ -267,7 +267,7 @@ function Events({requestId, latitude, longitude}) {
 				case 'Conferences':
 					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/1935/1935157.svg" class="loaded" />)
 				case 'Expos':
-					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/544/544280.svg" class="loaded" />)
+					return (<img width="32" height="32" src="https://image.flaticon.com/icons/svg/2793/2793709.svg" class="loaded" />)
 				case 'Concerts':
 					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/1941/1941070.svg" class="loaded" />)
 				case 'Festivals':
