@@ -30,6 +30,3 @@ def check_for_objects(image_path):
             pyplot.imshow(output_image)
             return True
     return False
-
-
-#check_for_objects('images_to_filter/test7.png')

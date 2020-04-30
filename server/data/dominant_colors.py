@@ -72,6 +72,3 @@ def find_nearest_colors(image_path):
       if delta_e_cie2000(lab_2, lab_3) < 23:
         return True
     return False
-
-#print(get_dominant_colors('images_to_filter/test8.png', 3, True))
-#print(find_nearest_colors('images_to_filter/test9.png'))

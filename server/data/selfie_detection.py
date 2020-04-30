@@ -76,9 +76,3 @@ def check_if_group_photo(image_path):
     if number_of_faces > 4 or total_width/og_width > 0.4:
         return True
     return False
-
-
-#save_img_url('https://i.pinimg.com/originals/cf/70/ce/cf70ce32f1981d64ed82875772e33dfa.jpg', 'images_to_filter/test1.jpg')
-#faces = search_for_faces('images_to_filter/test1.jpg')
-#print(check_if_selfie('images_to_filter/test3.jpg', faces))
-# print(check_if_group_photo('images_to_filter/test1.jpg'))
