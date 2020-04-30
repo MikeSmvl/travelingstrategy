@@ -15,7 +15,7 @@ def check_for_objects(image_path):
     total_heights = 0
     # with computer vision, identify objects and return the bounding box co-ordinates, corrensponding labels and confidence scores
     coordinates, item, confidence = cvlib.detect_common_objects(image)
-    if coordinates[0]:
+    if coordinates and coordinates[0]:
         # save coordinates of object
         for coordinate in coordinates:
             # unpacking coordinates of each object found

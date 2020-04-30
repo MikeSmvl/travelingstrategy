@@ -14,21 +14,19 @@ class selfie_test(unittest.TestCase):
         """
         Test that the check_if_selfie function can identify selfies by the return values true for selfies and false when not selfies
         """
-        try:
-            check_selfie_1 = check_if_selfie('assets/selfie1.jpg')
-            check_selfie_2 = check_if_selfie('assets/selfie2.jpg')
-            check_selfie_3 = check_if_selfie('assets/selfie3.jpg')
-            check_not_selfie_1 = check_if_selfie('assets/not-selfie1.jpg')
-            check_not_selfie_2 = check_if_selfie('assets/not-selfie2.jpg')
-            check_not_selfie_3 = check_if_selfie('assets/not-selfie3.jpg')
-            self.assertTrue(check_selfie_1)
-            self.assertTrue(check_selfie_2)
-            self.assertTrue(check_selfie_3)
-            self.assertFalse(check_not_selfie_1)
-            self.assertFalse(check_not_selfie_2)
-            self.assertFalse(check_not_selfie_3)
-        except Exception as error_msg:
-            print(error_msg)
+        check_selfie_1 = check_if_selfie('assets/selfie1.jpg')
+        check_selfie_2 = check_if_selfie('assets/selfie2.jpg')
+        check_selfie_3 = check_if_selfie('assets/selfie3.jpg')
+        check_not_selfie_1 = check_if_selfie('assets/not-selfie1.jpg')
+        check_not_selfie_2 = check_if_selfie('assets/not-selfie2.jpg')
+        check_not_selfie_3 = check_if_selfie('assets/not-selfie3.jpg')
+
+        self.assertTrue(check_selfie_1)
+        self.assertTrue(check_selfie_2)
+        self.assertTrue(check_selfie_3)
+        self.assertFalse(check_not_selfie_1)
+        self.assertFalse(check_not_selfie_2)
+        self.assertFalse(check_not_selfie_3)
 
 if __name__ == '__main__':
     unittest.main()
