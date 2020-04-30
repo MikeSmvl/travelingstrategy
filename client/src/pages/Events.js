@@ -6,12 +6,7 @@ import Unsplash, {toJson} from 'unsplash-js';
 import './Events.css';
 import {AwesomeButton} from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
-import {
-	addMyEvents,
-	addApiEvents,
-	getButtonContent,
-	emailEvents,
-} from '../utils/eventsTools';
+import {addMyEvents, addApiEvents, emailEvents} from '../utils/eventsTools';
 
 const unsplash = new Unsplash({
 	accessKey: 'sgB9gtzmmpHYIb9_L152xcAfUphuwKry84UML9bMv9M',
@@ -48,7 +43,13 @@ function Events({requestId, latitude, longitude}) {
 	const [redirect, setRedirect] = useState(false);
 	const [email, setEmail] = useState('');
 	const [show, setShow] = useState(false);
+	const [title, setTitle] = useState('Favourites');
+	const [faveContent, setFaveContent] = useState('None');
 	document.body.classList.add('event-body');
+
+	useEffect(() => {
+		setFaveContent(addMyEvents(savedEvents, requestId));
+	}, [savedEvents, requestId]);
 
 	useEffect(() => {
 		async function getToken() {
@@ -93,7 +94,11 @@ function Events({requestId, latitude, longitude}) {
 		async function eventsByCategoryToDispaly() {
 			let arrayOfEvents = [];
 			switch (category) {
+				case 'likes':
+					setTitle('Favourites');
+					break;
 				case 'conferences':
+					setTitle('Conferences');
 					if (!conferencesCalled) {
 						arrayOfEvents = await searchByCategory();
 						setConferences(arrayOfEvents);
@@ -103,6 +108,7 @@ function Events({requestId, latitude, longitude}) {
 					setConferencesCalled(true);
 					break;
 				case 'expos':
+					setTitle('Expos');
 					if (!exposCalled) {
 						arrayOfEvents = await searchByCategory();
 						setExpos(arrayOfEvents);
@@ -112,6 +118,7 @@ function Events({requestId, latitude, longitude}) {
 					setExposCalled(true);
 					break;
 				case 'concerts':
+					setTitle('Concerts');
 					if (!concertsCalled) {
 						arrayOfEvents = await searchByCategory();
 						seConcerts(arrayOfEvents);
@@ -121,6 +128,7 @@ function Events({requestId, latitude, longitude}) {
 					setConcertsCalled(true);
 					break;
 				case 'festivals':
+					setTitle('Festivals');
 					if (!festivalsCalled) {
 						arrayOfEvents = await searchByCategory();
 						setFestivals(arrayOfEvents);
@@ -130,6 +138,7 @@ function Events({requestId, latitude, longitude}) {
 					setFestivalsCalled(true);
 					break;
 				case 'performing-arts':
+					setTitle('Performing Arts');
 					if (!performingArtsCalled) {
 						arrayOfEvents = await searchByCategory();
 						setPerformingArts(arrayOfEvents);
@@ -139,6 +148,7 @@ function Events({requestId, latitude, longitude}) {
 					setPerformingArtsCalled(true);
 					break;
 				case 'sports':
+					setTitle('Sports');
 					if (!sportsCalled) {
 						arrayOfEvents = await searchByCategory();
 						setSports(arrayOfEvents);
@@ -148,6 +158,7 @@ function Events({requestId, latitude, longitude}) {
 					setSportsCalled(true);
 					break;
 				case 'community':
+					setTitle('Community');
 					if (!communityCalled) {
 						arrayOfEvents = await searchByCategory();
 						setCommunity(arrayOfEvents);
@@ -227,9 +238,11 @@ function Events({requestId, latitude, longitude}) {
 		longitude,
 		email,
 		requestId,
+		savedEvents,
 	]);
 
 	const expandNavBar = (event) => {
+		console.log(toggled);
 		if (toggled) {
 			setNavbarClass('sidebar');
 			setMainContentClass('main-content');
@@ -245,94 +258,120 @@ function Events({requestId, latitude, longitude}) {
 		return <Redirect to='/' />;
 	}
 
+	function getButtonContent(category) {
+		if (toggled) return <>{category}</>;
+		else
+			switch (category) {
+				case 'Favourites':
+					return (<img width="35" height="35" src={require('../assets/images/eventsImages/heart.png')} class="loaded" />)
+				case 'Conferences':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/1935/1935157.svg" class="loaded" />)
+				case 'Expos':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/544/544280.svg" class="loaded" />)
+				case 'Concerts':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/1941/1941070.svg" class="loaded" />)
+				case 'Festivals':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/2138/2138882.svg" class="loaded" />)
+				case 'Performing Arts':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/1413/1413579.svg" class="loaded" />)
+				case 'Sports':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/420/420105.svg" class="loaded" />)
+				case 'Community':
+					return (<img width="30" height="30" src="https://image.flaticon.com/icons/svg/829/829141.svg" class="loaded" />)
+			}
+	}
+
 	return (
 		<div id='events-section'>
 			<Row>
 				<div className={navbarClass}>
-					<span className='shape' />
-					<span className='shape' />
 					<div className='categories-btn'>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='likes'
-								onClick={expandNavBar}>
-								{getButtonContent('Hamburger')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='likes'
-								onClick={() => setCategory('likes')}>
-								{getButtonContent('Favourites')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='conferences'
-								onClick={() => setCategory('conferences')}>
-								{getButtonContent('Conferences')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='expos'
-								onClick={() => setCategory('expos')}>
-								{getButtonContent('Expos')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='concerts'
-								onClick={() => setCategory('concerts')}>
-								{getButtonContent('Concerts')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='festivals'
-								onClick={() => setCategory('festivals')}>
-								{getButtonContent('Festivals')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='performing-arts'
-								onClick={() => setCategory('performing-arts')}>
-								{getButtonContent('Performing-arts')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='sports'
-								onClick={() => setCategory('sports')}>
-								{getButtonContent('Sports')}
-							</Button>
-						</div>
-						<div className='choice-btn'>
-							<Button
-								variant='outline-primary'
-								style={{width: '100%'}}
-								value='community'
-								onClick={() => setCategory('community')}>
-								{getButtonContent('Community')}
-							</Button>
-						</div>
+						<Button
+							className='expanding'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='likes'
+							onClick={expandNavBar}>
+							{toggled ? (
+								<img
+									width='35'
+									height='35'
+									src='https://image.flaticon.com/icons/svg/481/481146.svg'
+									class='loaded'
+								/>
+							) : (
+								<img
+									width='35'
+									height='35'
+									src='https://image.flaticon.com/icons/svg/481/481143.svg'
+									class='loaded'
+								/>
+							)}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='likes'
+							onClick={() => setCategory('likes')}>
+							{getButtonContent('Favourites')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='conferences'
+							onClick={() => setCategory('conferences')}>
+							{getButtonContent('Conferences')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='expos'
+							onClick={() => setCategory('expos')}>
+							{getButtonContent('Expos')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='concerts'
+							onClick={() => setCategory('concerts')}>
+							{getButtonContent('Concerts')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='festivals'
+							onClick={() => setCategory('festivals')}>
+							{getButtonContent('Festivals')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='performing-arts'
+							onClick={() => setCategory('performing-arts')}>
+							{getButtonContent('Performing Arts')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='sports'
+							onClick={() => setCategory('sports')}>
+							{getButtonContent('Sports')}
+						</Button>
+						<Button
+							className='choice-btn'
+							variant='outline-primary'
+							style={{width: '100%'}}
+							value='community'
+							onClick={() => setCategory('community')}>
+							{getButtonContent('Community')}
+						</Button>
 					</div>
 				</div>
 				<Toast
@@ -352,39 +391,43 @@ function Events({requestId, latitude, longitude}) {
 					</Toast.Body>
 				</Toast>
 				<section className={mainContentClass}>
-					<div>
-						{category === 'likes' && (
-							<OverlayTrigger
-								overlay={
-									<Popover
-										id='popover-positioned-bottom'
-										className='popover-context'>
-										Receive an email of your favourite events
-									</Popover>
-								}>
-								<div className='email-btn' style={{float: 'right'}}>
-									<AwesomeButton
-										type='secondary'
-										size='small'
-										value='likes'
-										onPress={() => {
-											emailEvents(savedEvents);
-											setShow(true);
-										}}>
-										<img
-											alt='Icon'
-											src={require('../assets/images/eventsImages/Email Favourites.png')}
-											style={{height: '2em'}}
-										/>
-									</AwesomeButton>
-								</div>
-							</OverlayTrigger>
-						)}
+					<div className='page-title'>
+						<h2>{title}</h2>
 					</div>
+					<div>
+						<OverlayTrigger
+							overlay={
+								<Popover
+									id='popover-positioned-bottom'
+									className='popover-context'>
+									Receive an email of your favourite events
+								</Popover>
+							}>
+							<div className='email-btn'>
+								<AwesomeButton
+									type='secondary'
+									size='small'
+									value='likes'
+									onPress={() => {
+										emailEvents(savedEvents);
+										setShow(true);
+									}}>
+									<img
+										alt='Icon'
+										src={require('../assets/images/eventsImages/Email Favourites.png')}
+										style={{height: '2em'}}
+									/>
+								</AwesomeButton>
+							</div>
+						</OverlayTrigger>
+					</div>
+					<div>{category === 'likes'}</div>
 					<div className='app-card-list' id='app-card-list'>
-						{category === 'likes'
-							? addMyEvents(savedEvents, requestId)
-							: addApiEvents(eventsForCategories, requestId, images)}
+						{category === 'likes' ? (
+							<>{faveContent}</>
+						) : (
+							addApiEvents(eventsForCategories, requestId, images)
+						)}
 					</div>
 				</section>
 			</Row>

@@ -77,14 +77,12 @@ const EventsCard = (props) => {
 	const handleLike = () => {
 		addEvent();
 		setModal(false);
-		setLikedModal(true);
 	};
 
 	const handleDelete = () => {
 		removeEvent();
 		setModal(false);
 		setRemoved(true);
-		setRemovedModal(true);
 	};
 
 	const handleFavoriteModals = () => {
