@@ -237,8 +237,7 @@ function Events({requestId, latitude, longitude}) {
 		latitude,
 		longitude,
 		email,
-		requestId,
-		savedEvents,
+		requestId
 	]);
 
 	const expandNavBar = (event) => {
