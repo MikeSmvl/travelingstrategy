@@ -352,139 +352,139 @@ function Country({
 			{!isLoading && (
 				<div data-aos="fade-up" className="parallax">
 					<div id="overlay" />
-					<Row style={{justifyContent: 'center', paddingTop: '150px'}}>
-					<Col lg={8} style={{border: '1px solid #343a40', borderRadius: '20px'}}>
-					<Header
-						country={getCountryName(destinationCountry)}
-						city={destinationCity}
-						time={getTimeDifference(timeOrigin, timeDestination, originCity)}
-						show={show}
-						handleShow={handleShow}
-						handleClose={handleClose}
-						lat={destinationLat}
-						lng={destinationLng}
-						countryIso={destinationCountry}
-						email={email}
-					/>
-					<Row className="justify-content-center">
-						<Col
-							style={{
-								backgroundColor: 'rgb(255, 255, 255)',
-								borderRadius: '0 0 20px 20px',
-								padding: '0'
-							}}
-						>
-							<Row className="justify-content-center sticky">
-								<CountryNavbar />
-							</Row>
-							<Row id="Important Basics" className="justify-content-center">
-								<Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
-									<CountryCard
-										data-aos="fade-right"
-										flagSrc={flagSrc(destinationCountry)}
-										title="Country Flag"
-										footer={<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
+					<Row style={{ justifyContent: 'center', paddingTop: '150px' }}>
+						<Col lg={8} style={{ border: '1px solid #343a40', borderRadius: '20px' }}>
+							<Header
+								country={getCountryName(destinationCountry)}
+								city={destinationCity}
+								time={getTimeDifference(timeOrigin, timeDestination, originCity)}
+								show={show}
+								handleShow={handleShow}
+								handleClose={handleClose}
+								lat={destinationLat}
+								lng={destinationLng}
+								countryIso={destinationCountry}
+								email={email}
+							/>
+							<Row className="justify-content-center">
+								<Col
+									style={{
+										backgroundColor: 'rgb(255, 255, 255)',
+										borderRadius: '0 0 20px 20px',
+										padding: '0'
+									}}
+								>
+									<Row className="justify-content-center sticky">
+										<CountryNavbar />
+									</Row>
+									<Row id="Important Basics" className="justify-content-center">
+										<Col sm={5} style={{ padding: '40px 25px 25px 25px' }}>
+											<CountryCard
+												data-aos="fade-right"
+												flagSrc={flagSrc(destinationCountry)}
+												title="Country Flag"
+												footer={<Row className="justify-content-center"><a href="https://en.wikipedia.org/wiki/List_of_official_languages_by_country_and_territory" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}
+											>
+												<CardBody>
+													{languagesInfo !== 'Not available yet.'
+												&& languages(languagesInfo)}
+												</CardBody>
+											</CountryCard>
+											<br />
+											<EmbassisesCard embassyInfo={embassyInfo} originCountryName={originCountryName} destCountryName={destCountryName} />
+											<br />
+											<WeatherGraph destinationCity={destinationCity} />
+											<br />
+										</Col>
+										<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
+											<VisaCard visaInfo={visaInfo} originCountry={originCountry} formatedVisaInfo={formatedVisaInfo} />
+											<br />
+											<DrugsCard canabaisRecreational={canabaisRecreational} canabaisMedical={canabaisMedical} cocainePossession={cocainePossession} methaphetaminePossession={methaphetaminePossession} />
+											<br />
+											<br />
+											{showWeather && (
+												<Weather
+													lat={destinationLat}
+													lng={destinationLng}
+												/>
+											)}
+										</Col>
+									</Row>
+									<br />
+									<Card
+										header="Weather Map"
+										footer={(
+											<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
+											</Row>
+										)}
 									>
 										<CardBody>
-											{languagesInfo !== 'Not available yet.'
-												&& languages(languagesInfo)}
-										</CardBody>
-									</CountryCard>
-									<br />
-									<EmbassisesCard embassyInfo={embassyInfo} originCountryName={originCountryName} destCountryName={destCountryName} />
-									<br />
-									<WeatherGraph destinationCity={destinationCity} />
-									<br />
-								</Col>
-								<Col sm={6} style={{ padding: '40px 25px 25px 25px' }}>
-									<VisaCard visaInfo={visaInfo} originCountry={originCountry} formatedVisaInfo={formatedVisaInfo} />
-									<br />
-									<DrugsCard canabaisRecreational={canabaisRecreational} canabaisMedical={canabaisMedical} cocainePossession={cocainePossession} methaphetaminePossession={methaphetaminePossession} />
-									<br />
-									<br />
-									{showWeather && (
-										<Weather
-											lat={destinationLat}
-											lng={destinationLng}
-										/>
-									)}
-								</Col>
-							</Row>
-							<br />
-							<Card
-								header="Weather Map"
-								footer={(
-									<Row className="justify-content-center"><a href="https://darksky.net/forecast/40.7127,-74.0059/us12/en" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference &nbsp;</a>
-									</Row>
-								)}
-							>
-								<CardBody>
-									<iframe title="darksky" className="map-darksky" src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},11`} />
-								</CardBody>
-							</Card>
-							<hr />
-							<div id="Financials">
-								<Row className="justify-content-center">
-									<Col sm={6} style={{ padding: '25px' }}>
-										<CurrencyCard currencyInfo={currencyInfo} rate={rate} originCurrencyInfo={originCurrencyInfo} />
-									</Col>
-								</Row>
-								<Row className="justify-content-center">
-									<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
-										<PricesCard financialInfo={financialInfo} currencyInfo={currencyInfo} />
-									</Col>
-								</Row>
-							</div>
-							<hr />
-							<Row id="Safety" className="justify-content-center">
-								<AdvisoryCard originCountry={originCountry} destinationCountry={destinationCountry} advisoryInfo={advisoryInfo} advisoryLink={advisoryLink} />
-								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									<Card data-aos="fade-left" header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-										<CardBody>
-											<div
-												className="scrolling-card"
-												style={{ maxHeight: '285px', overflow: 'scroll' }}
-												dangerouslySetInnerHTML={{ __html: unsafeAreas }}
-											/>
+											<iframe title="darksky" className="map-darksky" src={`https://maps.darksky.net/@temperature,${destinationLat},${destinationLng},11`} />
 										</CardBody>
 									</Card>
-								</Col>
-								<Col xs="10" sm="6" style={{ padding: '25px' }}>
-									<EmergencyCard emergencyInfo={emergencyInfo} />
-								</Col>
-							</Row>
-							<hr />
-							<Row id="Health" className="justify-content-center">
-								<Col xs="10" sm="8" style={{ padding: '25px 0 25px 0' }}>
-									<HealthCard destinationHealth={destinationHealth} originHealth={originHealth} destinationCountry={destinationCountry} />
-								</Col>
-								<Col xs="10" sm="8" style={{ padding: '0 0 25px 0' }}>
-									{!(vaccines === null || vaccines === 'Not available yet') && (
-										<VaccinesCard vaccines={vaccines} destinationCountry={destinationCountry} />
-									)}
-								</Col>
-							</Row>
-							<hr />
-							<Row id="Culture" className="justify-content-center">
-								<Col xs="10" sm="10" style={{ padding: '25px' }}>
-									<CommonPhrases originCity={originCity} phrases={phrases} phraseLanguage={phraseLanguage} phraseIso={phraseIso} pronunciation={pronunciation} />
-								</Col>
-							</Row>
-							<hr />
-							<Row id="Miscellaneous" className="justify-content-center">
-								<Col xs="10" sm="10" style={{ padding: '25px' }}>
-									<Card data-aos="fade-down" header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-										<CardBody>
-											<p>
-												{getCountryName(destinationCountry)} uses{' '}
-												<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
-												<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
-												electrical sockets. Plugs are of{' '}
-												<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
-											</p>
-											<Divider />
-											<Row className="justify-content-center">
-												{socketType !== 'Not available yet'
+									<hr />
+									<div id="Financials">
+										<Row className="justify-content-center">
+											<Col sm={6} style={{ padding: '25px' }}>
+												<CurrencyCard currencyInfo={currencyInfo} rate={rate} originCurrencyInfo={originCurrencyInfo} />
+											</Col>
+										</Row>
+										<Row className="justify-content-center">
+											<Col xs="10" sm="6" style={{ padding: '0 0 25px 0' }}>
+												<PricesCard financialInfo={financialInfo} currencyInfo={currencyInfo} />
+											</Col>
+										</Row>
+									</div>
+									<hr />
+									<Row id="Safety" className="justify-content-center">
+										<AdvisoryCard originCountry={originCountry} destinationCountry={destinationCountry} advisoryInfo={advisoryInfo} advisoryLink={advisoryLink} />
+										<Col xs="10" sm="6" style={{ padding: '25px' }}>
+											<Card data-aos="fade-left" header="Unsafe Areas" footer={<Row className="justify-content-center"><a href={`https://travel.gc.ca/destinations/${getCountryName(destinationCountry)}`} target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+												<CardBody>
+													<div
+														className="scrolling-card"
+														style={{ maxHeight: '285px', overflow: 'scroll' }}
+														dangerouslySetInnerHTML={{ __html: unsafeAreas }}
+													/>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="6" style={{ padding: '25px' }}>
+											<EmergencyCard emergencyInfo={emergencyInfo} />
+										</Col>
+									</Row>
+									<hr />
+									<Row id="Health" className="justify-content-center">
+										<Col xs="10" sm="8" style={{ padding: '25px 0 25px 0' }}>
+											<HealthCard destinationHealth={destinationHealth} originHealth={originHealth} destinationCountry={destinationCountry} />
+										</Col>
+										<Col xs="10" sm="8" style={{ padding: '0 0 25px 0' }}>
+											{!(vaccines === null || vaccines === 'Not available yet') && (
+												<VaccinesCard vaccines={vaccines} destinationCountry={destinationCountry} />
+											)}
+										</Col>
+									</Row>
+									<hr />
+									<Row id="Culture" className="justify-content-center">
+										<Col xs="10" sm="10" style={{ padding: '25px' }}>
+											<CommonPhrases originCity={originCity} phrases={phrases} phraseLanguage={phraseLanguage} phraseIso={phraseIso} pronunciation={pronunciation} />
+										</Col>
+									</Row>
+									<hr />
+									<Row id="Miscellaneous" className="justify-content-center">
+										<Col xs="10" sm="10" style={{ padding: '25px' }}>
+											<Card data-aos="fade-down" header="Sockets & Plugs" footer={<Row className="justify-content-center"><a href="https://www.iec.ch/worldplugs/list_bylocation.htm" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+												<CardBody>
+													<p>
+														{getCountryName(destinationCountry)} uses{' '}
+														<b style={{ color: '#FF9A8D' }}>{voltage}</b> and{' '}
+														<b style={{ color: '#FF9A8D' }}>{frequency}</b> for
+														electrical sockets. Plugs are of{' '}
+														<b style={{ color: '#FF9A8D' }}>{socketType}</b>:
+													</p>
+													<Divider />
+													<Row className="justify-content-center">
+														{socketType !== 'Not available yet'
 														&& socketArray.map((item) => (
 															/* eslint-disable */
 															// eslint is giving tab indent errors such as "Expected indentation of 27 tabs but found 14", which makes no sense
@@ -498,55 +498,55 @@ function Country({
 															</Col>
 															/* eslint-enable */
 														))}
+													</Row>
+												</CardBody>
+											</Card>
+										</Col>
+										<Col xs="10" sm="10" style={{ padding: '0px 0px 50px 0px' }}>
+											<Row className="justify-content-center">
+												<Card data-aos="fade-up" header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
+													<CardBody>
+														{trafficSide !== 'Not available yet' && (
+															<p>
+																In {getCountryName(destinationCountry)} the traffic
+																flow is on the{' '}
+																<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b>{' '}
+																side
+															</p>
+														)}
+														<Divider />
+														{trafficSide !== 'Not available yet' && (
+															<img
+																key={trafficSide}
+																src={require(`../assets/images/trafficImages/${trafficSide}.png`)}
+																style={{
+																	width: '200px',
+																	marginLeft: 'auto',
+																	marginRight: 'auto',
+																	display: 'block'
+																}}
+																alt=""
+															/>
+														)}
+														{trafficSide !== 'Not available yet' && (
+															<p style={{ textAlign: 'center' }}>
+																<br />
+																<b style={{ color: '#FF1C00' }}>Warning</b>
+																<br />
+																Be sure to look {getOtherTrafficSide(
+																	trafficSide
+																)}{' '}
+																when crossing streets
+															</p>
+														)}
+													</CardBody>
+												</Card>
 											</Row>
-										</CardBody>
-									</Card>
-								</Col>
-								<Col xs="10" sm="10" style={{ padding: '0px 0px 50px 0px' }}>
-									<Row className="justify-content-center">
-										<Card data-aos="fade-up" header="Traffic Flow" footer={<Row className="justify-content-center"><a href="https://www.worldstandards.eu/cars/list-of-left-driving-countries/" target="_blank" rel="noopener noreferrer"><i className="fa fa-globe" /> Reference </a></Row>}>
-											<CardBody>
-												{trafficSide !== 'Not available yet' && (
-													<p>
-														In {getCountryName(destinationCountry)} the traffic
-														flow is on the{' '}
-														<b style={{ color: '#FF9A8D' }}>{trafficSide} hand</b>{' '}
-														side
-													</p>
-												)}
-												<Divider />
-												{trafficSide !== 'Not available yet' && (
-													<img
-														key={trafficSide}
-														src={require(`../assets/images/trafficImages/${trafficSide}.png`)}
-														style={{
-															width: '200px',
-															marginLeft: 'auto',
-															marginRight: 'auto',
-															display: 'block'
-														}}
-														alt=""
-													/>
-												)}
-												{trafficSide !== 'Not available yet' && (
-													<p style={{ textAlign: 'center' }}>
-														<br />
-														<b style={{ color: '#FF1C00' }}>Warning</b>
-														<br />
-														Be sure to look {getOtherTrafficSide(
-															trafficSide
-														)}{' '}
-														when crossing streets
-													</p>
-												)}
-											</CardBody>
-										</Card>
+										</Col>
 									</Row>
 								</Col>
 							</Row>
 						</Col>
-					</Row>
-					</Col>
 					</Row>
 					<footer id="footer">
 						<Footer

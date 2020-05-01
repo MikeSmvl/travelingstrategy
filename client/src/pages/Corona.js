@@ -91,7 +91,7 @@ function Corona() {
 	}
 
 	return (
-		<div style={{backgroundColor: 'white', marginBottom: '10px'}}>
+		<div style={{ backgroundColor: 'white', marginBottom: '10px' }}>
 			<CoronaHeader />
 			{!isLoading
 			&& (

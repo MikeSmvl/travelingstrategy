@@ -18,6 +18,7 @@
         "import/no-unresolved": "off",
         "object-curly-newline": "off",
         "no-undef": "off",
+        "no-shadow": "off",
         "array-callback-return": "off",
         "consistent-return": "off",
         "import/no-dynamic-require": "off",

@@ -54,7 +54,7 @@ const Slider = (props) => {
 					</div>
 				</div>
 				<Carousel.Caption>
-					<h3>See what's trending! </h3>
+					<h3>See what&apos;s trending! </h3>
 				</Carousel.Caption>
 			</Carousel.Item>
 
