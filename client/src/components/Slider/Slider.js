@@ -4,8 +4,8 @@ import Carousel from 'react-bootstrap/Carousel';
 import { Link } from 'react-router-dom';
 import './Slider.css';
 import './Button.css';
-import imageOne from './pictures/Events2.jpg';
-import imageTwo from './pictures/Events3.jpg';
+import imageOne from './pictures/Events.jpg';
+import imageTwo from './pictures/Trending.jpg';
 
 
 const Slider = (props) => {
