@@ -62,7 +62,7 @@
    }
 }
 .app-card-list .card {
-    margin: 60px 30px;
+    margin: 50px 30px;
     display: inline-block;
     width: 23em;
     border-radius: 12px;
@@ -93,30 +93,41 @@
 	right: 0;
 	bottom: 0;
 	left: 0;
-	z-index:1;
+    z-index:1;
+    border-radius: 12px;
 }
-.card-image {
+.modal-content {
+    border-radius: 12px;
+}
+.modal-overlay:before {
+	content: '';
+	position: absolute;
+	background: linear-gradient(rgba(253, 218, 197, 0.212), rgb(253, 218, 197, 0.2));
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+    z-index:1;
+    border-radius: 12px;
+}
+.modal-header {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+.modal-header .close {
+    display: none;
+}
+.modal-title {
+    font: normal normal normal 27px/1.4em georgia,palatino,book antiqua,palatino linotype,serif;
+    color: rgb(107 107 107);
+    white-space: pre-line;
 }
 #modal-info{
     max-width: 45% !important;
-    margin-left: 30%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
 }
-
-#modal-favorites{
-    margin-left: 35%;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.46), 0 6px 20px 0 rgba(0, 0, 0, 0.46);
-}
-
-#modal-notification{
-    margin-left: 35%;
-}
-
-.modal-like-button{
-    text-align: center;
-    margin-bottom: 3%;
-}
-
 .responsive-more-info {
     /* max-width: 100%; */
     width: 100%;
