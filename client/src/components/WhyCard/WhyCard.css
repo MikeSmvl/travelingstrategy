@@ -1,7 +1,9 @@
 .why {
 	font-family: 'Open Sans', sans-serif;
  }
-
+.mainCardClass {
+	background:linear-gradient(315deg, #fee8d8 10%, #DEE7F3 54%);
+}
 .why_inner {
 	position: fixed;
 	width:355px;

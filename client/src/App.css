@@ -40,13 +40,13 @@
 }
 
 #footer {
-  padding-top: 80px;
+  padding-top: 150px;
+  padding-bottom: 40px;
 }
 
 .parallax {
   /* The image used */
-  background-color: rgba(148, 219, 218, 0.678);
-  background-image: linear-gradient( 135deg, rgb(216, 236, 234) 10%, hsla(323, 56%, 66%, 0.301) 100%);
+  background-image: linear-gradient( 135deg, #DEE7F3 50%, #fee8d8 70%);
 }
 
 .sticky {
@@ -86,18 +86,6 @@ hr {
   color: white;
   text-align: center;
   padding-top: 50%;
-}
-
-.categories-btn{
-  margin-top: 30%;
-}
-
-.choice-btn{
-  margin-top: 5%;
-}
-
-.email-btn{
-  margin-top: 1%;
 }
 
 .buttonSpeaker{

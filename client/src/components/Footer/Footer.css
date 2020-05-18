@@ -1,24 +1,38 @@
-.footerlogotitle {
-    margin-top :7%;
+.footerWrapper {
+	display: grid;
+	grid-template-columns: 1fr 4fr 5fr;
 }
-
-.email {
-    margin-top :7%;
-    text-align: right;
-    align-self: right;
+.aboutUs {
+    z-index: 2;
+    color: #77797b;
+	margin-right: 80px;
+	text-align: justify;
+	text-justify: inter-word;
 }
-
-.emaillogo {
-    position: "absolute";
-    bottom: 0;
-    align-self: center;
+.aboutUs h4 {
+	font: normal normal normal 20px georgia, palatino, book antiqua,
+        palatino linotype, serif !important;
+    color: #343a40;
 }
-
-.aws-btn {
-    --button-primary-color: #ea5940 !important;
-    --button-primary-color-dark: #000000 !important;
-    --button-primary-color-light: #000000 !important;
-    --button-primary-color-hover: #ea5940 !important;
-    --button-primary-color-active: #cfdee9 !important;
-    --button-primary-border: none !important;
+.stayInformedBtn {
+	font: normal normal normal 15px/1.4em georgia, palatino, book antiqua,
+		palatino linotype, serif !important;
+}
+.footerLogo {
+    justify-self: right;
+    margin-right: 25px;
+    z-index: 2;
+}
+.footerLinks {
+    z-index: 2;
+	color: #77797b;
+	margin-left: auto;
+	margin-right: 60px;
+}
+.footerLinks p {
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+.stayInformedBtn {
+	margin-right: 15px !important;
 }

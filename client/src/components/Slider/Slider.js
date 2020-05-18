@@ -36,7 +36,7 @@ const Slider = (props) => {
 					</div>
 				</div>
 				<Carousel.Caption>
-					<h3>Go discover special events near you!</h3>
+					<h3>Discover special events!</h3>
 					<p />
 				</Carousel.Caption>
 			</Carousel.Item>
@@ -54,7 +54,7 @@ const Slider = (props) => {
 					</div>
 				</div>
 				<Carousel.Caption>
-					<h3>Go visit the most trending spots! </h3>
+					<h3>See what&apos;s trending! </h3>
 				</Carousel.Caption>
 			</Carousel.Item>
 

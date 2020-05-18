@@ -6,7 +6,6 @@ import { AwesomeButton } from 'react-awesome-button';
 import IntelBot from './IntelBot/IntelBot';
 import 'react-awesome-button/dist/styles.css';
 
-
 const EventsCard = (props) => {
 	const [modal, setModal] = useState(false);
 	const [likedModal, setLikedModal] = useState(false);
@@ -77,14 +76,12 @@ const EventsCard = (props) => {
 	const handleLike = () => {
 		addEvent();
 		setModal(false);
-		setLikedModal(true);
 	};
 
 	const handleDelete = () => {
 		removeEvent();
 		setModal(false);
 		setRemoved(true);
-		setRemovedModal(true);
 	};
 
 	const handleFavoriteModals = () => {
@@ -107,23 +104,42 @@ const EventsCard = (props) => {
 	 */
 	const getDateText = (date) => {
 		const dateObject = new Date(date);
-		const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
-			'Thursday', 'Friday', 'Saturday'];
-		const months = ['January', 'February', 'March', 'April',
-			'May', 'June', 'July', 'August', 'September',
-			'October', 'November', 'December'];
-		const dateText = `${days[dateObject.getDay()]} ${months[dateObject.getMonth()]
+		const days = [
+			'Sunday',
+			'Monday',
+			'Tuesday',
+			'Wednesday',
+			'Thursday',
+			'Friday',
+			'Saturday'
+		];
+		const months = [
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December'
+		];
+		const dateText = `${days[dateObject.getDay()]} ${
+			months[dateObject.getMonth()]
 		} ${dateObject.getDate()} ${dateObject.getFullYear()}`;
 
 		return dateText;
 	};
 
 	/**
-     *
-     * This method basically adds an 's' to the duration unit
-     * in case the value is more than. This allows the sentence
-     * to be grammatically correct
-     */
+	 *
+	 * This method basically adds an 's' to the duration unit
+	 * in case the value is more than. This allows the sentence
+	 * to be grammatically correct
+	 */
 	const sentenceToDisplay = (durationToDisplay, monthOrDaysOrHours) => {
 		const truncatedDuration = Math.trunc(durationToDisplay);
 		if (truncatedDuration > 1) {
@@ -133,9 +149,9 @@ const EventsCard = (props) => {
 	};
 
 	/**
-     * The duration is given in seconds.
-     * This method converts to duration to an appropriate duration unit
-     */
+	 * The duration is given in seconds.
+	 * This method converts to duration to an appropriate duration unit
+	 */
 	const getDuration = () => {
 		let durationToDisplay = duration / 60;
 
@@ -154,7 +170,6 @@ const EventsCard = (props) => {
 		return sentenceToDisplay(durationToDisplay, 'minute');
 	};
 
-
 	/**
 	 * This modal shows all the information regarding an event
 	 */
@@ -166,85 +181,114 @@ const EventsCard = (props) => {
 				centered
 				id="modal-info"
 			>
-				<Modal.Header closeButton>
-					<Modal.Title id="example-modal-sizes-title-lg">
-						<h2>{title}</h2>
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<img alt="Modal pic" id="image_with_shadow" variant="top" src={eventImg} className="responsive-more-info" />
-					<div className="card-body">
-						{ !isLiked
-							? (
-								<div className="modal-like-button">
-									<AwesomeButton
-										type="secondary"
-										size="small"
-										centered
-										onPress={handleLike}
-									>
-										<img alt="like button" src={require('../../assets/images/eventsImages/heart.png')} style={{ height: '3em' }} />
-									</AwesomeButton>
-								</div>
-							)
-							: (
-								<div className="modal-like-button">
-									<AwesomeButton
-										type="secondary"
-										size="small"
-										centered
-										onPress={handleDelete}
-									>
-										<img alt="like button" src={require('../../assets/images/eventsImages/broken-heart.png')} style={{ height: '3em' }} />
-									</AwesomeButton>
-								</div>
+				<div className="modal-overlay">
+					<Modal.Header closeButton>
+						<Modal.Title>{title}</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<img
+							alt="Modal pic"
+							id="image_with_shadow"
+							variant="top"
+							src={eventImg}
+							className="responsive-more-info"
+						/>
+						<div className="card-body">
+							<p className="card-category">
+								<b>Start Date: </b>
+								<p className="card-date">{getDateText(startDate)}</p>
+							</p>
+							<p className="card-category">
+								<b>End Date: </b>
+								<p className="card-date">{getDateText(endDate)}</p>
+							</p>
+							{address !== '' && (
+								<p>
+									<p className="card-category">
+										<b>Address: </b>
+									</p>
+									<p className="card-date">{address}</p>
+								</p>
 							)}
-						<OverlayTrigger
-							overlay={(
-								<Popover
-									id="popover-positioned-bottom"
-									className="popover-context"
-								>
-									Learn more about the key points of this event
-								</Popover>
+							{nameOfPlace !== '' && (
+								<p>
+									<p className="card-category">
+										<b>Venue Name: </b>
+									</p>
+									<p className="card-date">{nameOfPlace}</p>
+								</p>
 							)}
-						>
-							<div className="modal-like-button">
+							{getDuration().charAt(0) !== '0' && (
+								<p>
+									<p className="card-category">
+										<b>Duration: </b>
+									</p>
+									<p className="card-date">{getDuration()}</p>
+								</p>
+							)}
+							{description !== '' && (
+								<p className="body-content-modal">
+									<p className="card-category">
+										<b>Description: </b>
+									</p>
+									<p className="card-date">{description}</p>
+								</p>
+							)}
+							<OverlayTrigger
+								overlay={(
+									<Popover
+										id="popover-positioned-bottom"
+										className="popover-context"
+									>
+										Learn more about the key points of this event
+									</Popover>
+								)}
+							>
 								<AwesomeButton
 									type="secondary"
 									size="small"
 									onPress={handleShowBot}
 									centered
 								>
-									<img alt="like button" src={require('../../assets/images/eventsImages/smart.png')} style={{ height: '3em' }} />
+									<img
+										alt="like button"
+										src={require('../../assets/images/eventsImages/smart.png')}
+										style={{ height: '3em' }}
+									/>
 								</AwesomeButton>
-							</div>
-						</OverlayTrigger>
-
-						<p className="date"><b>Start Date: </b>{getDateText(startDate)}</p>
-						<p className="date"><b>End Date:</b> {getDateText(endDate)}</p>
-						{address !== '' && (
-							<p>
-								<b>Address: </b>{address}
-							</p>
-						)}
-						{nameOfPlace !== '' && (
-							<p>
-								<b>Venue Name: </b>{nameOfPlace}
-							</p>
-						)}
-						{(getDuration().charAt(0) !== '0') && (
-							<p>
-								<b>Duration: </b>{getDuration()}
-							</p>
-						)}
-						{description !== '' && (
-							<p className="body-content-modal">
-								<b>Description: </b>{description}
-							</p>
-						)}
-					</div>
-				</Modal.Body>
+							</OverlayTrigger>
+							{!isLiked ? (
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									centered
+									onPress={handleLike}
+									style={{ float: 'right' }}
+								>
+									<img
+										alt="like button"
+										src={require('../../assets/images/eventsImages/heart.png')}
+										style={{ height: '3em' }}
+									/>
+								</AwesomeButton>
+							) : (
+								<AwesomeButton
+									type="secondary"
+									size="small"
+									centered
+									onPress={handleDelete}
+									style={{ float: 'right' }}
+								>
+									<img
+										alt="like button"
+										src={require('../../assets/images/eventsImages/broken-heart.png')}
+										style={{ height: '3em' }}
+									/>
+								</AwesomeButton>
+							)}
+						</div>
+					</Modal.Body>
+				</div>
 			</Modal>
 		);
 	};
@@ -262,22 +306,32 @@ const EventsCard = (props) => {
 			>
 				<Modal.Header closeButton>
 					<Modal.Title id="example-modal-sizes-title-lg">
-						{likedModal
-							? <h2>Added To your Favorites !!</h2>
-							: (
-								<h2>Removed from your favorites
-									<span role="img" aria-label="sad">😭</span>
-								</h2>
-							)}
+						{likedModal ? (
+							<h2>Added To your Favorites !!</h2>
+						) : (
+							<h2>
+								Removed from your favorites
+								<span role="img" aria-label="sad">
+									😭
+								</span>
+							</h2>
+						)}
 					</Modal.Title>
 				</Modal.Header>
 				<ModalBody style={{ textAlign: 'center' }}>
-					{likedModal
-						? <img alt="Alert" src={require('../../assets/images/eventsImages/addedToFavorites.gif')} />
-						: <img alt="Alert" src={require('../../assets/images/eventsImages/sad-monkey.gif')} />}
+					{likedModal ? (
+						<img
+							alt="Alert"
+							src={require('../../assets/images/eventsImages/addedToFavorites.gif')}
+						/>
+					) : (
+						<img
+							alt="Alert"
+							src={require('../../assets/images/eventsImages/sad-monkey.gif')}
+						/>
+					)}
 				</ModalBody>
 			</Modal>
-
 		);
 	};
 
@@ -286,44 +340,62 @@ const EventsCard = (props) => {
 	 */
 	const EventCard = () => {
 		return (
-			(!removed
-			&& (
+			!removed && (
 				<Card className="card" id="eventcard" border="dark">
-					<Card.Img variant="top" id="image_with_shadow" src={eventImg} style={{ height: '21em' }} />
+					<div className="card-overlay" />
+					<Card.Img
+						variant="top"
+						id="image_with_shadow"
+						src={eventImg}
+						className="card-image"
+						style={{ height: '21em' }}
+					/>
 					<div className="card-body" id="cardbody">
-						<p className="card-category"><b>{eventCategory.charAt(0).toUpperCase() + eventCategory.slice(1, -1)}</b></p>
-						<p className="date">{getDateText(startDate)}</p>
 						<h2 className="card-title">{title}</h2>
+						<p className="card-category">
+							<b>
+								{eventCategory.charAt(0).toUpperCase()
+									+ eventCategory.slice(1, -1)}
+							</b>
+						</p>
+						<p className="card-date">{getDateText(startDate)}</p>
 						<AwesomeButton
 							type="secondary"
 							size="medium"
 							onPress={() => setModal(true)}
-						>Find out more
+						>
+							Find out more
 						</AwesomeButton>
-						{ !isLiked
-							? (
-								<AwesomeButton
-									type="secondary"
-									size="small"
-									onPress={handleLike}
-									style={{ float: 'right' }}
-								>
-									<img alt="like button" src={require('../../assets/images/eventsImages/heart.png')} style={{ height: '3em' }} />
-								</AwesomeButton>
-							)
-							: (
-								<AwesomeButton
-									type="secondary"
-									size="small"
-									onPress={handleDelete}
-									style={{ float: 'right' }}
-								>
-									<img alt="like button" src={require('../../assets/images/eventsImages/broken-heart.png')} style={{ height: '3em' }} />
-								</AwesomeButton>
-							)}
+						{!isLiked ? (
+							<AwesomeButton
+								type="secondary"
+								size="small"
+								onPress={handleLike}
+								style={{ float: 'right' }}
+							>
+								<img
+									alt="like button"
+									src={require('../../assets/images/eventsImages/heart.png')}
+									style={{ height: '3em' }}
+								/>
+							</AwesomeButton>
+						) : (
+							<AwesomeButton
+								type="secondary"
+								size="small"
+								onPress={handleDelete}
+								style={{ float: 'right' }}
+							>
+								<img
+									alt="like button"
+									src={require('../../assets/images/eventsImages/broken-heart.png')}
+									style={{ height: '3em' }}
+								/>
+							</AwesomeButton>
+						)}
 					</div>
 				</Card>
-			))
+			)
 		);
 	};
 
@@ -345,7 +417,6 @@ const EventsCard = (props) => {
 		</>
 	);
 };
-
 
 EventsCard.propTypes = {
 	eventCategory: PropTypes.string,

@@ -30,13 +30,17 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 				.then((res) => {
 					res.data.imagesForRequestId
 						&& res.data.imagesForRequestId.length !== 0
-						&& setTrendingSpots(res.data.imagesForRequestId)
-						&& setWeekDate(res.data.imagesForRequestId[0].date_retrieved);
+						&& setTrendingSpots(res.data.imagesForRequestId);
+					res.data.imagesForRequestId
+						&& res.data.imagesForRequestId.length !== 0
+						&& setWeekDate(
+							res.data.imagesForRequestId[0].date_retrieved.replace('/', '-')
+						);
 				});
 		}
 		fetchData();
 	}, [requestId]);
-	// console.log(trendingSpots);
+
 	return (
 		<div className="wrapper">
 			{Object.keys(trendingSpots).length === 0 ? (
@@ -65,7 +69,7 @@ function TrendingSpots({ requestId, city, latitude, longitude }) {
 						})}
 						<div className="quote">Daydream. We&apos;ll do the rest.</div>
 						<div>
-							<div className="weekDate">{weekDate.replace('/', '-')}</div>
+							<div className="weekDate">{weekDate}</div>
 							<div className="weekOf">Week of </div>
 						</div>
 					</div>

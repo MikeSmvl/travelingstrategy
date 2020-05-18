@@ -603,73 +603,70 @@ Array [
     }
   >
     <div
-      className="AppHeaderWrapper"
+      className="justify-content-center row"
     >
       <div
-        className="justify-content-center row"
+        className="col"
+        style={
+          Object {
+            "border": "5px solid white",
+            "borderRadius": "20px 20px 0 0",
+            "padding": "0",
+          }
+        }
       >
         <div
-          className="col-lg-8"
+          className="AppHeader"
           style={
             Object {
-              "border": "5px solid white",
-              "borderRadius": "20px 20px 0 0",
+              "height": "420px",
             }
           }
+          subtitle="France"
         >
           <div
-            className="AppHeader"
-            style={
-              Object {
-                "height": "420px",
-              }
-            }
-            subtitle="France"
+            className="overlay"
+          />
+          <video
+            autoPlay={true}
+            className="videoHeader"
+            loop={true}
+            muted={true}
           >
-            <div
-              className="overlay"
+            <source
+              src="FR.mp4"
+              type="video/mp4"
             />
-            <video
-              autoPlay={true}
-              className="videoHeader"
-              loop={true}
-              muted={true}
+          </video>
+          <div
+            className="country"
+          >
+            Paris
+          </div>
+          <div
+            className="city"
+          >
+            TimeZone
+          </div>
+          <div
+            className="time"
+          >
+            TimeDifference
+          </div>
+          <div
+            className="text-center"
+          >
+            <button
+              className="subscribe iwhy btn btn-outline-primary"
+              disabled={false}
+              onClick=""
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              type="button"
             >
-              <source
-                src="FR.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <div
-              className="country"
-            >
-              Paris
-            </div>
-            <div
-              className="city"
-            >
-              TimeZone
-            </div>
-            <div
-              className="time"
-            >
-              TimeDifference
-            </div>
-            <div
-              className="text-center"
-            >
-              <button
-                className="subscribe iwhy btn btn-outline-primary"
-                disabled={false}
-                onClick=""
-                onFocus={[Function]}
-                onMouseLeave={[Function]}
-                onMouseOver={[Function]}
-                type="button"
-              >
-                Stay Informed
-              </button>
-            </div>
+              Stay Informed
+            </button>
           </div>
         </div>
       </div>
@@ -712,73 +709,70 @@ Array [
     }
   >
     <div
-      className="AppHeaderWrapper"
+      className="justify-content-center row"
     >
       <div
-        className="justify-content-center row"
+        className="col"
+        style={
+          Object {
+            "border": "5px solid white",
+            "borderRadius": "20px 20px 0 0",
+            "padding": "0",
+          }
+        }
       >
         <div
-          className="col-lg-8"
+          className="AppHeader"
           style={
             Object {
-              "border": "5px solid white",
-              "borderRadius": "20px 20px 0 0",
+              "height": "420px",
             }
           }
+          subtitle="France"
         >
           <div
-            className="AppHeader"
-            style={
-              Object {
-                "height": "420px",
-              }
-            }
-            subtitle="France"
+            className="overlay"
+          />
+          <video
+            autoPlay={true}
+            className="videoHeader"
+            loop={true}
+            muted={true}
           >
-            <div
-              className="overlay"
+            <source
+              src="FR.mp4"
+              type="video/mp4"
             />
-            <video
-              autoPlay={true}
-              className="videoHeader"
-              loop={true}
-              muted={true}
+          </video>
+          <div
+            className="country"
+          >
+            Paris
+          </div>
+          <div
+            className="city"
+          >
+            TimeZone
+          </div>
+          <div
+            className="time"
+          >
+            TimeDifference
+          </div>
+          <div
+            className="text-center"
+          >
+            <button
+              className="subscribe iwhy btn btn-outline-primary"
+              disabled={false}
+              onClick=""
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              type="button"
             >
-              <source
-                src="FR.mp4"
-                type="video/mp4"
-              />
-            </video>
-            <div
-              className="country"
-            >
-              Paris
-            </div>
-            <div
-              className="city"
-            >
-              TimeZone
-            </div>
-            <div
-              className="time"
-            >
-              TimeDifference
-            </div>
-            <div
-              className="text-center"
-            >
-              <button
-                className="subscribe iwhy btn btn-outline-primary"
-                disabled={false}
-                onClick=""
-                onFocus={[Function]}
-                onMouseLeave={[Function]}
-                onMouseOver={[Function]}
-                type="button"
-              >
-                Stay Informed
-              </button>
-            </div>
+              Stay Informed
+            </button>
           </div>
         </div>
       </div>

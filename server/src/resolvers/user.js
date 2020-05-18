@@ -132,7 +132,6 @@ async function verifyUser(user) {
           logger.error(err);
           reject(err);
         } else {
-          // console.log(`Successfully verified ${user} account`);
           resolve();
         }
       }

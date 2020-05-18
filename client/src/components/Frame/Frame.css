@@ -20,6 +20,8 @@
   top: 0;
 	position: relative;
 	overflow: hidden;
+	border: 0.5px solid #717379;
+	border-radius: 4px;
 }
 .frame img {
 	width: 100%;
@@ -35,7 +37,7 @@
 /* Caption */
 .frameCaption {
 	color: black;
-	background: white;
+	background: #FBF4EF;
 	margin: 0;
 	height: 18px;
 	width: 100%;
@@ -51,7 +53,7 @@
 	flex-direction: row;
 	flex-shrink: 0;
 	color: black;
-	background: white;
+	background: #FBF4EF;
 	margin: 0;
 	padding: 8px 20px 8px 8px;
 	align-items: center;
