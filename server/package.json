@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/MikeSmvl/travelingstrategy#readme",
   "dependencies": {
-    "bcrypt": "^3.0.8",
+    "bcrypt": "^5.0.0",
     "chai": "^4.2.0",
     "city-timezones": "^1.1.0",
     "cookie-parser": "^1.4.4",
